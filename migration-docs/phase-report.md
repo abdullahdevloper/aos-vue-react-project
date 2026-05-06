@@ -4,7 +4,7 @@ Last updated: 2026-05-06
 
 ## Phase
 
-UI Components / Widgets / Lists implementation.
+UI Components / Widgets / Statistic implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -12,8 +12,8 @@ Approval:
 
 - UI Components / Charts = approved
 - UI Components / Widgets / Cards = approved route preserved
-- UI Components / Widgets / Lists = pending user visual approval
-- UI Components / Widgets / Statistic = not started
+- UI Components / Widgets / Lists = approved route preserved
+- UI Components / Widgets / Statistic = pending user visual approval
 - UI Components / Widgets / Chart = not started
 - UI Components / Widgets / Document Cards = not started
 
@@ -25,6 +25,7 @@ Approval:
 - `react-dashboard-template/src/layouts/DashboardLayout.tsx`
 - `react-dashboard-template/src/pages/ui-components/widgets/CardsPage.tsx`
 - `react-dashboard-template/src/pages/ui-components/widgets/ListsPage.tsx`
+- `react-dashboard-template/src/pages/ui-components/widgets/StatisticPage.tsx`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/Avengers-EndGame.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/dragon.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/design_community.png`
@@ -35,6 +36,8 @@ Approval:
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/g4.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/m1.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/lists/*`
+- `react-dashboard-template/src/assets/ui-components/widgets/statistics/AdobeXD.png`
+- `react-dashboard-template/src/assets/ui-components/widgets/statistics/sketch.png`
 - `migration-docs/progress.md`
 - `migration-docs/phase-report.md`
 
@@ -54,6 +57,12 @@ No protected Vue/root files or `AGENTS.md` were modified.
 - Implemented LatestMediaList, TicketCheckList, AuthorList, TransactionsList, TodoList, MembersList, and BestSellerList.
 - Recreated debounced Fuse search, checklist filters, checkbox state, add-new-on-enter, checklist menus, list actions, status chips, and hover inset list rows.
 - Copied only required local Lists assets into the React template assets folder.
+- Added route `/widgets/statistic`.
+- Added minimal Widgets sidebar exposure for `Statistic`.
+- Rebuilt the Statistic widgets page from `src/views/Widgets/Stats/index.vue`.
+- Implemented ColumnarStatistic, BasicStatistic, and TaskStatus compositions.
+- Preserved Vue values, progress bars, task-progress rows, visual indicators, brand logo avatars, and responsive layout.
+- Copied only required local Statistic assets into the React template assets folder.
 
 Historical Charts work already completed:
 
@@ -116,7 +125,7 @@ Historical Charts work already completed:
 ## Skipped Or Failed Items
 
 - Widgets / Cards: approved route preserved; not modified beyond shared route/sidebar context.
-- Widgets / Statistic: skipped by scope.
+- Widgets / Lists: approved route preserved; not modified beyond shared route/sidebar context.
 - Widgets / Chart: skipped by scope.
 - Widgets / Document Cards: skipped by scope.
 - Charts: approved and not modified in this slice.
@@ -142,7 +151,7 @@ Result: no output. Protected Vue/root files and `AGENTS.md` were unchanged.
 
 ## Stop Point
 
-Stopped after Widgets / Lists. Widgets / Lists remains pending user visual approval. Statistic, Chart widgets, Document Cards, and Vuetify were not started.
+Stopped after Widgets / Statistic. Widgets / Statistic remains pending user visual approval. Chart widgets, Document Cards, and Vuetify were not started.
 
 ## Widgets Audit Summary
 
@@ -260,3 +269,39 @@ Remaining visual/behavior gaps:
 - Needs user visual review against the running Vue app.
 - Checklist menu items are present and close on click; destructive/edit actions remain demo no-ops.
 - Dates are static for this rebuild pass based on the current audit date, while Vue computes them from `new Date()`.
+
+## Widgets Statistic Verification
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/widgets/statistic` route renders Stats Widgets page | `/widgets/statistic` route added | Full | Route wired in React router |
+| Sidebar | UI Components > Widgets > Statistic | Widgets parent includes Statistic child | Full | Cards and Lists entries preserved |
+| Page header | `Stats Widgets`, Widgets > Stats breadcrumbs, `card_giftcard` icon | `Stats Widgets`, Widgets > Stats breadcrumbs, card gift icon | High | Uses React VuseSectionDefinition |
+| Single column stats | Six cards: Total Orders, Total Views, Likes, Comments, Reviews, Return | Six matching ColumnarStatistic cards | Full | Values, trend directions, colors, and labels preserved |
+| Two column stats | Four cards: Users, Happy Customers, Tickets, UI Users | Four matching two-item ColumnarStatistic cards | Full | Sketch and AdobeXD assets copied locally |
+| Basic stats row | Users, Orders, CUP Usage, Weekly Income with default trend slot | Four matching BasicStatistic cards | Full | `CUP Usage` typo preserved from Vue |
+| Progress basic stats | Customers, Closed Tickets, Downloads, Visits with progress values 52, 78, 80, 68 | Four matching BasicStatistic cards with progress bars | Full | Text and values preserved |
+| TaskStatus | Task Status card with On Going and Upcomig groups | TaskStatus rebuilt with both groups | Full | `Upcomig` typo preserved from Vue |
+| Task progress rows | Six static task rows with timeline and completedPercentage values | Same six rows and values | Full | Progress bars are static visual indicators like Vue |
+| Hover states | No explicit hover behavior in Vue statistic source | No custom hover added | Full | Cards remain soft raised |
+| Responsive layout | First row `lg=2 md=4 sm=6`; second/basic rows `lg=3 sm=6`; task `md=6` | Matching MUI breakpoints | High | Grid spacing uses existing React Vuse shell rhythm |
+| Visual identity | Pale background, neu-glow cards, large avatars/headings, varied accent colors | Vuse soft cards, avatars, headings, progress bars, varied accents | High | Needs final user visual review against running Vue app |
+| Running app visual check | Compare against local Vue page | Local route probe was unstable | Partial | `http://127.0.0.1:5173/widgets/statistic` briefly returned 200, then refused follow-up connection |
+
+## Widgets Statistic Implementation Summary
+
+Implemented route:
+
+- `/widgets/statistic`
+
+Implemented statistic widgets:
+
+- ColumnarStatistic
+- BasicStatistic
+- TaskStatus
+
+Remaining visual/behavior gaps:
+
+- Needs user visual review against the running Vue app.
+- Screenshot-level running-app verification could not be completed because the local route was unavailable on follow-up.
+- No interactive behaviors beyond static progress/status indicators are present in the Vue Statistic source.

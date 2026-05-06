@@ -14,12 +14,12 @@ Current rebuild strategy:
 
 ## Current Slice
 
-- Scope: UI Components / Widgets / Lists
+- Scope: UI Components / Widgets / Statistic
 - Status: implemented; pending user visual approval
 - UI Components / Charts: approved
 - Widgets / Cards: approved route preserved
-- Widgets / Lists: pending user visual approval
-- Widgets / Statistic: not started
+- Widgets / Lists: approved route preserved
+- Widgets / Statistic: pending user visual approval
 - Widgets / Chart: not started
 - Widgets / Document Cards: not started
 - Vuetify: not started
@@ -32,6 +32,7 @@ Current rebuild strategy:
 - `/charts/spark-line`
 - `/widgets/card`
 - `/widgets/lists`
+- `/widgets/statistic`
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
 
@@ -322,6 +323,55 @@ Not touched:
 - Charts implementation and routes.
 - Widgets / Cards implementation and route.
 - Widgets / Statistic.
+- Widgets / Chart.
+- Widgets / Document Cards.
+- Vuetify, Style & User Interface, Pages.
+
+## Widgets Statistic Implementation
+
+Status: implemented; pending user visual approval.
+
+Route:
+
+- `/widgets/statistic`
+
+Implemented Widgets sidebar entries:
+
+- `UI Components`
+- `Widgets`
+- `Statistic`
+
+Implemented statistic widgets:
+
+- ColumnarStatistic
+- BasicStatistic
+- TaskStatus
+
+Completed:
+
+- Added the Vue-matching Widgets Statistic route.
+- Added only the Widgets / Statistic sidebar child needed for this slice.
+- Rebuilt the Statistic page with the Vue row structure: six single-column statistic cards, four two-column statistic cards, eight basic statistic cards, and TaskStatus.
+- Preserved Vue values, labels, progress values, task rows, typo `Upcomig`, brand logo avatars, trend indicators, and responsive breakpoints.
+- Copied only required statistic brand assets into `react-dashboard-template/src/assets/ui-components/widgets/statistics/`.
+
+Verification:
+
+- Source verification completed against `src/views/Widgets/Stats/index.vue`, `src/views/Widgets/Stats/TaskStatus.vue`, statistic card components, progress components, and `migration-docs/widgets-audit.md`.
+- Running app route probe for `http://127.0.0.1:5173/widgets/statistic` briefly returned HTTP 200, but the server was unavailable on follow-up, so screenshot-level visual verification could not be completed from this session.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Charts implementation and routes.
+- Widgets / Cards implementation and route.
+- Widgets / Lists implementation and route.
 - Widgets / Chart.
 - Widgets / Document Cards.
 - Vuetify, Style & User Interface, Pages.
