@@ -1,0 +1,1838 @@
+{
+  "timestamp": "2026-05-05T14:44:43.265Z",
+  "totalComponents": 49,
+  "components": [
+    {
+      "name": "FooterSettings",
+      "path": "AppSettings/FooterSettings.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 38,
+          "elementCount": 19,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "mapGetters"
+          ],
+          "from": "vuex"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 116,
+        "hasVuex": true,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون FooterSettings من مستوى 2"
+      }
+    },
+    {
+      "name": "HeaderSettings",
+      "path": "AppSettings/HeaderSettings.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 57,
+          "elementCount": 28,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "mapGetters"
+          ],
+          "from": "vuex"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 147,
+        "hasVuex": true,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون HeaderSettings من مستوى 2"
+      }
+    },
+    {
+      "name": "Index",
+      "path": "AppSettings/Index.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 66,
+          "elementCount": 33,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div",
+            "visibility",
+            "theme",
+            "header",
+            "sidenav",
+            "footer",
+            "language"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": {
+        "scoped": true,
+        "lang": "css",
+        "hasVariables": false,
+        "lineCount": 7
+      },
+      "imports": [],
+      "summary": {
+        "linesOfCode": 95,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون Index من مستوى 2"
+      }
+    },
+    {
+      "name": "LanguageSelection",
+      "path": "AppSettings/LanguageSelection.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 6,
+          "elementCount": 3,
+          "uniqueElements": [
+            "template",
+            "v"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "mapGetters"
+          ],
+          "from": "vuex"
+        },
+        {
+          "items": [
+            "availableLocale"
+          ],
+          "from": "@/config/locale"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 34,
+        "hasVuex": true,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون LanguageSelection من مستوى 2"
+      }
+    },
+    {
+      "name": "SidenavSettings",
+      "path": "AppSettings/SidenavSettings.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 38,
+          "elementCount": 18,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "mapGetters"
+          ],
+          "from": "vuex"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 109,
+        "hasVuex": true,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون SidenavSettings من مستوى 2"
+      }
+    },
+    {
+      "name": "Theme",
+      "path": "AppSettings/Theme.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 11,
+          "elementCount": 8,
+          "uniqueElements": [
+            "template",
+            "v"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "mapGetters"
+          ],
+          "from": "vuex"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 218,
+        "hasVuex": true,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون Theme من مستوى 2"
+      }
+    },
+    {
+      "name": "Visibility",
+      "path": "AppSettings/Visibility.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 40,
+          "elementCount": 20,
+          "uniqueElements": [
+            "template",
+            "v"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "mapGetters"
+          ],
+          "from": "vuex"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 69,
+        "hasVuex": true,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون Visibility من مستوى 2"
+      }
+    },
+    {
+      "name": "BarChart",
+      "path": "ChartJS/BarChart.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": null,
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "Bar"
+          ],
+          "from": "vue-chartjs"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 78,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون BarChart من مستوى 2"
+      }
+    },
+    {
+      "name": "BubbleChart",
+      "path": "ChartJS/BubbleChart.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": null,
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "Bubble"
+          ],
+          "from": "vue-chartjs"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 48,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون BubbleChart من مستوى 2"
+      }
+    },
+    {
+      "name": "DoughnutChart",
+      "path": "ChartJS/DoughnutChart.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": null,
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "Doughnut"
+          ],
+          "from": "vue-chartjs"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 62,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون DoughnutChart من مستوى 2"
+      }
+    },
+    {
+      "name": "HorizontalBarChart",
+      "path": "ChartJS/HorizontalBarChart.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": null,
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "HorizontalBar"
+          ],
+          "from": "vue-chartjs"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 67,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون HorizontalBarChart من مستوى 2"
+      }
+    },
+    {
+      "name": "LineChart",
+      "path": "ChartJS/LineChart.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": null,
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "Line"
+          ],
+          "from": "vue-chartjs"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 110,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون LineChart من مستوى 2"
+      }
+    },
+    {
+      "name": "PieChart",
+      "path": "ChartJS/PieChart.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": null,
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "Pie"
+          ],
+          "from": "vue-chartjs"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 58,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون PieChart من مستوى 2"
+      }
+    },
+    {
+      "name": "PolarareaChart",
+      "path": "ChartJS/PolarareaChart.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": null,
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "PolarArea"
+          ],
+          "from": "vue-chartjs"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 57,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون PolarareaChart من مستوى 2"
+      }
+    },
+    {
+      "name": "RadarChart",
+      "path": "ChartJS/RadarChart.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": null,
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "Radar"
+          ],
+          "from": "vue-chartjs"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 87,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون RadarChart من مستوى 2"
+      }
+    },
+    {
+      "name": "ScatterChart",
+      "path": "ChartJS/ScatterChart.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": null,
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "Scatter"
+          ],
+          "from": "vue-chartjs"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 48,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون ScatterChart من مستوى 2"
+      }
+    },
+    {
+      "name": "CountDown",
+      "path": "CountDown.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 28,
+          "elementCount": 14,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": {
+        "scoped": true,
+        "lang": "css",
+        "hasVariables": false,
+        "lineCount": 45
+      },
+      "imports": [],
+      "summary": {
+        "linesOfCode": 130,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون CountDown من مستوى 2"
+      }
+    },
+    {
+      "name": "VuseAvatar",
+      "path": "Stock/VuseAvatar.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 10,
+          "elementCount": 5,
+          "uniqueElements": [
+            "template",
+            "v"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 82,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون VuseAvatar من مستوى 2"
+      }
+    },
+    {
+      "name": "VuseLogo",
+      "path": "Stock/VuseLogo.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 28,
+          "elementCount": 14,
+          "uniqueElements": [
+            "template",
+            "svg",
+            "g",
+            "path",
+            "polygon",
+            "polyline"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 94,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون VuseLogo من مستوى 2"
+      }
+    },
+    {
+      "name": "VuseNeuAvatar",
+      "path": "Stock/VuseNeuAvatar.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 12,
+          "elementCount": 6,
+          "uniqueElements": [
+            "template",
+            "v"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 102,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون VuseNeuAvatar من مستوى 2"
+      }
+    },
+    {
+      "name": "VuseSectionDefinition",
+      "path": "Stock/VuseSectionDefinition.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 23,
+          "elementCount": 12,
+          "uniqueElements": [
+            "template",
+            "v",
+            "span",
+            "slot"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": {
+        "scoped": true,
+        "lang": "scss",
+        "hasVariables": false,
+        "lineCount": 13
+      },
+      "imports": [
+        {
+          "items": [
+            "mapGetters"
+          ],
+          "from": "vuex"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 79,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": true,
+        "description": "مكون VuseSectionDefinition من مستوى 2"
+      }
+    },
+    {
+      "name": "HorizontalCard",
+      "path": "UI/Card/HorizontalCard.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 18,
+          "elementCount": 10,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div",
+            "VuseNeuAvatar"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 107,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون HorizontalCard من مستوى 2"
+      }
+    },
+    {
+      "name": "ConfirmBox",
+      "path": "UI/Dialogs/ConfirmBox.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 22,
+          "elementCount": 11,
+          "uniqueElements": [
+            "template",
+            "v",
+            "span"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 45,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون ConfirmBox من مستوى 2"
+      }
+    },
+    {
+      "name": "FlexList",
+      "path": "UI/List/FlexList/FlexList.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 19,
+          "elementCount": 11,
+          "uniqueElements": [
+            "template",
+            "v",
+            "list"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 54,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون FlexList من مستوى 2"
+      }
+    },
+    {
+      "name": "FlexListItem",
+      "path": "UI/List/FlexList/Partials/FlexListItem.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 36,
+          "elementCount": 17,
+          "uniqueElements": [
+            "template",
+            "v",
+            "img",
+            "span",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "complex"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 105,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون FlexListItem من مستوى 2"
+      }
+    },
+    {
+      "name": "HorizontalCardList",
+      "path": "UI/List/HorizontalCardList.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 27,
+          "elementCount": 14,
+          "uniqueElements": [
+            "template",
+            "v",
+            "horizontal"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "authUser"
+          ],
+          "from": "@/data/dummyData"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 76,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون HorizontalCardList من مستوى 2"
+      }
+    },
+    {
+      "name": "TwoLinesItems",
+      "path": "UI/List/TwoLinesItems.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 42,
+          "elementCount": 21,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "authUser"
+          ],
+          "from": "@/data/dummyData"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 73,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون TwoLinesItems من مستوى 2"
+      }
+    },
+    {
+      "name": "ItemIcon",
+      "path": "UI/NavigationItems/ItemIcon.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 10,
+          "elementCount": 5,
+          "uniqueElements": [
+            "template",
+            "v",
+            "span"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 24,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون ItemIcon من مستوى 2"
+      }
+    },
+    {
+      "name": "ListGroup",
+      "path": "UI/NavigationItems/ListGroup.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 9,
+          "elementCount": 5,
+          "uniqueElements": [
+            "template",
+            "v"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "camel"
+          ],
+          "from": "@/utils/helpers"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 85,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون ListGroup من مستوى 2"
+      }
+    },
+    {
+      "name": "ListSubGroup",
+      "path": "UI/NavigationItems/ListSubGroup.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 10,
+          "elementCount": 6,
+          "uniqueElements": [
+            "template",
+            "v",
+            "ItemIcon"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 58,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون ListSubGroup من مستوى 2"
+      }
+    },
+    {
+      "name": "NavigationItem",
+      "path": "UI/NavigationItems/NavigationItem.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 9,
+          "elementCount": 5,
+          "uniqueElements": [
+            "template",
+            "v",
+            "ItemIcon"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 55,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون NavigationItem من مستوى 2"
+      }
+    },
+    {
+      "name": "LinearProgressAvatar",
+      "path": "UI/ProgressBar/LinearProgressAvatar.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 16,
+          "elementCount": 9,
+          "uniqueElements": [
+            "template",
+            "v",
+            "slot"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": {
+        "scoped": true,
+        "lang": "css",
+        "hasVariables": false,
+        "lineCount": 5
+      },
+      "imports": [],
+      "summary": {
+        "linesOfCode": 83,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون LinearProgressAvatar من مستوى 2"
+      }
+    },
+    {
+      "name": "LinearProgressContent",
+      "path": "UI/ProgressBar/LinearProgressContent.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 12,
+          "elementCount": 7,
+          "uniqueElements": [
+            "template",
+            "v",
+            "slot"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 62,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون LinearProgressContent من مستوى 2"
+      }
+    },
+    {
+      "name": "StatsChartAnalysis",
+      "path": "UI/Widgets/Cards/Analytical/StatsChartAnalysis.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 50,
+          "elementCount": 24,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div",
+            "span",
+            "img",
+            "slot"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "complex"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 114,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون StatsChartAnalysis من مستوى 2"
+      }
+    },
+    {
+      "name": "CartCard",
+      "path": "UI/Widgets/Cards/E-Commerce/CartCard.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 23,
+          "elementCount": 12,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div",
+            "slot"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 105,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون CartCard من مستوى 2"
+      }
+    },
+    {
+      "name": "FabIconCard",
+      "path": "UI/Widgets/Cards/E-Commerce/FabIconCard.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 19,
+          "elementCount": 10,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div",
+            "slot"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 53,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون FabIconCard من مستوى 2"
+      }
+    },
+    {
+      "name": "ProductDetailsCard",
+      "path": "UI/Widgets/Cards/E-Commerce/ProductDetailsCard.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 29,
+          "elementCount": 15,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div",
+            "span",
+            "slot"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 82,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون ProductDetailsCard من مستوى 2"
+      }
+    },
+    {
+      "name": "CourseCard",
+      "path": "UI/Widgets/Cards/Others/CourseCard.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 28,
+          "elementCount": 14,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 88,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون CourseCard من مستوى 2"
+      }
+    },
+    {
+      "name": "ArticlePost",
+      "path": "UI/Widgets/Cards/Posts/ArticlePost.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 44,
+          "elementCount": 22,
+          "uniqueElements": [
+            "template",
+            "v",
+            "slot"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "users"
+          ],
+          "from": "@/data/dummyData"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 105,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون ArticlePost من مستوى 2"
+      }
+    },
+    {
+      "name": "BlogPost",
+      "path": "UI/Widgets/Cards/Posts/BlogPost.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 44,
+          "elementCount": 22,
+          "uniqueElements": [
+            "template",
+            "v",
+            "slot"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "users"
+          ],
+          "from": "@/data/dummyData"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 105,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون BlogPost من مستوى 2"
+      }
+    },
+    {
+      "name": "TextPost",
+      "path": "UI/Widgets/Cards/Posts/TextPost.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 36,
+          "elementCount": 18,
+          "uniqueElements": [
+            "template",
+            "v",
+            "slot"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [
+        {
+          "items": [
+            "users"
+          ],
+          "from": "@/data/dummyData"
+        }
+      ],
+      "summary": {
+        "linesOfCode": 80,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون TextPost من مستوى 2"
+      }
+    },
+    {
+      "name": "BasicStatistic",
+      "path": "UI/Widgets/Cards/Statistics/BasicStatistic.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [
+        {
+          "name": "default",
+          "default": true
+        }
+      ],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 23,
+          "elementCount": 13,
+          "uniqueElements": [
+            "template",
+            "v",
+            "slot",
+            "img",
+            "span"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "simple"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 55,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون BasicStatistic من مستوى 2"
+      }
+    },
+    {
+      "name": "ColumnarStatistic",
+      "path": "UI/Widgets/Cards/Statistics/ColumnarStatistic.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 30,
+          "elementCount": 14,
+          "uniqueElements": [
+            "template",
+            "v",
+            "img",
+            "span",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 73,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون ColumnarStatistic من مستوى 2"
+      }
+    },
+    {
+      "name": "UserProfileCard",
+      "path": "UI/Widgets/Cards/User/UserProfileCard.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 25,
+          "elementCount": 13,
+          "uniqueElements": [
+            "template",
+            "v",
+            "vuse",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": {
+        "scoped": true,
+        "lang": "scss",
+        "hasVariables": false,
+        "lineCount": 7
+      },
+      "imports": [],
+      "summary": {
+        "linesOfCode": 91,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون UserProfileCard من مستوى 2"
+      }
+    },
+    {
+      "name": "UserSocialCard",
+      "path": "UI/Widgets/Cards/User/UserSocialCard.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 27,
+          "elementCount": 14,
+          "uniqueElements": [
+            "template",
+            "v",
+            "vuse",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": {
+        "scoped": true,
+        "lang": "scss",
+        "hasVariables": false,
+        "lineCount": 7
+      },
+      "imports": [],
+      "summary": {
+        "linesOfCode": 153,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون UserSocialCard من مستوى 2"
+      }
+    },
+    {
+      "name": "CheckList",
+      "path": "UI/Widgets/Lists/CheckList/CheckList.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 22,
+          "elementCount": 13,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div",
+            "list"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 134,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون CheckList من مستوى 2"
+      }
+    },
+    {
+      "name": "ListItem",
+      "path": "UI/Widgets/Lists/CheckList/Partials/ListItem.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [
+        {
+          "name": "checked",
+          "args": "$event"
+        }
+      ],
+      "template": {
+        "structure": {
+          "depth": 26,
+          "elementCount": 15,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "medium"
+      },
+      "style": {
+        "scoped": true,
+        "lang": "css",
+        "hasVariables": false,
+        "lineCount": 6
+      },
+      "imports": [],
+      "summary": {
+        "linesOfCode": 95,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون ListItem من مستوى 2"
+      }
+    },
+    {
+      "name": "SearchableList",
+      "path": "UI/Widgets/Lists/SearchableList.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [],
+      "template": {
+        "structure": {
+          "depth": 37,
+          "elementCount": 19,
+          "uniqueElements": [
+            "template",
+            "v",
+            "img",
+            "span",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "complex"
+      },
+      "style": null,
+      "imports": [],
+      "summary": {
+        "linesOfCode": 121,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون SearchableList من مستوى 2"
+      }
+    },
+    {
+      "name": "VuseColorPicker",
+      "path": "VuseColorPicker.vue",
+      "level": 2,
+      "props": [],
+      "computed": [],
+      "methods": [],
+      "slots": [],
+      "emits": [
+        {
+          "name": "closed",
+          "args": null
+        },
+        {
+          "name": "changed",
+          "args": "this.selectedColor"
+        }
+      ],
+      "template": {
+        "structure": {
+          "depth": 58,
+          "elementCount": 29,
+          "uniqueElements": [
+            "template",
+            "v",
+            "div"
+          ]
+        },
+        "hasForm": false,
+        "hasTable": false,
+        "hasModal": false,
+        "complexity": "complex"
+      },
+      "style": {
+        "scoped": false,
+        "lang": "scss",
+        "hasVariables": false,
+        "lineCount": 5
+      },
+      "imports": [],
+      "summary": {
+        "linesOfCode": 207,
+        "hasVuex": false,
+        "hasRouter": false,
+        "hasI18n": false,
+        "description": "مكون VuseColorPicker من مستوى 2"
+      }
+    }
+  ]
+}

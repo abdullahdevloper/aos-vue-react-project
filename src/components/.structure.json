@@ -1,0 +1,353 @@
+{
+  "generated": "2026-05-05T14:31:03.738Z",
+  "totalComponents": 49,
+  "levels": {
+    "2": [
+      "FooterSettings",
+      "HeaderSettings",
+      "Index",
+      "LanguageSelection",
+      "SidenavSettings",
+      "Theme",
+      "Visibility",
+      "BarChart",
+      "BubbleChart",
+      "DoughnutChart",
+      "HorizontalBarChart",
+      "LineChart",
+      "PieChart",
+      "PolarareaChart",
+      "RadarChart",
+      "ScatterChart",
+      "CountDown",
+      "VuseAvatar",
+      "VuseLogo",
+      "VuseNeuAvatar",
+      "VuseSectionDefinition",
+      "HorizontalCard",
+      "ConfirmBox",
+      "FlexList",
+      "FlexListItem",
+      "HorizontalCardList",
+      "TwoLinesItems",
+      "ItemIcon",
+      "ListGroup",
+      "ListSubGroup",
+      "NavigationItem",
+      "LinearProgressAvatar",
+      "LinearProgressContent",
+      "StatsChartAnalysis",
+      "CartCard",
+      "FabIconCard",
+      "ProductDetailsCard",
+      "CourseCard",
+      "ArticlePost",
+      "BlogPost",
+      "TextPost",
+      "BasicStatistic",
+      "ColumnarStatistic",
+      "UserProfileCard",
+      "UserSocialCard",
+      "CheckList",
+      "ListItem",
+      "SearchableList",
+      "VuseColorPicker"
+    ]
+  },
+  "componentsList": [
+    {
+      "name": "FooterSettings",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/FooterSettings"
+    },
+    {
+      "name": "HeaderSettings",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/HeaderSettings"
+    },
+    {
+      "name": "Index",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/Index"
+    },
+    {
+      "name": "LanguageSelection",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/LanguageSelection"
+    },
+    {
+      "name": "SidenavSettings",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/SidenavSettings"
+    },
+    {
+      "name": "Theme",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/Theme"
+    },
+    {
+      "name": "Visibility",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/Visibility"
+    },
+    {
+      "name": "BarChart",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/BarChart"
+    },
+    {
+      "name": "BubbleChart",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/BubbleChart"
+    },
+    {
+      "name": "DoughnutChart",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/DoughnutChart"
+    },
+    {
+      "name": "HorizontalBarChart",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/HorizontalBarChart"
+    },
+    {
+      "name": "LineChart",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/LineChart"
+    },
+    {
+      "name": "PieChart",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/PieChart"
+    },
+    {
+      "name": "PolarareaChart",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/PolarareaChart"
+    },
+    {
+      "name": "RadarChart",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/RadarChart"
+    },
+    {
+      "name": "ScatterChart",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/ScatterChart"
+    },
+    {
+      "name": "CountDown",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/CountDown"
+    },
+    {
+      "name": "VuseAvatar",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/VuseAvatar"
+    },
+    {
+      "name": "VuseLogo",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/VuseLogo"
+    },
+    {
+      "name": "VuseNeuAvatar",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/VuseNeuAvatar"
+    },
+    {
+      "name": "VuseSectionDefinition",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/VuseSectionDefinition"
+    },
+    {
+      "name": "HorizontalCard",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/HorizontalCard"
+    },
+    {
+      "name": "ConfirmBox",
+      "level": 2,
+      "props": 0,
+      "path": "Level2/ConfirmBox"
+    },
+    {
+      "name": "FlexList",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/FlexList"
+    },
+    {
+      "name": "FlexListItem",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/FlexListItem"
+    },
+    {
+      "name": "HorizontalCardList",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/HorizontalCardList"
+    },
+    {
+      "name": "TwoLinesItems",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/TwoLinesItems"
+    },
+    {
+      "name": "ItemIcon",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/ItemIcon"
+    },
+    {
+      "name": "ListGroup",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/ListGroup"
+    },
+    {
+      "name": "ListSubGroup",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/ListSubGroup"
+    },
+    {
+      "name": "NavigationItem",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/NavigationItem"
+    },
+    {
+      "name": "LinearProgressAvatar",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/LinearProgressAvatar"
+    },
+    {
+      "name": "LinearProgressContent",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/LinearProgressContent"
+    },
+    {
+      "name": "StatsChartAnalysis",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/StatsChartAnalysis"
+    },
+    {
+      "name": "CartCard",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/CartCard"
+    },
+    {
+      "name": "FabIconCard",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/FabIconCard"
+    },
+    {
+      "name": "ProductDetailsCard",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/ProductDetailsCard"
+    },
+    {
+      "name": "CourseCard",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/CourseCard"
+    },
+    {
+      "name": "ArticlePost",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/ArticlePost"
+    },
+    {
+      "name": "BlogPost",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/BlogPost"
+    },
+    {
+      "name": "TextPost",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/TextPost"
+    },
+    {
+      "name": "BasicStatistic",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/BasicStatistic"
+    },
+    {
+      "name": "ColumnarStatistic",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/ColumnarStatistic"
+    },
+    {
+      "name": "UserProfileCard",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/UserProfileCard"
+    },
+    {
+      "name": "UserSocialCard",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/UserSocialCard"
+    },
+    {
+      "name": "CheckList",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/CheckList"
+    },
+    {
+      "name": "ListItem",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/ListItem"
+    },
+    {
+      "name": "SearchableList",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/SearchableList"
+    },
+    {
+      "name": "VuseColorPicker",
+      "level": 2,
+      "props": 1,
+      "path": "Level2/VuseColorPicker"
+    }
+  ]
+}

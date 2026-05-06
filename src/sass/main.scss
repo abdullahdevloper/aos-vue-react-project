@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Muli&display=swap');
+
+@import "./_variables.scss";
+@import "./preset/overrides";
+@import "~vuetify/src/styles/main.sass";
+@import "./helpers";
+@import "./_scrollbar";
+@import "./_base";
+@import "./Inputs/all";
+@import "./UI/all";
+@import "./flexgrid";
+@import "./_sidebar";
+@import "./applications/all";
+@import "./pages/all";

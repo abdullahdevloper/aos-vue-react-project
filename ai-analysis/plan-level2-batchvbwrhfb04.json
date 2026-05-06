@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-05-05T14:39:46.224Z",
+  "level": 2,
+  "components": [
+    {
+      "name": "FooterSettings",
+      "props": 0,
+      "slots": 0,
+      "emits": 0
+    },
+    {
+      "name": "HeaderSettings",
+      "props": 0,
+      "slots": 0,
+      "emits": 0
+    },
+    {
+      "name": "Index",
+      "props": 1,
+      "slots": 0,
+      "emits": 0
+    },
+    {
+      "name": "LanguageSelection",
+      "props": 0,
+      "slots": 0,
+      "emits": 0
+    },
+    {
+      "name": "SidenavSettings",
+      "props": 0,
+      "slots": 0,
+      "emits": 0
+    }
+  ],
+  "files_to_create": 25,
+  "estimated_tokens": 7500
+}

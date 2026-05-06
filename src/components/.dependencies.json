@@ -1,0 +1,373 @@
+{
+  "FooterSettings": {
+    "imports": [
+      "vuex"
+    ],
+    "dependsOn": [],
+    "usedBy": [
+      "Index"
+    ]
+  },
+  "HeaderSettings": {
+    "imports": [
+      "vuex"
+    ],
+    "dependsOn": [],
+    "usedBy": [
+      "Index"
+    ]
+  },
+  "Index": {
+    "imports": [
+      "./Visibility",
+      "./SidenavSettings",
+      "./FooterSettings",
+      "./HeaderSettings",
+      "./LanguageSelection",
+      "./Theme"
+    ],
+    "dependsOn": [
+      "Visibility",
+      "SidenavSettings",
+      "FooterSettings",
+      "HeaderSettings",
+      "LanguageSelection",
+      "Theme"
+    ],
+    "usedBy": []
+  },
+  "LanguageSelection": {
+    "imports": [
+      "vuex",
+      "@/config/locale"
+    ],
+    "dependsOn": [],
+    "usedBy": [
+      "Index"
+    ]
+  },
+  "SidenavSettings": {
+    "imports": [
+      "vuex"
+    ],
+    "dependsOn": [],
+    "usedBy": [
+      "Index"
+    ]
+  },
+  "Theme": {
+    "imports": [
+      "vuex",
+      "vuetify/es5/util/colors",
+      "@/components/VuseColorPicker"
+    ],
+    "dependsOn": [
+      "VuseColorPicker"
+    ],
+    "usedBy": [
+      "Index"
+    ]
+  },
+  "Visibility": {
+    "imports": [
+      "vuex"
+    ],
+    "dependsOn": [],
+    "usedBy": [
+      "Index"
+    ]
+  },
+  "BarChart": {
+    "imports": [
+      "lodash/has",
+      "vue-chartjs"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "BubbleChart": {
+    "imports": [
+      "lodash/has",
+      "vue-chartjs"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "DoughnutChart": {
+    "imports": [
+      "lodash/has",
+      "vue-chartjs"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "HorizontalBarChart": {
+    "imports": [
+      "lodash/has",
+      "vue-chartjs"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "LineChart": {
+    "imports": [
+      "lodash/has",
+      "vue-chartjs"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "PieChart": {
+    "imports": [
+      "lodash/has",
+      "vue-chartjs"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "PolarareaChart": {
+    "imports": [
+      "lodash/has",
+      "vue-chartjs"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "RadarChart": {
+    "imports": [
+      "lodash/has",
+      "vue-chartjs"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "ScatterChart": {
+    "imports": [
+      "lodash/has",
+      "vue-chartjs"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "CountDown": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": [
+      "FlexList",
+      "ListGroup",
+      "ListSubGroup",
+      "NavigationItem",
+      "CheckList",
+      "SearchableList"
+    ]
+  },
+  "VuseAvatar": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "VuseLogo": {
+    "imports": [
+      "vuetify/es5/util/colors"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "VuseNeuAvatar": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "VuseSectionDefinition": {
+    "imports": [
+      "vuex",
+      "lodash/capitalize"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "HorizontalCard": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": [
+      "HorizontalCardList"
+    ]
+  },
+  "ConfirmBox": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "FlexList": {
+    "imports": [
+      "./Partials/FlexListItem"
+    ],
+    "dependsOn": [
+      "CountDown"
+    ],
+    "usedBy": []
+  },
+  "FlexListItem": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "HorizontalCardList": {
+    "imports": [
+      "@/data/dummyData",
+      "@/components/UI/Card/HorizontalCard"
+    ],
+    "dependsOn": [
+      "HorizontalCard"
+    ],
+    "usedBy": []
+  },
+  "TwoLinesItems": {
+    "imports": [
+      "@/data/dummyData"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "ItemIcon": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "ListGroup": {
+    "imports": [
+      "./ListSubGroup",
+      "./ItemIcon"
+    ],
+    "dependsOn": [
+      "CountDown"
+    ],
+    "usedBy": []
+  },
+  "ListSubGroup": {
+    "imports": [
+      "./ItemIcon"
+    ],
+    "dependsOn": [
+      "CountDown"
+    ],
+    "usedBy": []
+  },
+  "NavigationItem": {
+    "imports": [
+      "./ItemIcon"
+    ],
+    "dependsOn": [
+      "CountDown"
+    ],
+    "usedBy": []
+  },
+  "LinearProgressAvatar": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "LinearProgressContent": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "StatsChartAnalysis": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "CartCard": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "FabIconCard": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "ProductDetailsCard": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "CourseCard": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "ArticlePost": {
+    "imports": [
+      "@/data/dummyData"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "BlogPost": {
+    "imports": [
+      "@/data/dummyData"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "TextPost": {
+    "imports": [
+      "@/data/dummyData"
+    ],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "BasicStatistic": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "ColumnarStatistic": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "UserProfileCard": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "UserSocialCard": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "CheckList": {
+    "imports": [
+      "./Partials/ListItem"
+    ],
+    "dependsOn": [
+      "CountDown"
+    ],
+    "usedBy": []
+  },
+  "ListItem": {
+    "imports": [],
+    "dependsOn": [],
+    "usedBy": []
+  },
+  "SearchableList": {
+    "imports": [
+      "fuse.js"
+    ],
+    "dependsOn": [
+      "CountDown"
+    ],
+    "usedBy": []
+  },
+  "VuseColorPicker": {
+    "imports": [
+      "vuetify/es5/util/colors"
+    ],
+    "dependsOn": [],
+    "usedBy": [
+      "Theme"
+    ]
+  }
+}

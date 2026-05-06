@@ -1,0 +1,10 @@
+{
+  "examples": {
+    "multiple": {
+      "heading": "### Multiple"
+    },
+    "mandatory": {
+      "heading": "### Obligatoire"
+    }
+  }
+}

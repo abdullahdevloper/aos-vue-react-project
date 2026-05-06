@@ -1,0 +1,47 @@
+.unset-overflow {
+  overflow: unset !important;
+}
+
+.x-height {
+  height: inherit;
+}
+
+.pos-relative {
+  position: relative;
+}
+
+.pos-absolute {
+  position: absolute;
+}
+
+.circle {
+  border-radius: 50% !important;
+}
+
+.no-text-decoration {
+  text-decoration: none;
+}
+
+.text-line-through {
+  text-decoration: line-through;
+}
+
+.hide {
+  display: none;
+}
+
+.clear-shadow {
+  box-shadow: unset;
+}
+
+.fab-row {
+  top: -20px;
+  position: absolute;
+  width: 100%;
+  @extend .mx-0;
+  left: 0;
+}
+
+.with-radius {
+  @extend .rounded;
+}

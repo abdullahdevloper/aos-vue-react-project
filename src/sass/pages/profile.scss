@@ -1,0 +1,21 @@
+.profile-cover {
+  .v-image__image {
+    @extend .with-radius;
+  }
+
+  .user-avatar-col {
+    position: absolute;
+    bottom: -50px;
+    width: 100%;
+  }
+}
+
+.profile-tab-item {
+  .theme--light.v-tabs-items {
+    background-color: transparent;
+  }
+
+  .theme--dark.v-tabs-items {
+    background-color: transparent;
+  }
+}

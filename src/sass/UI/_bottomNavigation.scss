@@ -1,0 +1,3 @@
+.v-item-group.v-bottom-navigation .v-btn {
+    font-size: map-get(map-get($bottom-navigation, 'btn'), 'font-size');
+}

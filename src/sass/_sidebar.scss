@@ -1,0 +1,97 @@
+.vuse-sidebar {
+  overflow: hidden;
+
+  .logo-section {
+    @extend .app-bg,
+    .py-2;
+
+    &.semi-dark {
+      background-color: #363636;
+    }
+
+    width: calc(100% - 10px);
+    position: fixed;
+    z-index: 1;
+  }
+
+  .nav-subheader {
+    i {
+      display: none;
+    }
+  }
+
+  &.v-navigation-drawer--mini-variant {
+    .nav-subheader {
+      i {
+        margin-left: 8px;
+        display: flex;
+      }
+
+      span {
+        display: none;
+      }
+    }
+  }
+
+  &.v-navigation-drawer--is-mouseover {
+    .nav-subheader {
+      i {
+        display: none;
+      }
+
+      span {
+        display: flex;
+      }
+    }
+  }
+
+  .nav-drawer {
+    padding-top: 0;
+
+    &:not(.v-list--flat) {
+      .v-list-item--link:before {
+        opacity: 0 !important;
+      }
+
+      a.v-list-item {
+
+
+        &.v-list-item--active {
+          @extend .neu-glow-inset;
+        }
+      }
+    }
+
+    .v-list-item__title {
+      font-size: map-get(map-get(map-get($sidebar, 'list-item'), 'title'), 'size');
+      line-height: map-get(map-get(map-get($sidebar, 'list-item'), 'title'), 'line-height');
+    }
+  }
+}
+
+.vuse-sidebar-scrollable {
+  .v-navigation-drawer__content {
+    height: inherit;
+    position: relative;
+  }
+
+  .vuse-sidenav-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+    width: 100%;
+
+    .scrollable-content {
+      flex-grow: 1;
+      overflow: auto;
+      height: 100%;
+      /* for Firefox */
+      min-height: 0;
+    }
+  }
+}

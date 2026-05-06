@@ -1,0 +1,9 @@
+// You can override more styles with vuetify scss variables
+// Visit: https://vuetifyjs.com/en/customization/sass-variables
+// Or our online document
+
+$body-font-family: "Muli",
+sans-serif;
+// $font-size-root: 15px;
+$border-radius-root: 4px;
+$headings: ('h6': ('font-family': 'Muli', sans-serif 'letter-spacing': 0, 'weight': 600), 'subtitle-2': ('weight': 600));

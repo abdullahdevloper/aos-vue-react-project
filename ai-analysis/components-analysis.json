@@ -1,0 +1,1765 @@
+{
+  "timestamp": "2026-05-05T14:30:02.460Z",
+  "projectPath": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components",
+  "stats": {
+    "totalComponents": 49,
+    "byLevel": {
+      "2": 49
+    }
+  },
+  "components": [
+    {
+      "name": "FooterSettings",
+      "path": "AppSettings/FooterSettings.vue",
+      "folder": "AppSettings",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "vuex"
+      ],
+      "fileSize": 3107,
+      "hasScoped": false
+    },
+    {
+      "name": "HeaderSettings",
+      "path": "AppSettings/HeaderSettings.vue",
+      "folder": "AppSettings",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "vuex"
+      ],
+      "fileSize": 3764,
+      "hasScoped": false
+    },
+    {
+      "name": "Index",
+      "path": "AppSettings/Index.vue",
+      "folder": "AppSettings",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "./Visibility",
+        "./SidenavSettings",
+        "./FooterSettings",
+        "./HeaderSettings",
+        "./LanguageSelection",
+        "./Theme"
+      ],
+      "fileSize": 2453,
+      "hasScoped": true
+    },
+    {
+      "name": "LanguageSelection",
+      "path": "AppSettings/LanguageSelection.vue",
+      "folder": "AppSettings",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "vuex",
+        "@/config/locale"
+      ],
+      "fileSize": 585,
+      "hasScoped": false
+    },
+    {
+      "name": "SidenavSettings",
+      "path": "AppSettings/SidenavSettings.vue",
+      "folder": "AppSettings",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "vuex"
+      ],
+      "fileSize": 2831,
+      "hasScoped": false
+    },
+    {
+      "name": "Theme",
+      "path": "AppSettings/Theme.vue",
+      "folder": "AppSettings",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "vuex",
+        "vuetify/es5/util/colors",
+        "@/components/VuseColorPicker"
+      ],
+      "fileSize": 6386,
+      "hasScoped": false
+    },
+    {
+      "name": "Visibility",
+      "path": "AppSettings/Visibility.vue",
+      "folder": "AppSettings",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "vuex"
+      ],
+      "fileSize": 1777,
+      "hasScoped": false
+    },
+    {
+      "name": "BarChart",
+      "path": "ChartJS/BarChart.vue",
+      "folder": "ChartJS",
+      "level": 2,
+      "props": [
+        {
+          "name": "linearStroke",
+          "type": "Array",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "fileSize": 1967,
+      "hasScoped": false
+    },
+    {
+      "name": "BubbleChart",
+      "path": "ChartJS/BubbleChart.vue",
+      "folder": "ChartJS",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "fileSize": 1259,
+      "hasScoped": false
+    },
+    {
+      "name": "DoughnutChart",
+      "path": "ChartJS/DoughnutChart.vue",
+      "folder": "ChartJS",
+      "level": 2,
+      "props": [
+        {
+          "name": "gradientFill",
+          "type": "Array",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "fileSize": 1666,
+      "hasScoped": false
+    },
+    {
+      "name": "HorizontalBarChart",
+      "path": "ChartJS/HorizontalBarChart.vue",
+      "folder": "ChartJS",
+      "level": 2,
+      "props": [
+        {
+          "name": "gradients",
+          "type": "Array",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "fileSize": 1708,
+      "hasScoped": false
+    },
+    {
+      "name": "LineChart",
+      "path": "ChartJS/LineChart.vue",
+      "folder": "ChartJS",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "fileSize": 3254,
+      "hasScoped": false
+    },
+    {
+      "name": "PieChart",
+      "path": "ChartJS/PieChart.vue",
+      "folder": "ChartJS",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "fileSize": 1589,
+      "hasScoped": false
+    },
+    {
+      "name": "PolarareaChart",
+      "path": "ChartJS/PolarareaChart.vue",
+      "folder": "ChartJS",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "fileSize": 1600,
+      "hasScoped": false
+    },
+    {
+      "name": "RadarChart",
+      "path": "ChartJS/RadarChart.vue",
+      "folder": "ChartJS",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "fileSize": 2620,
+      "hasScoped": false
+    },
+    {
+      "name": "ScatterChart",
+      "path": "ChartJS/ScatterChart.vue",
+      "folder": "ChartJS",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "fileSize": 1261,
+      "hasScoped": false
+    },
+    {
+      "name": "CountDown",
+      "path": "CountDown.vue",
+      "folder": ".",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 2824,
+      "hasScoped": true
+    },
+    {
+      "name": "VuseAvatar",
+      "path": "Stock/VuseAvatar.vue",
+      "folder": "Stock",
+      "level": 2,
+      "props": [
+        {
+          "name": "src",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 1689,
+      "hasScoped": false
+    },
+    {
+      "name": "VuseLogo",
+      "path": "Stock/VuseLogo.vue",
+      "folder": "Stock",
+      "level": 2,
+      "props": [
+        {
+          "name": "size",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "vuetify/es5/util/colors"
+      ],
+      "fileSize": 4451,
+      "hasScoped": false
+    },
+    {
+      "name": "VuseNeuAvatar",
+      "path": "Stock/VuseNeuAvatar.vue",
+      "folder": "Stock",
+      "level": 2,
+      "props": [
+        {
+          "name": "src",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 2297,
+      "hasScoped": false
+    },
+    {
+      "name": "VuseSectionDefinition",
+      "path": "Stock/VuseSectionDefinition.vue",
+      "folder": "Stock",
+      "level": 2,
+      "props": [
+        {
+          "name": "breadcrumbs",
+          "type": "Array",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default"
+      ],
+      "imports": [
+        "vuex",
+        "lodash/capitalize"
+      ],
+      "fileSize": 1785,
+      "hasScoped": true
+    },
+    {
+      "name": "HorizontalCard",
+      "path": "UI/Card/HorizontalCard.vue",
+      "folder": "UI/Card",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 2218,
+      "hasScoped": false
+    },
+    {
+      "name": "ConfirmBox",
+      "path": "UI/Dialogs/ConfirmBox.vue",
+      "folder": "UI/Dialogs",
+      "level": 2,
+      "props": [],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 966,
+      "hasScoped": false
+    },
+    {
+      "name": "FlexList",
+      "path": "UI/List/FlexList/FlexList.vue",
+      "folder": "UI/List/FlexList",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "./Partials/FlexListItem"
+      ],
+      "fileSize": 1167,
+      "hasScoped": false
+    },
+    {
+      "name": "FlexListItem",
+      "path": "UI/List/FlexList/Partials/FlexListItem.vue",
+      "folder": "UI/List/FlexList/Partials",
+      "level": 2,
+      "props": [
+        {
+          "name": "title",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 2418,
+      "hasScoped": false
+    },
+    {
+      "name": "HorizontalCardList",
+      "path": "UI/List/HorizontalCardList.vue",
+      "folder": "UI/List",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "@/data/dummyData",
+        "@/components/UI/Card/HorizontalCard"
+      ],
+      "fileSize": 1651,
+      "hasScoped": false
+    },
+    {
+      "name": "TwoLinesItems",
+      "path": "UI/List/TwoLinesItems.vue",
+      "folder": "UI/List",
+      "level": 2,
+      "props": [
+        {
+          "name": "icon",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "@/data/dummyData"
+      ],
+      "fileSize": 1723,
+      "hasScoped": false
+    },
+    {
+      "name": "ItemIcon",
+      "path": "UI/NavigationItems/ItemIcon.vue",
+      "folder": "UI/NavigationItems",
+      "level": 2,
+      "props": [
+        {
+          "name": "icon",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 377,
+      "hasScoped": false
+    },
+    {
+      "name": "ListGroup",
+      "path": "UI/NavigationItems/ListGroup.vue",
+      "folder": "UI/NavigationItems",
+      "level": 2,
+      "props": [
+        {
+          "name": "group",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "./ListSubGroup",
+        "./ItemIcon"
+      ],
+      "fileSize": 2131,
+      "hasScoped": false
+    },
+    {
+      "name": "ListSubGroup",
+      "path": "UI/NavigationItems/ListSubGroup.vue",
+      "folder": "UI/NavigationItems",
+      "level": 2,
+      "props": [
+        {
+          "name": "group",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "./ItemIcon"
+      ],
+      "fileSize": 1127,
+      "hasScoped": false
+    },
+    {
+      "name": "NavigationItem",
+      "path": "UI/NavigationItems/NavigationItem.vue",
+      "folder": "UI/NavigationItems",
+      "level": 2,
+      "props": [
+        {
+          "name": "href",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "./ItemIcon"
+      ],
+      "fileSize": 961,
+      "hasScoped": false
+    },
+    {
+      "name": "LinearProgressAvatar",
+      "path": "UI/ProgressBar/LinearProgressAvatar.vue",
+      "folder": "UI/ProgressBar",
+      "level": 2,
+      "props": [
+        {
+          "name": "value",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default",
+        "default"
+      ],
+      "imports": [],
+      "fileSize": 1322,
+      "hasScoped": true
+    },
+    {
+      "name": "LinearProgressContent",
+      "path": "UI/ProgressBar/LinearProgressContent.vue",
+      "folder": "UI/ProgressBar",
+      "level": 2,
+      "props": [
+        {
+          "name": "value",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default",
+        "default"
+      ],
+      "imports": [],
+      "fileSize": 959,
+      "hasScoped": false
+    },
+    {
+      "name": "StatsChartAnalysis",
+      "path": "UI/Widgets/Cards/Analytical/StatsChartAnalysis.vue",
+      "folder": "UI/Widgets/Cards/Analytical",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default"
+      ],
+      "imports": [],
+      "fileSize": 2913,
+      "hasScoped": false
+    },
+    {
+      "name": "CartCard",
+      "path": "UI/Widgets/Cards/E-Commerce/CartCard.vue",
+      "folder": "UI/Widgets/Cards/E-Commerce",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default"
+      ],
+      "imports": [],
+      "fileSize": 2119,
+      "hasScoped": false
+    },
+    {
+      "name": "FabIconCard",
+      "path": "UI/Widgets/Cards/E-Commerce/FabIconCard.vue",
+      "folder": "UI/Widgets/Cards/E-Commerce",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default"
+      ],
+      "imports": [],
+      "fileSize": 1087,
+      "hasScoped": false
+    },
+    {
+      "name": "ProductDetailsCard",
+      "path": "UI/Widgets/Cards/E-Commerce/ProductDetailsCard.vue",
+      "folder": "UI/Widgets/Cards/E-Commerce",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default"
+      ],
+      "imports": [],
+      "fileSize": 1744,
+      "hasScoped": false
+    },
+    {
+      "name": "CourseCard",
+      "path": "UI/Widgets/Cards/Others/CourseCard.vue",
+      "folder": "UI/Widgets/Cards/Others",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 1595,
+      "hasScoped": false
+    },
+    {
+      "name": "ArticlePost",
+      "path": "UI/Widgets/Cards/Posts/ArticlePost.vue",
+      "folder": "UI/Widgets/Cards/Posts",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default"
+      ],
+      "imports": [
+        "@/data/dummyData"
+      ],
+      "fileSize": 2086,
+      "hasScoped": false
+    },
+    {
+      "name": "BlogPost",
+      "path": "UI/Widgets/Cards/Posts/BlogPost.vue",
+      "folder": "UI/Widgets/Cards/Posts",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default"
+      ],
+      "imports": [
+        "@/data/dummyData"
+      ],
+      "fileSize": 2081,
+      "hasScoped": false
+    },
+    {
+      "name": "TextPost",
+      "path": "UI/Widgets/Cards/Posts/TextPost.vue",
+      "folder": "UI/Widgets/Cards/Posts",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default"
+      ],
+      "imports": [
+        "@/data/dummyData"
+      ],
+      "fileSize": 1521,
+      "hasScoped": false
+    },
+    {
+      "name": "BasicStatistic",
+      "path": "UI/Widgets/Cards/Statistics/BasicStatistic.vue",
+      "folder": "UI/Widgets/Cards/Statistics",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [
+        "default"
+      ],
+      "imports": [],
+      "fileSize": 1239,
+      "hasScoped": false
+    },
+    {
+      "name": "ColumnarStatistic",
+      "path": "UI/Widgets/Cards/Statistics/ColumnarStatistic.vue",
+      "folder": "UI/Widgets/Cards/Statistics",
+      "level": 2,
+      "props": [
+        {
+          "name": "items",
+          "type": "Array",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 1980,
+      "hasScoped": false
+    },
+    {
+      "name": "UserProfileCard",
+      "path": "UI/Widgets/Cards/User/UserProfileCard.vue",
+      "folder": "UI/Widgets/Cards/User",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 1897,
+      "hasScoped": true
+    },
+    {
+      "name": "UserSocialCard",
+      "path": "UI/Widgets/Cards/User/UserSocialCard.vue",
+      "folder": "UI/Widgets/Cards/User",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 3113,
+      "hasScoped": true
+    },
+    {
+      "name": "CheckList",
+      "path": "UI/Widgets/Lists/CheckList/CheckList.vue",
+      "folder": "UI/Widgets/Lists/CheckList",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "./Partials/ListItem"
+      ],
+      "fileSize": 3037,
+      "hasScoped": false
+    },
+    {
+      "name": "ListItem",
+      "path": "UI/Widgets/Lists/CheckList/Partials/ListItem.vue",
+      "folder": "UI/Widgets/Lists/CheckList/Partials",
+      "level": 2,
+      "props": [
+        {
+          "name": "title",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [],
+      "fileSize": 2110,
+      "hasScoped": true
+    },
+    {
+      "name": "SearchableList",
+      "path": "UI/Widgets/Lists/SearchableList.vue",
+      "folder": "UI/Widgets/Lists",
+      "level": 2,
+      "props": [
+        {
+          "name": "maxWidth",
+          "type": "unknown",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "fuse.js"
+      ],
+      "fileSize": 3127,
+      "hasScoped": false
+    },
+    {
+      "name": "VuseColorPicker",
+      "path": "VuseColorPicker.vue",
+      "folder": ".",
+      "level": 2,
+      "props": [
+        {
+          "name": "resetNeu",
+          "type": "Boolean",
+          "required": false
+        }
+      ],
+      "emits": [],
+      "slots": [],
+      "imports": [
+        "vuetify/es5/util/colors"
+      ],
+      "fileSize": 4804,
+      "hasScoped": false
+    }
+  ],
+  "structure": {
+    "AppSettings": {
+      "type": "directory",
+      "children": [],
+      "level": 0
+    },
+    "AppSettings/FooterSettings.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 3107,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/AppSettings/FooterSettings.vue"
+    },
+    "AppSettings/HeaderSettings.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 3764,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/AppSettings/HeaderSettings.vue"
+    },
+    "AppSettings/Index.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2453,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/AppSettings/Index.vue"
+    },
+    "AppSettings/LanguageSelection.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 585,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/AppSettings/LanguageSelection.vue"
+    },
+    "AppSettings/SidenavSettings.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2831,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/AppSettings/SidenavSettings.vue"
+    },
+    "AppSettings/Theme.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 6386,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/AppSettings/Theme.vue"
+    },
+    "AppSettings/Visibility.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1777,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/AppSettings/Visibility.vue"
+    },
+    "ChartJS": {
+      "type": "directory",
+      "children": [],
+      "level": 0
+    },
+    "ChartJS/BarChart.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1967,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/BarChart.vue"
+    },
+    "ChartJS/BubbleChart.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1259,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/BubbleChart.vue"
+    },
+    "ChartJS/DoughnutChart.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1666,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/DoughnutChart.vue"
+    },
+    "ChartJS/HorizontalBarChart.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1708,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/HorizontalBarChart.vue"
+    },
+    "ChartJS/LineChart.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 3254,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/LineChart.vue"
+    },
+    "ChartJS/PieChart.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1589,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/PieChart.vue"
+    },
+    "ChartJS/PolarareaChart.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1600,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/PolarareaChart.vue"
+    },
+    "ChartJS/RadarChart.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2620,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/RadarChart.vue"
+    },
+    "ChartJS/Readme.md": {
+      "type": "file",
+      "extension": ".md",
+      "size": 728,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/Readme.md"
+    },
+    "ChartJS/ScatterChart.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1261,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/ScatterChart.vue"
+    },
+    "ChartJS/index.js": {
+      "type": "file",
+      "extension": ".js",
+      "size": 304,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/ChartJS/index.js"
+    },
+    "CountDown.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2824,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/CountDown.vue"
+    },
+    "Stock": {
+      "type": "directory",
+      "children": [],
+      "level": 0
+    },
+    "Stock/VuseAvatar.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1689,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/Stock/VuseAvatar.vue"
+    },
+    "Stock/VuseLogo.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 4451,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/Stock/VuseLogo.vue"
+    },
+    "Stock/VuseNeuAvatar.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2297,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/Stock/VuseNeuAvatar.vue"
+    },
+    "Stock/VuseSectionDefinition.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1785,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/Stock/VuseSectionDefinition.vue"
+    },
+    "UI": {
+      "type": "directory",
+      "children": [],
+      "level": 0
+    },
+    "UI/Card": {
+      "type": "directory",
+      "children": [],
+      "level": 1
+    },
+    "UI/Card/HorizontalCard.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2218,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Card/HorizontalCard.vue"
+    },
+    "UI/Dialogs": {
+      "type": "directory",
+      "children": [],
+      "level": 1
+    },
+    "UI/Dialogs/ConfirmBox.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 966,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Dialogs/ConfirmBox.vue"
+    },
+    "UI/List": {
+      "type": "directory",
+      "children": [],
+      "level": 1
+    },
+    "UI/List/FlexList": {
+      "type": "directory",
+      "children": [],
+      "level": 2
+    },
+    "UI/List/FlexList/FlexList.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1167,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/List/FlexList/FlexList.vue"
+    },
+    "UI/List/FlexList/Partials": {
+      "type": "directory",
+      "children": [],
+      "level": 3
+    },
+    "UI/List/FlexList/Partials/FlexListItem.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2418,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/List/FlexList/Partials/FlexListItem.vue"
+    },
+    "UI/List/HorizontalCardList.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1651,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/List/HorizontalCardList.vue"
+    },
+    "UI/List/TwoLinesItems.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1723,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/List/TwoLinesItems.vue"
+    },
+    "UI/NavigationItems": {
+      "type": "directory",
+      "children": [],
+      "level": 1
+    },
+    "UI/NavigationItems/ItemIcon.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 377,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/NavigationItems/ItemIcon.vue"
+    },
+    "UI/NavigationItems/ListGroup.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2131,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/NavigationItems/ListGroup.vue"
+    },
+    "UI/NavigationItems/ListSubGroup.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1127,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/NavigationItems/ListSubGroup.vue"
+    },
+    "UI/NavigationItems/NavigationItem.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 961,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/NavigationItems/NavigationItem.vue"
+    },
+    "UI/ProgressBar": {
+      "type": "directory",
+      "children": [],
+      "level": 1
+    },
+    "UI/ProgressBar/LinearProgressAvatar.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1322,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/ProgressBar/LinearProgressAvatar.vue"
+    },
+    "UI/ProgressBar/LinearProgressContent.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 959,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/ProgressBar/LinearProgressContent.vue"
+    },
+    "UI/Widgets": {
+      "type": "directory",
+      "children": [],
+      "level": 1
+    },
+    "UI/Widgets/Cards": {
+      "type": "directory",
+      "children": [],
+      "level": 2
+    },
+    "UI/Widgets/Cards/Analytical": {
+      "type": "directory",
+      "children": [],
+      "level": 3
+    },
+    "UI/Widgets/Cards/Analytical/StatsChartAnalysis.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2913,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/Analytical/StatsChartAnalysis.vue"
+    },
+    "UI/Widgets/Cards/E-Commerce": {
+      "type": "directory",
+      "children": [],
+      "level": 3
+    },
+    "UI/Widgets/Cards/E-Commerce/CartCard.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2119,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/E-Commerce/CartCard.vue"
+    },
+    "UI/Widgets/Cards/E-Commerce/FabIconCard.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1087,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/E-Commerce/FabIconCard.vue"
+    },
+    "UI/Widgets/Cards/E-Commerce/ProductDetailsCard.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1744,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/E-Commerce/ProductDetailsCard.vue"
+    },
+    "UI/Widgets/Cards/Others": {
+      "type": "directory",
+      "children": [],
+      "level": 3
+    },
+    "UI/Widgets/Cards/Others/CourseCard.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1595,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/Others/CourseCard.vue"
+    },
+    "UI/Widgets/Cards/Posts": {
+      "type": "directory",
+      "children": [],
+      "level": 3
+    },
+    "UI/Widgets/Cards/Posts/ArticlePost.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2086,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/Posts/ArticlePost.vue"
+    },
+    "UI/Widgets/Cards/Posts/BlogPost.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2081,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/Posts/BlogPost.vue"
+    },
+    "UI/Widgets/Cards/Posts/TextPost.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1521,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/Posts/TextPost.vue"
+    },
+    "UI/Widgets/Cards/Statistics": {
+      "type": "directory",
+      "children": [],
+      "level": 3
+    },
+    "UI/Widgets/Cards/Statistics/BasicStatistic.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1239,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/Statistics/BasicStatistic.vue"
+    },
+    "UI/Widgets/Cards/Statistics/ColumnarStatistic.md": {
+      "type": "file",
+      "extension": ".md",
+      "size": 537,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/Statistics/ColumnarStatistic.md"
+    },
+    "UI/Widgets/Cards/Statistics/ColumnarStatistic.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1980,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/Statistics/ColumnarStatistic.vue"
+    },
+    "UI/Widgets/Cards/User": {
+      "type": "directory",
+      "children": [],
+      "level": 3
+    },
+    "UI/Widgets/Cards/User/UserProfileCard.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 1897,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/User/UserProfileCard.vue"
+    },
+    "UI/Widgets/Cards/User/UserSocialCard.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 3113,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Cards/User/UserSocialCard.vue"
+    },
+    "UI/Widgets/Lists": {
+      "type": "directory",
+      "children": [],
+      "level": 2
+    },
+    "UI/Widgets/Lists/CheckList": {
+      "type": "directory",
+      "children": [],
+      "level": 3
+    },
+    "UI/Widgets/Lists/CheckList/CheckList.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 3037,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Lists/CheckList/CheckList.vue"
+    },
+    "UI/Widgets/Lists/CheckList/Partials": {
+      "type": "directory",
+      "children": [],
+      "level": 4
+    },
+    "UI/Widgets/Lists/CheckList/Partials/ListItem.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 2110,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Lists/CheckList/Partials/ListItem.vue"
+    },
+    "UI/Widgets/Lists/SearchableList.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 3127,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/UI/Widgets/Lists/SearchableList.vue"
+    },
+    "VuseColorPicker.vue": {
+      "type": "file",
+      "extension": ".vue",
+      "size": 4804,
+      "path": "/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/src/components/VuseColorPicker.vue"
+    },
+    "levels": {
+      "2": [
+        "FooterSettings",
+        "HeaderSettings",
+        "Index",
+        "LanguageSelection",
+        "SidenavSettings",
+        "Theme",
+        "Visibility",
+        "BarChart",
+        "BubbleChart",
+        "DoughnutChart",
+        "HorizontalBarChart",
+        "LineChart",
+        "PieChart",
+        "PolarareaChart",
+        "RadarChart",
+        "ScatterChart",
+        "CountDown",
+        "VuseAvatar",
+        "VuseLogo",
+        "VuseNeuAvatar",
+        "VuseSectionDefinition",
+        "HorizontalCard",
+        "ConfirmBox",
+        "FlexList",
+        "FlexListItem",
+        "HorizontalCardList",
+        "TwoLinesItems",
+        "ItemIcon",
+        "ListGroup",
+        "ListSubGroup",
+        "NavigationItem",
+        "LinearProgressAvatar",
+        "LinearProgressContent",
+        "StatsChartAnalysis",
+        "CartCard",
+        "FabIconCard",
+        "ProductDetailsCard",
+        "CourseCard",
+        "ArticlePost",
+        "BlogPost",
+        "TextPost",
+        "BasicStatistic",
+        "ColumnarStatistic",
+        "UserProfileCard",
+        "UserSocialCard",
+        "CheckList",
+        "ListItem",
+        "SearchableList",
+        "VuseColorPicker"
+      ]
+    }
+  },
+  "dependencies": {
+    "FooterSettings": {
+      "imports": [
+        "vuex"
+      ],
+      "dependsOn": [],
+      "usedBy": [
+        "Index"
+      ]
+    },
+    "HeaderSettings": {
+      "imports": [
+        "vuex"
+      ],
+      "dependsOn": [],
+      "usedBy": [
+        "Index"
+      ]
+    },
+    "Index": {
+      "imports": [
+        "./Visibility",
+        "./SidenavSettings",
+        "./FooterSettings",
+        "./HeaderSettings",
+        "./LanguageSelection",
+        "./Theme"
+      ],
+      "dependsOn": [
+        "Visibility",
+        "SidenavSettings",
+        "FooterSettings",
+        "HeaderSettings",
+        "LanguageSelection",
+        "Theme"
+      ],
+      "usedBy": []
+    },
+    "LanguageSelection": {
+      "imports": [
+        "vuex",
+        "@/config/locale"
+      ],
+      "dependsOn": [],
+      "usedBy": [
+        "Index"
+      ]
+    },
+    "SidenavSettings": {
+      "imports": [
+        "vuex"
+      ],
+      "dependsOn": [],
+      "usedBy": [
+        "Index"
+      ]
+    },
+    "Theme": {
+      "imports": [
+        "vuex",
+        "vuetify/es5/util/colors",
+        "@/components/VuseColorPicker"
+      ],
+      "dependsOn": [
+        "VuseColorPicker"
+      ],
+      "usedBy": [
+        "Index"
+      ]
+    },
+    "Visibility": {
+      "imports": [
+        "vuex"
+      ],
+      "dependsOn": [],
+      "usedBy": [
+        "Index"
+      ]
+    },
+    "BarChart": {
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "BubbleChart": {
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "DoughnutChart": {
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "HorizontalBarChart": {
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "LineChart": {
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "PieChart": {
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "PolarareaChart": {
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "RadarChart": {
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "ScatterChart": {
+      "imports": [
+        "lodash/has",
+        "vue-chartjs"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "CountDown": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": [
+        "FlexList",
+        "ListGroup",
+        "ListSubGroup",
+        "NavigationItem",
+        "CheckList",
+        "SearchableList"
+      ]
+    },
+    "VuseAvatar": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "VuseLogo": {
+      "imports": [
+        "vuetify/es5/util/colors"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "VuseNeuAvatar": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "VuseSectionDefinition": {
+      "imports": [
+        "vuex",
+        "lodash/capitalize"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "HorizontalCard": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": [
+        "HorizontalCardList"
+      ]
+    },
+    "ConfirmBox": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "FlexList": {
+      "imports": [
+        "./Partials/FlexListItem"
+      ],
+      "dependsOn": [
+        "CountDown"
+      ],
+      "usedBy": []
+    },
+    "FlexListItem": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "HorizontalCardList": {
+      "imports": [
+        "@/data/dummyData",
+        "@/components/UI/Card/HorizontalCard"
+      ],
+      "dependsOn": [
+        "HorizontalCard"
+      ],
+      "usedBy": []
+    },
+    "TwoLinesItems": {
+      "imports": [
+        "@/data/dummyData"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "ItemIcon": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "ListGroup": {
+      "imports": [
+        "./ListSubGroup",
+        "./ItemIcon"
+      ],
+      "dependsOn": [
+        "CountDown"
+      ],
+      "usedBy": []
+    },
+    "ListSubGroup": {
+      "imports": [
+        "./ItemIcon"
+      ],
+      "dependsOn": [
+        "CountDown"
+      ],
+      "usedBy": []
+    },
+    "NavigationItem": {
+      "imports": [
+        "./ItemIcon"
+      ],
+      "dependsOn": [
+        "CountDown"
+      ],
+      "usedBy": []
+    },
+    "LinearProgressAvatar": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "LinearProgressContent": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "StatsChartAnalysis": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "CartCard": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "FabIconCard": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "ProductDetailsCard": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "CourseCard": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "ArticlePost": {
+      "imports": [
+        "@/data/dummyData"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "BlogPost": {
+      "imports": [
+        "@/data/dummyData"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "TextPost": {
+      "imports": [
+        "@/data/dummyData"
+      ],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "BasicStatistic": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "ColumnarStatistic": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "UserProfileCard": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "UserSocialCard": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "CheckList": {
+      "imports": [
+        "./Partials/ListItem"
+      ],
+      "dependsOn": [
+        "CountDown"
+      ],
+      "usedBy": []
+    },
+    "ListItem": {
+      "imports": [],
+      "dependsOn": [],
+      "usedBy": []
+    },
+    "SearchableList": {
+      "imports": [
+        "fuse.js"
+      ],
+      "dependsOn": [
+        "CountDown"
+      ],
+      "usedBy": []
+    },
+    "VuseColorPicker": {
+      "imports": [
+        "vuetify/es5/util/colors"
+      ],
+      "dependsOn": [],
+      "usedBy": [
+        "Theme"
+      ]
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,10 @@
+{
+  "examples": {
+    "circular-colored": {
+      "heading": "### Coloré"
+    },
+    "circular-indeterminate": {
+      "heading": "### Indéterminé"
+    }
+  }
+}

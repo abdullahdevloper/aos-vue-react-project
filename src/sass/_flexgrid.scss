@@ -1,0 +1,51 @@
+.flex-x {
+    display: flex;
+    flex-direction: row;
+
+    &.center {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+.flex-y {
+    display: flex;
+    flex-direction: column;
+
+    &.center {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+.flex-0 {
+    flex: 0;
+}
+
+.flex-1 {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.full-height-64ex {
+    height: calc(100vh - 64px);
+}
+
+.fill-width {
+    width: 100%;
+}
+
+.scroll-x {
+    overflow-x: auto;
+}

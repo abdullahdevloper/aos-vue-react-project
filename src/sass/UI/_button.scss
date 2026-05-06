@@ -1,0 +1,13 @@
+.vuse-fab {
+  top: -15px !important;
+}
+
+.theme--light,
+.theme--dark {
+  &.neu-glow-inset {
+    &.v-btn--active:hover::before,
+    &.v-btn--active::before {
+      opacity: 0 !important;
+    }
+  }
+}
