@@ -26,22 +26,22 @@ export default function SparkLinePage() {
           { label: "SparkLine" },
         ]}
       />
-      <Box sx={{ mx: { xs: 0, md: 1.5 }, mb: 2 }}>
-        <Typography variant="h5" color="text.primary" sx={{ fontWeight: 500, mb: 1 }}>
+      <Box sx={{ mx: { xs: 0, md: 1.5 }, mb: 1.5 }}>
+        <Typography variant="h5" color="text.primary" sx={{ fontSize: 22, fontWeight: 500, mb: 0.75 }}>
           Examples
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" sx={{ fontSize: 13.5 }}>
           Sparkline playground and card examples recreated from the Vuetify/Vuse demo composition.
         </Typography>
       </Box>
-      <Grid container spacing={3}>
+      <Grid container spacing={2.5}>
         <Grid item xs={12}>
-          <ExampleBlock title="Playground" source="sparklines/playground" height={500}>
+          <ExampleBlock title="Playground" source="sparklines/playground" height={460}>
             <SparklinePlayground />
           </ExampleBlock>
         </Grid>
         <Grid item xs={12}>
-          <ExampleBlock title="Fill" source="sparklines/simple/fill" height={430}>
+          <ExampleBlock title="Fill" source="sparklines/simple/fill" height={390}>
             <SparklineFill />
           </ExampleBlock>
         </Grid>

@@ -48,6 +48,16 @@ Status: pending user visual approval.
 - Changed ChartJS examples to full-width stacked documentation examples instead of a generic dashboard grid.
 - Changed SparkLine examples to full-width stacked documentation examples.
 
+## Latest Charts Tuning
+
+- Lightened example-card shadows to reduce the heavy framed appearance.
+- Reduced example toolbar action buttons to smaller, lower-emphasis icon controls.
+- Reduced the footer source path prominence to better match the Vue page emphasis.
+- Added descriptive text above the Simple Line chart.
+- Reduced card padding, chart heights, and vertical grid spacing.
+- Preserved full-width documentation-style layout.
+- Left Widgets and Vuetify untouched.
+
 ## Skipped Or Failed Items
 
 - Widgets: skipped by scope.

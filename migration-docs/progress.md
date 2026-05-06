@@ -118,3 +118,17 @@ Result: no output. No protected Vue/root files or `AGENTS.md` were modified.
 - Vuetify is intentionally not implemented in this slice.
 - The Vuetify documentation shell and API explorer remain future work.
 - The app shell currently includes only the UI Components Charts group needed for this approved slice.
+
+## Latest Charts Visual Tuning
+
+Status: pending user visual approval.
+
+Completed:
+
+- Reduced example-card shadow strength so the documentation surfaces are lighter and less framed.
+- Reduced top-right example action button size, opacity, and visual weight.
+- Reduced source/footer path prominence with smaller text, lower opacity, and tighter footer padding.
+- Added descriptive copy above the Simple Line chart to better match the Vue documentation/example structure.
+- Tightened chart card padding, vertical spacing, intro typography, and chart heights.
+- Kept the full-width documentation-style layout.
+- Did not implement Widgets, Vuetify, Style & User Interface, or Pages.
