@@ -91,3 +91,25 @@ The React version must preserve the Vuse Admin Template visual identity:
 
 Official visual reference:
 ThemeForest item: Vuse: VueJs CLI Material Admin
+
+## Section Audit Requirements
+
+Before implementing any section, audit must include:
+
+- routes and pages
+- child components
+- shared data and assets
+- visual layout
+- typography, spacing, shadows, colors
+- all visible action buttons
+- tooltips
+- click behavior
+- hover behavior
+- toggle/invert/dark behavior
+- expand/collapse behavior
+- tabs, dialogs, filters, search, menus
+- responsive behavior
+- any interactive behavior visible in the running Vue app
+
+A section must not be implemented until its behavior audit is complete.
+A section must not be approved until visual behavior and interactions are reviewed by the user.
