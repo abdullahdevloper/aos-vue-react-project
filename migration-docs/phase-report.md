@@ -4,15 +4,15 @@ Last updated: 2026-05-06
 
 ## Phase
 
-UI Components / Widgets / Cards implementation.
+UI Components / Widgets / Lists implementation.
 
 Status: implemented; pending user visual approval.
 
 Approval:
 
 - UI Components / Charts = approved
-- UI Components / Widgets / Cards = pending user visual approval
-- UI Components / Widgets / Lists = not started
+- UI Components / Widgets / Cards = approved route preserved
+- UI Components / Widgets / Lists = pending user visual approval
 - UI Components / Widgets / Statistic = not started
 - UI Components / Widgets / Chart = not started
 - UI Components / Widgets / Document Cards = not started
@@ -24,6 +24,7 @@ Approval:
 - `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
 - `react-dashboard-template/src/layouts/DashboardLayout.tsx`
 - `react-dashboard-template/src/pages/ui-components/widgets/CardsPage.tsx`
+- `react-dashboard-template/src/pages/ui-components/widgets/ListsPage.tsx`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/Avengers-EndGame.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/dragon.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/design_community.png`
@@ -33,6 +34,7 @@ Approval:
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/g3.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/g4.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/m1.jpg`
+- `react-dashboard-template/src/assets/ui-components/widgets/lists/*`
 - `migration-docs/progress.md`
 - `migration-docs/phase-report.md`
 
@@ -46,6 +48,12 @@ No protected Vue/root files or `AGENTS.md` were modified.
 - Implemented the three responsive columns and the thirteen Vue card examples.
 - Recreated Vuse-style e-commerce cards, course card, post cards, user profile/social cards, and utilization/progress card.
 - Copied only required local Cards assets into the React template assets folder.
+- Added route `/widgets/lists`.
+- Added minimal Widgets sidebar exposure for `Lists`.
+- Rebuilt the Lists widgets page from `src/views/Widgets/List/index.vue`.
+- Implemented LatestMediaList, TicketCheckList, AuthorList, TransactionsList, TodoList, MembersList, and BestSellerList.
+- Recreated debounced Fuse search, checklist filters, checkbox state, add-new-on-enter, checklist menus, list actions, status chips, and hover inset list rows.
+- Copied only required local Lists assets into the React template assets folder.
 
 Historical Charts work already completed:
 
@@ -107,7 +115,7 @@ Historical Charts work already completed:
 
 ## Skipped Or Failed Items
 
-- Widgets / Lists: skipped by scope.
+- Widgets / Cards: approved route preserved; not modified beyond shared route/sidebar context.
 - Widgets / Statistic: skipped by scope.
 - Widgets / Chart: skipped by scope.
 - Widgets / Document Cards: skipped by scope.
@@ -134,7 +142,7 @@ Result: no output. Protected Vue/root files and `AGENTS.md` were unchanged.
 
 ## Stop Point
 
-Stopped after Widgets / Cards. Widgets / Cards remains pending user visual approval. Lists, Statistic, Chart widgets, Document Cards, and Vuetify were not started.
+Stopped after Widgets / Lists. Widgets / Lists remains pending user visual approval. Statistic, Chart widgets, Document Cards, and Vuetify were not started.
 
 ## Widgets Audit Summary
 
@@ -220,3 +228,35 @@ Remaining visual/behavior gaps:
 - Card actions are visually present and clickable, but demo callbacks remain no-op like the Vue examples.
 - Remote Picsum images remain remote, matching the Vue source.
 - The pre-existing prototype `/widgets` route was left untouched; approved work is `/widgets/card`.
+
+## Widgets Lists Implementation Summary
+
+Implemented route:
+
+- `/widgets/lists`
+
+Implemented list widgets:
+
+- LatestMediaList
+- TicketCheckList
+- AuthorList
+- TransactionsList
+- TodoList
+- MembersList
+- BestSellerList
+
+Implemented behaviors:
+
+- Debounced Fuse.js search for searchable lists.
+- Active/completed task filter pills for Tickets.
+- Add-new task input on Enter for Tickets.
+- Checkbox state updates and counts.
+- Checklist row menu with Edit, Move to Archive, Delete.
+- Flex list row hover from raised `neu-glow` to inset `neu-glow-inset`.
+- Status chips, icon actions, text amount actions, and responsive three-column layout.
+
+Remaining visual/behavior gaps:
+
+- Needs user visual review against the running Vue app.
+- Checklist menu items are present and close on click; destructive/edit actions remain demo no-ops.
+- Dates are static for this rebuild pass based on the current audit date, while Vue computes them from `new Date()`.

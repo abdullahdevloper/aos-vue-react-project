@@ -92,6 +92,63 @@ The React version must preserve the Vuse Admin Template visual identity:
 Official visual reference:
 ThemeForest item: Vuse: VueJs CLI Material Admin
 
+
+## Section Completion Gate
+
+No section or slice is complete until all of the following are done:
+
+1. Source audit completed.
+2. Visual audit completed.
+3. Behavior audit completed.
+4. Data/assets audit completed.
+5. Routes/sidebar audit completed.
+6. Implementation completed only for the approved active slice.
+7. Build passed inside react-dashboard-template/.
+8. Protected Vue/root files remain unchanged.
+9. User visually approves the result.
+
+## Mandatory Audit Checklist
+
+Before implementing any slice, document:
+
+- all routes
+- all sidebar entries
+- all Vue source files
+- all child components
+- all props/data used
+- all images/assets/audio/media
+- all buttons/actions
+- all tooltips
+- all hover states
+- all click behaviors
+- all toggles/switches
+- all filters/search behavior
+- all checkboxes
+- all menus/dialogs/tabs
+- all chart interactions
+- all responsive layout behavior
+- all empty/loading/status states if present
+
+If any item cannot be verified, mark it clearly as UNKNOWN and do not implement until resolved.
+
+## Implementation Rule
+
+Codex must not simplify, summarize, or approximate the slice.
+
+Every visible element and every visible behavior from the Vue slice must either be:
+- implemented in React, or
+- explicitly listed as a documented exception pending user approval.
+
+## Verification Rule
+
+After implementation, Codex must produce a verification table:
+
+| Item | Vue behavior | React status | Notes |
+|---|---|---|---|
+
+The slice remains pending until the user approves it visually.
+
+
 ## Section Audit Requirements
 
 Before implementing any section, audit must include:
@@ -113,3 +170,4 @@ Before implementing any section, audit must include:
 
 A section must not be implemented until its behavior audit is complete.
 A section must not be approved until visual behavior and interactions are reviewed by the user.
+

@@ -1,4 +1,4 @@
-import { CardGiftcard, InsertChartOutlined, OfflineBolt, WidgetsOutlined } from "@mui/icons-material";
+import { CardGiftcard, FormatListBulleted, InsertChartOutlined, OfflineBolt, WidgetsOutlined } from "@mui/icons-material";
 
 export const uiComponentsNavigation = [
   {
@@ -15,7 +15,10 @@ export const uiComponentsNavigation = [
       {
         title: "Widgets",
         icon: <WidgetsOutlined />,
-        children: [{ title: "Cards", path: "/widgets/card", icon: <CardGiftcard /> }],
+        children: [
+          { title: "Cards", path: "/widgets/card", icon: <CardGiftcard /> },
+          { title: "Lists", path: "/widgets/lists", icon: <FormatListBulleted /> },
+        ],
       },
     ],
   },

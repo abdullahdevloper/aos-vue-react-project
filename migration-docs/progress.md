@@ -14,11 +14,11 @@ Current rebuild strategy:
 
 ## Current Slice
 
-- Scope: UI Components / Widgets / Cards
+- Scope: UI Components / Widgets / Lists
 - Status: implemented; pending user visual approval
 - UI Components / Charts: approved
-- Widgets / Cards: pending user visual approval
-- Widgets / Lists: not started
+- Widgets / Cards: approved route preserved
+- Widgets / Lists: pending user visual approval
 - Widgets / Statistic: not started
 - Widgets / Chart: not started
 - Widgets / Document Cards: not started
@@ -31,6 +31,7 @@ Current rebuild strategy:
 - `/charts/chartjs`
 - `/charts/spark-line`
 - `/widgets/card`
+- `/widgets/lists`
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
 
@@ -269,6 +270,57 @@ Not touched:
 
 - Charts implementation and routes.
 - Widgets / Lists.
+- Widgets / Statistic.
+- Widgets / Chart.
+- Widgets / Document Cards.
+- Vuetify, Style & User Interface, Pages.
+
+## Widgets Lists Implementation
+
+Status: implemented; pending user visual approval.
+
+Route:
+
+- `/widgets/lists`
+
+Implemented Widgets sidebar entries:
+
+- `UI Components`
+- `Widgets`
+- `Lists`
+
+Implemented list widgets:
+
+- LatestMediaList
+- TicketCheckList
+- AuthorList
+- TransactionsList
+- TodoList
+- MembersList
+- BestSellerList
+
+Completed:
+
+- Added the Vue-matching Widgets Lists route.
+- Added only the Widgets / Lists sidebar child needed for this slice.
+- Rebuilt the Lists page as the same three-column responsive composition from `src/views/Widgets/List/index.vue`.
+- Recreated FlexList, SearchableList, and CheckList behavior in the Lists page.
+- Implemented 1200 ms debounced Fuse.js search for Authors and Members.
+- Implemented checklist checkbox state, active/completed filters, add-new-on-enter, tag/status strips, and dense row menus.
+- Implemented FlexList row hover behavior that switches from raised to inset soft surface.
+- Copied only required list thumbnails and avatars into `react-dashboard-template/src/assets/ui-components/widgets/lists/`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Charts implementation and routes.
+- Widgets / Cards implementation and route.
 - Widgets / Statistic.
 - Widgets / Chart.
 - Widgets / Document Cards.
