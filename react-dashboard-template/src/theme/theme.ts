@@ -8,23 +8,69 @@ export const buildTheme = (darkMode = false, rtl = false) =>
       primary: { main: "#00838f", light: "#80deea", dark: "#006064", contrastText: "#fff" },
       secondary: { main: "#ffb74d", light: "#ffe0b2", dark: "#ef6c00", contrastText: "#fff" },
       background: {
-        default: darkMode ? "#101418" : "#f4f7fa",
-        paper: darkMode ? "#171d23" : "#ffffff",
+        default: darkMode ? "#292d32" : "#f2f3f7",
+        paper: darkMode ? "#292d32" : "#f2f3f7",
+      },
+      text: {
+        primary: darkMode ? "#f6f7fb" : "#263238",
+        secondary: darkMode ? "#c8d0d8" : "#6f7d85",
       },
     },
-    shape: { borderRadius: 8 },
+    shape: { borderRadius: 4 },
     typography: {
       fontFamily: ["Inter", "Roboto", "Arial", "sans-serif"].join(","),
-      button: { textTransform: "none", fontWeight: 700 },
+      h4: { fontWeight: 500, letterSpacing: 0 },
+      h6: { fontWeight: 500, letterSpacing: 0 },
+      button: { textTransform: "none", fontWeight: 600 },
     },
     components: {
       MuiCard: {
         styleOverrides: {
           root: {
-            borderRadius: 8,
+            borderRadius: 4,
+            backgroundImage: "none",
             boxShadow: darkMode
-              ? "0 14px 34px rgba(0,0,0,.35)"
-              : "0 12px 30px rgba(15, 23, 42, .08)",
+              ? "-4px -4px 5px rgba(255,255,255,.05), 7px 7px 7px rgba(0,0,0,.38)"
+              : "-7px -7px 5px rgba(255,255,255,.85), 7px 7px 7px rgba(174, 174, 192, .32)",
+          },
+        },
+      },
+      MuiButtonBase: {
+        defaultProps: {
+          disableRipple: true,
+        },
+      },
+      MuiIconButton: {
+        styleOverrides: {
+          root: {
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+          },
+        },
+      },
+      MuiSlider: {
+        styleOverrides: {
+          root: {
+            color: "#00838f",
+          },
+          rail: {
+            opacity: 1,
+            backgroundColor: "rgba(111, 125, 133, .18)",
+          },
+        },
+      },
+      MuiToggleButton: {
+        styleOverrides: {
+          root: {
+            border: 0,
+            borderRadius: 4,
+            paddingInline: 14,
+            "&.Mui-selected": {
+              color: "#00838f",
+              backgroundColor: "#f2f3f7",
+              boxShadow: "inset -4px -4px 5px rgba(255,255,255,.85), inset 5px 5px 7px rgba(174,174,192,.32)",
+            },
           },
         },
       },

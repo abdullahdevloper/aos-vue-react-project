@@ -1,9 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import DashboardLayout from "./layouts/DashboardLayout";
 import { useDashboardStore } from "./store/useDashboardStore";
 import { buildTheme } from "./theme/theme";
-import { ChartsPage, DashboardPage, ListsPage, SettingsPage, WidgetsPage } from "./routes/pages";
+import { DashboardPage, ListsPage, SettingsPage, WidgetsPage } from "./routes/pages";
+import ChartJsPage from "./pages/ui-components/charts/ChartJsPage";
+import SparkLinePage from "./pages/ui-components/charts/SparkLinePage";
 
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
@@ -15,8 +17,11 @@ export default function App() {
       <BrowserRouter>
         <DashboardLayout>
           <Routes>
-            <Route path="/" element={<DashboardPage />} />
-            <Route path="/charts" element={<ChartsPage />} />
+            <Route path="/" element={<Navigate to="/charts/chartjs" replace />} />
+            <Route path="/charts" element={<Navigate to="/charts/chartjs" replace />} />
+            <Route path="/charts/chartjs" element={<ChartJsPage />} />
+            <Route path="/charts/spark-line" element={<SparkLinePage />} />
+            <Route path="/prototype-dashboard" element={<DashboardPage />} />
             <Route path="/widgets" element={<WidgetsPage />} />
             <Route path="/lists" element={<ListsPage />} />
             <Route path="/settings" element={<SettingsPage />} />

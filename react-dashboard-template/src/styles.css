@@ -6,4 +6,10 @@ body,
 
 body {
   margin: 0;
+  overflow: hidden;
+  background: #f2f3f7;
+}
+
+* {
+  box-sizing: border-box;
 }
