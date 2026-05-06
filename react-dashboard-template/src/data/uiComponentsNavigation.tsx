@@ -1,4 +1,4 @@
-import { InsertChartOutlined, OfflineBolt } from "@mui/icons-material";
+import { CardGiftcard, InsertChartOutlined, OfflineBolt, WidgetsOutlined } from "@mui/icons-material";
 
 export const uiComponentsNavigation = [
   {
@@ -11,6 +11,11 @@ export const uiComponentsNavigation = [
           { title: "Spark Line", path: "/charts/spark-line", icon: <OfflineBolt /> },
           { title: "ChartJS", path: "/charts/chartjs", icon: <InsertChartOutlined /> },
         ],
+      },
+      {
+        title: "Widgets",
+        icon: <WidgetsOutlined />,
+        children: [{ title: "Cards", path: "/widgets/card", icon: <CardGiftcard /> }],
       },
     ],
   },

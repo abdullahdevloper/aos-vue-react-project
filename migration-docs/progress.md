@@ -14,10 +14,14 @@ Current rebuild strategy:
 
 ## Current Slice
 
-- Scope: UI Components / Charts invert example color behavior fix
-- Status: implemented; pending final user approval
-- UI Components / Charts: pending final user approval after invert-action behavior fix
-- Widgets: audited; pending implementation and visual approval
+- Scope: UI Components / Widgets / Cards
+- Status: implemented; pending user visual approval
+- UI Components / Charts: approved
+- Widgets / Cards: pending user visual approval
+- Widgets / Lists: not started
+- Widgets / Statistic: not started
+- Widgets / Chart: not started
+- Widgets / Document Cards: not started
 - Vuetify: not started
 - Style & User Interface: not in scope
 - Pages and Dashboard rebuild: not in scope
@@ -26,6 +30,7 @@ Current rebuild strategy:
 
 - `/charts/chartjs`
 - `/charts/spark-line`
+- `/widgets/card`
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
 
@@ -213,3 +218,58 @@ Build:
 - Working directory: `react-dashboard-template/`
 - Result: passed
 - Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+## Widgets Cards Implementation
+
+Status: implemented; pending user visual approval.
+
+Route:
+
+- `/widgets/card`
+
+Implemented Widgets sidebar entries:
+
+- `UI Components`
+- `Widgets`
+- `Cards`
+
+Implemented card widgets:
+
+- MovieTicket
+- CourseCard
+- BlogPostCard
+- UserFollowCard
+- AddToCart
+- ShoeCard
+- ArticlePostCard
+- UserProfileCard
+- ProductCard
+- TinyPost
+- UserProfileCardAlternative
+- UserProfileCardAnother
+- UserUtilization
+
+Completed:
+
+- Added a Vue-matching Widgets Cards route.
+- Added only the Widgets sidebar parent and Cards child needed for this slice.
+- Rebuilt the Cards page as a three-column Vuse widget layout matching `src/views/Widgets/Card/index.vue`.
+- Recreated e-commerce cards, course card, post cards, user profile/social cards, and utilization/progress card.
+- Preserved Vuse soft UI tokens: pale `#f2f3f7` background, 4px radius, soft raised cards, inset progress/user row, circular soft icon buttons, teal/cyan accents, and Vuetify-like spacing.
+- Copied only required local card assets into `react-dashboard-template/src/assets/ui-components/widgets/cards/`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Charts implementation and routes.
+- Widgets / Lists.
+- Widgets / Statistic.
+- Widgets / Chart.
+- Widgets / Document Cards.
+- Vuetify, Style & User Interface, Pages.

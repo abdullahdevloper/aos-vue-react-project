@@ -4,25 +4,50 @@ Last updated: 2026-05-06
 
 ## Phase
 
-UI Components / Charts invert example color behavior fix.
+UI Components / Widgets / Cards implementation.
 
-Status: implemented; pending final user approval.
+Status: implemented; pending user visual approval.
 
 Approval:
 
-- UI Components / Charts = pending final user approval after invert-action behavior fix
-- UI Components / Widgets = audited only; pending implementation and visual approval
+- UI Components / Charts = approved
+- UI Components / Widgets / Cards = pending user visual approval
+- UI Components / Widgets / Lists = not started
+- UI Components / Widgets / Statistic = not started
+- UI Components / Widgets / Chart = not started
+- UI Components / Widgets / Document Cards = not started
 
 ## Completed Files
 
 - `migration-docs/widgets-audit.md`
-- `react-dashboard-template/src/components/docs/ExampleBlock.tsx`
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/layouts/DashboardLayout.tsx`
+- `react-dashboard-template/src/pages/ui-components/widgets/CardsPage.tsx`
+- `react-dashboard-template/src/assets/ui-components/widgets/cards/Avengers-EndGame.jpg`
+- `react-dashboard-template/src/assets/ui-components/widgets/cards/dragon.jpg`
+- `react-dashboard-template/src/assets/ui-components/widgets/cards/design_community.png`
+- `react-dashboard-template/src/assets/ui-components/widgets/cards/headphone-fancy-yellow.webp`
+- `react-dashboard-template/src/assets/ui-components/widgets/cards/shoe-revolt-unsplash.webp`
+- `react-dashboard-template/src/assets/ui-components/widgets/cards/g2.jpg`
+- `react-dashboard-template/src/assets/ui-components/widgets/cards/g3.jpg`
+- `react-dashboard-template/src/assets/ui-components/widgets/cards/g4.jpg`
+- `react-dashboard-template/src/assets/ui-components/widgets/cards/m1.jpg`
 - `migration-docs/progress.md`
 - `migration-docs/phase-report.md`
 
-No Widgets or Vuetify implementation files were modified.
+No protected Vue/root files or `AGENTS.md` were modified.
 
 ## Implemented Work
+
+- Added route `/widgets/card`.
+- Added minimal Widgets sidebar exposure: `UI Components` > `Widgets` > `Cards`.
+- Rebuilt the Cards widgets page from `src/views/Widgets/Card/index.vue`.
+- Implemented the three responsive columns and the thirteen Vue card examples.
+- Recreated Vuse-style e-commerce cards, course card, post cards, user profile/social cards, and utilization/progress card.
+- Copied only required local Cards assets into the React template assets folder.
+
+Historical Charts work already completed:
 
 - Replaced the active prototype broad `/charts` page with Vue-matching chart routes.
 - Added `/charts/chartjs` and `/charts/spark-line`.
@@ -82,8 +107,11 @@ No Widgets or Vuetify implementation files were modified.
 
 ## Skipped Or Failed Items
 
-- Widgets implementation: skipped by audit-only scope.
-- Charts: implementation limited to the shared example invert action.
+- Widgets / Lists: skipped by scope.
+- Widgets / Statistic: skipped by scope.
+- Widgets / Chart: skipped by scope.
+- Widgets / Document Cards: skipped by scope.
+- Charts: approved and not modified in this slice.
 - Vuetify: skipped by scope.
 - Style & User Interface: skipped by scope.
 - Dashboard rebuild: skipped by scope.
@@ -106,7 +134,7 @@ Result: no output. Protected Vue/root files and `AGENTS.md` were unchanged.
 
 ## Stop Point
 
-Stopped before Widgets implementation and Vuetify. Charts is pending final user approval after the invert-action behavior fix.
+Stopped after Widgets / Cards. Widgets / Cards remains pending user visual approval. Lists, Statistic, Chart widgets, Document Cards, and Vuetify were not started.
 
 ## Widgets Audit Summary
 
@@ -163,3 +191,32 @@ Implemented behavior:
 Affected React file:
 
 - `react-dashboard-template/src/components/docs/ExampleBlock.tsx`
+
+## Widgets Cards Implementation Summary
+
+Implemented route:
+
+- `/widgets/card`
+
+Implemented card widgets:
+
+- MovieTicket
+- CourseCard
+- BlogPostCard
+- UserFollowCard
+- AddToCart
+- ShoeCard
+- ArticlePostCard
+- UserProfileCard
+- ProductCard
+- TinyPost
+- UserProfileCardAlternative
+- UserProfileCardAnother
+- UserUtilization
+
+Remaining visual/behavior gaps:
+
+- Needs user visual review against the running Vue app.
+- Card actions are visually present and clickable, but demo callbacks remain no-op like the Vue examples.
+- Remote Picsum images remain remote, matching the Vue source.
+- The pre-existing prototype `/widgets` route was left untouched; approved work is `/widgets/card`.

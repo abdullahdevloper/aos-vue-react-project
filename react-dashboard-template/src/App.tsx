@@ -6,6 +6,7 @@ import { buildTheme } from "./theme/theme";
 import { DashboardPage, ListsPage, SettingsPage, WidgetsPage } from "./routes/pages";
 import ChartJsPage from "./pages/ui-components/charts/ChartJsPage";
 import SparkLinePage from "./pages/ui-components/charts/SparkLinePage";
+import CardsPage from "./pages/ui-components/widgets/CardsPage";
 
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="/charts" element={<Navigate to="/charts/chartjs" replace />} />
             <Route path="/charts/chartjs" element={<ChartJsPage />} />
             <Route path="/charts/spark-line" element={<SparkLinePage />} />
+            <Route path="/widgets/card" element={<CardsPage />} />
             <Route path="/prototype-dashboard" element={<DashboardPage />} />
             <Route path="/widgets" element={<WidgetsPage />} />
             <Route path="/lists" element={<ListsPage />} />
