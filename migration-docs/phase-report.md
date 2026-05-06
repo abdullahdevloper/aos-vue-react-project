@@ -4,27 +4,23 @@ Last updated: 2026-05-06
 
 ## Phase
 
-UI Components Shell + Charts pages implementation.
+UI Components / Charts invert example color behavior fix.
 
-Status: approved by user.
+Status: implemented; pending final user approval.
 
 Approval:
 
-- UI Components / Charts = approved
+- UI Components / Charts = pending final user approval after invert-action behavior fix
+- UI Components / Widgets = audited only; pending implementation and visual approval
 
 ## Completed Files
 
-- `react-dashboard-template/src/App.tsx`
-- `react-dashboard-template/src/layouts/DashboardLayout.tsx`
-- `react-dashboard-template/src/components/layout/VuseSectionDefinition.tsx`
+- `migration-docs/widgets-audit.md`
 - `react-dashboard-template/src/components/docs/ExampleBlock.tsx`
-- `react-dashboard-template/src/components/ChartJS/chartConfig.ts`
-- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
-- `react-dashboard-template/src/pages/ui-components/charts/ChartJsPage.tsx`
-- `react-dashboard-template/src/pages/ui-components/charts/SparkLinePage.tsx`
-- `react-dashboard-template/src/pages/ui-components/charts/chartPalette.ts`
 - `migration-docs/progress.md`
 - `migration-docs/phase-report.md`
+
+No Widgets or Vuetify implementation files were modified.
 
 ## Implemented Work
 
@@ -86,10 +82,11 @@ Approval:
 
 ## Skipped Or Failed Items
 
-- Widgets: skipped by scope.
+- Widgets implementation: skipped by audit-only scope.
+- Charts: implementation limited to the shared example invert action.
 - Vuetify: skipped by scope.
 - Style & User Interface: skipped by scope.
-- Dashboard rebuild: skipped beyond redirect and shell needs.
+- Dashboard rebuild: skipped by scope.
 - Failed items: none.
 
 ## Build Result
@@ -109,4 +106,60 @@ Result: no output. Protected Vue/root files and `AGENTS.md` were unchanged.
 
 ## Stop Point
 
-Stopped before Widgets and Vuetify. Charts visual review is approved by user.
+Stopped before Widgets implementation and Vuetify. Charts is pending final user approval after the invert-action behavior fix.
+
+## Widgets Audit Summary
+
+Sidebar entries found:
+
+- Cards
+- Lists
+- Statistic
+- Chart
+- Document Cards
+
+Routes found:
+
+- `/widgets/card`
+- `/widgets/lists`
+- `/widgets/statistic`
+- `/widgets/analytical`
+- `/widgets/document-cards`
+
+Vue pages found:
+
+- `src/views/Widgets/Card/index.vue`
+- `src/views/Widgets/List/index.vue`
+- `src/views/Widgets/Stats/index.vue`
+- `src/views/Widgets/Chart/index.vue`
+- `src/views/Widgets/Documents/index.vue`
+
+Current React gaps:
+
+- No approved Widgets sidebar entries.
+- No approved Widgets routes.
+- No approved Widgets pages.
+- No approved Widgets data/assets layer.
+- No approved Vuse widget primitives for cards, lists, statistics, analytical chart widgets, or document/media cards.
+
+Recommended next implementation slice:
+
+- Widgets shell/sidebar entries plus Cards page at `/widgets/card`, keeping Widgets pending user visual approval.
+
+## Charts Invert Behavior Fix
+
+Vue reference:
+
+- `src/demo/components/Example.vue`
+
+Implemented behavior:
+
+- The React shared `ExampleBlock` now keeps local inverted state.
+- The top-right invert action uses tooltip text `Invert example color`.
+- Clicking the invert action toggles the example body to a dark/inverted presentation.
+- ChartJS and SparkLine examples inherit this behavior through the shared example action bar.
+- The minimal action icon sizing and low-emphasis styling were preserved.
+
+Affected React file:
+
+- `react-dashboard-template/src/components/docs/ExampleBlock.tsx`

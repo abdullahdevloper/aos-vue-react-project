@@ -14,13 +14,13 @@ Current rebuild strategy:
 
 ## Current Slice
 
-- Scope: UI Components Shell + Charts pages
-- Status: approved by user
-- UI Components / Charts: approved
-- Widgets: not started
+- Scope: UI Components / Charts invert example color behavior fix
+- Status: implemented; pending final user approval
+- UI Components / Charts: pending final user approval after invert-action behavior fix
+- Widgets: audited; pending implementation and visual approval
 - Vuetify: not started
 - Style & User Interface: not in scope
-- Pages and Dashboard rebuild: not in scope beyond the shell required for Charts
+- Pages and Dashboard rebuild: not in scope
 
 ## Implemented Routes
 
@@ -161,3 +161,55 @@ Completed:
 - Increased spacing between full-width documentation examples.
 - Preserved previous fixes: no source/footer paths, minimal top-right icons, subtle documentation surfaces, pale Vuse background, and Vue-like datasets.
 - Did not implement Widgets, Vuetify, Style & User Interface, or Pages.
+
+## Widgets Audit
+
+Status: audit complete; no implementation code changed.
+
+Created:
+
+- `migration-docs/widgets-audit.md`
+
+Audited Vue source:
+
+- Widgets sidebar entries under `UI Components`.
+- Widgets routes for Cards, Lists, Statistic, Chart, and Document Cards.
+- Vue page files under `src/views/Widgets/**`.
+- Shared widget components under `src/components/UI/Widgets/**`.
+- Shared list/progress helpers under `src/components/UI/List/**` and `src/components/UI/ProgressBar/**`.
+- Shared ChartJS wrappers and `src/data/dummyData.js`.
+- Widget assets referenced from Vue data and component files.
+
+Findings:
+
+- Missing approved React routes: `/widgets/card`, `/widgets/lists`, `/widgets/statistic`, `/widgets/analytical`, `/widgets/document-cards`.
+- Missing approved React pages: Cards, Lists, Statistic, Chart widgets, Document Cards.
+- Missing approved React widget primitives: e-commerce cards, post cards, user cards, searchable/check/flex lists, statistic cards, task progress, analytical chart card, and document/media cards.
+- Recommended next slice: Widgets shell/sidebar entries plus Cards page only.
+
+Notes:
+
+- Charts approval was temporarily reopened for the missing example invert action.
+- Widgets implementation was not started.
+- Vuetify was not touched.
+
+## Charts Invert Example Color Fix
+
+Status: implemented; pending final user approval.
+
+Completed:
+
+- Inspected the original Vue `src/demo/components/Example.vue` action buttons.
+- Matched the Vue example action behavior where the invert icon toggles a local dark example surface.
+- Added a working `Invert example color` tooltip/action to the React shared `ExampleBlock`.
+- The action toggles the chart/example body into a dark/inverted surface while keeping the current minimal action icon style.
+- The behavior applies to ChartJS and SparkLine examples because both use the shared `ExampleBlock`.
+- Widgets implementation remains paused.
+- Vuetify was not touched.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.

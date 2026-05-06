@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, IconButton, Toolbar, Tooltip, Typography } from "@mui/material";
 import { Code, GitHub, InvertColors } from "@mui/icons-material";
 import type { ReactNode } from "react";
+import { useState } from "react";
 
 interface ExampleBlockProps {
   title: string;
@@ -11,6 +12,8 @@ interface ExampleBlockProps {
 }
 
 export default function ExampleBlock({ title, source, children, height = 330, description }: ExampleBlockProps) {
+  const [inverted, setInverted] = useState(false);
+
   return (
     <Card
       sx={{
@@ -35,8 +38,21 @@ export default function ExampleBlock({ title, source, children, height = 330, de
           )}
         </Box>
         <Box sx={{ flexGrow: 1 }} />
-        <Tooltip title="Invert example colors">
-          <IconButton size="small" sx={{ width: 22, height: 22, color: "text.secondary", mx: 0.1, bgcolor: "transparent", opacity: 0.48 }}>
+        <Tooltip title="Invert example color">
+          <IconButton
+            size="small"
+            aria-label="Invert example color"
+            aria-pressed={inverted}
+            onClick={() => setInverted((value) => !value)}
+            sx={{
+              width: 22,
+              height: 22,
+              color: inverted ? "primary.main" : "text.secondary",
+              mx: 0.1,
+              bgcolor: "transparent",
+              opacity: inverted ? 0.72 : 0.48,
+            }}
+          >
             <InvertColors sx={{ fontSize: 14 }} />
           </IconButton>
         </Tooltip>
@@ -52,7 +68,36 @@ export default function ExampleBlock({ title, source, children, height = 330, de
         </Tooltip>
       </Toolbar>
       <CardContent sx={{ p: 0 }}>
-        <Box sx={{ px: { xs: 2.5, md: 3.5 }, pt: description && !title ? 1.25 : 2, pb: 2.75, minHeight: height, display: "flex", alignItems: "center" }}>
+        <Box
+          sx={{
+            px: { xs: 2.5, md: 3.5 },
+            pt: description && !title ? 1.25 : 2,
+            pb: 2.75,
+            minHeight: height,
+            display: "flex",
+            alignItems: "center",
+            bgcolor: inverted ? "#303030" : "transparent",
+            color: inverted ? "rgba(255,255,255,.92)" : "inherit",
+            transition: "background-color 180ms ease, color 180ms ease",
+            "& canvas, & svg": {
+              filter: inverted ? "invert(1) hue-rotate(180deg)" : "none",
+              transition: "filter 180ms ease",
+            },
+            "& .MuiCard-root": {
+              bgcolor: inverted ? "rgba(255,255,255,.08)" : undefined,
+              color: inverted ? "rgba(255,255,255,.92)" : undefined,
+            },
+            "& .MuiTypography-root, & .MuiFormControlLabel-label, & .MuiToggleButton-root, & .MuiSlider-markLabel": {
+              color: inverted ? "rgba(255,255,255,.82)" : undefined,
+            },
+            "& .MuiDivider-root": {
+              borderColor: inverted ? "rgba(255,255,255,.18)" : undefined,
+            },
+            "& .MuiSlider-track, & .MuiSlider-thumb": {
+              color: inverted ? "#1de9b6" : undefined,
+            },
+          }}
+        >
           <Box sx={{ width: "100%", height }}>{children}</Box>
         </Box>
       </CardContent>
