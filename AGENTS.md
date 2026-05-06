@@ -15,7 +15,9 @@ Create a parallel React version of this Vue/Vuetify dashboard UI template.
 - All React output must go inside: react-dashboard-template/
 - All reports must go inside: migration-docs/
 - Do not modify AGENTS.md unless explicitly instructed.
-- Before finishing each phase, run: git status --short -- src public scripts package.json package-lock.json babel.config.js vue.config.js webpack.config.js README.md
+- Before finishing each phase, run: git status --short -- src public scripts package.json package-lock.json babel.config.js vue.config.js webpack.config.js README.md AGENTS.md
+
+
 ## Target Stack
 
 - React
@@ -45,9 +47,10 @@ If any Vue file was modified, revert it immediately.
 ## Done Means
 
 - react-dashboard-template builds successfully.
-- All 49 Vue components have React equivalents or documented exceptions.
+- Each section is rebuilt with high visual fidelity before moving to the next section.
+- A section is not complete until the user visually approves it.
 - Vue project remains unchanged.
-
+- Protected Vue/root files remain unchanged.
 
 
 ## Protected Paths
@@ -63,6 +66,7 @@ Do not modify these existing Vue project files or folders:
 - vue.config.js
 - webpack.config.js
 - README.md
+- AGENTS.md
 
 ## Command Rules
 
@@ -73,3 +77,27 @@ Do not modify these existing Vue project files or folders:
 - Only modify files inside:
   - react-dashboard-template/
   - migration-docs/
+
+
+## Vuse Visual Fidelity Rules
+
+The goal is not a generic React/MUI dashboard.
+
+The React version must preserve the Vuse Admin Template visual identity:
+
+- Neumorphic / soft UI design
+- soft raised cards with subtle shadows
+- pale gray dashboard background
+- white or near-white card surfaces in light theme
+- dark neumorphic surfaces in dark theme when applicable
+- cyan/teal primary accent
+- compact left sidebar with section headers
+- nested expandable menu groups
+- rounded active navigation pills
+- circular soft icon buttons
+- Vue/Vuetify-like spacing, typography, and density
+- chart cards and widget cards matching the original Vuse composition
+- no generic MUI demo pages unless visually adapted to Vuse
+
+Official visual reference:
+ThemeForest item: Vuse: VueJs CLI Material Admin
