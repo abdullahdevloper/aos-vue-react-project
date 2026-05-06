@@ -6,7 +6,11 @@ Last updated: 2026-05-06
 
 UI Components Shell + Charts pages implementation.
 
-Status: pending user visual approval.
+Status: approved by user.
+
+Approval:
+
+- UI Components / Charts = approved
 
 ## Completed Files
 
@@ -58,6 +62,28 @@ Status: pending user visual approval.
 - Preserved full-width documentation-style layout.
 - Left Widgets and Vuetify untouched.
 
+## Exact Vue Fidelity Pass
+
+- Removed visible example footer/source paths such as `chartjs/line/SimpleLine`.
+- Removed the `Simple Line` heading.
+- Added the exact Vue Simple Line intro text above the chart.
+- Renamed `Filled Line` to `Filled Line Chart`.
+- Reduced example card chrome again with subtler inset shadow and no source/footer band.
+- Reduced top-right action icon size and emphasis.
+- Kept ChartJS and SparkLine pages full-width and documentation-oriented.
+
+## Final Scale And Density Pass
+
+- Increased Charts page visual scale to better match the local Vue Vuse page.
+- Increased section heading, examples heading, and descriptive body text sizes.
+- Increased chart card content padding.
+- Increased default ChartJS example height from compressed card bodies to larger Vue-like chart areas.
+- Increased radial, bubble, scatter, pie, and doughnut chart block heights.
+- Increased SparkLine playground/card example heights.
+- Increased vertical spacing between full-width documentation examples.
+- Preserved no-footer-path, minimal-icon, pale-background, subtle-surface fixes.
+- Left Widgets and Vuetify untouched.
+
 ## Skipped Or Failed Items
 
 - Widgets: skipped by scope.
@@ -83,4 +109,4 @@ Result: no output. Protected Vue/root files and `AGENTS.md` were unchanged.
 
 ## Stop Point
 
-Stopped before Widgets and Vuetify. Charts are pending user visual approval.
+Stopped before Widgets and Vuetify. Charts visual review is approved by user.

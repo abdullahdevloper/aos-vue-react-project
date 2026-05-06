@@ -18,8 +18,8 @@ export default function VuseSectionDefinition({ title, namespace, icon, breadcru
     <Box
       sx={{
         mx: { xs: 0, md: 1.5 },
-        mb: 2.5,
-        py: 1.25,
+        mb: 3,
+        py: 1.75,
       }}
     >
       <Stack spacing={0.75}>
@@ -41,7 +41,7 @@ export default function VuseSectionDefinition({ title, namespace, icon, breadcru
             </Box>
           )}
           <Box>
-            <Typography variant="h5" color="primary.main" sx={{ fontSize: { xs: 22, md: 24 }, fontWeight: 500 }}>
+            <Typography variant="h5" color="primary.main" sx={{ fontSize: { xs: 24, md: 28 }, fontWeight: 500 }}>
               {title}
             </Typography>
             {namespace && (
@@ -53,7 +53,7 @@ export default function VuseSectionDefinition({ title, namespace, icon, breadcru
         </Stack>
 
         {breadcrumbs.length > 0 && (
-          <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ color: "text.secondary", pl: { xs: 0, sm: 8 }, fontSize: 14 }}>
+          <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ color: "text.secondary", pl: { xs: 0, sm: 8 }, fontSize: 15 }}>
             {breadcrumbs.map((crumb, index) =>
               crumb.href && index < breadcrumbs.length - 1 ? (
                 <Link key={crumb.label} underline="hover" color="inherit" href={crumb.href}>

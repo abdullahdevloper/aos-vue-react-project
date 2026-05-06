@@ -26,37 +26,37 @@ export default function SparkLinePage() {
           { label: "SparkLine" },
         ]}
       />
-      <Box sx={{ mx: { xs: 0, md: 1.5 }, mb: 1.5 }}>
-        <Typography variant="h5" color="text.primary" sx={{ fontSize: 22, fontWeight: 500, mb: 0.75 }}>
+      <Box sx={{ mx: { xs: 0, md: 1.5 }, mb: 2.5 }}>
+        <Typography variant="h5" color="text.primary" sx={{ fontSize: 26, fontWeight: 500, mb: 1 }}>
           Examples
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ fontSize: 13.5 }}>
+        <Typography variant="body2" color="text.secondary" sx={{ fontSize: 15.5, lineHeight: 1.6 }}>
           Sparkline playground and card examples recreated from the Vuetify/Vuse demo composition.
         </Typography>
       </Box>
-      <Grid container spacing={2.5}>
+      <Grid container spacing={3.5}>
         <Grid item xs={12}>
-          <ExampleBlock title="Playground" source="sparklines/playground" height={460}>
+          <ExampleBlock title="Playground" source="sparklines/playground" height={540}>
             <SparklinePlayground />
           </ExampleBlock>
         </Grid>
         <Grid item xs={12}>
-          <ExampleBlock title="Fill" source="sparklines/simple/fill" height={390}>
+          <ExampleBlock title="Fill" source="sparklines/simple/fill" height={470}>
             <SparklineFill />
           </ExampleBlock>
         </Grid>
         <Grid item xs={12}>
-          <ExampleBlock title="Heart Rate" source="sparklines/intermediate/heart-rate" height={300}>
+          <ExampleBlock title="Heart Rate" source="sparklines/intermediate/heart-rate" height={360}>
             <HeartRateCard />
           </ExampleBlock>
         </Grid>
         <Grid item xs={12}>
-          <ExampleBlock title="Dashboard Card" source="sparklines/intermediate/dashboard-card" height={330}>
+          <ExampleBlock title="Dashboard Card" source="sparklines/intermediate/dashboard-card" height={390}>
             <DashboardSparkCard />
           </ExampleBlock>
         </Grid>
         <Grid item xs={12}>
-          <ExampleBlock title="Sales Card" source="sparklines/intermediate/sales-card" height={350}>
+          <ExampleBlock title="Sales Card" source="sparklines/intermediate/sales-card" height={410}>
             <SalesCard />
           </ExampleBlock>
         </Grid>

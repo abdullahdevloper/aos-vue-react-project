@@ -37,18 +37,18 @@ export default function ChartJsPage() {
           { label: "SparkLine" },
         ]}
       />
-      <Box sx={{ mx: { xs: 0, md: 1.5 }, mb: 1.5 }}>
-        <Typography variant="h5" color="text.primary" sx={{ fontSize: 22, fontWeight: 500, mb: 0.75 }}>
+      <Box sx={{ mx: { xs: 0, md: 1.5 }, mb: 2.5 }}>
+        <Typography variant="h5" color="text.primary" sx={{ fontSize: 26, fontWeight: 500, mb: 1 }}>
           Examples
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ fontSize: 13.5 }}>
+        <Typography variant="body2" color="text.secondary" sx={{ fontSize: 15.5, lineHeight: 1.6 }}>
           Chart.js examples rendered with the Vuse soft UI demo shell and source-matched datasets.
         </Typography>
       </Box>
-      <Grid container spacing={2.5}>
+      <Grid container spacing={3.5}>
         {chartExamples.map((example) => (
           <Grid item xs={12} key={example.title}>
-            <ExampleBlock title={example.title} source={example.source} height={example.height ?? 260} description={example.description}>
+            <ExampleBlock title={example.title} source={example.source} height={example.height ?? 340} description={example.description}>
               {example.render()}
             </ExampleBlock>
           </Grid>
@@ -246,13 +246,13 @@ const chartExamples = [
     render: () => <Bar data={horizontalBarData} options={{ ...(commonCartesianOptions as ChartOptions<"bar">), indexAxis: "y" }} />,
   },
   {
-    title: "Simple Line",
+    title: "",
     source: "chartjs/line/SimpleLine",
-    description: "The line chart example uses two unfilled datasets with soft point styling and month labels, matching the Vue demo structure before the chart canvas.",
+    description: "A line chart is a way of plotting data points on a line. Often, it is used to show trend data, and the comparison of two data sets.",
     render: () => <Line data={simpleLineData} options={commonCartesianOptions as ChartOptions<"line">} />,
   },
   {
-    title: "Filled Line",
+    title: "Filled Line Chart",
     source: "chartjs/line/FilledLine",
     render: () => (
       <Line
@@ -265,19 +265,19 @@ const chartExamples = [
       />
     ),
   },
-  { title: "Pie Chart", source: "chartjs/PieChart", height: 250, render: () => <Pie data={pieData} options={{ responsive: true, maintainAspectRatio: false }} /> },
-  { title: "Doughnut Chart", source: "chartjs/DoughnutChart", height: 250, render: () => <Doughnut data={doughnutData} options={{ responsive: true, maintainAspectRatio: false }} /> },
-  { title: "Radar Chart", source: "chartjs/RadarChart", height: 270, render: () => <Radar data={radarData} options={radialOptions as ChartOptions<"radar">} /> },
+  { title: "Pie Chart", source: "chartjs/PieChart", height: 320, render: () => <Pie data={pieData} options={{ responsive: true, maintainAspectRatio: false }} /> },
+  { title: "Doughnut Chart", source: "chartjs/DoughnutChart", height: 320, render: () => <Doughnut data={doughnutData} options={{ responsive: true, maintainAspectRatio: false }} /> },
+  { title: "Radar Chart", source: "chartjs/RadarChart", height: 340, render: () => <Radar data={radarData} options={radialOptions as ChartOptions<"radar">} /> },
   {
     title: "Polararea Chart",
     source: "chartjs/PolarareaChart",
-    height: 270,
+    height: 340,
     render: () => <PolarArea data={polarData} options={{ ...radialOptions, plugins: { legend: { position: "top" }, title: { display: true, text: "Chart.js PolarareaChart Chart" } } } as ChartOptions<"polarArea">} />,
   },
   {
     title: "Bubble Chart",
     source: "chartjs/BubbleChart",
-    height: 270,
+    height: 340,
     render: () => (
       <Bubble
         data={bubbleData}
@@ -289,5 +289,5 @@ const chartExamples = [
       />
     ),
   },
-  { title: "Scatter Chart", source: "chartjs/ScatterChart", height: 270, render: () => <Scatter data={scatterData} options={{ responsive: true, maintainAspectRatio: false }} /> },
+  { title: "Scatter Chart", source: "chartjs/ScatterChart", height: 340, render: () => <Scatter data={scatterData} options={{ responsive: true, maintainAspectRatio: false }} /> },
 ];

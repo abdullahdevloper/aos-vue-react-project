@@ -15,7 +15,8 @@ Current rebuild strategy:
 ## Current Slice
 
 - Scope: UI Components Shell + Charts pages
-- Status: pending user visual approval
+- Status: approved by user
+- UI Components / Charts: approved
 - Widgets: not started
 - Vuetify: not started
 - Style & User Interface: not in scope
@@ -112,8 +113,7 @@ Result: no output. No protected Vue/root files or `AGENTS.md` were modified.
 
 ## Remaining Gaps
 
-- Charts await user visual approval.
-- Remaining visual tuning may be needed after browser review against the local Vue app.
+- Charts visual review approved by user.
 - Widgets are intentionally not implemented in this slice.
 - Vuetify is intentionally not implemented in this slice.
 - The Vuetify documentation shell and API explorer remain future work.
@@ -121,7 +121,7 @@ Result: no output. No protected Vue/root files or `AGENTS.md` were modified.
 
 ## Latest Charts Visual Tuning
 
-Status: pending user visual approval.
+Status: approved by user.
 
 Completed:
 
@@ -131,4 +131,33 @@ Completed:
 - Added descriptive copy above the Simple Line chart to better match the Vue documentation/example structure.
 - Tightened chart card padding, vertical spacing, intro typography, and chart heights.
 - Kept the full-width documentation-style layout.
+- Did not implement Widgets, Vuetify, Style & User Interface, or Pages.
+
+## Exact Vue Fidelity Pass
+
+Status: approved by user.
+
+Completed:
+
+- Removed visible source/footer paths from chart example cards.
+- Removed the `Simple Line` heading.
+- Set the Simple Line visible paragraph exactly to: `A line chart is a way of plotting data points on a line. Often, it is used to show trend data, and the comparison of two data sets.`
+- Changed `Filled Line` heading to exactly `Filled Line Chart`.
+- Further reduced example-card chrome with subtler inset shadow, no footer divider/path area, and tighter body padding.
+- Reduced top-right action icons to smaller, lower-opacity controls.
+- Preserved full-width documentation-style layout and Vue-like chart datasets/proportions.
+
+## Final Charts Scale And Density Pass
+
+Status: approved by user.
+
+Completed:
+
+- Increased overall Charts page scale so React no longer reads as compressed compared with Vue.
+- Increased section title, examples heading, and body text sizes.
+- Increased chart card body padding and vertical rhythm.
+- Increased chart canvas heights/presence across ChartJS examples.
+- Increased SparkLine example block heights to feel roomier.
+- Increased spacing between full-width documentation examples.
+- Preserved previous fixes: no source/footer paths, minimal top-right icons, subtle documentation surfaces, pale Vuse background, and Vue-like datasets.
 - Did not implement Widgets, Vuetify, Style & User Interface, or Pages.
