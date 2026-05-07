@@ -76,7 +76,7 @@ export const globalNavigation: SidebarNavEntry[] = [
     icon: <Lock />,
     children: [
       { title: "Login", path: "/pages/authentication/login" },
-      { title: "Sign Up", disabled: true, pending: true },
+      { title: "Sign Up", path: "/pages/authentication/signup" },
       { title: "Forgot Password", disabled: true, pending: true },
       { title: "Lock Screen", disabled: true, pending: true },
     ],

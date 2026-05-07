@@ -10,11 +10,11 @@ Current rebuild strategy:
 
 - Rebuild section by section with high visual fidelity.
 - Do not move to the next section until the current section is approved by the user.
-- Active section: Pages / Authentication / Login.
+- Active section: Pages / Authentication / Signup.
 
 ## Current Slice
 
-- Scope: Pages / Authentication / Login only
+- Scope: Pages / Authentication / Signup only
 - Status: implemented; pending user visual approval
 - UI Components / Charts: approved
 - Widgets / Cards: approved route preserved
@@ -34,7 +34,7 @@ Current rebuild strategy:
 - Pages / Errors: implemented; pending user visual approval
 - Pages / Profile: not started
 - Pages / Login: implemented; pending user visual approval
-- Pages / Signup: not started
+- Pages / Signup: implemented; pending user visual approval
 - Pages / Forgot Password: not started
 - Pages / Lock Screen: not started
 - Pages / Coming Soon: not started
@@ -63,6 +63,12 @@ Implemented Login page:
 - Block `Sign In` button with disabled invalid state.
 - Success snackbar text `Signed In Successfully`.
 - Submit reset and delayed redirect to `/dashboard/operational`.
+- Visual fix pass after review:
+  - Confirmed visible title is exactly `Vuse Admin`.
+  - Changed Signup inputs from floating-label styling to inline placeholder-style labels closer to Vue `solo flat`.
+  - Fixed input height, line-height, padding, and icon/adornment alignment.
+  - Tuned title, subtitle, checkbox, button, and footer link typography/spacing.
+  - Kept validation, password toggle, confirm-password validation, policy checkbox, disabled submit, snackbar, redirect, and Login link behavior working.
 
 Build:
 
@@ -74,6 +80,49 @@ Build:
 Not touched:
 
 - Signup.
+- Forgot Password.
+- Lock Screen.
+- Profile.
+- Coming Soon.
+- Maintenance.
+- Vuetify.
+- Charts.
+- Widgets.
+- Style & User Interface.
+
+## Pages Signup Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/pages/authentication/signup`
+
+Implemented Signup page:
+
+- Reuses the Vuse auth shell outside `DashboardLayout`.
+- Full-height pale Vuse background with inset neumorphic outer surface.
+- Centered auth card using Vue-equivalent `cols=12 sm=8 md=7` behavior.
+- Left illustration column using `welcome.png`, hidden below `md` like Vue.
+- Right form column with `Vuse Admin`, `Create Account`, and max-width 380 form.
+- Name, Email, Password, and Confirm Password fields with Vue-like filled/solo density and prepended icons.
+- Password visibility toggle on the Password field.
+- Agree-to-policy checkbox with inline `terms & privacy policy` action text.
+- Block `Sign Up` button with disabled invalid state.
+- `Login` link using the Vue route path.
+- Success snackbar text `Signed In Successfully`.
+- Submit reset and delayed redirect to `/dashboard/operational`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Login implementation, except its existing Create Account link now reaches the implemented Signup route.
 - Forgot Password.
 - Lock Screen.
 - Profile.

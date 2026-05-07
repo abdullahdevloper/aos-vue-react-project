@@ -4,7 +4,7 @@ Last updated: 2026-05-07
 
 ## Phase
 
-Pages / Authentication / Login implementation.
+Pages / Authentication / Signup implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -25,7 +25,7 @@ Approval:
 - Pages / Errors = implemented; pending user visual approval
 - Pages / Profile = not started
 - Pages / Login = implemented; pending user visual approval
-- Pages / Signup = not started
+- Pages / Signup = implemented; pending user visual approval
 - Pages / Forgot Password = not started
 - Pages / Lock Screen = not started
 - Pages / Coming Soon = not started
@@ -43,8 +43,10 @@ Approval:
 - `react-dashboard-template/src/App.tsx`
 - `react-dashboard-template/src/pages/pages/auth/AuthShell.tsx`
 - `react-dashboard-template/src/pages/pages/auth/LoginPage.tsx`
+- `react-dashboard-template/src/pages/pages/auth/SignupPage.tsx`
 - `react-dashboard-template/src/pages/pages/auth/VuseLogoMark.tsx`
 - `react-dashboard-template/src/assets/pages/illustrator/working_late.png`
+- `react-dashboard-template/src/assets/pages/illustrator/welcome.png`
 - `react-dashboard-template/src/pages/pages/components/FullPageShell.tsx`
 - `react-dashboard-template/src/pages/pages/ErrorPage.tsx`
 - `react-dashboard-template/src/pages/pages/Error404Page.tsx`
@@ -99,6 +101,28 @@ No protected Vue/root files or `AGENTS.md` were modified.
 ## Implemented Work
 
 Current implementation work:
+
+- Added Vue-matching route `/pages/authentication/signup`.
+- Reused the existing `AuthShell` for the Signup page, preserving the Vue full-height pale background, inset outer surface, centered auth card, and `cols=12 sm=8 md=7`-equivalent responsive behavior.
+- Copied the required `welcome.png` illustration into React assets.
+- Rebuilt the Signup page with `Vuse Admin` branding, `Create Account` subtitle, illustration column hidden below `md`, max-width 380 form, Vue-like solo/flat input density, and prepended icons.
+- Implemented Name, Email, Password, Confirm Password, and Agree-to-policy controls.
+- Implemented validation behavior for required name, required/email email, required/min-length password, confirm-password matching, and required policy agreement.
+- Implemented Vue-matching validation messages where present in source.
+- Implemented password visibility toggle for the Password field.
+- Implemented disabled invalid submit behavior.
+- Implemented success snackbar text `Signed In Successfully`.
+- Implemented submit reset and delayed redirect to `/dashboard/operational`.
+- Enabled the Sign Up sidebar entry while leaving Forgot Password and Lock Screen visible as pending/disabled.
+- Applied Signup visual fix pass after review:
+  - Verified the visible title is exactly `Vuse Admin`.
+  - Changed input rendering from floating-label styling to inline placeholder-style labels closer to Vue `solo flat`.
+  - Fixed input height, padding, line-height, and icon/adornment alignment.
+  - Tuned Signup title, subtitle, field rhythm, checkbox spacing, button text, and footer link spacing.
+  - Preserved validation, password visibility toggle, confirm-password validation, policy checkbox, disabled Sign Up, snackbar, redirect, and Login link behavior.
+- Did not implement Forgot Password, Lock Screen, Profile, Coming Soon, Maintenance, Vuetify, Charts, Widgets, or Style & User Interface.
+
+Previous implementation work:
 
 - Added Vue-matching route `/pages/authentication/login`.
 - Built `AuthShell` for the Login page only with full-height pale Vuse background, inset outer surface, centered auth card, and `cols=12 sm=8 md=7`-equivalent responsive behavior.
@@ -293,7 +317,6 @@ Historical Charts work already completed:
 ## Skipped Or Failed Items
 
 - Profile: skipped by active scope.
-- Signup: skipped by active scope.
 - Forgot Password: skipped by active scope.
 - Lock Screen: skipped by active scope.
 - Coming Soon: skipped by active scope.
@@ -320,6 +343,27 @@ Historical Charts work already completed:
 - Directory: `react-dashboard-template/`
 - Status: passed
 - Non-blocking warning: generated JS chunk is larger than Vite's default 500 kB warning threshold.
+
+## Signup Verification
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/pages/authentication/signup` full/auth layout | `/pages/authentication/signup` renders `SignupPage` outside `DashboardLayout` | Full | Added to React router. |
+| Auth shell | Full-height `v-sheet` with `neu-glow-inset` background | Reused `AuthShell` with full viewport pale background and inset outer surface | High | Same responsive shell as Login. |
+| Auth card width | `v-col cols=12 sm=8 md=7` centered | MUI Grid equivalent `xs=12 sm=8 md=7`, centered | High | No arbitrary extra breakpoints. |
+| Illustration column | Left `md=6`, hidden below `md`, image `welcome.png` | Left column hidden below `md`, copied local `welcome.png` illustration | High | Source asset copied into React assets. |
+| Header | `Vuse Admin` and `Create Account` | Same visible text and hierarchy | High | Uses text rendering rather than Vuse SVG logo. |
+| Form width | Transparent sheet max-width 380 | Form constrained to max-width 380 | Full | Matches Vue form measure. |
+| Name field | Solo flat field, person icon, inline label, required validation, `Name is required.` | Inline placeholder-style label, fixed 50px height, centered icon, blur touched validation, matching message | High | Floating-label look removed to better match Vue `solo flat`. |
+| Email field | Solo flat field, email icon, inline label, required/email validation | Inline placeholder-style label, fixed 50px height, centered icon, input/blur touched validation, matching messages | High | Messages: `Please enter email`, `Email must be valid`. |
+| Password field | Solo flat field, lock icon, inline label, required/minLength validation, eye toggle | Inline placeholder-style label, fixed 50px height, aligned start/end icons, visibility toggle, matching messages | High | Toggle swaps text/password type. |
+| Confirm Password | Solo flat field, enhanced-encryption icon, inline label, required/sameAs password | Inline placeholder-style label, fixed 50px height, centered icon, required invalid state and `Password does not match` when mismatched | Medium | Vue source only defines a visible sameAs message; React keeps required invalid without adding new visible copy. |
+| Policy checkbox | Required checkbox with inline `terms & privacy policy` button-toggle text | Checkbox and inline action text with tuned spacing/typography | High | Vue toggles internal `dialog` state but has no dialog markup; React preserves visible interaction only. |
+| Sign Up button | Block submit button disabled when invalid | Full-width button disabled while invalid with Vue-like size and text scale | High | Vue-like hover/disabled styles. |
+| Login link | Link to `/pages/authentication/login` | Link uses same path and preserves Login route | Full | Existing Login route untouched. |
+| Submit behavior | On valid submit: snackbar, reset form/validation, redirect to dashboard after 2s | Snackbar, reset fields/touched state, redirect to `/dashboard/operational` after 2s | High | `/dashboard/operational` safely redirects to current React home target. |
+| Snackbar | Top-right success snackbar with text and check icon | Top-right success snackbar/alert with `Signed In Successfully` and check icon | High | MUI Alert approximation. |
+| Scope control | Only Signup auth page implemented | Forgot Password and Lock Screen remain pending | Full | No other page content implemented. |
 
 ## Login Verification
 
