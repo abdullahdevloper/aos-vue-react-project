@@ -1,6 +1,6 @@
 # Phase Report
 
-Last updated: 2026-05-06
+Last updated: 2026-05-07
 
 ## Phase
 
@@ -331,7 +331,7 @@ Remaining visual/behavior gaps:
 | Hover/tooltips | Chart.js hover/tooltips enabled, line widgets index/non-intersect | Tooltips enabled; line widgets index/non-intersect | High | Bar widgets also expose tooltip hover |
 | Analytical card actions | `See Details` text button aligned end on first four cards | Matching low-emphasis text actions | Full | Demo no-op like Vue |
 | Visual identity | Pale background, neu-glow cards, compact typography, teal/cyan accents | Soft raised cards, compact headers, varied chart colors | High | Needs final user visual review against running Vue app |
-| Running app visual check | Compare against local Vue page | Local route returned HTTP 200 | Partial | Screenshot-level inspection was not available from this session |
+| Running app visual check | Compare against local Vue page | Local route probe failed on 2026-05-07 | Partial | `http://127.0.0.1:5173/widgets/analytical` returned connection refused, so screenshot-level inspection was not available from this session |
 
 ## Widgets Chart Implementation Summary
 

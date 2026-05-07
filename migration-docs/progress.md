@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-06
+Last updated: 2026-05-07
 
 ## Strategy Status
 
@@ -411,7 +411,7 @@ Completed:
 Verification:
 
 - Source verification completed against `src/views/Widgets/Chart/index.vue`, all six active analytical widget files, `StatsChartAnalysis.vue`, `src/components/ChartJS/**`, and `migration-docs/widgets-audit.md`.
-- Running app route probe for `http://127.0.0.1:5173/widgets/analytical` returned HTTP 200, but screenshot-level visual inspection was not available from this session.
+- Running app route probe for `http://127.0.0.1:5173/widgets/analytical` failed with connection refused on 2026-05-07, so screenshot-level visual inspection was not available from this session.
 
 Build:
 
