@@ -10,11 +10,11 @@ Current rebuild strategy:
 
 - Rebuild section by section with high visual fidelity.
 - Do not move to the next section until the current section is approved by the user.
-- Active section: UI Components only.
+- Active section: Pages audit only.
 
 ## Current Slice
 
-- Scope: UI Components / Vuetify Batch A
+- Scope: Pages section audit
 - Status: audit complete; implementation not started
 - UI Components / Charts: approved
 - Widgets / Cards: approved route preserved
@@ -24,13 +24,62 @@ Current rebuild strategy:
 - Widgets / Document Cards: approved
 - UI Components / Widgets: approved
 - Vuetify Batch A: audited
-- Vuetify / Api Explorer: implemented; pending user visual approval
-- Vuetify / Alerts: implemented; pending user visual approval
-- Vuetify / Avatars: implemented; pending user visual approval
-- Vuetify / Badges: implemented; pending user visual approval
+- Vuetify / Api Explorer: approved
+- Vuetify / Alerts: approved
+- Vuetify / Avatars: approved
+- Vuetify / Badges: approved
+- Vuetify / Banners: not started; intentionally paused
 - Vuetify Batch B and later: not started
 - Style & User Interface: not in scope
-- Pages and Dashboard rebuild: not in scope
+- Pages: audited; implementation not started
+- Dashboard rebuild: not in scope
+
+## Pages Audit
+
+Status: audit complete; implementation not started.
+
+Created audit file:
+
+- `migration-docs/pages-audit.md`
+
+Audited Pages sidebar entries:
+
+- Profile
+- Coming Soon
+- Maintenance
+- Authentication
+  - Login
+  - Sign Up
+  - Forgot Password
+  - Lock Screen
+- Error
+  - 404
+  - 500
+
+Audited Pages routes:
+
+- `/pages/profile`
+- `/pages/authentication/login`
+- `/pages/authentication/signup`
+- `/pages/authentication/forgot-password`
+- `/pages/authentication/lock-screen`
+- `/pages/coming-soon`
+- `/pages/under-maintenance`
+- `/pages/error/404`
+- `/pages/error/500`
+- Catch-all `*` route to Error404 in Vue
+
+Audit notes:
+
+- Requested `src/views/Auth/**` and `src/views/Error/**` do not exist in this Vue project.
+- Auth and error views live under `src/views/Pages/Authentication/**` and `src/views/Pages/Errors/**`.
+- Pages implementation should begin with shared full-page shell plus Error 404 and Error 500.
+
+Not touched:
+
+- React code.
+- Vuetify Banners.
+- Approved Charts, Widgets, Api Explorer, Alerts, Avatars, and Badges.
 
 ## Implemented Routes
 
