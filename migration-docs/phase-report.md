@@ -4,9 +4,9 @@ Last updated: 2026-05-07
 
 ## Phase
 
-UI Components / Widgets / Document Cards implementation.
+UI Components / Vuetify Batch A audit.
 
-Status: approved.
+Status: audit complete; implementation not started.
 
 Approval:
 
@@ -17,8 +17,15 @@ Approval:
 - UI Components / Widgets / Chart = approved route preserved
 - UI Components / Widgets / Document Cards = approved
 - UI Components / Widgets = approved
+- UI Components / Vuetify Batch A = audited; pending implementation
 
 ## Completed Files
+
+- `migration-docs/vuetify-batch-a-audit.md`
+- `migration-docs/progress.md`
+- `migration-docs/phase-report.md`
+
+Historical completed files from previous approved slices:
 
 - `migration-docs/widgets-audit.md`
 - `react-dashboard-template/src/App.tsx`
@@ -47,6 +54,21 @@ Approval:
 No protected Vue/root files or `AGENTS.md` were modified.
 
 ## Implemented Work
+
+Current audit-only work:
+
+- Audited Vuetify Batch A sidebar entries under `UI Components` > `Vuetify`.
+- Audited Batch A Vue routes and view files.
+- Audited shared Vue documentation shell behavior: `DocPage`, `Usage`, `UsageExample`, `Examples`, and `Example`.
+- Audited API Explorer autocomplete, API tabs, search, and parameter rendering behavior.
+- Audited Alerts examples, usage controls, dismiss/reset/toggle behavior, and visual requirements.
+- Audited Avatars examples, usage controls, expansion panel behavior, responsive behavior, and assets.
+- Audited Badges examples, usage controls, hover-only badge, dynamic counter, reset behavior, and assets.
+- Audited Banners examples, usage controls, sticky behavior, checkbox/dismiss behavior, icon-click behavior, and related playground files.
+- Documented React target files and recommended implementation order.
+- Did not modify React code.
+
+Historical implemented work from previous approved slices:
 
 - Added route `/widgets/card`.
 - Added minimal Widgets sidebar exposure: `UI Components` > `Widgets` > `Cards`.
@@ -137,22 +159,21 @@ Historical Charts work already completed:
 
 ## Skipped Or Failed Items
 
-- Widgets / Cards: approved route preserved; not modified beyond shared route/sidebar context.
-- Widgets / Lists: approved route preserved; not modified beyond shared route/sidebar context.
-- Widgets / Statistic: approved route preserved; not modified beyond shared route/sidebar context.
-- Widgets / Chart: approved route preserved; not modified beyond shared route/sidebar context.
-- Charts: approved and not modified in this slice.
-- Vuetify: skipped by scope.
+- Charts: approved and not modified in this audit.
+- Widgets / Cards: approved and not modified in this audit.
+- Widgets / Lists: approved and not modified in this audit.
+- Widgets / Statistic: approved and not modified in this audit.
+- Widgets / Chart: approved and not modified in this audit.
+- Widgets / Document Cards: approved and not modified in this audit.
+- Vuetify Batch A implementation: skipped by audit-only scope.
+- Vuetify Batch B and later: skipped by scope.
 - Style & User Interface: skipped by scope.
 - Dashboard rebuild: skipped by scope.
 - Failed items: none.
 
 ## Build Result
 
-- Command: `npm run build`
-- Directory: `react-dashboard-template/`
-- Status: passed
-- Non-blocking warning: generated JS chunk is larger than Vite's default 500 kB warning threshold.
+- Not run. This task was audit-only and did not modify React code.
 
 ## Protected File Verification
 

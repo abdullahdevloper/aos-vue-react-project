@@ -14,8 +14,8 @@ Current rebuild strategy:
 
 ## Current Slice
 
-- Scope: UI Components / Widgets
-- Status: approved
+- Scope: UI Components / Vuetify Batch A
+- Status: audit complete; implementation not started
 - UI Components / Charts: approved
 - Widgets / Cards: approved route preserved
 - Widgets / Lists: approved route preserved
@@ -23,7 +23,8 @@ Current rebuild strategy:
 - Widgets / Chart: approved route preserved
 - Widgets / Document Cards: approved
 - UI Components / Widgets: approved
-- Vuetify: not started
+- Vuetify Batch A: audited
+- Vuetify Batch B and later: not started
 - Style & User Interface: not in scope
 - Pages and Dashboard rebuild: not in scope
 
@@ -38,6 +39,79 @@ Current rebuild strategy:
 - `/widgets/document-cards`
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
+
+## Vuetify Batch A Audit
+
+Status: audit complete; no React implementation code changed.
+
+Created:
+
+- `migration-docs/vuetify-batch-a-audit.md`
+
+Audited Batch A pages:
+
+- Api Explorer
+- Alerts
+- Avatars
+- Badges
+- Banners
+
+Audited Vue source:
+
+- `src/config/navigation-items.js`
+- `src/router/routes.js`
+- `src/router/routes/vuetify.js`
+- `src/views/Vuetify/ApiExplorerView.vue`
+- `src/views/Vuetify/AlertsView.vue`
+- `src/views/Vuetify/AvatarsView.vue`
+- `src/views/Vuetify/BadgeView.vue`
+- `src/views/Vuetify/BannersView.vue`
+- `src/demo/components/DocPage.vue`
+- `src/demo/components/Examples.vue`
+- `src/demo/components/Example.vue`
+- `src/demo/components/Usage.vue`
+- `src/demo/components/UsageExample.vue`
+- `src/demo/components/Api/**`
+- `src/demo/examples/alerts/**`
+- `src/demo/examples/avatars/**`
+- `src/demo/examples/badges/**`
+- `src/demo/examples/banners/**`
+- `src/demo/usages/alerts.vue`
+- `src/demo/usages/avatars.vue`
+- `src/demo/usages/badges.vue`
+- `src/demo/usages/banners.vue`
+
+Missing React routes:
+
+- `/components/vuetify/api-explorer`
+- `/components/alerts`
+- `/components/avatars`
+- `/components/badge`
+- `/components/banners`
+
+Missing React pages:
+
+- Api Explorer
+- Alerts
+- Avatars
+- Badges
+- Banners
+
+Behavior details captured:
+
+- Shared Vuetify docs shell, usage playground, example cards, invert-color actions, source panels, API explorer, alerts, avatars, badges, and banners.
+
+Recommended next implementation slice:
+
+- Shared Vuetify docs shell and Batch A route/sidebar wiring, then Api Explorer.
+
+Build:
+
+- Not run; this was an audit-only task.
+
+Protected files:
+
+- No protected Vue/root files or `AGENTS.md` were modified.
 
 ## Implemented UI Components Shell
 
