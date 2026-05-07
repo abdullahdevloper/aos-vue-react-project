@@ -1220,3 +1220,40 @@ Not touched:
 - Coming Soon and Maintenance page implementations.
 - Error page implementations.
 - Vuetify, Charts, Widgets, Style & User Interface.
+
+## Style & User Interface Audit
+
+Status: audit complete; implementation not started.
+
+Scope audited:
+
+- Style & User Interface sidebar entries.
+- Routes and Vue page files.
+- Child components, docs/example shell behavior, data/assets, styles, and responsive behavior.
+- Current React gaps and target files.
+- Recommended implementation order.
+
+Inventory:
+
+- Color: `/colors`
+- Icons: `/icons`
+- Helpers: `/helpers`
+- Border Radius: `/border-radius`
+- Text & Typography: `/text-typography`
+- Motion: `/transitions`
+- Programmatic Scrolling: `/scroll`
+- Forms: `/forms`
+
+Audit document:
+
+- `migration-docs/style-ui-audit.md`
+
+Recommended first implementation slice:
+
+- Shared Style docs/example shell plus Color page only.
+
+Not touched:
+
+- React implementation code.
+- Vuetify Banners or later Vuetify batches.
+- Pages, Charts, Widgets.
