@@ -4,9 +4,9 @@ Last updated: 2026-05-07
 
 ## Phase
 
-UI Components / Vuetify Batch A audit.
+UI Components / Vuetify Batch A / Api Explorer implementation.
 
-Status: audit complete; implementation not started.
+Status: implemented; pending user visual approval.
 
 Approval:
 
@@ -17,13 +17,24 @@ Approval:
 - UI Components / Widgets / Chart = approved route preserved
 - UI Components / Widgets / Document Cards = approved
 - UI Components / Widgets = approved
-- UI Components / Vuetify Batch A = audited; pending implementation
+- UI Components / Vuetify Batch A = in progress
+- UI Components / Vuetify / Api Explorer = implemented; pending user visual approval
 
 ## Completed Files
 
 - `migration-docs/vuetify-batch-a-audit.md`
 - `migration-docs/progress.md`
 - `migration-docs/phase-report.md`
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/layouts/DashboardLayout.tsx`
+- `react-dashboard-template/src/data/vuetifyApiData.ts`
+- `react-dashboard-template/src/components/vuetify-docs/DocPage.tsx`
+- `react-dashboard-template/src/components/vuetify-docs/DocText.tsx`
+- `react-dashboard-template/src/components/vuetify-docs/ApiExplorer.tsx`
+- `react-dashboard-template/src/components/vuetify-docs/ApiItems.tsx`
+- `react-dashboard-template/src/components/vuetify-docs/ApiParameterRow.tsx`
+- `react-dashboard-template/src/pages/ui-components/vuetify/ApiExplorerPage.tsx`
 
 Historical completed files from previous approved slices:
 
@@ -55,18 +66,21 @@ No protected Vue/root files or `AGENTS.md` were modified.
 
 ## Implemented Work
 
-Current audit-only work:
+Current implementation work:
 
-- Audited Vuetify Batch A sidebar entries under `UI Components` > `Vuetify`.
-- Audited Batch A Vue routes and view files.
-- Audited shared Vue documentation shell behavior: `DocPage`, `Usage`, `UsageExample`, `Examples`, and `Example`.
-- Audited API Explorer autocomplete, API tabs, search, and parameter rendering behavior.
-- Audited Alerts examples, usage controls, dismiss/reset/toggle behavior, and visual requirements.
-- Audited Avatars examples, usage controls, expansion panel behavior, responsive behavior, and assets.
-- Audited Badges examples, usage controls, hover-only badge, dynamic counter, reset behavior, and assets.
-- Audited Banners examples, usage controls, sticky behavior, checkbox/dismiss behavior, icon-click behavior, and related playground files.
-- Documented React target files and recommended implementation order.
-- Did not modify React code.
+- Added route `/components/vuetify/api-explorer`.
+- Added only the Vuetify sidebar parent and Api Explorer child needed for this slice.
+- Added reusable Vuetify docs primitives needed for Api Explorer: `DocPage`, `DocText`, `ApiExplorer`, `ApiItems`, and `ApiParameterRow`.
+- Replaced the original React-local subset with a generated JSON copy of Vue's full `@vuetify/api-generator` metadata.
+- Preserved Vue's selectable-entry filter: `v-*` entries excluding `v-ripple`, `v-touch`, `v-scroll`, and `v-resize`.
+- Exposed 159 API components in the React Api Explorer.
+- Rebuilt the Api Explorer page with Vuse section header, documentation text, soft autocomplete, empty state, selected API section, teal API toolbar, component selector, search field, tabs, and parameter rendering.
+- Preserved responsive behavior with stacked toolbar controls and horizontal small-screen tabs.
+- Kept Alerts, Avatars, Badges, Banners, Charts, and Widgets untouched.
+
+Audit foundation from previous step:
+
+- Audited Vuetify Batch A sidebar entries, routes, views, shared docs shell, Api Explorer behavior, and remaining Batch A page behaviors.
 
 Historical implemented work from previous approved slices:
 
@@ -159,13 +173,16 @@ Historical Charts work already completed:
 
 ## Skipped Or Failed Items
 
-- Charts: approved and not modified in this audit.
-- Widgets / Cards: approved and not modified in this audit.
-- Widgets / Lists: approved and not modified in this audit.
-- Widgets / Statistic: approved and not modified in this audit.
-- Widgets / Chart: approved and not modified in this audit.
-- Widgets / Document Cards: approved and not modified in this audit.
-- Vuetify Batch A implementation: skipped by audit-only scope.
+- Alerts: skipped by active scope.
+- Avatars: skipped by active scope.
+- Badges: skipped by active scope.
+- Banners: skipped by active scope.
+- Charts: approved and not modified in this slice.
+- Widgets / Cards: approved and not modified in this slice.
+- Widgets / Lists: approved and not modified in this slice.
+- Widgets / Statistic: approved and not modified in this slice.
+- Widgets / Chart: approved and not modified in this slice.
+- Widgets / Document Cards: approved and not modified in this slice.
 - Vuetify Batch B and later: skipped by scope.
 - Style & User Interface: skipped by scope.
 - Dashboard rebuild: skipped by scope.
@@ -173,7 +190,31 @@ Historical Charts work already completed:
 
 ## Build Result
 
-- Not run. This task was audit-only and did not modify React code.
+- Command: `npm run build`
+- Directory: `react-dashboard-template/`
+- Status: passed
+- Non-blocking warning: generated JS chunk is larger than Vite's default 500 kB warning threshold.
+
+## Api Explorer Verification
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/vuetify/api-explorer` | `/components/vuetify/api-explorer` | Full | Added to React router. |
+| Sidebar | `UI Components` > `Vuetify` > `Api Explorer` | Same parent/child exposed in existing UI Components shell | Full | Existing Charts and Widgets entries preserved. |
+| Section header | Vuse section definition with title, namespace, icon, breadcrumbs | `DocPage` uses existing Vuse section definition with Api Explorer title, Components namespace, dashboard icon, and breadcrumbs | High | Breadcrumb copy follows audited page scope. |
+| Doc text | Intro documentation surface above explorer | `DocText` renders compact gray documentation copy above explorer | High | Exact i18n copy is not available in React; documented local copy is used. |
+| Autocomplete | Full-width search/select with database-search icon, clearable, selected chip, icon items | MUI autocomplete with raised Vuse surface, leading icon, clear behavior, selected chip, icon options, labels, and subtext | High | Uses React-local API dataset. |
+| Empty state | Centered gray search/or/browse prompts | Centered search icon plus search/or/browse prompts | High | Text adapted to visible meaning. |
+| API selection | Selecting a component renders API section | Selection renders API heading, text, toolbar, tabs, and rows | High | Implemented for local API metadata entries. |
+| API toolbar | Primary toolbar with component select and search field | Teal primary toolbar with white outlined component select and search field | High | Responsive stack preserved. |
+| API tabs | Available categories as vertical tabs on desktop, horizontal on small screens | Props/slots/events/functions/options/sass tabs render only when data exists; vertical on desktop, scrollable horizontal on small screens | High | Mirrors audited behavior. |
+| Search/filter | Search filters parameter rows | Search filters active tab rows and shows no-results message | High | Client-side string filter. |
+| Parameter rows | Compact overline labels, monospace values, descriptions, dividers, code blocks | `ApiParameterRow` renders overline labels, monospace name/type/default, descriptions, optional code blocks, dividers | High | Description text comes from local metadata. |
+| Data source | `@vuetify/api-generator` metadata from `dist/api.js` | React-local JSON copy generated from the same package metadata | High | Full selectable Vue API list is present; package is copied as data rather than imported as a runtime dependency. |
+| API component count | Vue filters generated metadata to `v-*` entries excluding four directives | React exposes 159 API components with the same filter | Full | Verified from `react-dashboard-template/src/data/vuetifyApiGeneratorData.json`. |
+| API metadata categories | Props, slots, events, functions, options, plus available generator categories | React preserves `api`, `props`, `slots`, `events`, `functions`, `functional`, `options`, `sass` when present | High | Vue also has i18n descriptions outside the generator. |
+| Descriptions | Vue `Parameters.vue` resolves descriptions through docs i18n keys | React shows generator descriptions when present and a generated fallback otherwise | Partial | Remaining gap: full Vue i18n description catalog has not been migrated. |
+| Responsive layout | Full-width autocomplete; API toolbar stacks; tabs adapt | Implemented with MUI breakpoints | High | Needs user visual review against running Vue app. |
 
 ## Protected File Verification
 

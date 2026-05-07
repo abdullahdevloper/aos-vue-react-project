@@ -24,6 +24,7 @@ Current rebuild strategy:
 - Widgets / Document Cards: approved
 - UI Components / Widgets: approved
 - Vuetify Batch A: audited
+- Vuetify / Api Explorer: implemented; pending user visual approval
 - Vuetify Batch B and later: not started
 - Style & User Interface: not in scope
 - Pages and Dashboard rebuild: not in scope
@@ -37,8 +38,74 @@ Current rebuild strategy:
 - `/widgets/statistic`
 - `/widgets/analytical`
 - `/widgets/document-cards`
+- `/components/vuetify/api-explorer`
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
+
+## Vuetify Api Explorer Implementation
+
+Status: implemented; pending user visual approval.
+
+Route:
+
+- `/components/vuetify/api-explorer`
+
+Implemented Vuetify sidebar entries:
+
+- `UI Components`
+- `Vuetify`
+- `Api Explorer`
+
+Implemented docs primitives:
+
+- `DocPage`
+- `DocText`
+- `ApiExplorer`
+- `ApiItems`
+- `ApiParameterRow`
+- React-local JSON copy of the full Vue `@vuetify/api-generator` metadata
+
+Implemented Api Explorer behavior:
+
+- Search/autocomplete component selector with icons, labels, subtext, clear behavior, and selected chip.
+- Empty state prompting the user to search or browse categories.
+- Selected component API section with heading copy, primary toolbar, component select, search field, tabs, and parameter rows.
+- Search filters the active API tab rows.
+- Tabs render available API categories including props, slots, events, functions, options, and sass when data exists.
+- Desktop tabs use vertical orientation; small screens use horizontal scrolling tabs.
+- Parameter rows preserve compact overline labels, monospace names/types/defaults, descriptions, code blocks, dividers, and an internal scroll panel.
+
+Metadata source:
+
+- Vue source uses `import api from "@vuetify/api-generator"` in `src/demo/components/Api/ApiExplorer.vue`.
+- The package main is `node_modules/@vuetify/api-generator/dist/api.js`.
+- React now uses a generated JSON copy at `react-dashboard-template/src/data/vuetifyApiGeneratorData.json`.
+- React applies the same selectable entry filter as Vue: include `v-*` keys and exclude `v-ripple`, `v-touch`, `v-scroll`, and `v-resize`.
+- Available React API components: 159.
+- Metadata categories preserved from the generator: `api`, `props`, `slots`, `events`, `functions`, `functional`, `options`, and `sass` when present.
+
+Remaining metadata gap:
+
+- Vue row descriptions are resolved at runtime through the Vue docs i18n/Parameters layer, not directly from `@vuetify/api-generator`.
+- React now preserves the full generated API metadata, but uses a fallback description when the generator record has no description.
+
+Visual status:
+
+- Uses pale Vuse `#f2f3f7` background, soft neumorphic autocomplete surface, teal primary toolbar, compact documentation spacing, and Vue-like typography/density.
+- Pending user visual approval before moving to Alerts.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Alerts, Avatars, Badges, Banners.
+- Charts pages.
+- Widgets pages.
 
 ## Vuetify Batch A Audit
 

@@ -11,6 +11,7 @@ import ListsWidgetsPage from "./pages/ui-components/widgets/ListsPage";
 import StatisticPage from "./pages/ui-components/widgets/StatisticPage";
 import AnalyticalPage from "./pages/ui-components/widgets/AnalyticalPage";
 import DocumentCardsPage from "./pages/ui-components/widgets/DocumentCardsPage";
+import ApiExplorerPage from "./pages/ui-components/vuetify/ApiExplorerPage";
 
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/widgets/statistic" element={<StatisticPage />} />
             <Route path="/widgets/analytical" element={<AnalyticalPage />} />
             <Route path="/widgets/document-cards" element={<DocumentCardsPage />} />
+            <Route path="/components/vuetify/api-explorer" element={<ApiExplorerPage />} />
             <Route path="/prototype-dashboard" element={<DashboardPage />} />
             <Route path="/widgets" element={<WidgetsPage />} />
             <Route path="/lists" element={<ListsPage />} />
