@@ -59,7 +59,7 @@ export const globalNavigation: SidebarNavEntry[] = [
   { icon: <Contacts />, title: "Contacts", disabled: true, pending: true },
   { icon: <Chat />, title: "Chat", disabled: true, pending: true },
   { header: "Style & User Interface" },
-  { icon: <ColorLens />, title: "Color", disabled: true, pending: true },
+  { icon: <ColorLens />, title: "Color", path: "/colors" },
   { icon: <PhotoLibrary />, title: "Icons", disabled: true, pending: true },
   { icon: <Help />, title: "Helpers", disabled: true, pending: true },
   { icon: <RoundedCorner />, title: "Border Radius", badge: "new", disabled: true, pending: true },
