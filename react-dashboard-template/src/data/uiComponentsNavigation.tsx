@@ -1,4 +1,4 @@
-import { Article, CardGiftcard, Dashboard, Equalizer, FormatListBulleted, InsertChartOutlined, OfflineBolt, ShowChart, WidgetsOutlined } from "@mui/icons-material";
+import { Article, CardGiftcard, Dashboard, Equalizer, FormatListBulleted, InsertChartOutlined, NotificationsActive, OfflineBolt, ShowChart, WidgetsOutlined } from "@mui/icons-material";
 
 export const uiComponentsNavigation = [
   {
@@ -26,7 +26,10 @@ export const uiComponentsNavigation = [
       {
         title: "Vuetify",
         icon: <Dashboard />,
-        children: [{ title: "Api Explorer", path: "/components/vuetify/api-explorer", icon: <Dashboard /> }],
+        children: [
+          { title: "Api Explorer", path: "/components/vuetify/api-explorer", icon: <Dashboard /> },
+          { title: "Alerts", path: "/components/alerts", icon: <NotificationsActive /> },
+        ],
       },
     ],
   },

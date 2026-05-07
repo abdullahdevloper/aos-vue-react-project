@@ -171,3 +171,58 @@ Before implementing any section, audit must include:
 A section must not be implemented until its behavior audit is complete.
 A section must not be approved until visual behavior and interactions are reviewed by the user.
 
+
+## Visual Fidelity Gate
+
+For every implemented slice, Codex must compare the React page against the running Vue page.
+
+The comparison must include:
+
+- same viewport size
+- same browser zoom
+- same route
+- same sidebar state
+- same scroll position
+- same light/dark/inverted state where applicable
+
+Codex must verify:
+
+- page width and content container width
+- card width and height
+- typography scale
+- line-height
+- padding and margins
+- section spacing
+- button size and states
+- input/select height and label position
+- icon size and alignment
+- chart/canvas dimensions
+- shadows and background colors
+- hover/click/toggle behavior
+- visible documentation text
+
+A slice is not ready for user review until scale, spacing, and behavior are checked against Vue.
+
+React must not rely on generic MUI default sizing. Override MUI styles locally when needed to match the Vue/Vuse page.
+
+
+## Responsive Fidelity Gate
+
+React must follow the original Vue/Vuetify responsive behavior.
+
+Before implementing or approving any slice, Codex must inspect the original Vue source to identify:
+
+- Vuetify breakpoints used by the page
+- v-container / v-row / v-col layout behavior
+- responsive props such as cols, sm, md, lg, xl
+- hidden/show behavior by breakpoint
+- sidebar state changes
+- card wrapping behavior
+- chart/media resizing behavior
+- typography/spacing changes by screen size
+
+Do not impose arbitrary breakpoints if the Vue source does not use them.
+
+Use common viewport sizes only as test samples, not as design requirements.
+
+If the original page has no special mobile/tablet behavior, React should preserve that behavior and document it.

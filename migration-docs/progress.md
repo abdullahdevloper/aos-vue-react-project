@@ -25,6 +25,7 @@ Current rebuild strategy:
 - UI Components / Widgets: approved
 - Vuetify Batch A: audited
 - Vuetify / Api Explorer: implemented; pending user visual approval
+- Vuetify / Alerts: implemented; pending user visual approval
 - Vuetify Batch B and later: not started
 - Style & User Interface: not in scope
 - Pages and Dashboard rebuild: not in scope
@@ -39,8 +40,105 @@ Current rebuild strategy:
 - `/widgets/analytical`
 - `/widgets/document-cards`
 - `/components/vuetify/api-explorer`
+- `/components/alerts`
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
+
+## Vuetify Alerts Implementation
+
+Status: implemented; pending user visual approval.
+
+Route:
+
+- `/components/alerts`
+
+Implemented Vuetify sidebar entries:
+
+- `UI Components`
+- `Vuetify`
+- `Alerts`
+
+Implemented Alerts page:
+
+- Vuse section header with Components > Vuetify > Alerts breadcrumbs.
+- Documentation intro text.
+- Usage playground with tabs, dismissible switch, elevation slider, border/color/icon/type selects, reset behavior, and `Invert playground colors`.
+- Vuse-style example documentation blocks with `Invert example color`, GitHub, and source action icons.
+- All Vue Alerts examples:
+  - Type
+  - Border
+  - Colored Border
+  - Dense
+  - Dismissible
+  - Icon
+  - Outlined
+  - Prominent
+  - Text
+  - Transition
+  - Twitter
+
+Implemented Alerts behavior:
+
+- Dismissible example close/reset behavior.
+- Twitter example delete close icon and reset-alert behavior.
+- Transition example toggle with scale/opacity transition.
+- Usage playground reset after dismiss.
+- Usage playground tabs and controls update the preview alert.
+- Example invert action switches the example surface to a dark/inverted mode.
+- Example source action expands/collapses a dark source panel similar to Vue `Example.vue`.
+- Source panel includes rounded section tabs and code windows, with `template` plus `script` tabs for stateful examples.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Source panel fix:
+
+- Implemented after visual review reopened Alerts.
+- The `View source` action now toggles an expandable dark source/code panel for Alerts examples.
+- The invert example color behavior and all Alerts dismiss/reset/toggle behaviors were preserved.
+
+Controls/state fix:
+
+- Implemented after Alerts visual review remained open.
+- Reworked Alerts example buttons with Vuse-like default, hover, focus-visible, active/pressed, disabled, radius, typography, padding, and contrast states.
+- Fixed prominent alert action button styling so hover/pressed colors remain stable instead of shifting to generic MUI colors.
+- Replaced the usage playground boolean checkbox with a compact inset switch matching Vue usage controls more closely.
+- Reworked usage selects to prevent label/value overlap and align height, padding, line-height, icon placement, border, hover, focus, and menu selected states.
+- Preserved source-panel expansion, invert example color, dismiss/reset, Twitter reset, and transition toggle behaviors.
+
+Documentation structure fix:
+
+- Implemented after Alerts visual review remained open.
+- Added visible documentation paragraphs to the Type and Border example sections.
+- Reviewed Alerts examples and added section-level documentation text for the remaining visible docs examples.
+- Increased Alerts example heading sizes, paragraph sizes, toolbar height, body padding, grid spacing, and alert body spacing to reduce the compressed React feel.
+- Tuned alert body typography and spacing toward Vue/Vuetify density.
+- Preserved source-panel expansion, invert example color, dismiss/reset, Twitter reset, transition toggle, and playground controls.
+- Alerts remains pending user visual approval.
+
+Visual scale/density fix:
+
+- Implemented after Alerts visual review remained open for compressed React scale.
+- Increased Usage and Examples headings to better match Vue documentation scale.
+- Increased documentation paragraph size, line height, and spacing.
+- Increased usage playground height, tab height, options toolbar height, options padding, and control spacing.
+- Increased select height, label/value size, icon alignment, and switch size.
+- Increased example block toolbar height, title size, paragraph size, body padding, and vertical gap between examples.
+- Increased alert row text size, line height, vertical padding, horizontal padding, row spacing, icon size, and close-button target size.
+- Increased example action icon button size while preserving low-emphasis visual treatment.
+- Preserved View source, Invert example color, dismiss/reset, transition toggle, and playground behavior.
+- Alerts remains pending user visual approval.
+
+Not touched:
+
+- Api Explorer implementation, except the existing route/sidebar remains preserved.
+- Avatars, Badges, Banners.
+- Charts pages.
+- Widgets pages.
 
 ## Vuetify Api Explorer Implementation
 

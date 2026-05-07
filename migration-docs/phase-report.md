@@ -4,7 +4,7 @@ Last updated: 2026-05-07
 
 ## Phase
 
-UI Components / Vuetify Batch A / Api Explorer implementation.
+UI Components / Vuetify Batch A / Alerts implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -19,6 +19,7 @@ Approval:
 - UI Components / Widgets = approved
 - UI Components / Vuetify Batch A = in progress
 - UI Components / Vuetify / Api Explorer = implemented; pending user visual approval
+- UI Components / Vuetify / Alerts = implemented; pending user visual approval
 
 ## Completed Files
 
@@ -35,6 +36,7 @@ Approval:
 - `react-dashboard-template/src/components/vuetify-docs/ApiItems.tsx`
 - `react-dashboard-template/src/components/vuetify-docs/ApiParameterRow.tsx`
 - `react-dashboard-template/src/pages/ui-components/vuetify/ApiExplorerPage.tsx`
+- `react-dashboard-template/src/pages/ui-components/vuetify/AlertsPage.tsx`
 
 Historical completed files from previous approved slices:
 
@@ -68,15 +70,25 @@ No protected Vue/root files or `AGENTS.md` were modified.
 
 Current implementation work:
 
-- Added route `/components/vuetify/api-explorer`.
-- Added only the Vuetify sidebar parent and Api Explorer child needed for this slice.
-- Added reusable Vuetify docs primitives needed for Api Explorer: `DocPage`, `DocText`, `ApiExplorer`, `ApiItems`, and `ApiParameterRow`.
-- Replaced the original React-local subset with a generated JSON copy of Vue's full `@vuetify/api-generator` metadata.
-- Preserved Vue's selectable-entry filter: `v-*` entries excluding `v-ripple`, `v-touch`, `v-scroll`, and `v-resize`.
-- Exposed 159 API components in the React Api Explorer.
-- Rebuilt the Api Explorer page with Vuse section header, documentation text, soft autocomplete, empty state, selected API section, teal API toolbar, component selector, search field, tabs, and parameter rendering.
-- Preserved responsive behavior with stacked toolbar controls and horizontal small-screen tabs.
-- Kept Alerts, Avatars, Badges, Banners, Charts, and Widgets untouched.
+- Added route `/components/alerts`.
+- Added only the Vuetify / Alerts sidebar child needed for this slice, preserving Api Explorer.
+- Rebuilt the Alerts page with Vuse section header, documentation text, usage playground, and examples section.
+- Implemented all eleven Vue Alerts examples: Type, Border, Colored Border, Dense, Dismissible, Icon, Outlined, Prominent, Text, Transition, and Twitter.
+- Implemented usage controls from `AlertsView.vue`: dismissible, elevation, normal/dense/prominent/outlined/text/tile tabs, border select, color select, icon select, and type select.
+- Implemented visible behaviors from the Vue examples: alert close/reset, transition toggle, Twitter delete close/reset, and example invert-color action.
+- Implemented the missing Vue-like example source panel expansion/collapse behavior for Alerts examples.
+- Source panels render a dark code surface with rounded section buttons and code content, including a `script` tab for stateful examples.
+- Reworked Alerts-only button states and usage controls after visual review found hover/active/select inconsistencies.
+- Replaced usage playground checkbox with a Vue-like inset switch.
+- Fixed select/dropdown label/value spacing, height, padding, icon alignment, outlined borders, hover, focus, and menu selected states.
+- Added stable default/hover/focus/active/disabled styles for Alerts reset/toggle/action buttons and source panel buttons.
+- Added missing visible documentation paragraphs for the Type and Border examples.
+- Added section-level documentation text to the remaining Alerts examples where the Vue docs page presents explanatory copy.
+- Increased Alerts example heading scale, paragraph scale, toolbar height, card body padding, grid spacing, and alert internal typography/spacing to better match the Vue documentation page.
+- Increased Alerts visual scale/density after review found React still smaller and more compressed than Vue.
+- Tuned Usage block sizing, tabs, selects, switch, options toolbar, example action bar, dark/inverted body, buttons, alert bars, alert text, and icon alignment.
+- Preserved Vuse pale background, soft documentation surfaces, teal accents, compact docs density, subtle shadows, and Vue-like alert spacing.
+- Kept Api Explorer route behavior preserved and did not implement Avatars, Badges, Banners, Charts, or Widgets.
 
 Audit foundation from previous step:
 
@@ -173,7 +185,7 @@ Historical Charts work already completed:
 
 ## Skipped Or Failed Items
 
-- Alerts: skipped by active scope.
+- Api Explorer changes: skipped by active scope except route/sidebar preservation.
 - Avatars: skipped by active scope.
 - Badges: skipped by active scope.
 - Banners: skipped by active scope.
@@ -214,6 +226,74 @@ Historical Charts work already completed:
 | API component count | Vue filters generated metadata to `v-*` entries excluding four directives | React exposes 159 API components with the same filter | Full | Verified from `react-dashboard-template/src/data/vuetifyApiGeneratorData.json`. |
 | API metadata categories | Props, slots, events, functions, options, plus available generator categories | React preserves `api`, `props`, `slots`, `events`, `functions`, `functional`, `options`, `sass` when present | High | Vue also has i18n descriptions outside the generator. |
 | Descriptions | Vue `Parameters.vue` resolves descriptions through docs i18n keys | React shows generator descriptions when present and a generated fallback otherwise | Partial | Remaining gap: full Vue i18n description catalog has not been migrated. |
+
+## Alerts Verification
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/alerts` | `/components/alerts` | Full | Added to React router. |
+| Sidebar | `UI Components` > `Vuetify` > `Alerts` | Same parent/child exposed in existing UI Components shell | Full | Api Explorer sidebar child preserved. |
+| Section header | Vuse section definition with Components > Vuetify > Alerts breadcrumbs | `DocPage` uses existing Vuse section definition and matching breadcrumbs | High | Uses React docs shell. |
+| Documentation layout | `DocPage` intro, usage section, examples section | Intro text, usage section, and examples section implemented | High | Exact i18n prose is adapted. |
+| Usage controls | `dismissible`, `elevation`, variant tabs, border/color/icon/type selects | Implemented controls with live preview | High | Controls update the preview alert. |
+| Usage invert | `Invert playground colors` toggles dark playground surface | Implemented invert playground action | High | Matches visible behavior. |
+| Type example | success/info/warning/error alerts | Implemented | High | Icons/colors mapped to MUI equivalents. |
+| Border example | top/right/bottom/left colored dark alerts | Implemented | High | Border placement and color treatment preserved. |
+| Colored Border example | colored border, elevation, long copy | Implemented | High | Soft React shadow approximates Vuetify elevation. |
+| Dense example | dense/text/border/outlined combinations | Implemented | High | Typography and density adapted. |
+| Dismissible example | close hides alert; Reset restores | Implemented | Full | Close aria label uses `Close Alert`. |
+| Icon example | custom icons/colors/prominent alert | Implemented | High | Icons mapped to available Material icons. |
+| Outlined example | outlined, text, prominent border variants | Implemented | High | Layout and text hierarchy preserved. |
+| Prominent example | prominent alert with action button plus icon variants | Implemented | High | Responsive row approximated with Stack. |
+| Text example | text alerts, divider, Okay action | Implemented | High | Divider opacity and outlined action preserved. |
+| Transition example | Toggle button shows/hides alert with scale transition | Implemented | High | CSS transition approximates Vuetify `scale-transition`. |
+| Twitter example | colored-border cyan alert, Twitter icon, delete close icon, reset | Implemented | High | Uses Material Twitter/delete icons. |
+| Example invert | Vue example block supports invert example colors | Implemented for Alerts example blocks | High | Uses same tooltip text requested for prior Charts behavior. |
+| Source/GitHub action icons | Vue example card shows action icons | Minimal action icons visible; source action toggles code panel | High | GitHub icon remains visual/non-navigation in this local React slice. |
+| Source panel expansion | `View source` expands a dark panel with section buttons and code window | Implemented expandable dark source panel with template/script sections where applicable | High | Alerts examples now match the Vue interaction pattern; snippets are React-maintained approximations of Vue example source. |
+| Type documentation copy | Vue Type example shows descriptive paragraph above the alerts | Added visible Type paragraph above the React Type example | High | Text matches the documented Vuetify meaning and is now visible in the example block. |
+| Border documentation copy | Vue Border example shows descriptive paragraph above the alerts | Added visible Border paragraph above the React Border example | High | Text covers the same top/bottom/left/right border guidance. |
+| Section documentation copy | Vue docs examples include explanatory paragraphs where present | Added section-level explanatory copy across Alerts examples | Medium | Exact i18n strings may differ where Vue text is resolved from localization. |
+| Docs scale/spacing | Vue docs layout is roomier with larger headings and body copy | Increased example heading, paragraph, toolbar, card padding, grid spacing, and alert body spacing | High | Keeps full-width docs layout. |
+| Alert colors | Vue/Vuetify alert colors use Vuetify palette/type colors | Palette kept aligned to Vuetify v2 type and named colors, with Vuse primary retained where source uses `primary` | High | Further exact tuning may depend on the running Vuse theme overrides. |
+
+## Alerts Controls Verification
+
+| Control/Behavior | Vue expected | React after fix | Match level | Notes |
+|---|---|---|---|---|
+| Example contained buttons | Stable Vuetify button color on default/hover/pressed states with compact radius and medium text | Added local Vuse button styles for Reset, Toggle, Reset Alert, and dark/light actions | High | Hover colors no longer fall back to generic MUI shades. |
+| Prominent alert action button | Light `v-btn` inside prominent error alert keeps readable contrast and subtle pressed feedback | `Take action` uses a light Vuse button with stable hover, active inset, focus ring, compact padding, and no uppercase transform | High | Matches Vue action-button intent more closely. |
+| Outlined action button | Info outlined button keeps border color and subtle tint on hover/press | `Okay` uses a local outlined style with stable info border, hover tint, active inset, and focus ring | High | Prevents inconsistent hover color. |
+| Source panel section buttons | Rounded dark-panel section buttons show selected and pressed states | Added hover, active, focus-visible, selected background, rounded shape, and compact padding | High | Used only in Alerts source panel. |
+| Example action icons | Small low-emphasis icon buttons with hover tooltip and pressed feedback | Added hover, active scale, focus ring, active color, and opacity states | High | Preserves invert and source toggle behavior. |
+| Usage boolean control | Vue usage playground renders an inset switch for booleans | Replaced checkbox with compact inset switch styled for checked, hover, active, and track states | High | Label remains `dismissible`. |
+| Usage tabs | Vue tabs use primary selected color, subtle hover, and stable active state | Added hover, active, selected underline/inset feel, disabled, focus-visible, and compact typography | High | Existing tab behavior preserved. |
+| Usage selects | Dense filled/outlined Vuetify controls with no text overlap and aligned icon/value | Reworked select label shrink, height, padding, line-height, icon position, outline, hover/focus, menu paper, and selected rows | High | Removes label/value overlap. |
+| Playground invert | Invert playground colors remains available and stable on hover/press | Preserved behavior and added Vuse icon-button hover/active/focus states | High | No behavior regression. |
+| Dismiss/reset/toggle | Alerts close/reset/toggle examples keep working | Preserved dismissible, Twitter, transition, and usage reset behavior | Full | Verified by build and code path. |
+
+Remaining Alerts visual gaps:
+
+- Exact Vue i18n documentation strings may differ for some secondary examples because those strings are resolved through the Vue docs localization layer.
+- Alert color matching is aligned to Vuetify v2 named/type colors, but final approval may require screenshot-level tuning against the running local Vuse theme.
+
+## Alerts Visual Scale Checklist
+
+| Area | Vue expected | React after fix | Match level | Notes |
+|---|---|---|---|---|
+| Page section rhythm | Roomy docs flow between Usage, Examples, and example cards | Increased section margins and example grid spacing | High | Alerts-only adjustment. |
+| Usage heading | Larger Vue docs heading scale | Increased Usage heading to 28/32px responsive sizing | High | Keeps existing docs shell. |
+| Examples heading | Larger Vue docs heading scale | Increased Examples heading to 28/32px responsive sizing | High | No other pages touched. |
+| Documentation paragraphs | Larger, lighter, roomier Vue docs text | Increased paragraph font size, line height, and bottom spacing | High | Type and Border copy remain visible. |
+| Usage tabs | Vuetify tab height/density, readable labels | Increased tab min height, padding, font size, hover/selected state | High | Existing tab behavior preserved. |
+| Usage playground | Vue usage preview has more presence | Increased preview height and inner padding | High | Invert playground still works. |
+| Options toolbar | Vue options header is taller/readable | Increased toolbar height and label size | High | Invert icon preserved. |
+| Select fields | Vuetify-like control height and no label overlap | Increased select height, value font, label transform, icon offset | High | No overlap retained. |
+| Switch control | Vue inset switch size/density | Increased switch track/thumb size and label size | High | Replaces prior checkbox. |
+| Example action bar | Vue example toolbar is roomier | Increased toolbar height, horizontal padding, title size, action icon target | High | Source/invert still work. |
+| Dark/inverted body | Vue example dark sheet occupies full demo body | Increased body padding and preserved dark surface transition | High | Invert example color preserved. |
+| Alert rows | Vuetify alerts are taller and less compressed | Increased alert font size, line height, padding, margin, and icon sizes | High | Dense alerts remain smaller than regular alerts. |
+| Buttons | Vuetify button height/padding and pressed feedback | Increased contained/outlined button height, padding, and font size | High | Hover/active fixes preserved. |
 | Responsive layout | Full-width autocomplete; API toolbar stacks; tabs adapt | Implemented with MUI breakpoints | High | Needs user visual review against running Vue app. |
 
 ## Protected File Verification
