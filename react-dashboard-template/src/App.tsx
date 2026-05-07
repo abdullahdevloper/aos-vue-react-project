@@ -9,6 +9,7 @@ import SparkLinePage from "./pages/ui-components/charts/SparkLinePage";
 import CardsPage from "./pages/ui-components/widgets/CardsPage";
 import ListsWidgetsPage from "./pages/ui-components/widgets/ListsPage";
 import StatisticPage from "./pages/ui-components/widgets/StatisticPage";
+import AnalyticalPage from "./pages/ui-components/widgets/AnalyticalPage";
 
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/widgets/card" element={<CardsPage />} />
             <Route path="/widgets/lists" element={<ListsWidgetsPage />} />
             <Route path="/widgets/statistic" element={<StatisticPage />} />
+            <Route path="/widgets/analytical" element={<AnalyticalPage />} />
             <Route path="/prototype-dashboard" element={<DashboardPage />} />
             <Route path="/widgets" element={<WidgetsPage />} />
             <Route path="/lists" element={<ListsPage />} />

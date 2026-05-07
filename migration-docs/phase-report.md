@@ -4,7 +4,7 @@ Last updated: 2026-05-06
 
 ## Phase
 
-UI Components / Widgets / Statistic implementation.
+UI Components / Widgets / Chart implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -13,8 +13,8 @@ Approval:
 - UI Components / Charts = approved
 - UI Components / Widgets / Cards = approved route preserved
 - UI Components / Widgets / Lists = approved route preserved
-- UI Components / Widgets / Statistic = pending user visual approval
-- UI Components / Widgets / Chart = not started
+- UI Components / Widgets / Statistic = approved route preserved
+- UI Components / Widgets / Chart = pending user visual approval
 - UI Components / Widgets / Document Cards = not started
 
 ## Completed Files
@@ -26,6 +26,7 @@ Approval:
 - `react-dashboard-template/src/pages/ui-components/widgets/CardsPage.tsx`
 - `react-dashboard-template/src/pages/ui-components/widgets/ListsPage.tsx`
 - `react-dashboard-template/src/pages/ui-components/widgets/StatisticPage.tsx`
+- `react-dashboard-template/src/pages/ui-components/widgets/AnalyticalPage.tsx`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/Avengers-EndGame.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/dragon.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/design_community.png`
@@ -63,6 +64,11 @@ No protected Vue/root files or `AGENTS.md` were modified.
 - Implemented ColumnarStatistic, BasicStatistic, and TaskStatus compositions.
 - Preserved Vue values, progress bars, task-progress rows, visual indicators, brand logo avatars, and responsive layout.
 - Copied only required local Statistic assets into the React template assets folder.
+- Added route `/widgets/analytical`.
+- Added minimal Widgets sidebar exposure for `Chart`.
+- Rebuilt the Chart widgets page from `src/views/Widgets/Chart/index.vue`.
+- Implemented AnalyticIncomeExpense, RevenueProfileBar, ProductComparisonBar, ProductSalesHorizBar, OrdersStackedLine, and NetProfitLine.
+- Preserved Vue datasets, card titles/subtitles, status values, `See Details` actions, avatar indicators, Chart.js hover/tooltips, chart proportions, and responsive layout.
 
 Historical Charts work already completed:
 
@@ -126,7 +132,7 @@ Historical Charts work already completed:
 
 - Widgets / Cards: approved route preserved; not modified beyond shared route/sidebar context.
 - Widgets / Lists: approved route preserved; not modified beyond shared route/sidebar context.
-- Widgets / Chart: skipped by scope.
+- Widgets / Statistic: approved route preserved; not modified beyond shared route/sidebar context.
 - Widgets / Document Cards: skipped by scope.
 - Charts: approved and not modified in this slice.
 - Vuetify: skipped by scope.
@@ -151,7 +157,7 @@ Result: no output. Protected Vue/root files and `AGENTS.md` were unchanged.
 
 ## Stop Point
 
-Stopped after Widgets / Statistic. Widgets / Statistic remains pending user visual approval. Chart widgets, Document Cards, and Vuetify were not started.
+Stopped after Widgets / Chart. Widgets / Chart remains pending user visual approval. Document Cards and Vuetify were not started.
 
 ## Widgets Audit Summary
 
@@ -305,3 +311,45 @@ Remaining visual/behavior gaps:
 - Needs user visual review against the running Vue app.
 - Screenshot-level running-app verification could not be completed because the local route was unavailable on follow-up.
 - No interactive behaviors beyond static progress/status indicators are present in the Vue Statistic source.
+
+## Widgets Chart Verification
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/widgets/analytical` route renders Analytical Widgets page | `/widgets/analytical` route added | Full | Route wired in React router |
+| Sidebar | UI Components > Widgets > Chart | Widgets parent includes Chart child | Full | Cards, Lists, Statistic entries preserved |
+| Page header | `Analytical Widgets`, Widgets > Analytical breadcrumbs, `card_giftcard` icon | `Analytical Widgets`, Widgets > Analytical breadcrumbs, card gift icon | High | Uses React VuseSectionDefinition |
+| Layout row 1 | Four compact cards at `lg=3 md=6` | Four compact analytical cards at `lg=3 md=6` | Full | Order matches Vue row1Components |
+| Layout row 2 | Two line cards at `md=6` | Two line analytical cards at `md=6` | Full | Order matches Vue row2Components |
+| AnalyticIncomeExpense | Expense `$42220`, +3.49 than last year, See Details, stacked hidden-axis bar chart | Matching card, status, action, and data | High | Uses Chart.js v4 options |
+| RevenueProfileBar | Profit `$38000`, +8.50%, See Details, cyan/amber bar chart | Matching card, status, action, and data | High | Uses source dataset values |
+| ProductComparisonBar | JS Framework Comparison, Year 2020, See Details, Angular/VuseJs/ReactJs bars | Matching card, status, action, and data | High | Labels/data/colors preserved closely |
+| ProductSalesHorizBar | Sales 12000, Year 2020, See Details, horizontal stacked bars | Matching horizontal bar widget | High | Uses `indexAxis: "y"` |
+| OrdersStackedLine | Orders 18K, red favorite avatar, two filled line datasets, index hover/tooltips | Matching line widget and hover/tooltips | High | Point glow plugin details are approximated by Chart.js v4 defaults |
+| NetProfitLine | Net Profit 68K, teal trending avatar, custom tooltip `$valueK` | Matching line widget and custom tooltip | High | Custom tooltip label preserved |
+| Chart proportions | Compact chart body within card, line charts max around 300px | Compact chart body with 184px chart area inside cards | Medium | May need visual tuning after user screenshot review |
+| Hover/tooltips | Chart.js hover/tooltips enabled, line widgets index/non-intersect | Tooltips enabled; line widgets index/non-intersect | High | Bar widgets also expose tooltip hover |
+| Analytical card actions | `See Details` text button aligned end on first four cards | Matching low-emphasis text actions | Full | Demo no-op like Vue |
+| Visual identity | Pale background, neu-glow cards, compact typography, teal/cyan accents | Soft raised cards, compact headers, varied chart colors | High | Needs final user visual review against running Vue app |
+| Running app visual check | Compare against local Vue page | Local route returned HTTP 200 | Partial | Screenshot-level inspection was not available from this session |
+
+## Widgets Chart Implementation Summary
+
+Implemented route:
+
+- `/widgets/analytical`
+
+Implemented analytical chart widgets:
+
+- AnalyticIncomeExpense
+- RevenueProfileBar
+- ProductComparisonBar
+- ProductSalesHorizBar
+- OrdersStackedLine
+- NetProfitLine
+
+Remaining visual/behavior gaps:
+
+- Needs user visual review against the running Vue app.
+- Vue custom chart shadow/point glow plugin details are approximated with Chart.js v4 defaults.
+- Dashed Y-grid from Vue line widgets was simplified to a soft visible grid because the installed Chart.js typings did not expose the dash option cleanly.

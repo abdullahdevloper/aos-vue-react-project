@@ -1,4 +1,4 @@
-import { CardGiftcard, Equalizer, FormatListBulleted, InsertChartOutlined, OfflineBolt, WidgetsOutlined } from "@mui/icons-material";
+import { CardGiftcard, Equalizer, FormatListBulleted, InsertChartOutlined, OfflineBolt, ShowChart, WidgetsOutlined } from "@mui/icons-material";
 
 export const uiComponentsNavigation = [
   {
@@ -19,6 +19,7 @@ export const uiComponentsNavigation = [
           { title: "Cards", path: "/widgets/card", icon: <CardGiftcard /> },
           { title: "Lists", path: "/widgets/lists", icon: <FormatListBulleted /> },
           { title: "Statistic", path: "/widgets/statistic", icon: <Equalizer /> },
+          { title: "Chart", path: "/widgets/analytical", icon: <ShowChart /> },
         ],
       },
     ],

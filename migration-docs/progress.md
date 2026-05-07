@@ -14,13 +14,13 @@ Current rebuild strategy:
 
 ## Current Slice
 
-- Scope: UI Components / Widgets / Statistic
+- Scope: UI Components / Widgets / Chart
 - Status: implemented; pending user visual approval
 - UI Components / Charts: approved
 - Widgets / Cards: approved route preserved
 - Widgets / Lists: approved route preserved
-- Widgets / Statistic: pending user visual approval
-- Widgets / Chart: not started
+- Widgets / Statistic: approved route preserved
+- Widgets / Chart: pending user visual approval
 - Widgets / Document Cards: not started
 - Vuetify: not started
 - Style & User Interface: not in scope
@@ -33,6 +33,7 @@ Current rebuild strategy:
 - `/widgets/card`
 - `/widgets/lists`
 - `/widgets/statistic`
+- `/widgets/analytical`
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
 
@@ -373,5 +374,57 @@ Not touched:
 - Widgets / Cards implementation and route.
 - Widgets / Lists implementation and route.
 - Widgets / Chart.
+- Widgets / Document Cards.
+- Vuetify, Style & User Interface, Pages.
+
+## Widgets Chart Implementation
+
+Status: implemented; pending user visual approval.
+
+Route:
+
+- `/widgets/analytical`
+
+Implemented Widgets sidebar entries:
+
+- `UI Components`
+- `Widgets`
+- `Chart`
+
+Implemented analytical chart widgets:
+
+- AnalyticIncomeExpense
+- RevenueProfileBar
+- ProductComparisonBar
+- ProductSalesHorizBar
+- OrdersStackedLine
+- NetProfitLine
+
+Completed:
+
+- Added the Vue-matching Widgets Chart route.
+- Added only the Widgets / Chart sidebar child needed for this slice.
+- Rebuilt the analytical widgets page with the Vue row structure: four compact cards at `lg=3 md=6`, then two line cards at `md=6`.
+- Preserved Vue labels, datasets, titles, subtitles, status text, `See Details` actions, avatar indicators, chart hover/tooltips, and responsive breakpoints.
+- Used existing React Chart.js setup and Vuse soft-card styling rather than generic MUI chart cards.
+
+Verification:
+
+- Source verification completed against `src/views/Widgets/Chart/index.vue`, all six active analytical widget files, `StatsChartAnalysis.vue`, `src/components/ChartJS/**`, and `migration-docs/widgets-audit.md`.
+- Running app route probe for `http://127.0.0.1:5173/widgets/analytical` returned HTTP 200, but screenshot-level visual inspection was not available from this session.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Charts pages implementation and routes.
+- Widgets / Cards implementation and route.
+- Widgets / Lists implementation and route.
+- Widgets / Statistic implementation and route.
 - Widgets / Document Cards.
 - Vuetify, Style & User Interface, Pages.
