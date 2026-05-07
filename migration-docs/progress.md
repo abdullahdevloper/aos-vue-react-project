@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Style & User Interface / Icons.
+- Active section: Style & User Interface / Helpers.
 
 ## Current Slice
 
-- Scope: Style & User Interface / Icons only.
-- Route: `/icons`
+- Scope: Style & User Interface / Helpers only.
+- Route: `/helpers`
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/style-ui-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -31,13 +31,58 @@ Current rebuild strategy:
 - Vuetify / Banners: not started; intentionally paused.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
-- Style & User Interface / Icons: implemented; pending user visual approval.
-- Style & User Interface / Helpers: not started.
+- Style & User Interface / Icons: route preserved.
+- Style & User Interface / Helpers: implemented; pending user visual approval.
 - Style & User Interface / Border Radius: not started.
 - Style & User Interface / Text & Typography: not started.
 - Style & User Interface / Motion: not started.
 - Style & User Interface / Programmatic Scrolling: not started.
 - Style & User Interface / Forms: not started.
+
+## Style UI Helpers Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/helpers`
+
+Implemented Helpers page:
+
+- Vuse-style section header using title `Helpers`, icon `help`, and breadcrumbs `User Interface > Helpers`.
+- Vue-matching dashboard route inside `DashboardLayout`.
+- Style & User Interface sidebar entry for `Helpers`, preserving the existing Color and Icons routes and leaving later Style UI items pending.
+- Desktop section selector matching Vue `mdAndUp` behavior: raised horizontal soft nav with active inset state.
+- Mobile/tablet selector matching Vue `smAndDown` behavior: raised dropdown activator with menu items.
+- Active section swapping for the six Vue helper partials: Content, Display, Elevation, Flex, Float, and Spacing.
+- Content examples: Blockquote, Paragraphs, Code, Variables, and User Input.
+- Display examples: Material Design viewport breakpoints table, display inline/block examples, visibility table/example, and print display example.
+- Elevation examples: 0-24 elevation grid, slider playground, and hover/dynamic elevation behavior.
+- Flex examples: inline, direction, column, justify, align, align-self, margins, nowrap, wrap, wrap reverse, order, align-content, and grow/shrink helper examples.
+- Float examples: viewport breakpoints table plus classes and responsive float examples.
+- Spacing examples: interactive padding/margin playground, helper format notes, horizontal centering, negative margin, breakpoint table, and responsive spacing example.
+- Shared Vuse-style example cards with invert color, source expansion, and visual GitHub action controls.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Color page implementation, except preserving its route/sidebar entry.
+- Icons page implementation, except preserving its route/sidebar entry.
+- Border Radius.
+- Text & Typography.
+- Motion.
+- Programmatic Scrolling.
+- Forms.
+- Vuetify.
+- Pages.
+- Charts.
+- Widgets.
 
 ## Style UI Icons Implementation
 

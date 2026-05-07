@@ -4,7 +4,7 @@ Last updated: 2026-05-07
 
 ## Phase
 
-Style & User Interface / Icons implementation.
+Style & User Interface / Helpers implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -20,8 +20,8 @@ Approval:
 - Pages section = approved
 - Global Sidebar Navigation = approved
 - Style & User Interface / Color = route preserved
-- Style & User Interface / Icons = implemented; pending user visual approval
-- Style & User Interface / Helpers = not started
+- Style & User Interface / Icons = route preserved
+- Style & User Interface / Helpers = implemented; pending user visual approval
 - Style & User Interface / Border Radius = not started
 - Style & User Interface / Text & Typography = not started
 - Style & User Interface / Motion = not started
@@ -32,27 +32,28 @@ Approval:
 
 - `migration-docs/progress.md`
 - `migration-docs/phase-report.md`
-- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
 - `react-dashboard-template/src/App.tsx`
-- `react-dashboard-template/src/pages/style-ui/IconsPage.tsx`
-- `react-dashboard-template/src/data/style-ui/google-material-icons.json`
-- `react-dashboard-template/src/assets/style-ui/icons/MaterialIcons-Regular.woff2`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/pages/style-ui/HelpersPage.tsx`
 
 ## Verification Table
 
 | Item | Vue expected | React implemented | Match level | Notes |
 |---|---|---|---|---|
-| Route | `/icons` renders inside the app/dashboard layout | `/icons` added inside `DashboardRoute` | High | Preserves approved dashboard/sidebar routes |
-| Sidebar entry | Style & User Interface > Icons entry visible | Icons entry linked to `/icons` | High | Color route preserved; later Style UI entries remain pending |
-| Page header | `VuseSectionDefinition` title `Icons`, icon `collections`, breadcrumbs `User Interface > Google Material Icons` | `DocPage` title `Icons`, collections icon, matching breadcrumbs | High | Uses existing React docs shell styling |
-| Dataset | Imports `src/data/json/google-material-icons.json` | Full JSON copied to `react-dashboard-template/src/data/style-ui/google-material-icons.json` | High | React owns the copied data |
-| Icon font | Vuetify `v-icon` renders Material Icons ligatures | Local `MaterialIcons-Regular.woff2` font-face renders ligatures | High | Font copied into React-owned assets |
-| Search field | Solo flat `neu-input` search with magnify icon and hidden details | Vuse-like filled search with magnify icon, inset surface, no helper row | High | Control remains visually soft rather than generic MUI |
-| Search behavior | Filters icons by keywords/state with case-insensitive regex | Filters keywords/state and visible id text | High | `id` fallback improves visible-name search; Vue source references `state`, but data primarily carries keywords |
-| Responsive grid | `cols=12 sm=6 md=4 lg=2` | `xs=12 sm=6 md=4 lg=2` | High | Follows Vue/Vuetify responsive props |
-| Icon cards | 150px flat neu-glow cards, centered icon and label | 150px soft cards, centered Material icon and label | High | No generic icon gallery card styling |
-| Click/copy behavior | No explicit click/copy behavior in Vue source | No click/copy behavior added | High | Avoids inventing behavior |
-| Visual identity | Pale Vuse background, soft surfaces, Vue-like typography/density | Pale background, soft surfaces, compact docs density | Pending visual review | Needs user screenshot comparison before approval |
+| Route | `/helpers` renders inside the dashboard app shell | `/helpers` added inside `DashboardRoute` | High | Approved Color and Icons routes preserved |
+| Sidebar entry | Style & User Interface > Helpers with help icon | Helpers entry linked to `/helpers` | High | Later Style UI entries remain pending |
+| Page header | `VuseSectionDefinition` title `Helpers`, icon `help`, breadcrumbs `User Interface > Helpers` | `DocPage` title `Helpers`, help icon, matching breadcrumbs | High | Uses existing React docs shell styling |
+| Section selector desktop | `v-bottom-navigation`, horizontal, raised `neu-glow`, visible on `mdAndUp` | Raised horizontal soft nav visible at `md` and up | High | Active section uses Vuse-like inset state |
+| Section selector mobile | `v-menu` with raised button/list on `smAndDown` | Dropdown selector below `md` | High | Matches Vue breakpoint intent without arbitrary extra breakpoints |
+| Active section behavior | Content, Display, Elevation, Flex, Float, Spacing swap partial component | Same six sections swap React section content | High | Initial section is Content |
+| Content examples | Blockquote, Paragraphs, Code, Variables, User Input example blocks | All five recreated with source/invert controls | Medium-High | Text is representative Vuse docs content, not exact markdown source text |
+| Display examples | Breakpoints table, display inline/block, visibility table/example, print example | Breakpoints and visibility tables plus inline/block/visibility/print examples | High | Responsive visibility uses MUI breakpoints matching Vuetify props |
+| Elevation examples | 0-24 card grid, slider playground, hover dynamic elevation | All three behaviors implemented | High | Hover changes both dynamic elevation cards |
+| Flex examples | Full flex helper set: inline, direction, column, justify, align, align-self, margins, wrap, order, align-content, grow/shrink | Representative Vuse-style examples for each helper group | Medium-High | Covers all audited helper groups; visual examples are React recreations |
+| Float examples | Breakpoints table, classes, responsive float examples | Breakpoints plus classes/responsive example blocks | High | Responsive copy preserved |
+| Spacing examples | Playground selects, horizontal, negative margin, breakpoint example, breakpoint table | Interactive spacing playground plus all audited examples | High | Selects alter visible margin/padding like Vue |
+| Example actions | Shared examples support invert color and view source/GitHub action buttons | Helpers examples include invert color, source expansion, and GitHub visual action | High | GitHub action is visual only, matching other recreated docs slices |
+| Visual identity | Pale #F2F3F7, soft docs surfaces, teal accents, compact Vuetify density | Pale dashboard shell, neu-glow/inset surfaces, teal active/actions | Pending visual review | Needs user screenshot comparison before approval |
 
 
 ## Build
@@ -64,7 +65,6 @@ Approval:
 
 ## Skipped Or Deferred
 
-- Helpers: not implemented by active scope.
 - Border Radius: not implemented by active scope.
 - Text & Typography: not implemented by active scope.
 - Motion: not implemented by active scope.
