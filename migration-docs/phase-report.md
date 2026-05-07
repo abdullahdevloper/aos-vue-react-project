@@ -887,3 +887,66 @@ Not touched:
 - Login and Signup page implementations, other than the shared `AuthShell` optional sizing props with unchanged defaults.
 - Profile, Coming Soon, Maintenance, Error pages.
 - Vuetify, Charts, Widgets, Style & User Interface.
+
+## Pages Coming Soon Verification
+
+| Page | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Coming Soon route | `/pages/coming-soon`, full layout outside dashboard | Route added outside `DashboardLayout` | Full | Existing dashboard routes preserved |
+| Shell layout | `v-sheet height=100% neu-glow-inset`, centered `v-col cols=12 sm=9 md=6` | Reuses `FullPageShell` with matching `xs=12 sm=9 md=6` | Full | Pale background and raised card preserved |
+| Illustration | `/static/illustator/the_moon.png`, 250px contain | Copied local asset, 250px contained image | Full | Asset stored under React tree |
+| Heading | `Lauching Very Soon` in `text-h5` | Exact visible text and similar scale | Full | Source typo preserved |
+| Countdown | `CountDown` component, four 70px inset tiles: Days/Hrs/Min/Sec | Four 70px inset tiles updating every second | High | Deadline computed as one year from current date like Vue |
+| Subscribe copy | `Please subscribe us to get updates on our application` | Matching text with bold `subscribe` | Full | Typography tuned to Vue density |
+| Email field | Solo Email field, required/email validation, max-width 400 | Styled filled field, required/email validation, max-width 400 | High | Uses MUI field styled to Vuse surface |
+| Submit behavior | `Notify Me!`, disabled while invalid, clears form on valid submit | Matching disabled/reset behavior | Full | Vue has no visible snackbar for submit |
+| Responsive behavior | Illustration/card remain centered; container collapses to full width on mobile | Matching full-width mobile and centered desktop card | High | No arbitrary breakpoints added |
+
+## Pages Maintenance Verification
+
+| Page | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Maintenance route | `/pages/under-maintenance`, full layout outside dashboard | Route added outside `DashboardLayout` | Full | Existing dashboard routes preserved |
+| Shell layout | `v-sheet height=100% neu-glow-inset`, centered `v-col cols=12 sm=9 md=6` | Reuses `FullPageShell` with matching `xs=12 sm=9 md=6` | Full | Pale background and raised card preserved |
+| Illustration | `/static/illustator/under_construction.png`, 250px contain | Copied local asset, 250px contained image | Full | Asset stored under React tree |
+| Heading | `Under Maintenance!` in `text-h4` | Exact visible text and similar scale | Full | Scale follows Vue status page |
+| Body copy | `Scheduled maintenance is currently in progress.` line break, then `Please check back soon We apologize for any inconvenience.` | Matching copy and line break | Full | Source wording preserved |
+| Home action | Secondary `Back To Home` button to `/dashboard/operational` | Matching secondary button and route | Full | Button states follow existing Vuse full-page styling |
+| Responsive behavior | Centered full-page card with mobile full-width collapse | Matching full-page responsive shell | High | No arbitrary breakpoints added |
+
+## Pages Coming Soon + Maintenance Summary
+
+Implemented routes:
+
+- `/pages/coming-soon`
+- `/pages/under-maintenance`
+
+Affected files:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/pages/pages/ComingSoonPage.tsx`
+- `react-dashboard-template/src/pages/pages/MaintenancePage.tsx`
+- `react-dashboard-template/src/assets/pages/illustrator/the_moon.png`
+- `react-dashboard-template/src/assets/pages/illustrator/under_construction.png`
+- `migration-docs/progress.md`
+- `migration-docs/phase-report.md`
+
+Remaining visual/behavior gaps:
+
+- Needs user visual review against the running Vue app.
+- Countdown behavior is recreated in React and visually matches the Vue `CountDown` component, but the internal Vue component is not ported one-for-one.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Profile.
+- Authentication page implementations and shared AuthShell.
+- Error page implementations.
+- Vuetify, Charts, Widgets, Style & User Interface.

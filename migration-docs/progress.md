@@ -1136,3 +1136,44 @@ Not touched:
 - Approved Login and Signup page implementations, except the shared `AuthShell` optional width prop used to preserve Vue-auth layout fidelity.
 - Profile, Coming Soon, Maintenance, Error pages.
 - Vuetify, Charts, Widgets, Style & User Interface.
+
+## Pages Coming Soon + Maintenance Implementation
+
+Status: implemented; pending user visual approval.
+
+Routes:
+
+- `/pages/coming-soon`
+- `/pages/under-maintenance`
+
+Implemented:
+
+- Added Vue-matching full-page routes outside `DashboardLayout`.
+- Enabled the existing Pages sidebar entries for Coming Soon and Maintenance.
+- Rebuilt Coming Soon with:
+  - copied `the_moon.png` React-only asset
+  - Vue text `Lauching Very Soon`
+  - four 70px inset countdown tiles for Days, Hrs, Min, Sec
+  - one-year deadline countdown behavior
+  - subscribe email field with required/email validation
+  - `Notify Me!` button and reset-on-submit behavior
+- Rebuilt Maintenance with:
+  - copied `under_construction.png` React-only asset
+  - Vue heading `Under Maintenance!`
+  - Vue maintenance copy and line break
+  - `Back To Home` button to `/dashboard/operational`
+- Preserved the shared full-page pale background, soft raised card, 4px radius, and Vue `sm=9 md=6` responsive container behavior.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Profile.
+- Authentication page implementations and shared auth shell.
+- Error page implementations.
+- Vuetify, Charts, Widgets, Style & User Interface.

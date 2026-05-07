@@ -69,8 +69,8 @@ export const globalNavigation: SidebarNavEntry[] = [
   { icon: <Input />, title: "Forms", disabled: true, pending: true },
   { header: "Pages" },
   { icon: <People />, title: "Profile", disabled: true, pending: true },
-  { icon: <Timer />, title: "Coming Soon", disabled: true, pending: true },
-  { icon: <Build />, title: "Maintenance", disabled: true, pending: true },
+  { icon: <Timer />, title: "Coming Soon", path: "/pages/coming-soon" },
+  { icon: <Build />, title: "Maintenance", path: "/pages/under-maintenance" },
   {
     title: "Authentication",
     icon: <Lock />,

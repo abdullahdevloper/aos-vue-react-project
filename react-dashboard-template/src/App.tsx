@@ -18,6 +18,8 @@ import AvatarsPage from "./pages/ui-components/vuetify/AvatarsPage";
 import BadgesPage from "./pages/ui-components/vuetify/BadgesPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
+import ComingSoonPage from "./pages/pages/ComingSoonPage";
+import MaintenancePage from "./pages/pages/MaintenancePage";
 import LoginPage from "./pages/pages/auth/LoginPage";
 import SignupPage from "./pages/pages/auth/SignupPage";
 import ForgotPasswordPage from "./pages/pages/auth/ForgotPasswordPage";
@@ -50,6 +52,8 @@ export default function App() {
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
           <Route path="/lists" element={<DashboardRoute><ListsPage /></DashboardRoute>} />
           <Route path="/settings" element={<DashboardRoute><SettingsPage /></DashboardRoute>} />
+          <Route path="/pages/coming-soon" element={<ComingSoonPage />} />
+          <Route path="/pages/under-maintenance" element={<MaintenancePage />} />
           <Route path="/pages/error/404" element={<Error404Page />} />
           <Route path="/pages/error/500" element={<Error500Page />} />
           <Route path="/pages/authentication/login" element={<LoginPage />} />
