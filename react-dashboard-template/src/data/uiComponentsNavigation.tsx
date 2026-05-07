@@ -60,7 +60,7 @@ export const globalNavigation: SidebarNavEntry[] = [
   { icon: <Chat />, title: "Chat", disabled: true, pending: true },
   { header: "Style & User Interface" },
   { icon: <ColorLens />, title: "Color", path: "/colors" },
-  { icon: <PhotoLibrary />, title: "Icons", disabled: true, pending: true },
+  { icon: <PhotoLibrary />, title: "Icons", path: "/icons" },
   { icon: <Help />, title: "Helpers", disabled: true, pending: true },
   { icon: <RoundedCorner />, title: "Border Radius", badge: "new", disabled: true, pending: true },
   { icon: <FormatColorText />, title: "Text & Typography", badge: "new", disabled: true, pending: true },

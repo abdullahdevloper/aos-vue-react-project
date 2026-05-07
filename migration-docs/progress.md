@@ -9,37 +9,77 @@ The previous React output is treated as an unapproved prototype.
 Current rebuild strategy:
 
 - Rebuild section by section with high visual fidelity.
-- Do not move to the next section until the current section is approved by the user.
-- Active section: Pages / Authentication / Signup.
+- Audit -> implementation -> visual review -> approval.
+- Do not move to the next slice until the current slice is approved by the user.
+- Active section: Style & User Interface / Icons.
 
 ## Current Slice
 
-- Scope: Pages / Authentication / Signup only
-- Status: implemented; pending user visual approval
-- UI Components / Charts: approved
-- Widgets / Cards: approved route preserved
-- Widgets / Lists: approved route preserved
-- Widgets / Statistic: approved route preserved
-- Widgets / Chart: approved route preserved
-- Widgets / Document Cards: approved
-- UI Components / Widgets: approved
-- Vuetify Batch A: audited
-- Vuetify / Api Explorer: approved
-- Vuetify / Alerts: approved
-- Vuetify / Avatars: approved
-- Vuetify / Badges: approved
-- Vuetify / Banners: not started; intentionally paused
-- Vuetify Batch B and later: not started
-- Style & User Interface: not in scope
-- Pages / Errors: implemented; pending user visual approval
-- Pages / Profile: not started
-- Pages / Login: implemented; pending user visual approval
-- Pages / Signup: implemented; pending user visual approval
-- Pages / Forgot Password: not started
-- Pages / Lock Screen: not started
-- Pages / Coming Soon: not started
-- Pages / Maintenance: not started
-- Dashboard rebuild: not in scope
+- Scope: Style & User Interface / Icons only.
+- Route: `/icons`
+- Status: implemented; pending user visual approval.
+- Source audit: `migration-docs/style-ui-audit.md`
+- Build: passed inside `react-dashboard-template/`.
+- UI Components / Charts: approved.
+- UI Components / Widgets: approved.
+- Global Sidebar Navigation Fidelity: approved.
+- Pages section: approved.
+- Vuetify / Api Explorer: approved.
+- Vuetify / Alerts: approved.
+- Vuetify / Avatars: approved.
+- Vuetify / Badges: approved.
+- Vuetify / Banners: not started; intentionally paused.
+- Vuetify Batch B and later: not started.
+- Style & User Interface / Color: route preserved.
+- Style & User Interface / Icons: implemented; pending user visual approval.
+- Style & User Interface / Helpers: not started.
+- Style & User Interface / Border Radius: not started.
+- Style & User Interface / Text & Typography: not started.
+- Style & User Interface / Motion: not started.
+- Style & User Interface / Programmatic Scrolling: not started.
+- Style & User Interface / Forms: not started.
+
+## Style UI Icons Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/icons`
+
+Implemented Icons page:
+
+- Vuse-style section header using title `Icons`, icon `collections`, and breadcrumbs `User Interface > Google Material Icons`.
+- Vue-matching dashboard route inside `DashboardLayout`.
+- Style & User Interface sidebar entry for `Icons`, preserving the existing `Color` route and leaving later Style UI items pending.
+- Full Material Icons dataset copied into React-owned data at `react-dashboard-template/src/data/style-ui/google-material-icons.json`.
+- Local Material Icons font copied into React-owned assets at `react-dashboard-template/src/assets/style-ui/icons/MaterialIcons-Regular.woff2`.
+- Vuse-like search input with magnify icon, soft/inset field styling, and no helper/details row.
+- Search/filter behavior based on the Vue page: filters icon metadata by keywords/state, with `id` included as a practical React fallback for visible icon-name search.
+- Responsive icon grid matching the Vue Vuetify layout: `cols=12`, `sm=6`, `md=4`, `lg=2`.
+- 150px centered icon cards with soft Vuse surfaces, Material Icons ligature rendering, and visible icon labels.
+- No click/copy behavior added because the Vue Icons page does not define a visible click action.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Color page implementation, except preserving its route/sidebar entry.
+- Helpers.
+- Border Radius.
+- Text & Typography.
+- Motion.
+- Programmatic Scrolling.
+- Forms.
+- Vuetify.
+- Pages.
+- Charts.
+- Widgets.
 
 ## Pages Login Implementation
 

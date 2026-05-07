@@ -8,6 +8,7 @@ import { DashboardPage, ListsPage, SettingsPage, WidgetsPage } from "./routes/pa
 import ChartJsPage from "./pages/ui-components/charts/ChartJsPage";
 import SparkLinePage from "./pages/ui-components/charts/SparkLinePage";
 import ColorsPage from "./pages/style-ui/ColorsPage";
+import IconsPage from "./pages/style-ui/IconsPage";
 import CardsPage from "./pages/ui-components/widgets/CardsPage";
 import ListsWidgetsPage from "./pages/ui-components/widgets/ListsPage";
 import StatisticPage from "./pages/ui-components/widgets/StatisticPage";
@@ -40,6 +41,7 @@ export default function App() {
           <Route path="/dashboard/operational" element={<DashboardRoute><Navigate to="/charts/chartjs" replace /></DashboardRoute>} />
           <Route path="/charts" element={<DashboardRoute><Navigate to="/charts/chartjs" replace /></DashboardRoute>} />
           <Route path="/colors" element={<DashboardRoute><ColorsPage /></DashboardRoute>} />
+          <Route path="/icons" element={<DashboardRoute><IconsPage /></DashboardRoute>} />
           <Route path="/charts/chartjs" element={<DashboardRoute><ChartJsPage /></DashboardRoute>} />
           <Route path="/charts/spark-line" element={<DashboardRoute><SparkLinePage /></DashboardRoute>} />
           <Route path="/widgets/card" element={<DashboardRoute><CardsPage /></DashboardRoute>} />
