@@ -27,6 +27,7 @@ Current rebuild strategy:
 - Vuetify / Api Explorer: implemented; pending user visual approval
 - Vuetify / Alerts: implemented; pending user visual approval
 - Vuetify / Avatars: implemented; pending user visual approval
+- Vuetify / Badges: implemented; pending user visual approval
 - Vuetify Batch B and later: not started
 - Style & User Interface: not in scope
 - Pages and Dashboard rebuild: not in scope
@@ -43,8 +44,68 @@ Current rebuild strategy:
 - `/components/vuetify/api-explorer`
 - `/components/alerts`
 - `/components/avatars`
+- `/components/badge`
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
+
+## Vuetify Badges Implementation
+
+Status: implemented; pending user visual approval.
+
+Route:
+
+- `/components/badge`
+
+Implemented Vuetify sidebar entries:
+
+- `UI Components`
+- `Vuetify`
+- `Badges`
+
+Implemented Badges page:
+
+- Vuse section header with Components > Vuetify > Badge breadcrumbs.
+- Documentation intro text.
+- Usage playground with `dot`, `overlap`, `icon`, `left`, and `bottom` switches.
+- Usage tabs for `default`, `hidden`, `text`, `inline`, and `bordered` variants.
+- Vuse-style example documentation blocks with `Invert example color`, GitHub, and source action icons.
+- All Vue Badges examples:
+  - Tabs
+  - Hover
+  - Dynamic
+  - Customization
+
+Implemented Badges behavior:
+
+- Usage controls update badge position, dot/content/icon state, inline/text display, hidden state, overlap, and bordered state.
+- Simple Tabs example uses a primary toolbar with three clickable grow tabs and pink, green, and deep-purple badge treatments.
+- Hover example reveals the `9999+` left badge on hover/focus and hides it on leave/blur.
+- Dynamic example increments message count with `Send Message`, clears it with `Clear Notifications`, and hides the email badge at zero.
+- Customization example preserves bordered lock badge, bottom dot avatar badge, and avatar-badge slot composition.
+- Example invert action switches each example surface to a dark/inverted mode.
+- View source expands/collapses the dark source panel with template/script tabs where applicable.
+
+Responsive verification:
+
+- Usage playground follows the Vue docs layout: wide preview column and options column on desktop; stacked on narrow viewports.
+- Tabs example uses grow-style equal columns matching the Vue toolbar/tab behavior.
+- Dynamic and customization examples use centered Vuetify-like rows with responsive wrapping instead of fixed arbitrary breakpoints.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Api Explorer implementation and route.
+- Alerts implementation and route.
+- Avatars implementation and route.
+- Banners.
+- Charts pages.
+- Widgets pages.
 
 ## Vuetify Avatars Implementation
 

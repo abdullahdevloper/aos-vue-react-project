@@ -4,7 +4,7 @@ Last updated: 2026-05-07
 
 ## Phase
 
-UI Components / Vuetify Batch A / Alerts implementation.
+UI Components / Vuetify Batch A / Badges implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -21,6 +21,7 @@ Approval:
 - UI Components / Vuetify / Api Explorer = implemented; pending user visual approval
 - UI Components / Vuetify / Alerts = implemented; pending user visual approval
 - UI Components / Vuetify / Avatars = implemented; pending user visual approval
+- UI Components / Vuetify / Badges = implemented; pending user visual approval
 
 ## Completed Files
 
@@ -39,6 +40,7 @@ Approval:
 - `react-dashboard-template/src/pages/ui-components/vuetify/ApiExplorerPage.tsx`
 - `react-dashboard-template/src/pages/ui-components/vuetify/AlertsPage.tsx`
 - `react-dashboard-template/src/pages/ui-components/vuetify/AvatarsPage.tsx`
+- `react-dashboard-template/src/pages/ui-components/vuetify/BadgesPage.tsx`
 
 Historical completed files from previous approved slices:
 
@@ -71,6 +73,18 @@ No protected Vue/root files or `AGENTS.md` were modified.
 ## Implemented Work
 
 Current implementation work:
+
+- Added route `/components/badge`.
+- Added only the Vuetify / Badges sidebar child needed for this slice.
+- Rebuilt the Badges page with Vuse section header, documentation text, usage playground, and examples section.
+- Implemented usage controls from `BadgeView.vue`: `dot`, `overlap`, `icon`, `left`, and `bottom` switches plus `default`, `hidden`, `text`, `inline`, and `bordered` usage tabs.
+- Implemented all four Vue Badges examples: Tabs, Hover, Dynamic, and Customization.
+- Implemented visible behavior from the Vue examples: clickable grow tabs, hover/focus badge reveal, dynamic message increment/clear and zero-count hide, bordered lock button badge, bottom dot avatar badge, and avatar slot badge.
+- Preserved example invert-color action and source-panel expansion/collapse behavior for Badges examples.
+- Preserved Vuse pale background, soft documentation surfaces, teal accents, compact docs density, subtle shadows, and Vue-like badge spacing.
+- Kept Api Explorer, Alerts, and Avatars route behavior preserved and did not implement Banners, Charts, or Widgets.
+
+Previous Vuetify Batch A implementation work:
 
 - Added route `/components/alerts`.
 - Added only the Vuetify / Alerts sidebar child needed for this slice, preserving Api Explorer.
@@ -198,7 +212,7 @@ Historical Charts work already completed:
 - Api Explorer changes: skipped by active scope except route/sidebar preservation.
 - Api Explorer: preserved, not modified beyond existing route/sidebar context.
 - Alerts: preserved, not modified beyond existing route/sidebar context.
-- Badges: skipped by active scope.
+- Avatars: preserved, not modified beyond existing route/sidebar context.
 - Banners: skipped by active scope.
 - Charts: approved and not modified in this slice.
 - Widgets / Cards: approved and not modified in this slice.
@@ -217,6 +231,26 @@ Historical Charts work already completed:
 - Directory: `react-dashboard-template/`
 - Status: passed
 - Non-blocking warning: generated JS chunk is larger than Vite's default 500 kB warning threshold.
+
+## Badges Verification
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/badge` | `/components/badge` | Full | Added to React router. |
+| Sidebar | `UI Components` > `Vuetify` > `Badges` | Same parent/child exposed in existing UI Components shell | Full | Api Explorer, Alerts, and Avatars entries preserved. |
+| Section header | Vuse section definition with Components > Vuetify > Badge breadcrumbs | `DocPage` uses existing Vuse section definition and matching breadcrumbs | High | Uses React docs shell. |
+| Documentation layout | `DocPage` intro, usage section, examples section | Intro text, usage playground, and examples section implemented | High | Exact Vue docs i18n prose may need final screenshot review. |
+| Usage booleans | `dot`, `overlap`, `icon`, `left`, `bottom` controls | Implemented Vuse-style switches that update the live badge preview | High | Preserves the audited prop set from `BadgeView.vue`. |
+| Usage tabs | `default`, `hidden`, `text`, `inline`, `bordered` variants | Implemented rounded usage tabs with live preview changes | High | Hidden hides the badge; inline/text/bordered alter presentation. |
+| Usage invert | `Invert playground colors` toggles dark playground surface | Implemented invert playground action | High | Matches the shared docs interaction. |
+| Tabs example | Primary toolbar with grow tabs and pink dot, green count, deep-purple icon badges | Implemented clickable grow toolbar tabs and matching badge colors/content | High | `mdi-vuetify` is represented as a compact `V` badge mark. |
+| Hover example | Left `9999+` badge appears while hovering the account icon | Implemented hover and keyboard focus reveal with hide on leave/blur | High | CSS transition approximates Vue slide-x transition. |
+| Dynamic example | `Send Message` increments count; `Clear Notifications` resets; badge hidden at zero | Implemented message state, increment/reset buttons, and zero-count hide | Full | Uses Vue-like primary/error button treatment. |
+| Customization example | Bordered lock badge on error button, bottom dot avatar, avatar badge slot | Implemented all three customization compositions | High | Local `m2.jpg` asset reused from React assets; remote Vuetify/John images preserved. |
+| Example invert | Vue example block supports invert example colors | Implemented for all Badges example blocks | High | Tooltip text is `Invert example color`. |
+| Source panel | `View source` expands a dark source/code panel | Implemented expandable dark source panel with template/script tabs where applicable | High | Snippets mirror the Vue demo files. |
+| Responsive layout | Vuetify container/row/column wrapping; tabs grow; examples center and wrap | Implemented desktop preview/options columns, stacked mobile layout, grow tabs, centered rows, and responsive wrapping | High | No arbitrary extra breakpoint behavior added beyond MUI grid equivalents. |
+| Visual identity | Pale Vuse background, subtle docs surfaces, teal accents, Vue-like density | Implemented within existing Vuse React shell and local Badges docs blocks | High | Pending user visual approval for screenshot-level tuning. |
 
 ## Api Explorer Verification
 
