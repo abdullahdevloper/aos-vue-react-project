@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
+import type { ReactNode } from "react";
 import DashboardLayout from "./layouts/DashboardLayout";
 import { useDashboardStore } from "./store/useDashboardStore";
 import { buildTheme } from "./theme/theme";
@@ -15,6 +16,8 @@ import ApiExplorerPage from "./pages/ui-components/vuetify/ApiExplorerPage";
 import AlertsPage from "./pages/ui-components/vuetify/AlertsPage";
 import AvatarsPage from "./pages/ui-components/vuetify/AvatarsPage";
 import BadgesPage from "./pages/ui-components/vuetify/BadgesPage";
+import Error404Page from "./pages/pages/Error404Page";
+import Error500Page from "./pages/pages/Error500Page";
 
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
@@ -24,28 +27,34 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <DashboardLayout>
-          <Routes>
-            <Route path="/" element={<Navigate to="/charts/chartjs" replace />} />
-            <Route path="/charts" element={<Navigate to="/charts/chartjs" replace />} />
-            <Route path="/charts/chartjs" element={<ChartJsPage />} />
-            <Route path="/charts/spark-line" element={<SparkLinePage />} />
-            <Route path="/widgets/card" element={<CardsPage />} />
-            <Route path="/widgets/lists" element={<ListsWidgetsPage />} />
-            <Route path="/widgets/statistic" element={<StatisticPage />} />
-            <Route path="/widgets/analytical" element={<AnalyticalPage />} />
-            <Route path="/widgets/document-cards" element={<DocumentCardsPage />} />
-            <Route path="/components/vuetify/api-explorer" element={<ApiExplorerPage />} />
-            <Route path="/components/alerts" element={<AlertsPage />} />
-            <Route path="/components/avatars" element={<AvatarsPage />} />
-            <Route path="/components/badge" element={<BadgesPage />} />
-            <Route path="/prototype-dashboard" element={<DashboardPage />} />
-            <Route path="/widgets" element={<WidgetsPage />} />
-            <Route path="/lists" element={<ListsPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-          </Routes>
-        </DashboardLayout>
+        <Routes>
+          <Route path="/" element={<DashboardRoute><Navigate to="/charts/chartjs" replace /></DashboardRoute>} />
+          <Route path="/dashboard/operational" element={<DashboardRoute><Navigate to="/charts/chartjs" replace /></DashboardRoute>} />
+          <Route path="/charts" element={<DashboardRoute><Navigate to="/charts/chartjs" replace /></DashboardRoute>} />
+          <Route path="/charts/chartjs" element={<DashboardRoute><ChartJsPage /></DashboardRoute>} />
+          <Route path="/charts/spark-line" element={<DashboardRoute><SparkLinePage /></DashboardRoute>} />
+          <Route path="/widgets/card" element={<DashboardRoute><CardsPage /></DashboardRoute>} />
+          <Route path="/widgets/lists" element={<DashboardRoute><ListsWidgetsPage /></DashboardRoute>} />
+          <Route path="/widgets/statistic" element={<DashboardRoute><StatisticPage /></DashboardRoute>} />
+          <Route path="/widgets/analytical" element={<DashboardRoute><AnalyticalPage /></DashboardRoute>} />
+          <Route path="/widgets/document-cards" element={<DashboardRoute><DocumentCardsPage /></DashboardRoute>} />
+          <Route path="/components/vuetify/api-explorer" element={<DashboardRoute><ApiExplorerPage /></DashboardRoute>} />
+          <Route path="/components/alerts" element={<DashboardRoute><AlertsPage /></DashboardRoute>} />
+          <Route path="/components/avatars" element={<DashboardRoute><AvatarsPage /></DashboardRoute>} />
+          <Route path="/components/badge" element={<DashboardRoute><BadgesPage /></DashboardRoute>} />
+          <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
+          <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
+          <Route path="/lists" element={<DashboardRoute><ListsPage /></DashboardRoute>} />
+          <Route path="/settings" element={<DashboardRoute><SettingsPage /></DashboardRoute>} />
+          <Route path="/pages/error/404" element={<Error404Page />} />
+          <Route path="/pages/error/500" element={<Error500Page />} />
+          <Route path="*" element={<Error404Page />} />
+        </Routes>
       </BrowserRouter>
     </ThemeProvider>
   );
+}
+
+function DashboardRoute({ children }: { children: ReactNode }) {
+  return <DashboardLayout>{children}</DashboardLayout>;
 }

@@ -10,12 +10,12 @@ Current rebuild strategy:
 
 - Rebuild section by section with high visual fidelity.
 - Do not move to the next section until the current section is approved by the user.
-- Active section: Pages audit only.
+- Active section: Global Sidebar Navigation Fidelity.
 
 ## Current Slice
 
-- Scope: Pages section audit
-- Status: audit complete; implementation not started
+- Scope: DashboardLayout sidebar/navigation and navigation data only
+- Status: implemented; pending user visual approval
 - UI Components / Charts: approved
 - Widgets / Cards: approved route preserved
 - Widgets / Lists: approved route preserved
@@ -31,8 +31,101 @@ Current rebuild strategy:
 - Vuetify / Banners: not started; intentionally paused
 - Vuetify Batch B and later: not started
 - Style & User Interface: not in scope
-- Pages: audited; implementation not started
+- Pages / Errors: implemented; pending user visual approval
+- Pages / Profile: not started
+- Pages / Authentication: not started
+- Pages / Coming Soon: not started
+- Pages / Maintenance: not started
 - Dashboard rebuild: not in scope
+
+## Global Sidebar Navigation Fidelity
+
+Status: implemented; pending user visual approval.
+
+Implemented sidebar sections in Vue order:
+
+- Dashboard
+- App
+- Style & User Interface
+- Pages
+- UI Components
+- Directives
+- Guide
+
+Implemented sidebar behavior:
+
+- Replaced the UI Components-only sidebar data with Vuse-shaped global navigation data.
+- Kept implemented routes linked:
+  - Charts
+  - Widgets
+  - Vuetify Api Explorer, Alerts, Avatars, Badges
+  - Pages Errors
+- Kept unimplemented entries visible but disabled and marked `Pending`.
+- Added nested groups for Pages Authentication/Error, UI Components Charts/Widgets/Vuetify, Vuetify subgroups, Directives, and Guide.
+- Added route-driven active state and automatic expansion for the active route group.
+- Added click expand/collapse behavior that does not change active route state.
+- Matched Vuse sidebar visual direction: 280px drawer, pale background, compact dense spacing, section headers with `more_horiz`, nested indentation, chevrons, subtle hover, and inset soft active pill.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Page content.
+- Profile.
+- Authentication.
+- Coming Soon.
+- Maintenance.
+- Vuetify content.
+- Charts content.
+- Widgets content.
+- Style & User Interface content.
+
+## Pages Errors Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented routes:
+
+- `/pages/error/404`
+- `/pages/error/500`
+- Catch-all `*` route renders the Error404 page outside `DashboardLayout`, matching Vue full-layout catch-all behavior.
+- `/dashboard/operational` redirects to `/charts/chartjs` so the Error page `Back To Home` link has a safe home target without rebuilding the dashboard.
+
+Implemented shared shell:
+
+- `FullPageShell` recreates the Vue full-page layout used by Error pages:
+  - full viewport pale Vuse background
+  - inset neumorphic outer surface
+  - centered `cols=12 sm=9 md=6`-equivalent card
+  - raised `neu-glow` card surface
+
+Implemented Error pages:
+
+- Error 404 with `not_found.png`, large `404`, Vue copy, and `Back To Home` link.
+- Error 500 with `server_down.png`, large `500`, Vue copy, and `Back To Home` link.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Pages / Profile.
+- Pages / Authentication.
+- Pages / Coming Soon.
+- Pages / Maintenance.
+- Vuetify.
+- Charts.
+- Widgets.
+- Style & User Interface.
 
 ## Pages Audit
 
@@ -94,6 +187,9 @@ Not touched:
 - `/components/alerts`
 - `/components/avatars`
 - `/components/badge`
+- `/pages/error/404`
+- `/pages/error/500`
+- Catch-all 404 route
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
 

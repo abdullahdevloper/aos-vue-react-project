@@ -1,5 +1,5 @@
-import type { PropsWithChildren } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState, type PropsWithChildren } from "react";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -17,8 +17,8 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { DashboardCustomize, ExpandLess, ExpandMore, Menu } from "@mui/icons-material";
-import { uiComponentsNavigation } from "../data/uiComponentsNavigation";
+import { DashboardCustomize, ExpandLess, ExpandMore, Menu, MoreHoriz, OpenInNew } from "@mui/icons-material";
+import { fallbackIcon, pendingNote, uiComponentsNavigation, type SidebarNavEntry, type SidebarNavItem } from "../data/uiComponentsNavigation";
 import { useDashboardStore } from "../store/useDashboardStore";
 
 const drawerWidth = 282;
@@ -99,91 +99,208 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
 }
 
 function UiComponentsSidebar() {
+  const location = useLocation();
+
   return (
-    <Stack spacing={1.5} sx={{ height: "100%", pt: 2 }}>
-      <Stack direction="row" alignItems="center" spacing={1.5} sx={{ px: 1, py: 1.5, position: "sticky", top: 0, bgcolor: "background.default", zIndex: 1 }}>
-        <Box sx={{ width: 42, height: 42, display: "grid", placeItems: "center", color: "primary.main", borderRadius: 1, boxShadow: neuGlow }}>
+    <Stack spacing={0} sx={{ height: "100%", pt: 1.5 }}>
+      <Stack direction="row" alignItems="center" spacing={1.25} sx={{ px: 1, py: 1.25, position: "sticky", top: 0, bgcolor: "background.default", zIndex: 1 }}>
+        <Box sx={{ width: 38, height: 38, display: "grid", placeItems: "center", color: "primary.main", borderRadius: 1, boxShadow: neuGlow }}>
           <DashboardCustomize color="primary" />
         </Box>
-        <Typography variant="h6" color="primary.main" sx={{ fontWeight: 500 }}>
+        <Typography variant="h6" color="primary.main" sx={{ fontWeight: 500, fontSize: 20 }}>
           Vuse Admin
         </Typography>
       </Stack>
-      <Box sx={{ height: 48 }} />
-      {uiComponentsNavigation.map((section) => (
-        <Box key={section.section}>
-          <Typography
-            variant="caption"
-            sx={{
-              display: "block",
-              px: 2,
-              pb: 0.75,
-              color: "text.secondary",
-              fontWeight: 600,
-              textTransform: "uppercase",
-              letterSpacing: 0,
-              fontSize: 12,
-            }}
-          >
-            {section.section}
-          </Typography>
-          <List disablePadding>
-            {section.items.map((item) => (
-              <Box key={item.title}>
-                <ListItemButton
-                  sx={{
-                    borderRadius: 1,
-                    minHeight: 40,
-                    mx: 0.5,
-                    color: "text.primary",
-                    px: 1.5,
-                    "& .MuiListItemIcon-root": { color: "primary.main" },
-                  }}
-                >
-                  <ListItemIcon sx={{ minWidth: 38 }}>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.title} primaryTypographyProps={{ fontWeight: 700 }} />
-                  <ExpandLess fontSize="small" />
-                </ListItemButton>
-                <Collapse in timeout="auto" unmountOnExit={false}>
-                  <List disablePadding sx={{ pl: 0.75, mt: 0.25 }}>
-                    {item.children.map((child) => (
-                      <ListItemButton
-                        key={child.path}
-                        component={NavLink}
-                        to={child.path}
-                        sx={{
-                          ml: 2,
-                          mr: 0.5,
-                          my: 0.45,
-                          minHeight: 38,
-                          borderRadius: 1,
-                          color: "text.secondary",
-                          px: 1.5,
-                          "& .MuiListItemIcon-root": { color: "text.secondary" },
-                          "&.active": {
-                            color: "primary.main",
-                            bgcolor: "background.default",
-                            boxShadow: neuInset,
-                            "& .MuiListItemIcon-root": { color: "primary.main" },
-                          },
-                        }}
-                      >
-                        <ListItemIcon sx={{ minWidth: 34 }}>{child.icon}</ListItemIcon>
-                        <ListItemText primary={child.title} primaryTypographyProps={{ fontWeight: 700, fontSize: 14 }} />
-                      </ListItemButton>
-                    ))}
-                  </List>
-                </Collapse>
-              </Box>
-            ))}
-          </List>
-        </Box>
-      ))}
-      <Divider sx={{ pt: 1, borderColor: "rgba(111, 125, 133, .16)" }} />
+      <Box sx={{ height: 60, flexShrink: 0 }} />
+      <Box sx={{ flexGrow: 1, overflowY: "auto", pr: 0.35, pb: 3 }}>
+        <List dense disablePadding>
+          {uiComponentsNavigation.map((entry, index) => (
+            <SidebarEntry entry={entry} pathname={location.pathname} depth={0} index={index} key={"header" in entry ? `${entry.header}-${index}` : `${entry.title}-${index}`} />
+          ))}
+        </List>
+      </Box>
+      <Divider sx={{ borderColor: "rgba(111, 125, 133, .16)" }} />
       <Stack direction="row" spacing={1} alignItems="center" sx={{ px: 1.5, color: "text.secondary" }}>
         <ExpandMore fontSize="small" />
-        <Typography variant="caption">Vuetify Batch A started</Typography>
+        <Typography variant="caption">Pages / Errors pending approval</Typography>
       </Stack>
     </Stack>
   );
+}
+
+function SidebarEntry({ entry, pathname, depth, index }: { entry: SidebarNavEntry; pathname: string; depth: number; index: number }) {
+  if ("header" in entry) {
+    return (
+      <Typography
+        component="li"
+        variant="caption"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 0.65,
+          mt: index === 0 ? 0.75 : 2.1,
+          mb: 0.6,
+          ml: 1.5,
+          color: "text.secondary",
+          fontWeight: 700,
+          textTransform: "uppercase",
+          letterSpacing: 0,
+          fontSize: 11.5,
+          lineHeight: 1.2,
+          listStyle: "none",
+        }}
+      >
+        <MoreHoriz sx={{ fontSize: 19, opacity: 0.58 }} />
+        <Box component="span">{entry.header}</Box>
+      </Typography>
+    );
+  }
+
+  return <SidebarNavItemView item={entry} pathname={pathname} depth={depth} />;
+}
+
+function SidebarNavItemView({ item, pathname, depth }: { item: SidebarNavItem; pathname: string; depth: number }) {
+  const containsActive = itemHasActivePath(item, pathname);
+  const [open, setOpen] = useState(containsActive || depth === 0);
+
+  useEffect(() => {
+    if (containsActive) setOpen(true);
+  }, [containsActive]);
+
+  if (item.children?.length) {
+    return (
+      <Box component="li" sx={{ listStyle: "none" }}>
+        <ListItemButton onClick={() => setOpen((value) => !value)} sx={groupButtonSx(depth, containsActive)}>
+          <ListItemIcon sx={itemIconSx(depth, containsActive)}>{renderIcon(item)}</ListItemIcon>
+          <ListItemText primary={item.title} primaryTypographyProps={{ fontWeight: containsActive ? 700 : 600, fontSize: depth === 0 ? 14.5 : 13.5, noWrap: true }} />
+          {item.badge && <BadgePill label={item.badge} />}
+          {open ? <ExpandLess sx={{ fontSize: 18, opacity: 0.66 }} /> : <ExpandMore sx={{ fontSize: 18, opacity: 0.66 }} />}
+        </ListItemButton>
+        <Collapse in={open} timeout="auto" unmountOnExit={false}>
+          <List dense disablePadding sx={{ mt: 0.1, mb: 0.2 }}>
+            {item.children.map((child) => (
+              <SidebarNavItemView key={`${item.title}-${child.title}`} item={child} pathname={pathname} depth={depth + 1} />
+            ))}
+          </List>
+        </Collapse>
+      </Box>
+    );
+  }
+
+  const active = Boolean(item.path && pathsMatch(pathname, item.path));
+  const commonProps = {
+    sx: leafButtonSx(depth, active, Boolean(item.disabled)),
+    disabled: item.disabled,
+  };
+  const content = (
+    <>
+      <ListItemIcon sx={itemIconSx(depth, active, Boolean(item.disabled))}>{renderIcon(item)}</ListItemIcon>
+      <ListItemText primary={item.title} primaryTypographyProps={{ fontWeight: active ? 700 : 500, fontSize: depth === 0 ? 14.25 : 13.25, noWrap: true }} />
+      {item.pending && <PendingPill />}
+      {item.badge && <BadgePill label={item.badge} />}
+      {item.href && <OpenInNew sx={{ fontSize: 13, opacity: 0.54, ml: 0.4 }} />}
+    </>
+  );
+
+  if (item.href) {
+    return (
+      <ListItemButton component="a" href={item.href} target={item.target} rel="noopener" {...commonProps}>
+        {content}
+      </ListItemButton>
+    );
+  }
+
+  if (item.path && !item.disabled) {
+    return (
+      <ListItemButton component={RouterLink} to={item.path} {...commonProps}>
+        {content}
+      </ListItemButton>
+    );
+  }
+
+  return <ListItemButton {...commonProps}>{content}</ListItemButton>;
+}
+
+function renderIcon(item: SidebarNavItem) {
+  return item.icon || (
+    <Box sx={{ width: 26, height: 26, borderRadius: "50%", display: "grid", placeItems: "center", bgcolor: "rgba(0,131,143,.10)", color: "primary.main", fontSize: 10.5, fontWeight: 700 }}>
+      {fallbackIcon(item.title)}
+    </Box>
+  );
+}
+
+function itemHasActivePath(item: SidebarNavItem, pathname: string): boolean {
+  if (item.path && pathsMatch(pathname, item.path)) return true;
+  return Boolean(item.children?.some((child) => itemHasActivePath(child, pathname)));
+}
+
+function pathsMatch(pathname: string, path: string) {
+  return pathname === path || (path !== "/" && pathname.startsWith(`${path}/`));
+}
+
+function BadgePill({ label }: { label: string }) {
+  return <Box component="span" sx={{ ml: 0.5, px: 0.7, py: 0.1, borderRadius: 999, bgcolor: "primary.main", color: "#fff", fontSize: 10, fontWeight: 700, lineHeight: 1.45 }}>{label}</Box>;
+}
+
+function PendingPill() {
+  return <Box component="span" sx={{ ml: 0.5, px: 0.65, py: 0.1, borderRadius: 999, color: "text.secondary", bgcolor: "rgba(111,125,133,.10)", fontSize: 9.5, fontWeight: 700, lineHeight: 1.45 }}>{pendingNote}</Box>;
+}
+
+function groupButtonSx(depth: number, active: boolean) {
+  return {
+    mx: 0.35,
+    ml: 0.35 + depth * 1.55,
+    mr: 0.45,
+    my: 0.2,
+    minHeight: depth === 0 ? 38 : 34,
+    px: 1.2,
+    borderRadius: 1,
+    color: active ? "primary.main" : "text.primary",
+    bgcolor: "transparent",
+    transition: "background-color 140ms ease, color 140ms ease, box-shadow 140ms ease",
+    "& .MuiSvgIcon-root": { fontSize: depth === 0 ? 21 : 18 },
+    "&:hover": { bgcolor: "rgba(0,131,143,.065)", color: "primary.main" },
+    ...(active && {
+      bgcolor: "background.default",
+      boxShadow: neuInset,
+      "&:hover": { bgcolor: "background.default", color: "primary.main" },
+    }),
+  };
+}
+
+function leafButtonSx(depth: number, active: boolean, disabled: boolean) {
+  return {
+    mx: 0.35,
+    ml: 0.35 + depth * 1.65,
+    mr: 0.45,
+    my: 0.15,
+    minHeight: depth === 0 ? 36 : 32,
+    px: 1.2,
+    borderRadius: 1,
+    color: active ? "primary.main" : "text.secondary",
+    opacity: disabled ? 0.54 : 1,
+    transition: "background-color 140ms ease, color 140ms ease, box-shadow 140ms ease",
+    "& .MuiSvgIcon-root": { fontSize: depth === 0 ? 20 : 17 },
+    "&:hover": disabled ? {} : { bgcolor: "rgba(0,131,143,.065)", color: "primary.main" },
+    ...(active && {
+      color: "primary.main",
+      bgcolor: "background.default",
+      boxShadow: neuInset,
+      "&:hover": { bgcolor: "background.default", color: "primary.main" },
+    }),
+    "&.Mui-disabled": {
+      color: "text.secondary",
+      opacity: 0.52,
+    },
+  };
+}
+
+function itemIconSx(depth: number, active: boolean, disabled = false) {
+  return {
+    minWidth: depth === 0 ? 34 : 30,
+    color: active ? "primary.main" : "inherit",
+    opacity: disabled ? 0.72 : 1,
+    alignItems: "center",
+    "& .MuiSvgIcon-root": { fontSize: depth === 0 ? 20 : 17 },
+  };
 }
