@@ -1097,3 +1097,42 @@ Section status:
 
 - UI Components / Widgets = approved
 - Vuetify has not been started.
+
+## Pages Authentication Forgot Password + Lock Screen Implementation
+
+Status: implemented; pending user visual approval.
+
+Routes:
+
+- `/pages/authentication/forgot-password`
+- `/pages/authentication/lock-screen`
+
+Implemented:
+
+- Added Vue-matching full-page auth routes outside `DashboardLayout`.
+- Enabled the existing sidebar Authentication children for Forgot Password and Lock Screen.
+- Rebuilt Forgot Password as a three-step recovery flow:
+  - email entry with required/email validation
+  - 5-digit masked OTP input using `000-00` style formatting
+  - password/reset confirmation with visibility toggle and matching validation
+  - Vue-like fake loader timing and success snackbar
+- Rebuilt Lock Screen with:
+  - Alice Blue user identity from the Vue dummy-data reference
+  - copied local avatar asset
+  - neumorphic inset avatar treatment
+  - password validation, visibility toggle, success snackbar, and redirect behavior
+- Copied only required auth assets into `react-dashboard-template/src/assets/pages/`.
+- Updated `AuthShell` only to add optional responsive width props needed for Forgot Password's Vue `sm=8 md=8 lg=6` container; defaults preserve approved Login and Signup sizing.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Approved Login and Signup page implementations, except the shared `AuthShell` optional width prop used to preserve Vue-auth layout fidelity.
+- Profile, Coming Soon, Maintenance, Error pages.
+- Vuetify, Charts, Widgets, Style & User Interface.

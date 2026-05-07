@@ -20,6 +20,8 @@ import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import LoginPage from "./pages/pages/auth/LoginPage";
 import SignupPage from "./pages/pages/auth/SignupPage";
+import ForgotPasswordPage from "./pages/pages/auth/ForgotPasswordPage";
+import LockScreenPage from "./pages/pages/auth/LockScreenPage";
 
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
@@ -52,6 +54,8 @@ export default function App() {
           <Route path="/pages/error/500" element={<Error500Page />} />
           <Route path="/pages/authentication/login" element={<LoginPage />} />
           <Route path="/pages/authentication/signup" element={<SignupPage />} />
+          <Route path="/pages/authentication/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/pages/authentication/lock-screen" element={<LockScreenPage />} />
           <Route path="*" element={<Error404Page />} />
         </Routes>
       </BrowserRouter>

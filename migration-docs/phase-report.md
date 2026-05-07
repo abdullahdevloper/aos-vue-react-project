@@ -816,3 +816,74 @@ Remaining visual/behavior gaps:
 - Needs user visual review against the running Vue app.
 - Date formatting uses a stable absolute date label for this pass, while Vue uses the app `fulldate` filter on `new Date()`.
 - Video play button remains visual only, matching the Vue source; no modal/player is implemented.
+
+## Pages Authentication Forgot Password Verification
+
+| Page | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Forgot Password route | `/pages/authentication/forgot-password`, auth layout outside dashboard | Route added outside `DashboardLayout` | Full | Catch-all/Error routes preserved |
+| Auth shell sizing | `v-col cols=12 sm=8 md=8 lg=6` | `AuthShell` supports optional `md=8 lg=6` for this page | Full | Login/Signup default `md=7` remains unchanged |
+| Illustration column | Left illustration visible only at `mdAndUp`, image changes by recovery step | Left illustration hidden below `md`, dynamic per step | High | Vue assets copied into React asset tree |
+| Header | `<b>Vuse</b> Admin`, step title, optional subtitle | Matching title, step title, and subtitle text | Full | Step 3 omits subtitle like Vue |
+| Stepper behavior | Hidden transparent `v-stepper` with 3 steps | State-driven 3-step flow with no visible stepper chrome | High | Mirrors visible behavior, not Vuetify internals |
+| Email step | Solo flat Email input, required/email validation, `Send OTP`, 2s loader | Matching input, validation messages, disabled state, 2s loader | High | Uses React/MUI styled to Vuse density |
+| OTP step | Masked `###-##`, placeholder `000-00`, required validation, `Send OTP`, 2s loader | Digits only, max 5, auto hyphen after third digit, validation and loader | Full | Mask behavior recreated locally |
+| Reset step | Password eye toggle, confirm password, matching validation, `Reset Password` loader | Matching fields, toggle, validation, and loader | High | Confirm-password message text preserved |
+| Close action | Top-right close icon routes to Login | Close icon routes to `/pages/authentication/login` | Full | Minimal icon styling matches auth page |
+| Snackbar/redirect | `Password Reset Successfully`, then Login route | Success snackbar then Login route | High | React keeps snackbar briefly visible before route |
+| Responsive behavior | Mobile hides illustration and uses full-width form card | Matching hidden illustration and centered full-width form | High | No arbitrary extra breakpoints added |
+
+## Pages Authentication Lock Screen Verification
+
+| Page | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Lock Screen route | `/pages/authentication/lock-screen`, auth layout outside dashboard | Route added outside `DashboardLayout` | Full | Sidebar child enabled |
+| Auth shell sizing | `v-col cols=12 sm=8 md=7` | Uses default `AuthShell` sizing | Full | Same default as approved auth pages |
+| Illustration column | `/static/illustator/unlock.png`, hidden below `md` | Copied local unlock asset, hidden below `md` | Full | Asset remains inside React tree |
+| Header | `<b>Vuse</b> Admin`, `Hello, Welcome Back`, user name | Matching title, subtitle, and `Alice Blue` name | Full | User reference follows Vue `authUser` |
+| Avatar | `vuse-neu-avatar`, inset glow, Alice avatar | Recreated circular inset/raised avatar with copied `ali.jpg` | High | Exact internal component unavailable, visual behavior matched |
+| Password field | Solo flat field, `vpn_key`, eye toggle, required/minLength validation | Matching field, key icon, visibility toggle, validation messages | High | Uses Vuse auth input density |
+| Sign in behavior | Disabled while invalid, snackbar, reset, redirect after 2s | Matching disabled state, success snackbar, reset, redirect | Full | Redirects to `/dashboard/operational` |
+| Alternate account link | `Not Alice Blue ? Login with different account` to Login | Matching link and route | Full | Text preserved |
+| Responsive behavior | Illustration hidden below `md`, form remains centered | Matching shell behavior | High | No arbitrary extra breakpoints added |
+
+## Pages Authentication Forgot Password + Lock Screen Summary
+
+Implemented routes:
+
+- `/pages/authentication/forgot-password`
+- `/pages/authentication/lock-screen`
+
+Affected files:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/pages/pages/auth/AuthShell.tsx`
+- `react-dashboard-template/src/pages/pages/auth/ForgotPasswordPage.tsx`
+- `react-dashboard-template/src/pages/pages/auth/LockScreenPage.tsx`
+- `react-dashboard-template/src/assets/pages/illustrator/forgot_password.png`
+- `react-dashboard-template/src/assets/pages/illustrator/my_passcode.png`
+- `react-dashboard-template/src/assets/pages/illustrator/password.png`
+- `react-dashboard-template/src/assets/pages/illustrator/unlock.png`
+- `react-dashboard-template/src/assets/pages/doc-images/lists/ali.jpg`
+- `migration-docs/progress.md`
+- `migration-docs/phase-report.md`
+
+Remaining visual/behavior gaps:
+
+- Needs user visual review against the running Vue app.
+- Forgot Password success routing is delayed briefly so the snackbar remains visible in React; Vue triggers the snackbar and route push in the same method.
+- Vue's internal `v-stepper`, `v-text-field`, and `vuse-neu-avatar` components are recreated visually rather than ported one-for-one.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Login and Signup page implementations, other than the shared `AuthShell` optional sizing props with unchanged defaults.
+- Profile, Coming Soon, Maintenance, Error pages.
+- Vuetify, Charts, Widgets, Style & User Interface.
