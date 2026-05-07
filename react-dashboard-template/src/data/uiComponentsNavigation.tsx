@@ -68,7 +68,7 @@ export const globalNavigation: SidebarNavEntry[] = [
   { title: "Programmatic Scrolling", disabled: true, pending: true },
   { icon: <Input />, title: "Forms", disabled: true, pending: true },
   { header: "Pages" },
-  { icon: <People />, title: "Profile", disabled: true, pending: true },
+  { icon: <People />, title: "Profile", path: "/pages/profile" },
   { icon: <Timer />, title: "Coming Soon", path: "/pages/coming-soon" },
   { icon: <Build />, title: "Maintenance", path: "/pages/under-maintenance" },
   {
