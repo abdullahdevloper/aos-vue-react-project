@@ -14,14 +14,15 @@ Current rebuild strategy:
 
 ## Current Slice
 
-- Scope: UI Components / Widgets / Chart
-- Status: implemented; pending user visual approval
+- Scope: UI Components / Widgets
+- Status: approved
 - UI Components / Charts: approved
 - Widgets / Cards: approved route preserved
 - Widgets / Lists: approved route preserved
 - Widgets / Statistic: approved route preserved
-- Widgets / Chart: pending user visual approval
-- Widgets / Document Cards: not started
+- Widgets / Chart: approved route preserved
+- Widgets / Document Cards: approved
+- UI Components / Widgets: approved
 - Vuetify: not started
 - Style & User Interface: not in scope
 - Pages and Dashboard rebuild: not in scope
@@ -34,6 +35,7 @@ Current rebuild strategy:
 - `/widgets/lists`
 - `/widgets/statistic`
 - `/widgets/analytical`
+- `/widgets/document-cards`
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
 
@@ -428,3 +430,73 @@ Not touched:
 - Widgets / Statistic implementation and route.
 - Widgets / Document Cards.
 - Vuetify, Style & User Interface, Pages.
+
+## Widgets Document Cards Implementation
+
+Status: approved by user.
+
+Route:
+
+- `/widgets/document-cards`
+
+Implemented Widgets sidebar entries:
+
+- `UI Components`
+- `Widgets`
+- `Document Cards`
+
+Implemented document card widgets:
+
+- WordDocument
+- PdfDocument
+- PictureDocument
+- VideoDocument
+- AudioDocument
+
+Completed:
+
+- Added the Vue-matching Widgets Document Cards route.
+- Added only the Widgets / Document Cards sidebar child needed for this slice.
+- Rebuilt the Document Cards page with the Vue three-column `max-width: 1180` layout.
+- Recreated Word/PDF document cards with absolute linear progress avatar badges.
+- Recreated Picture and Video dark media overlay cards with metadata, size/duration pills, and visual play fab.
+- Recreated Audio card with native audio controls, duration pill, title, date metadata, and rounded player styling.
+- Preserved Vue-like card max width, spacing, pale background, soft raised cards, teal/cyan accents, and responsive collapse.
+
+Verification:
+
+- Source verification completed against `src/views/Widgets/Documents/index.vue`, all five document widget files, `LinearProgressAvatar.vue`, and `migration-docs/widgets-audit.md`.
+- Running app route probe for `http://127.0.0.1:5173/widgets/document-cards` returned HTTP 200, but screenshot-level visual inspection was not available from this session.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Charts pages implementation and routes.
+- Widgets / Cards implementation and route.
+- Widgets / Lists implementation and route.
+- Widgets / Statistic implementation and route.
+- Widgets / Chart implementation and route.
+- Vuetify, Style & User Interface, Pages.
+
+## Widgets Approval
+
+Status: approved by user.
+
+Approved slices:
+
+- Widgets / Cards
+- Widgets / Lists
+- Widgets / Statistic
+- Widgets / Chart
+- Widgets / Document Cards
+
+Section status:
+
+- UI Components / Widgets = approved
+- Vuetify has not been started.

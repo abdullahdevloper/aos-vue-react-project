@@ -4,9 +4,9 @@ Last updated: 2026-05-07
 
 ## Phase
 
-UI Components / Widgets / Chart implementation.
+UI Components / Widgets / Document Cards implementation.
 
-Status: implemented; pending user visual approval.
+Status: approved.
 
 Approval:
 
@@ -14,8 +14,9 @@ Approval:
 - UI Components / Widgets / Cards = approved route preserved
 - UI Components / Widgets / Lists = approved route preserved
 - UI Components / Widgets / Statistic = approved route preserved
-- UI Components / Widgets / Chart = pending user visual approval
-- UI Components / Widgets / Document Cards = not started
+- UI Components / Widgets / Chart = approved route preserved
+- UI Components / Widgets / Document Cards = approved
+- UI Components / Widgets = approved
 
 ## Completed Files
 
@@ -27,6 +28,7 @@ Approval:
 - `react-dashboard-template/src/pages/ui-components/widgets/ListsPage.tsx`
 - `react-dashboard-template/src/pages/ui-components/widgets/StatisticPage.tsx`
 - `react-dashboard-template/src/pages/ui-components/widgets/AnalyticalPage.tsx`
+- `react-dashboard-template/src/pages/ui-components/widgets/DocumentCardsPage.tsx`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/Avengers-EndGame.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/dragon.jpg`
 - `react-dashboard-template/src/assets/ui-components/widgets/cards/design_community.png`
@@ -69,6 +71,11 @@ No protected Vue/root files or `AGENTS.md` were modified.
 - Rebuilt the Chart widgets page from `src/views/Widgets/Chart/index.vue`.
 - Implemented AnalyticIncomeExpense, RevenueProfileBar, ProductComparisonBar, ProductSalesHorizBar, OrdersStackedLine, and NetProfitLine.
 - Preserved Vue datasets, card titles/subtitles, status values, `See Details` actions, avatar indicators, Chart.js hover/tooltips, chart proportions, and responsive layout.
+- Added route `/widgets/document-cards`.
+- Added minimal Widgets sidebar exposure for `Document Cards`.
+- Rebuilt the Document Cards page from `src/views/Widgets/Documents/index.vue`.
+- Implemented WordDocument, PdfDocument, PictureDocument, VideoDocument, and AudioDocument.
+- Preserved progress-avatar badges, document/media layout, dark image overlays, duration/size pills, visual play fab, native audio controls, card proportions, and responsive layout.
 
 Historical Charts work already completed:
 
@@ -133,7 +140,7 @@ Historical Charts work already completed:
 - Widgets / Cards: approved route preserved; not modified beyond shared route/sidebar context.
 - Widgets / Lists: approved route preserved; not modified beyond shared route/sidebar context.
 - Widgets / Statistic: approved route preserved; not modified beyond shared route/sidebar context.
-- Widgets / Document Cards: skipped by scope.
+- Widgets / Chart: approved route preserved; not modified beyond shared route/sidebar context.
 - Charts: approved and not modified in this slice.
 - Vuetify: skipped by scope.
 - Style & User Interface: skipped by scope.
@@ -157,7 +164,7 @@ Result: no output. Protected Vue/root files and `AGENTS.md` were unchanged.
 
 ## Stop Point
 
-Stopped after Widgets / Chart. Widgets / Chart remains pending user visual approval. Document Cards and Vuetify were not started.
+Stopped after Widgets / Document Cards. Widgets / Document Cards remains pending user visual approval. Vuetify was not started.
 
 ## Widgets Audit Summary
 
@@ -353,3 +360,43 @@ Remaining visual/behavior gaps:
 - Needs user visual review against the running Vue app.
 - Vue custom chart shadow/point glow plugin details are approximated with Chart.js v4 defaults.
 - Dashed Y-grid from Vue line widgets was simplified to a soft visible grid because the installed Chart.js typings did not expose the dash option cleanly.
+
+## Widgets Document Cards Verification
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/widgets/document-cards` route renders Document Widgets page | `/widgets/document-cards` route added | Full | Route wired in React router |
+| Sidebar | UI Components > Widgets > Document Cards | Widgets parent includes Document Cards child | Full | Existing Widgets children preserved |
+| Page header | `Document Widgets`, Widgets > Document breadcrumbs, `card_giftcard` icon | `Document Widgets`, Widgets > Document breadcrumbs, card gift icon | High | Uses React VuseSectionDefinition |
+| Page layout | Transparent sheet max-width 1180 with three `md=4` columns | Max-width 1180 layout with three `md=4` columns | Full | Column order matches Vue |
+| WordDocument | Soft card max-width 374, W progress avatar, Proposal Document, body text, date row | Matching document card and W badge | High | Date text uses current absolute date |
+| PdfDocument | Soft card max-width 374, PDF progress avatar size 25, same content/date row | Matching PDF card and badge | High | Date text uses current absolute date |
+| PictureDocument | Dark image card, `25MB` pill, title Bride At Night, date overlay | Matching dark media overlay | High | Uses same Picsum image URL |
+| VideoDocument | Dark image card, centered play fab, `01:28` pill, title Beach Party, date overlay | Matching video media overlay and visual play button | High | Play button is visual, matching Vue source |
+| AudioDocument | Soft card, native audio controls, rounded player, `06:12` teal pill, Beach Party/date | Matching audio card and native controls | High | Uses same SoundHelix MP3 source |
+| Progress avatar behavior | Absolute `LinearProgressAvatar` with tile avatar and 100% progress | Absolute top progress strip plus tile badge | High | Visual behavior recreated locally |
+| Media/audio behavior | Image overlays and native audio playback controls | Image overlays and native audio playback controls | Full | Remote media sources retained |
+| Hover states | No explicit hover state defined in Vue document source | No custom hover added | Full | Buttons/audio keep native/default feedback |
+| Responsive layout | Three columns collapse to full-width mobile | Matching MUI breakpoints | High | Cards retain max-width 374 |
+| Visual identity | Pale background, neu-glow cards, compact text, teal accent, dark media cards | Soft raised cards, compact metadata, teal audio pill, dark overlays | High | Needs final user visual review |
+| Running app visual check | Compare against local Vue page | Local route returned HTTP 200 | Partial | Screenshot-level inspection was not available from this session |
+
+## Widgets Document Cards Implementation Summary
+
+Implemented route:
+
+- `/widgets/document-cards`
+
+Implemented document card widgets:
+
+- WordDocument
+- PdfDocument
+- PictureDocument
+- VideoDocument
+- AudioDocument
+
+Remaining visual/behavior gaps:
+
+- Needs user visual review against the running Vue app.
+- Date formatting uses a stable absolute date label for this pass, while Vue uses the app `fulldate` filter on `new Date()`.
+- Video play button remains visual only, matching the Vue source; no modal/player is implemented.

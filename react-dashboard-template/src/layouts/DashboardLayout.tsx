@@ -90,7 +90,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
         </Container>
         <Stack sx={{ mt: 4, px: 3 }} alignItems="center">
           <Typography variant="caption" color="text.secondary">
-            React UI Components slice: Widgets / Chart pending visual approval
+            React UI Components slice: Widgets / Document Cards pending visual approval
           </Typography>
         </Stack>
       </Box>
@@ -182,7 +182,7 @@ function UiComponentsSidebar() {
       <Divider sx={{ pt: 1, borderColor: "rgba(111, 125, 133, .16)" }} />
       <Stack direction="row" spacing={1} alignItems="center" sx={{ px: 1.5, color: "text.secondary" }}>
         <ExpandMore fontSize="small" />
-        <Typography variant="caption">Lists, Statistic, Chart widgets, Document Cards, and Vuetify paused</Typography>
+        <Typography variant="caption">Vuetify paused</Typography>
       </Stack>
     </Stack>
   );
