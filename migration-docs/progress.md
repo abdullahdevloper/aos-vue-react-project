@@ -26,6 +26,7 @@ Current rebuild strategy:
 - Vuetify Batch A: audited
 - Vuetify / Api Explorer: implemented; pending user visual approval
 - Vuetify / Alerts: implemented; pending user visual approval
+- Vuetify / Avatars: implemented; pending user visual approval
 - Vuetify Batch B and later: not started
 - Style & User Interface: not in scope
 - Pages and Dashboard rebuild: not in scope
@@ -41,8 +42,64 @@ Current rebuild strategy:
 - `/widgets/document-cards`
 - `/components/vuetify/api-explorer`
 - `/components/alerts`
+- `/components/avatars`
 - `/charts` redirects to `/charts/chartjs`
 - `/` redirects to `/charts/chartjs` for this focused slice
+
+## Vuetify Avatars Implementation
+
+Status: implemented; pending user visual approval.
+
+Route:
+
+- `/components/avatars`
+
+Implemented Vuetify sidebar entries:
+
+- `UI Components`
+- `Vuetify`
+- `Avatars`
+
+Implemented Avatars page:
+
+- Vuse section header with Components > Vuetify > Avatars breadcrumbs.
+- Documentation intro text.
+- Usage playground with image switch, tile switch, color select, size slider, and `Invert playground colors`.
+- Vuse-style example documentation blocks with `Invert example color`, GitHub, and source action icons.
+- All Vue Avatars examples:
+  - Size
+  - Tile
+  - Default
+  - Profile
+  - Advanced
+
+Implemented Avatars behavior:
+
+- Usage controls update avatar image/text, tile shape, color, and size.
+- Example invert action switches the example surface to a dark/inverted mode.
+- View source expands/collapses the dark source panel.
+- Advanced example uses clickable expansion panels and preserves responsive hidden columns.
+
+Responsive verification:
+
+- Profile card uses the Vue max-width target of 434px.
+- Advanced row columns follow the Vue responsive intent: avatar visible at all widths, name hidden on xs, excerpt hidden below md.
+- Basic examples use responsive row wrapping while preserving Vue `justify="space-around"` composition.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Api Explorer implementation and route.
+- Alerts implementation and route.
+- Badges, Banners.
+- Charts pages.
+- Widgets pages.
 
 ## Vuetify Alerts Implementation
 

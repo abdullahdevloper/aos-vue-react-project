@@ -20,6 +20,7 @@ Approval:
 - UI Components / Vuetify Batch A = in progress
 - UI Components / Vuetify / Api Explorer = implemented; pending user visual approval
 - UI Components / Vuetify / Alerts = implemented; pending user visual approval
+- UI Components / Vuetify / Avatars = implemented; pending user visual approval
 
 ## Completed Files
 
@@ -37,6 +38,7 @@ Approval:
 - `react-dashboard-template/src/components/vuetify-docs/ApiParameterRow.tsx`
 - `react-dashboard-template/src/pages/ui-components/vuetify/ApiExplorerPage.tsx`
 - `react-dashboard-template/src/pages/ui-components/vuetify/AlertsPage.tsx`
+- `react-dashboard-template/src/pages/ui-components/vuetify/AvatarsPage.tsx`
 
 Historical completed files from previous approved slices:
 
@@ -88,6 +90,14 @@ Current implementation work:
 - Increased Alerts visual scale/density after review found React still smaller and more compressed than Vue.
 - Tuned Usage block sizing, tabs, selects, switch, options toolbar, example action bar, dark/inverted body, buttons, alert bars, alert text, and icon alignment.
 - Preserved Vuse pale background, soft documentation surfaces, teal accents, compact docs density, subtle shadows, and Vue-like alert spacing.
+- Added route `/components/avatars`.
+- Added only the Vuetify / Avatars sidebar child needed for this slice.
+- Rebuilt the Avatars page with Vuse section header, documentation text, usage playground, and examples section.
+- Implemented all five Vue Avatars examples: Size, Tile, Default, Profile, and Advanced.
+- Implemented usage controls from `AvatarsView.vue`: image switch, tile switch, color select, and size slider.
+- Implemented visible behaviors from the Vue examples: usage preview state changes, example invert-color action, source panel expansion, and advanced expansion-panel click behavior.
+- Preserved Avatars responsive behavior: profile max-width 434px, advanced hidden columns at xs/sm/md breakpoints, and responsive row wrapping for basic examples.
+- Kept Api Explorer and Alerts route behavior preserved and did not implement Badges, Banners, Charts, or Widgets.
 - Kept Api Explorer route behavior preserved and did not implement Avatars, Badges, Banners, Charts, or Widgets.
 
 Audit foundation from previous step:
@@ -186,7 +196,8 @@ Historical Charts work already completed:
 ## Skipped Or Failed Items
 
 - Api Explorer changes: skipped by active scope except route/sidebar preservation.
-- Avatars: skipped by active scope.
+- Api Explorer: preserved, not modified beyond existing route/sidebar context.
+- Alerts: preserved, not modified beyond existing route/sidebar context.
 - Badges: skipped by active scope.
 - Banners: skipped by active scope.
 - Charts: approved and not modified in this slice.
@@ -294,6 +305,30 @@ Remaining Alerts visual gaps:
 | Dark/inverted body | Vue example dark sheet occupies full demo body | Increased body padding and preserved dark surface transition | High | Invert example color preserved. |
 | Alert rows | Vuetify alerts are taller and less compressed | Increased alert font size, line height, padding, margin, and icon sizes | High | Dense alerts remain smaller than regular alerts. |
 | Buttons | Vuetify button height/padding and pressed feedback | Increased contained/outlined button height, padding, and font size | High | Hover/active fixes preserved. |
+
+## Avatars Verification
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/avatars` | `/components/avatars` | Full | Added to React router. |
+| Sidebar | `UI Components` > `Vuetify` > `Avatars` | Same parent/child exposed in existing UI Components shell | Full | Api Explorer and Alerts children preserved. |
+| Section header | Vuse section definition with Components > Vuetify > Avatars breadcrumbs | `DocPage` uses existing Vuse section definition and matching breadcrumbs | High | Uses React docs shell. |
+| Usage controls | `image`, `tile`, `color`, and `size` controls | Implemented image/tile switches, color select, and size slider | High | Controls update avatar preview. |
+| Usage preview | Centered avatar inside docs playground | Implemented centered image/text avatar with color, tile, and size changes | High | Uses Vue remote apple-touch-icon image. |
+| Usage invert | `Invert playground colors` toggles dark playground surface | Implemented invert playground action | High | Existing docs interaction preserved. |
+| Size example | Three avatars: indigo 36, teal 48, orange 62 | Implemented same sizes/colors/text labels | High | Responsive row wraps on narrow screens. |
+| Tile example | Square blue avatar with alarm icon | Implemented tile avatar with alarm icon | High | Material icon equivalent. |
+| Default example | Icon avatar, image avatar, red text avatar | Implemented icon, local image, and red initials avatar | High | Source typo `m4.jpgg` documented by using available `m4.jpg` asset. |
+| Profile example | Max-width 434 tile card, background image, 164px tile avatar, dark overlay text | Implemented max-width 434 profile card with remote background and local profile image | High | Preserves dark overlay name/subtitle. |
+| Advanced example | Popout expansion panels with responsive columns and avatar/icon/chip rows | Implemented clickable expansion rows, popout-style margin/shadow, hidden xs/sm/md columns | High | Uses MUI Accordion to mirror Vuetify expansion panels. |
+| Source panel | Vue example block supports source expansion | Implemented dark source panel with template/script sections where applicable | High | Source snippets are maintained React-side references to Vue source. |
+| Example invert | Vue example block supports invert example colors | Implemented for Avatars example blocks | High | Matches existing Vuetify docs shell behavior. |
+| Responsive layout | Vue basic examples wrap, profile stays centered, advanced hides columns by breakpoint | Implemented row wrapping, centered max-width profile, name hidden on xs, excerpt hidden below md | High | Based on audited Vue `v-row`/`v-col` props. |
+
+Remaining Avatars visual gaps:
+
+- The Vue default example references `/static/doc-images/lists/m4.jpgg`, likely a source typo. React uses the existing `m4.jpg` asset so the image visibly renders.
+- Exact expansion panel popout animation may differ slightly from Vuetify but preserves click behavior, spacing, and responsive visibility.
 | Responsive layout | Full-width autocomplete; API toolbar stacks; tabs adapt | Implemented with MUI breakpoints | High | Needs user visual review against running Vue app. |
 
 ## Protected File Verification

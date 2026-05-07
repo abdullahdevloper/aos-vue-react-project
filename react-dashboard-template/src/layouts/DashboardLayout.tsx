@@ -90,7 +90,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
         </Container>
         <Stack sx={{ mt: 4, px: 3 }} alignItems="center">
           <Typography variant="caption" color="text.secondary">
-            React UI Components slice: Vuetify / Alerts pending visual approval
+            React UI Components slice: Vuetify / Avatars pending visual approval
           </Typography>
         </Stack>
       </Box>
