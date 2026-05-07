@@ -18,6 +18,7 @@ import AvatarsPage from "./pages/ui-components/vuetify/AvatarsPage";
 import BadgesPage from "./pages/ui-components/vuetify/BadgesPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
+import LoginPage from "./pages/pages/auth/LoginPage";
 
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
@@ -48,6 +49,7 @@ export default function App() {
           <Route path="/settings" element={<DashboardRoute><SettingsPage /></DashboardRoute>} />
           <Route path="/pages/error/404" element={<Error404Page />} />
           <Route path="/pages/error/500" element={<Error500Page />} />
+          <Route path="/pages/authentication/login" element={<LoginPage />} />
           <Route path="*" element={<Error404Page />} />
         </Routes>
       </BrowserRouter>

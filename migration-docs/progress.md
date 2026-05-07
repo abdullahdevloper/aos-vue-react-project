@@ -10,11 +10,11 @@ Current rebuild strategy:
 
 - Rebuild section by section with high visual fidelity.
 - Do not move to the next section until the current section is approved by the user.
-- Active section: Global Sidebar Navigation Fidelity.
+- Active section: Pages / Authentication / Login.
 
 ## Current Slice
 
-- Scope: DashboardLayout sidebar/navigation and navigation data only
+- Scope: Pages / Authentication / Login only
 - Status: implemented; pending user visual approval
 - UI Components / Charts: approved
 - Widgets / Cards: approved route preserved
@@ -33,10 +33,56 @@ Current rebuild strategy:
 - Style & User Interface: not in scope
 - Pages / Errors: implemented; pending user visual approval
 - Pages / Profile: not started
-- Pages / Authentication: not started
+- Pages / Login: implemented; pending user visual approval
+- Pages / Signup: not started
+- Pages / Forgot Password: not started
+- Pages / Lock Screen: not started
 - Pages / Coming Soon: not started
 - Pages / Maintenance: not started
 - Dashboard rebuild: not in scope
+
+## Pages Login Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/pages/authentication/login`
+
+Implemented Login page:
+
+- Full-height Vuse auth shell outside `DashboardLayout`.
+- Pale Vuse background with inset neumorphic outer surface.
+- Centered auth card using Vue-equivalent `cols=12 sm=8 md=7` behavior.
+- Left illustration column using `working_late.png`, hidden below `md` like Vue.
+- Right form column with Vuse Admin branding, welcome text, max-width 380 form.
+- Email and password fields with Vue-like filled/solo density and prepended icons.
+- Password visibility toggle.
+- Remember Me checkbox.
+- `Forgot Password` and `Create Account` links using Vue route paths.
+- Block `Sign In` button with disabled invalid state.
+- Success snackbar text `Signed In Successfully`.
+- Submit reset and delayed redirect to `/dashboard/operational`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Signup.
+- Forgot Password.
+- Lock Screen.
+- Profile.
+- Coming Soon.
+- Maintenance.
+- Vuetify.
+- Charts.
+- Widgets.
+- Style & User Interface.
 
 ## Global Sidebar Navigation Fidelity
 

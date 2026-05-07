@@ -4,7 +4,7 @@ Last updated: 2026-05-07
 
 ## Phase
 
-Global Sidebar Navigation Fidelity pass.
+Pages / Authentication / Login implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -24,7 +24,10 @@ Approval:
 - UI Components / Vuetify / Banners = not started; intentionally paused
 - Pages / Errors = implemented; pending user visual approval
 - Pages / Profile = not started
-- Pages / Authentication = not started
+- Pages / Login = implemented; pending user visual approval
+- Pages / Signup = not started
+- Pages / Forgot Password = not started
+- Pages / Lock Screen = not started
 - Pages / Coming Soon = not started
 - Pages / Maintenance = not started
 - Global Sidebar Navigation = implemented; pending user visual approval
@@ -38,6 +41,10 @@ Approval:
 - `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
 - `react-dashboard-template/src/layouts/DashboardLayout.tsx`
 - `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/pages/pages/auth/AuthShell.tsx`
+- `react-dashboard-template/src/pages/pages/auth/LoginPage.tsx`
+- `react-dashboard-template/src/pages/pages/auth/VuseLogoMark.tsx`
+- `react-dashboard-template/src/assets/pages/illustrator/working_late.png`
 - `react-dashboard-template/src/pages/pages/components/FullPageShell.tsx`
 - `react-dashboard-template/src/pages/pages/ErrorPage.tsx`
 - `react-dashboard-template/src/pages/pages/Error404Page.tsx`
@@ -92,6 +99,19 @@ No protected Vue/root files or `AGENTS.md` were modified.
 ## Implemented Work
 
 Current implementation work:
+
+- Added Vue-matching route `/pages/authentication/login`.
+- Built `AuthShell` for the Login page only with full-height pale Vuse background, inset outer surface, centered auth card, and `cols=12 sm=8 md=7`-equivalent responsive behavior.
+- Copied the required `working_late.png` illustration into React assets.
+- Rebuilt the Login page with Vuse Admin branding, illustration column hidden below `md`, max-width 380 form, Vue-like solo/flat input density, prepended icons, password visibility toggle, Remember Me checkbox, submit button, and auth links.
+- Implemented validation behavior for required/email and required/min-length password rules with Vue matching messages.
+- Implemented disabled invalid submit behavior.
+- Implemented success snackbar text `Signed In Successfully`.
+- Implemented submit reset and delayed redirect to `/dashboard/operational`.
+- Enabled the Login sidebar entry while leaving Sign Up, Forgot Password, and Lock Screen visible as pending/disabled.
+- Did not implement Signup, Forgot Password, Lock Screen, Profile, Coming Soon, Maintenance, Vuetify, Charts, Widgets, or Style & User Interface.
+
+Previous implementation work:
 
 - Rebuilt the React sidebar data to follow the original Vue `src/config/navigation-items.js` top-level order.
 - Added global sidebar sections: Dashboard, App, Style & User Interface, Pages, UI Components, Directives, and Guide.
@@ -273,7 +293,9 @@ Historical Charts work already completed:
 ## Skipped Or Failed Items
 
 - Profile: skipped by active scope.
-- Authentication: skipped by active scope.
+- Signup: skipped by active scope.
+- Forgot Password: skipped by active scope.
+- Lock Screen: skipped by active scope.
 - Coming Soon: skipped by active scope.
 - Maintenance: skipped by active scope.
 - Vuetify Banners: not started; intentionally paused.
@@ -298,6 +320,27 @@ Historical Charts work already completed:
 - Directory: `react-dashboard-template/`
 - Status: passed
 - Non-blocking warning: generated JS chunk is larger than Vite's default 500 kB warning threshold.
+
+## Login Verification
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/pages/authentication/login` full/auth layout | `/pages/authentication/login` renders `LoginPage` outside `DashboardLayout` | Full | Added to React router. |
+| Auth shell | Full-height `v-sheet` with `neu-glow-inset` background | `AuthShell` uses full viewport pale background and inset neumorphic outer surface | High | Shared only for Login at this stage. |
+| Auth card width | `v-col cols=12 sm=8 md=7` centered | MUI Grid equivalent `xs=12 sm=8 md=7`, centered | High | No arbitrary extra breakpoints. |
+| Auth card surface | `v-sheet neu-glow with-radius` | Raised Vuse card with soft shadow and 4px radius | High | Pending visual approval. |
+| Illustration column | Left `md=6`, hidden below `md`, image `working_late.png` | Left column hidden below `md`, copied local `working_late.png` illustration | High | Source asset copied into React assets. |
+| Branding | `vuse-logo` size 45 + `use Admin`; subtitle `Hello, Welcome Back!` | Vuse-like logo mark with `use Admin`; exact subtitle | Medium | Logo mark approximates Vuse SVG until shared logo is rebuilt. |
+| Form width | Transparent sheet max-width 380 | Form constrained to max-width 380 | Full | Matches Vue form measure. |
+| Email field | Solo flat field, email icon, touched validation, required/email messages | Filled/solo-like field with email icon and matching messages | High | Error shown after input/blur. |
+| Password field | Solo flat field, key icon, eye toggle, touched validation, required/minLength messages | Password field with key icon, visibility toggle, matching messages | High | Toggle swaps text/password type. |
+| Remember Me | Checkbox bound to form state | Checkbox state implemented | High | Value resets after successful submit. |
+| Forgot Password link | Link to `/pages/authentication/forgot-password` | Link uses same path | Full | Target page remains unimplemented and will fall to current 404 behavior until its slice. |
+| Create Account link | Link to `/pages/authentication/signup` | Link uses same path | Full | Target page remains unimplemented and will fall to current 404 behavior until its slice. |
+| Sign In button | Block submit button disabled when invalid | Full-width button disabled while invalid | High | Vue-like hover/disabled styles. |
+| Submit behavior | On valid submit: snackbar, reset form/validation, redirect to dashboard after 2s | Snackbar, reset fields/touched state, redirect to `/dashboard/operational` after 2s | High | `/dashboard/operational` safely redirects to current React home target. |
+| Snackbar | Top-right success snackbar with text and check icon | Top-right success snackbar/alert with `Signed In Successfully` and check icon | High | MUI Alert approximation. |
+| Scope control | Only Login auth page implemented | Signup/Forgot Password/Lock Screen remain pending | Full | No other page content implemented. |
 
 ## Sidebar Verification
 
