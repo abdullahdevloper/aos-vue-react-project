@@ -4,7 +4,7 @@ Last updated: 2026-05-07
 
 ## Phase
 
-Style & User Interface / Helpers implementation.
+Style & User Interface / Border Radius implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -21,8 +21,8 @@ Approval:
 - Global Sidebar Navigation = approved
 - Style & User Interface / Color = route preserved
 - Style & User Interface / Icons = route preserved
-- Style & User Interface / Helpers = implemented; pending user visual approval
-- Style & User Interface / Border Radius = not started
+- Style & User Interface / Helpers = route preserved
+- Style & User Interface / Border Radius = implemented; pending user visual approval
 - Style & User Interface / Text & Typography = not started
 - Style & User Interface / Motion = not started
 - Style & User Interface / Programmatic Scrolling = not started
@@ -34,26 +34,25 @@ Approval:
 - `migration-docs/phase-report.md`
 - `react-dashboard-template/src/App.tsx`
 - `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
-- `react-dashboard-template/src/pages/style-ui/HelpersPage.tsx`
+- `react-dashboard-template/src/pages/style-ui/BorderRadiusPage.tsx`
 
 ## Verification Table
 
 | Item | Vue expected | React implemented | Match level | Notes |
 |---|---|---|---|---|
-| Route | `/helpers` renders inside the dashboard app shell | `/helpers` added inside `DashboardRoute` | High | Approved Color and Icons routes preserved |
-| Sidebar entry | Style & User Interface > Helpers with help icon | Helpers entry linked to `/helpers` | High | Later Style UI entries remain pending |
-| Page header | `VuseSectionDefinition` title `Helpers`, icon `help`, breadcrumbs `User Interface > Helpers` | `DocPage` title `Helpers`, help icon, matching breadcrumbs | High | Uses existing React docs shell styling |
-| Section selector desktop | `v-bottom-navigation`, horizontal, raised `neu-glow`, visible on `mdAndUp` | Raised horizontal soft nav visible at `md` and up | High | Active section uses Vuse-like inset state |
-| Section selector mobile | `v-menu` with raised button/list on `smAndDown` | Dropdown selector below `md` | High | Matches Vue breakpoint intent without arbitrary extra breakpoints |
-| Active section behavior | Content, Display, Elevation, Flex, Float, Spacing swap partial component | Same six sections swap React section content | High | Initial section is Content |
-| Content examples | Blockquote, Paragraphs, Code, Variables, User Input example blocks | All five recreated with source/invert controls | Medium-High | Text is representative Vuse docs content, not exact markdown source text |
-| Display examples | Breakpoints table, display inline/block, visibility table/example, print example | Breakpoints and visibility tables plus inline/block/visibility/print examples | High | Responsive visibility uses MUI breakpoints matching Vuetify props |
-| Elevation examples | 0-24 card grid, slider playground, hover dynamic elevation | All three behaviors implemented | High | Hover changes both dynamic elevation cards |
-| Flex examples | Full flex helper set: inline, direction, column, justify, align, align-self, margins, wrap, order, align-content, grow/shrink | Representative Vuse-style examples for each helper group | Medium-High | Covers all audited helper groups; visual examples are React recreations |
-| Float examples | Breakpoints table, classes, responsive float examples | Breakpoints plus classes/responsive example blocks | High | Responsive copy preserved |
-| Spacing examples | Playground selects, horizontal, negative margin, breakpoint example, breakpoint table | Interactive spacing playground plus all audited examples | High | Selects alter visible margin/padding like Vue |
-| Example actions | Shared examples support invert color and view source/GitHub action buttons | Helpers examples include invert color, source expansion, and GitHub visual action | High | GitHub action is visual only, matching other recreated docs slices |
-| Visual identity | Pale #F2F3F7, soft docs surfaces, teal accents, compact Vuetify density | Pale dashboard shell, neu-glow/inset surfaces, teal active/actions | Pending visual review | Needs user screenshot comparison before approval |
+| Route | `/border-radius` renders inside the dashboard app shell | `/border-radius` added inside `DashboardRoute` | High | Color, Icons, and Helpers routes preserved |
+| Sidebar entry | Style & User Interface > Border Radius with `rounded_corner` icon and `new` badge | Border Radius entry linked to `/border-radius`, with `new` badge preserved | High | Later Style UI entries remain pending |
+| Page header | `VuseSectionDefinition`, namespace `Styles`, title `BorderRadius`, breadcrumbs Components > Vuetify > Border Radius | `DocPage` namespace `Styles`, title `BorderRadius`, rounded icon, matching breadcrumb labels | High | Follows Vue source structure |
+| Intro docs | Border Radius heading and intro text from language file | Matching heading and visible intro text | High | Markdown links rendered as plain prose where applicable |
+| Rounded corners | `.rounded-sm`, `.rounded`, `.rounded-lg`, `.rounded-xl`, `cols=12 md=2`, centered row | Four responsive tiles with matching labels and increasing radii | High | Uses Vue-like grey sample tiles |
+| Pill and Circle | Centered pill 128x64 and circle 64x64 | Matching pill and circle samples | High | Responsive stack on small viewports |
+| Removing radius | `.rounded-0` single centered sample | Matching zero-radius centered tile | High | Uses same responsive column behavior |
+| Side radius | `.rounded-t-xl`, `.rounded-r-xl`, `.rounded-b-xl`, `.rounded-l-xl` | Four responsive tiles with side-specific radius | High | Matches audited class set |
+| Corner radius | `.rounded-tl-xl`, `.rounded-tr-xl`, `.rounded-br-xl`, `.rounded-bl-xl` | Four responsive tiles with corner-specific radius | High | Matches audited class set |
+| Sass snippets | `sass_default_rounded_variables` and `sass_changing_rounded_variables` dark markup panels | Both Sass snippets rendered in dark code panels with copy action | High | React-owned static snippets copied from Vue source text |
+| Example actions | Shared example action bar supports invert, GitHub, source panel | Radius examples include invert color, visual GitHub button, and source expansion | High | GitHub button is visual only, matching other recreated docs slices |
+| Responsive layout | Examples use `v-container`, centered `v-row`, `cols=12 md=2` | MUI grid `xs=12 md=2`, centered rows | High | No arbitrary breakpoints added |
+| Visual identity | Pale Vuse background, soft docs surfaces, teal accents, compact Vuetify density | Pale dashboard shell, neu-glow/inset surfaces, minimal action icons | Pending visual review | Needs user screenshot comparison before approval |
 
 
 ## Build
@@ -65,7 +64,6 @@ Approval:
 
 ## Skipped Or Deferred
 
-- Border Radius: not implemented by active scope.
 - Text & Typography: not implemented by active scope.
 - Motion: not implemented by active scope.
 - Programmatic Scrolling: not implemented by active scope.

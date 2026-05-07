@@ -62,7 +62,7 @@ export const globalNavigation: SidebarNavEntry[] = [
   { icon: <ColorLens />, title: "Color", path: "/colors" },
   { icon: <PhotoLibrary />, title: "Icons", path: "/icons" },
   { icon: <Help />, title: "Helpers", path: "/helpers" },
-  { icon: <RoundedCorner />, title: "Border Radius", badge: "new", disabled: true, pending: true },
+  { icon: <RoundedCorner />, title: "Border Radius", badge: "new", path: "/border-radius" },
   { icon: <FormatColorText />, title: "Text & Typography", badge: "new", disabled: true, pending: true },
   { icon: <Slideshow />, title: "Motion", disabled: true, pending: true },
   { title: "Programmatic Scrolling", disabled: true, pending: true },

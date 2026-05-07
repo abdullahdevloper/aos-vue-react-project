@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Style & User Interface / Helpers.
+- Active section: Style & User Interface / Border Radius.
 
 ## Current Slice
 
-- Scope: Style & User Interface / Helpers only.
-- Route: `/helpers`
+- Scope: Style & User Interface / Border Radius only.
+- Route: `/border-radius`
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/style-ui-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -32,12 +32,56 @@ Current rebuild strategy:
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
-- Style & User Interface / Helpers: implemented; pending user visual approval.
-- Style & User Interface / Border Radius: not started.
+- Style & User Interface / Helpers: route preserved.
+- Style & User Interface / Border Radius: implemented; pending user visual approval.
 - Style & User Interface / Text & Typography: not started.
 - Style & User Interface / Motion: not started.
 - Style & User Interface / Programmatic Scrolling: not started.
 - Style & User Interface / Forms: not started.
+
+## Style UI Border Radius Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/border-radius`
+
+Implemented Border Radius page:
+
+- Vuse-style section header using namespace `Styles`, title `BorderRadius`, rounded icon, and breadcrumbs `Components > Vuetify > Border Radius`.
+- Vue-matching dashboard route inside `DashboardLayout`.
+- Style & User Interface sidebar entry for `Border Radius`, preserving the existing Color, Icons, and Helpers routes and leaving later Style UI items pending.
+- Visible documentation text from `src/lang/en/styles/BorderRadius.json`.
+- Rounded corners example for `.rounded-sm`, `.rounded`, `.rounded-lg`, and `.rounded-xl`.
+- Pill and Circle example with the same 128x64 pill and 64x64 circle proportions from Vue.
+- Removing Border Radius example for `.rounded-0`.
+- Rounding sides separately example for `.rounded-t-xl`, `.rounded-r-xl`, `.rounded-b-xl`, and `.rounded-l-xl`.
+- Rounding corners separately example for `.rounded-tl-xl`, `.rounded-tr-xl`, `.rounded-br-xl`, and `.rounded-bl-xl`.
+- Customizing and Overwriting Radiuses documentation sections.
+- Dark Sass snippet panels for `sass_default_rounded_variables` and `sass_changing_rounded_variables`, with copy behavior.
+- Shared Vuse-style example cards with invert color, source expansion, and visual GitHub action controls.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Color page implementation, except preserving its route/sidebar entry.
+- Icons page implementation, except preserving its route/sidebar entry.
+- Helpers page implementation, except preserving its route/sidebar entry.
+- Text & Typography.
+- Motion.
+- Programmatic Scrolling.
+- Forms.
+- Vuetify.
+- Pages.
+- Charts.
+- Widgets.
 
 ## Style UI Helpers Implementation
 
