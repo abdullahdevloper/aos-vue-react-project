@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Style & User Interface / Border Radius.
+- Active section: Style & User Interface / Text & Typography.
 
 ## Current Slice
 
-- Scope: Style & User Interface / Border Radius only.
-- Route: `/border-radius`
+- Scope: Style & User Interface / Text & Typography only.
+- Route: `/text-typography`
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/style-ui-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -33,11 +33,61 @@ Current rebuild strategy:
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
 - Style & User Interface / Helpers: route preserved.
-- Style & User Interface / Border Radius: implemented; pending user visual approval.
-- Style & User Interface / Text & Typography: not started.
+- Style & User Interface / Border Radius: route preserved.
+- Style & User Interface / Text & Typography: implemented; pending user visual approval.
 - Style & User Interface / Motion: not started.
 - Style & User Interface / Programmatic Scrolling: not started.
 - Style & User Interface / Forms: not started.
+
+## Style UI Text & Typography Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/text-typography`
+
+Implemented Text & Typography page:
+
+- Vuse-style section header using namespace `Styles`, title `TextAndTypography`, text-fields icon, and breadcrumbs `User Interface > Text & Typography`.
+- Vue-matching dashboard route inside `DashboardLayout`.
+- Style & User Interface sidebar entry for `Text & Typography`, preserving the existing Color, Icons, Helpers, and Border Radius routes.
+- Visible documentation sections from the Vue source and language file:
+  - Text and typography intro.
+  - Typography.
+  - Typography breakpoints.
+  - Text alignment.
+  - Text decoration.
+  - Text wrapping and overflow.
+  - Text transform.
+  - Font weights and italics.
+  - Text opacity.
+  - RTL Alignment.
+- Interactive typography list with click-to-expand details for font, weight, size, and letter-spacing values.
+- Interactive breakpoint selector with hover/select states and the generated class label.
+- Alignment, decoration, no-wrap, truncate, transform, break, weights, opacity, and RTL example blocks.
+- Shared Vuse-style example cards with invert color, source expansion, and visual GitHub action controls.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Color page implementation, except preserving its route/sidebar entry.
+- Icons page implementation, except preserving its route/sidebar entry.
+- Helpers page implementation, except preserving its route/sidebar entry.
+- Border Radius page implementation, except preserving its route/sidebar entry.
+- Motion.
+- Programmatic Scrolling.
+- Forms.
+- Vuetify.
+- Pages.
+- Charts.
+- Widgets.
 
 ## Style UI Border Radius Implementation
 

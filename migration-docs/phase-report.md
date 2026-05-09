@@ -4,7 +4,7 @@ Last updated: 2026-05-07
 
 ## Phase
 
-Style & User Interface / Border Radius implementation.
+Style & User Interface / Text & Typography implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -22,8 +22,8 @@ Approval:
 - Style & User Interface / Color = route preserved
 - Style & User Interface / Icons = route preserved
 - Style & User Interface / Helpers = route preserved
-- Style & User Interface / Border Radius = implemented; pending user visual approval
-- Style & User Interface / Text & Typography = not started
+- Style & User Interface / Border Radius = route preserved
+- Style & User Interface / Text & Typography = implemented; pending user visual approval
 - Style & User Interface / Motion = not started
 - Style & User Interface / Programmatic Scrolling = not started
 - Style & User Interface / Forms = not started
@@ -34,24 +34,26 @@ Approval:
 - `migration-docs/phase-report.md`
 - `react-dashboard-template/src/App.tsx`
 - `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
-- `react-dashboard-template/src/pages/style-ui/BorderRadiusPage.tsx`
+- `react-dashboard-template/src/pages/style-ui/TextTypographyPage.tsx`
 
 ## Verification Table
 
 | Item | Vue expected | React implemented | Match level | Notes |
 |---|---|---|---|---|
-| Route | `/border-radius` renders inside the dashboard app shell | `/border-radius` added inside `DashboardRoute` | High | Color, Icons, and Helpers routes preserved |
-| Sidebar entry | Style & User Interface > Border Radius with `rounded_corner` icon and `new` badge | Border Radius entry linked to `/border-radius`, with `new` badge preserved | High | Later Style UI entries remain pending |
-| Page header | `VuseSectionDefinition`, namespace `Styles`, title `BorderRadius`, breadcrumbs Components > Vuetify > Border Radius | `DocPage` namespace `Styles`, title `BorderRadius`, rounded icon, matching breadcrumb labels | High | Follows Vue source structure |
-| Intro docs | Border Radius heading and intro text from language file | Matching heading and visible intro text | High | Markdown links rendered as plain prose where applicable |
-| Rounded corners | `.rounded-sm`, `.rounded`, `.rounded-lg`, `.rounded-xl`, `cols=12 md=2`, centered row | Four responsive tiles with matching labels and increasing radii | High | Uses Vue-like grey sample tiles |
-| Pill and Circle | Centered pill 128x64 and circle 64x64 | Matching pill and circle samples | High | Responsive stack on small viewports |
-| Removing radius | `.rounded-0` single centered sample | Matching zero-radius centered tile | High | Uses same responsive column behavior |
-| Side radius | `.rounded-t-xl`, `.rounded-r-xl`, `.rounded-b-xl`, `.rounded-l-xl` | Four responsive tiles with side-specific radius | High | Matches audited class set |
-| Corner radius | `.rounded-tl-xl`, `.rounded-tr-xl`, `.rounded-br-xl`, `.rounded-bl-xl` | Four responsive tiles with corner-specific radius | High | Matches audited class set |
-| Sass snippets | `sass_default_rounded_variables` and `sass_changing_rounded_variables` dark markup panels | Both Sass snippets rendered in dark code panels with copy action | High | React-owned static snippets copied from Vue source text |
-| Example actions | Shared example action bar supports invert, GitHub, source panel | Radius examples include invert color, visual GitHub button, and source expansion | High | GitHub button is visual only, matching other recreated docs slices |
-| Responsive layout | Examples use `v-container`, centered `v-row`, `cols=12 md=2` | MUI grid `xs=12 md=2`, centered rows | High | No arbitrary breakpoints added |
+| Route | `/text-typography` renders inside the dashboard app shell | `/text-typography` added inside `DashboardRoute` | High | Color, Icons, Helpers, and Border Radius routes preserved |
+| Sidebar entry | Style & User Interface > Text & Typography with `text_fields` icon and `new` badge | Text & Typography entry linked to `/text-typography`, with `new` badge preserved | High | Motion, Scroll, and Forms remain pending |
+| Page header | `VuseSectionDefinition`, namespace `Styles`, title `TextAndTypography`, icon `text_fields`, breadcrumbs User Interface > Text & Typography | `DocPage` namespace `Styles`, title `TextAndTypography`, text icon, matching breadcrumb labels | High | Follows Vue source structure |
+| Documentation flow | Typography intro, breakpoints, alignment, decoration, overflow, transform, weights, opacity, RTL | Same visible section order implemented | High | Uses audited Vue language text as source |
+| Typography example | Clickable typography list with active expanded details: Font, Weight, Size, Letter spacing | Clickable list with expanded details and Vue type scale values | High | Letter-spacing rendered as neutral spacing for React UI safety while values remain visible |
+| Typography breakpoint example | Selectable/hoverable item group cards, class label, example heading card | Selectable/hoverable cards, generated class label, example heading card | High | Uses MUI icons instead of Material icon ligature text |
+| Text alignment | Justify example and responsive alignment examples | Justify block and all alignment rows implemented | High | Responsive text alignment follows Vue breakpoint names |
+| Text decoration | Non-underlined link, line-through, overline, underline | All four decoration examples implemented | High | Matches visible Vue examples |
+| Wrapping and overflow | No-wrap overflow box and truncate block/inline samples | No-wrap and truncate examples implemented | High | Matches widths from Vue examples |
+| Transform and break | Lowercase, uppercase, capitalize, text-none, text-break | Transform and break examples implemented | High | Includes long word break sample |
+| Weights and italics | Black, bold, medium, regular, light, thin, italic | All weight/italic rows implemented | High | Uses Material font weights |
+| Text opacity | Primary, secondary, disabled opacity examples | All opacity examples implemented | High | Uses 87%, 60%, 37% opacity colors |
+| RTL alignment | Agnostic RTL and responsive RTL alignment examples | RTL section and examples implemented | High | Uses `start`/`end` text alignment semantics |
+| Example actions | Shared example action bar supports invert, GitHub, source panel | Text examples include invert color, visual GitHub button, and source expansion | High | GitHub button is visual only, matching other recreated docs slices |
 | Visual identity | Pale Vuse background, soft docs surfaces, teal accents, compact Vuetify density | Pale dashboard shell, neu-glow/inset surfaces, minimal action icons | Pending visual review | Needs user screenshot comparison before approval |
 
 
@@ -64,7 +66,6 @@ Approval:
 
 ## Skipped Or Deferred
 
-- Text & Typography: not implemented by active scope.
 - Motion: not implemented by active scope.
 - Programmatic Scrolling: not implemented by active scope.
 - Forms: not implemented by active scope.

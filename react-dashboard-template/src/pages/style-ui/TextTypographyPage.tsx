@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { Box, Card, Grid, IconButton, Stack, Toolbar, Tooltip, Typography } from "@mui/material";
-import { Code, FormatColorText, GitHub, InvertColors } from "@mui/icons-material";
+import { Code, DesktopWindows, Devices, FormatColorText, GitHub, InvertColors, Laptop, PhoneIphone, Tv } from "@mui/icons-material";
 import DocPage from "../../components/vuetify-docs/DocPage";
 import DocText from "../../components/vuetify-docs/DocText";
 
@@ -28,11 +28,11 @@ const typographyClasses: Array<[TypeClass, string, string, string, string, numbe
 ];
 
 const breakpointSizes = [
-  ["devices", "all", "caption"],
-  ["phone_iphone", "sm", "body-2"],
-  ["laptop", "md", "body-1"],
-  ["desktop_windows", "lg", "h6"],
-  ["tv", "xl", "h4"],
+  [Devices, "all", "caption"],
+  [PhoneIphone, "sm", "body-2"],
+  [Laptop, "md", "body-1"],
+  [DesktopWindows, "lg", "h6"],
+  [Tv, "xl", "h4"],
 ] as const;
 
 export default function TextTypographyPage() {
@@ -198,11 +198,11 @@ function TypographyBreakpointsExample() {
     <TextExample source={typographyBreakpointsSource} height={310}>
       <Stack alignItems="center" spacing={2}>
         <Stack direction="row" flexWrap="wrap" justifyContent="center" sx={{ p: 1 }}>
-          {breakpointSizes.map(([icon, bp, size]) => {
+          {breakpointSizes.map(([Icon, bp, size]) => {
             const active = model === size;
             return (
               <Box key={size} onClick={() => setModel(size)} sx={{ m: 1.5, p: 0.8, textAlign: "center", cursor: "pointer", color: active ? "text.primary" : "text.secondary", boxShadow: active ? "0 1px 4px rgba(38,50,56,.18)" : "none", transition: "box-shadow 160ms ease, color 160ms ease", "&:hover": { color: "text.primary", boxShadow: "0 1px 4px rgba(38,50,56,.18)" } }}>
-                <Box component="span" sx={{ fontFamily: "Material Icons", fontSize: 26, display: "block", lineHeight: 1.1, mb: 0.5 }}>{icon}</Box>
+                <Icon sx={{ fontSize: 26, display: "block", mx: "auto", mb: 0.5 }} />
                 <Typography sx={{ fontSize: 12 }}>{bp}</Typography>
               </Box>
             );
@@ -286,7 +286,7 @@ function typeSx(klass: TypeClass) {
   return {
     fontSize: `clamp(${klass === "h1" ? "3rem" : klass === "h2" ? "2.4rem" : "0.75rem"}, ${size}, ${size})`,
     fontWeight: Number(weight),
-    letterSpacing: spacing === "normal" ? 0 : spacing,
+    letterSpacing: 0,
     lineHeight: klass === "h1" || klass === "h2" ? 1.05 : 1.25,
     textTransform: klass === "button" || klass === "overline" ? "uppercase" : "none",
   };
