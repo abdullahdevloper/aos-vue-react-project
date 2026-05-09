@@ -226,3 +226,25 @@ Do not impose arbitrary breakpoints if the Vue source does not use them.
 Use common viewport sizes only as test samples, not as design requirements.
 
 If the original page has no special mobile/tablet behavior, React should preserve that behavior and document it.
+
+
+## Visual Mismatch Learning Rule
+
+Whenever the user identifies a visual or behavioral mismatch between React and the original Vue page, Codex must treat it as a reusable rule for future slices.
+
+For every mismatch found, Codex must:
+1. Fix it in the current slice.
+2. Add it to the verification checklist for future slices.
+3. Avoid repeating the same mismatch in later pages.
+4. Document the mismatch and fix in migration-docs/phase-report.md.
+
+Examples of reusable mismatch rules:
+- Documentation text must appear in the same location as Vue.
+- Example body/header structure must match Vue.
+- Dark/inverted examples must use the same surface colors as Vue.
+- Inputs must match Vue placeholder/label behavior.
+- Buttons must match Vue hover/active/pressed states.
+- Select/dropdown labels must not overlap.
+- Typography scale and spacing must match Vue.
+- Todo/list/card surfaces must match Vue light/dark styling.
+- React must not use generic MUI defaults when Vue has custom Vuetify/Vuse styling.
