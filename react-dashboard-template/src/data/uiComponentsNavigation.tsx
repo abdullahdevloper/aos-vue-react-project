@@ -26,6 +26,7 @@ import {
   RoundedCorner,
   ShowChart,
   Slideshow,
+  SwapVert,
   Timer,
   WidgetsOutlined,
 } from "@mui/icons-material";
@@ -65,7 +66,7 @@ export const globalNavigation: SidebarNavEntry[] = [
   { icon: <RoundedCorner />, title: "Border Radius", badge: "new", path: "/border-radius" },
   { icon: <FormatColorText />, title: "Text & Typography", badge: "new", path: "/text-typography" },
   { icon: <Slideshow />, title: "Motion", path: "/transitions" },
-  { title: "Programmatic Scrolling", disabled: true, pending: true },
+  { icon: <SwapVert />, title: "Programmatic Scrolling", path: "/scroll" },
   { icon: <Input />, title: "Forms", disabled: true, pending: true },
   { header: "Pages" },
   { icon: <People />, title: "Profile", path: "/pages/profile" },

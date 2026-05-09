@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-07
+Last updated: 2026-05-09
 
 ## Strategy Status
 
@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Style & User Interface / Motion.
+- Active section: Style & User Interface / Programmatic Scrolling.
 
 ## Current Slice
 
-- Scope: Style & User Interface / Motion only.
-- Route: `/transitions`
+- Scope: Style & User Interface / Programmatic Scrolling only.
+- Route: `/scroll`
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/style-ui-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -35,9 +35,63 @@ Current rebuild strategy:
 - Style & User Interface / Helpers: route preserved.
 - Style & User Interface / Border Radius: route preserved.
 - Style & User Interface / Text & Typography: route preserved.
-- Style & User Interface / Motion: implemented; pending user visual approval.
-- Style & User Interface / Programmatic Scrolling: not started.
+- Style & User Interface / Motion: route preserved.
+- Style & User Interface / Programmatic Scrolling: implemented; pending user visual approval.
 - Style & User Interface / Forms: not started.
+
+## Style UI Programmatic Scrolling Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/scroll`
+
+Implemented Programmatic Scrolling page:
+
+- Vuse-style section header using namespace `Styles`, title `Scroll`, and breadcrumbs `User Interface > Scroll`.
+- Main documentation heading `Programmatic Scrolling`.
+- Exact Vue language text from `src/lang/en/styles/Scroll.json`.
+- Vue-like inline code styling for `goTo`, `$vuetify`, `target`, `options`, `duration`, `easing`, `container`, and `offset`.
+- Usage example with:
+  - Target heading.
+  - Radio options: `Number`, `Selector`, `DOMElement`.
+  - Number field defaulting to `9999`.
+  - Selector select with `#first`, `#second`, `#third`.
+  - DOMElement select with `Button`, `Radio group`.
+  - Options heading.
+  - Easing select with Vuetify easing pattern names.
+  - Duration slider from `0` to `1000`, default `300`.
+  - Offset slider from `-500` to `500`, default `0`.
+  - Full-width primary `scroll` button.
+- Scroll behavior equivalent to `$vuetify.goTo(target, options)` for numeric, selector, and element targets.
+- Smooth scrolling uses the selected easing and duration.
+- Behavior fix after review:
+  - Number mode now computes target as `number - offset`, matching Vuetify `goTo`.
+  - Selector mode now resolves the selector with `document.querySelector`, computes cumulative target offset, subtracts the scroll container offset, then subtracts `offset`.
+  - DOMElement mode now targets the actual Button or Radio group refs and uses the same cumulative offset formula as Vuetify.
+  - Duration now uses Vuetify-style requestAnimationFrame progress timing.
+  - Easing functions match Vuetify's local `easing-patterns` implementation.
+  - Scroll writes to the React dashboard main scroll container because the React shell owns scrolling there; this preserves Vue's visible page behavior inside the React app shell.
+- Router section with exact `Using with router` text and `js_import_goto_router` code snippet.
+- Long anchor sections: `First`, `Second`, `Third`, each with repeated exact lorem ipsum text.
+- Example action bar with Invert example color, View on Github, and View source.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Forms.
+- Vuetify.
+- Pages.
+- Charts.
+- Widgets.
+- Color, Icons, Helpers, Border Radius, Text & Typography, and Motion page content.
 
 ## Style UI Motion Implementation
 

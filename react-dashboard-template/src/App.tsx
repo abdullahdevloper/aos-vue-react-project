@@ -13,6 +13,7 @@ import HelpersPage from "./pages/style-ui/HelpersPage";
 import BorderRadiusPage from "./pages/style-ui/BorderRadiusPage";
 import TextTypographyPage from "./pages/style-ui/TextTypographyPage";
 import TransitionsPage from "./pages/style-ui/TransitionsPage";
+import ScrollPage from "./pages/style-ui/ScrollPage";
 import CardsPage from "./pages/ui-components/widgets/CardsPage";
 import ListsWidgetsPage from "./pages/ui-components/widgets/ListsPage";
 import StatisticPage from "./pages/ui-components/widgets/StatisticPage";
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="/border-radius" element={<DashboardRoute><BorderRadiusPage /></DashboardRoute>} />
           <Route path="/text-typography" element={<DashboardRoute><TextTypographyPage /></DashboardRoute>} />
           <Route path="/transitions" element={<DashboardRoute><TransitionsPage /></DashboardRoute>} />
+          <Route path="/scroll" element={<DashboardRoute><ScrollPage /></DashboardRoute>} />
           <Route path="/charts/chartjs" element={<DashboardRoute><ChartJsPage /></DashboardRoute>} />
           <Route path="/charts/spark-line" element={<DashboardRoute><SparkLinePage /></DashboardRoute>} />
           <Route path="/widgets/card" element={<DashboardRoute><CardsPage /></DashboardRoute>} />
