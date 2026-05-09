@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Style & User Interface / Text & Typography.
+- Active section: Style & User Interface / Motion.
 
 ## Current Slice
 
-- Scope: Style & User Interface / Text & Typography only.
-- Route: `/text-typography`
+- Scope: Style & User Interface / Motion only.
+- Route: `/transitions`
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/style-ui-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -34,10 +34,71 @@ Current rebuild strategy:
 - Style & User Interface / Icons: route preserved.
 - Style & User Interface / Helpers: route preserved.
 - Style & User Interface / Border Radius: route preserved.
-- Style & User Interface / Text & Typography: implemented; pending user visual approval.
-- Style & User Interface / Motion: not started.
+- Style & User Interface / Text & Typography: route preserved.
+- Style & User Interface / Motion: implemented; pending user visual approval.
 - Style & User Interface / Programmatic Scrolling: not started.
 - Style & User Interface / Forms: not started.
+
+## Style UI Motion Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/transitions`
+
+Implemented Motion page:
+
+- Vuse-style section header using namespace `Styles`, title `Transitions`, slideshow icon, and breadcrumbs `User Interface > Transitions`.
+- Vue-matching dashboard route inside `DashboardLayout`.
+- Style & User Interface sidebar entry for `Motion`, preserving Color, Icons, Helpers, Border Radius, and Text & Typography routes.
+- Motion intro documentation from the Vue language file.
+- Usage example with Slide X and Scroll Y transition menus.
+- Slide X transitions example with normal and reverse directions.
+- Slide Y transitions example with normal and reverse directions.
+- Scroll X transitions example with normal and reverse directions.
+- Scroll Y transitions example with normal and reverse directions.
+- Scale transition example.
+- Fab transition example.
+- Fade transition example.
+- Expand transition example with vertical and horizontal expand toggles.
+- Custom Origin scale transition example.
+- Todo list example with add-on-enter, add icon fade, task count fade, checkbox state, completion icon slide, circular progress, and animated list rows.
+- Shared Vuse-style example cards with invert color, source expansion, and visual GitHub action controls.
+- Visual mismatch fix after review:
+  - Todo header now contains only the title and action icons.
+  - Main `Motion` heading scale adjusted to match Vue `# Motion` hierarchy more closely.
+  - Inline code tokens now use Vue markdown styling from `BaseMarkdown.vue`, including red text and pale red background.
+  - Exact Vue language strings are used for Motion docs and examples, including `transition`, `$primary-transition`, `v-speed-dial`, and `v-expand-x-transition` tokens.
+  - Motion example descriptions now render inside the example body like Vue, not in the white toolbar.
+  - Usage card now includes the Vue documentation text in the body and uses a taller body with roomier spacing.
+  - Inverted example state now also darkens transition menu/list surfaces, not only the outer example body.
+  - Todo description moved into the example body.
+  - Todo default/light state now keeps Vue-like light input/list surfaces.
+  - Todo inverted/dark state now uses Vue-like dark input/list surfaces.
+  - Todo body height, centered container width, checkbox, row, divider, progress, and shadows softened closer to Vue.
+  - Existing Todo behavior preserved.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Color page implementation, except preserving its route/sidebar entry.
+- Icons page implementation, except preserving its route/sidebar entry.
+- Helpers page implementation, except preserving its route/sidebar entry.
+- Border Radius page implementation, except preserving its route/sidebar entry.
+- Text & Typography page implementation, except preserving its route/sidebar entry.
+- Programmatic Scrolling.
+- Forms.
+- Vuetify.
+- Pages.
+- Charts.
+- Widgets.
 
 ## Style UI Text & Typography Implementation
 

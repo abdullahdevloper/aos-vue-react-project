@@ -64,7 +64,7 @@ export const globalNavigation: SidebarNavEntry[] = [
   { icon: <Help />, title: "Helpers", path: "/helpers" },
   { icon: <RoundedCorner />, title: "Border Radius", badge: "new", path: "/border-radius" },
   { icon: <FormatColorText />, title: "Text & Typography", badge: "new", path: "/text-typography" },
-  { icon: <Slideshow />, title: "Motion", disabled: true, pending: true },
+  { icon: <Slideshow />, title: "Motion", path: "/transitions" },
   { title: "Programmatic Scrolling", disabled: true, pending: true },
   { icon: <Input />, title: "Forms", disabled: true, pending: true },
   { header: "Pages" },
