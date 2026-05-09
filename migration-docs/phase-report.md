@@ -4,7 +4,7 @@ Last updated: 2026-05-09
 
 ## Phase
 
-Style & User Interface / Forms implementation.
+Global Toolbar / App Bar Fidelity implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -27,14 +27,13 @@ Approval:
 - Style & User Interface / Motion = route preserved
 - Style & User Interface / Programmatic Scrolling = route preserved
 - Style & User Interface / Forms = implemented; pending user visual approval
+- Global Toolbar / App Bar Fidelity = implemented; pending user visual approval
 
 ## Completed Files
 
 - `migration-docs/progress.md`
 - `migration-docs/phase-report.md`
-- `react-dashboard-template/src/App.tsx`
-- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
-- `react-dashboard-template/src/pages/style-ui/FormsPage.tsx`
+- `react-dashboard-template/src/layouts/DashboardLayout.tsx`
 
 ## Verification Table
 
@@ -57,6 +56,25 @@ Approval:
 | Register action | Text primary `Register`, disabled while `$v.$invalid`; valid submit shows success snackbar and resets | React disables while invalid; valid submit shows `Registration successful!` snackbar then resets | High | Snackbar is top-right inside form card |
 | Validation state | `$v` state updates as fields are touched and changed | React mirrors dirty, invalid, error, and rule booleans in JSON-like panel | Pending visual review | Not Vuelidate internals, but visible behavior/state is recreated |
 
+## Toolbar Verification
+
+| Toolbar item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| App bar surface | `v-app-bar app flat` with `vuse-header`, `with-radius`, soft `neu-glow` style when light | Fixed React `AppBar` with soft raised toolbar surface, pale background, 4px radius, and Vuse shadow | Pending visual review | Shared shell only |
+| Toolbar height | Vue dense/prominent settings default to compact app toolbar with small fab buttons | React toolbar uses 64px min-height with compact circular actions | Pending visual review | Keeps content offset below fixed bar |
+| Desktop alignment | Vue clipped app bar aligns with sidenav depending clipped state | React toolbar starts after persistent drawer on desktop and spans full width when drawer closed/small viewport | Pending visual review | Sidebar behavior preserved |
+| Left mini toggle | Vue large breakpoint shows small fab `menu_open` or `double_arrow` and toggles mini variant | React shows a circular soft button with `menu_open`/`double_arrow` and toggles existing sidebar state | Partial | React has open/closed sidebar, not Vue mini-variant state |
+| Contacts action | Vue shows small fab contacts button linking to `/app/contacts` | React shows visual circular contacts action | Visual only | App/Contacts page is outside active scope |
+| Chat action | Vue shows small fab chat button linking to `/app/chat` | React shows visual circular chat action | Visual only | Chat page is outside active scope |
+| Mobile menu action | Vue shows right-side menu fab on mdAndDown to toggle sidenav visibility | React shows mobile nav toggle on small screens using existing sidebar toggle | High | Keeps approved sidebar behavior |
+| Settings action | Vue settings fab calls `handleSettingsDrawer()` | React shows visual circular settings action | Visual only | Settings drawer is outside active scope |
+| Language control | Vue flag fab opens language menu with available locales | React flag button opens a soft menu with English, Français, Русский, 日本語 options and updates displayed flag | High | Uses emoji flags to avoid modifying/copying protected assets |
+| Avatar control | Vue avatar button opens profile menu | React avatar button uses existing Alice image asset and opens profile menu | High | Avatar source copied previously in React assets |
+| Profile menu items | Vue menu items: Profile, Account, Settings, Inbox, divider, Logout | React menu renders same labels/icons/divider | High | Click closes menu; deeper actions are outside active scope |
+| Button states | Vue small fab buttons use raised `neu-glow` and active inset style | React toolbar buttons use raised shadow, hover/active inset shadow, circular geometry, and teal icons | Pending visual review | Needs screenshot comparison |
+| Full-page routes | Vue full-layout auth/error pages do not use dashboard app shell toolbar | React toolbar remains only inside `DashboardLayout`; auth/error/coming soon/maintenance routes stay outside | High | No full-page route changes |
+| Page content | Toolbar change should not alter dashboard page content | No page content files modified in this pass | High | Only shared shell and reports changed |
+
 
 ## Build
 
@@ -67,8 +85,8 @@ Approval:
 
 ## Skipped Or Deferred
 
-- Vuetify Banners and later Vuetify batches: not implemented by active scope.
-- Pages, Charts, Widgets, and other Style UI pages: preserved; not modified for content.
+- Toolbar actions for Contacts, Chat, and Settings are visual-only because implementing those pages/drawers is outside active scope.
+- Page content for Forms, Scroll, Motion, Typography, Border Radius, Helpers, Icons, Color, Vuetify, Pages, Charts, and Widgets was preserved.
 
 ## Visual Mismatch Learning Checklist
 

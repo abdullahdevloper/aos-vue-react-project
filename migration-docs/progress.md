@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Style & User Interface / Forms.
+- Active section: Global Toolbar / App Bar Fidelity.
 
 ## Current Slice
 
-- Scope: Style & User Interface / Forms only.
-- Route: `/forms`
+- Scope: DashboardLayout toolbar/top bar and shared app shell only.
+- Route: shared dashboard shell.
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/style-ui-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -38,6 +38,44 @@ Current rebuild strategy:
 - Style & User Interface / Motion: route preserved.
 - Style & User Interface / Programmatic Scrolling: route preserved.
 - Style & User Interface / Forms: implemented; pending user visual approval.
+
+## Global Toolbar / App Bar Fidelity
+
+Status: implemented; pending user visual approval.
+
+Implemented shared shell updates:
+
+- Rebuilt React `DashboardLayout` top toolbar to more closely match Vue `src/layouts/App/Toolbar.vue`.
+- Soft neumorphic app bar surface with 64px toolbar height.
+- Toolbar aligns beside the persistent drawer on desktop and spans full width on small screens.
+- Left action buttons on large screens:
+  - Mini/sidebar toggle visual action.
+  - Contacts visual action.
+  - Chat visual action.
+- Compact logo/title area on smaller screens.
+- Right action controls:
+  - Mobile navigation toggle.
+  - Settings visual button.
+  - Language flag menu with English, Français, Русский, and 日本語 options.
+  - Avatar/profile menu with Profile, Account, Settings, Inbox, divider, and Logout.
+- Circular soft icon buttons use Vuse-like raised/inset hover and active states.
+- Dashboard content remains offset below the fixed toolbar.
+- Toolbar appears only in `DashboardLayout` routes and remains absent from full-page auth/error/coming soon/maintenance routes.
+
+Documented visual-only actions:
+
+- Contacts, Chat, and Settings are visual toolbar actions only in this pass because their target drawers/pages are outside active scope.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Page content for Forms, Scroll, Motion, Typography, Border Radius, Helpers, Icons, Color, Vuetify, Pages, Charts, and Widgets.
 
 ## Style UI Forms Implementation
 

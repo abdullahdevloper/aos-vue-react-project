@@ -1,7 +1,8 @@
-import { useEffect, useState, type PropsWithChildren } from "react";
+import { useEffect, useState, type MouseEvent, type PropsWithChildren, type ReactNode } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import {
   AppBar,
+  Avatar,
   Box,
   Collapse,
   Container,
@@ -10,16 +11,36 @@ import {
   Drawer,
   IconButton,
   List,
+  ListItemAvatar,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Menu as MuiMenu,
+  MenuItem,
   Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
-import { DashboardCustomize, ExpandLess, ExpandMore, Menu, MoreHoriz, OpenInNew } from "@mui/icons-material";
+import {
+  AccountBalanceWallet,
+  Chat,
+  Contacts,
+  DashboardCustomize,
+  DoubleArrow,
+  ExpandLess,
+  ExpandMore,
+  Inbox,
+  Menu as MenuIcon,
+  MenuOpen,
+  MoreHoriz,
+  OpenInNew,
+  Person,
+  PowerSettingsNew,
+  Settings,
+} from "@mui/icons-material";
 import { fallbackIcon, pendingNote, uiComponentsNavigation, type SidebarNavEntry, type SidebarNavItem } from "../data/uiComponentsNavigation";
 import { useDashboardStore } from "../store/useDashboardStore";
+import aliAvatar from "../assets/pages/profile/lists/ali.jpg";
 
 const drawerWidth = 282;
 
@@ -29,6 +50,9 @@ const neuInset = "inset -7px -7px 5px rgba(255,255,255,.88), inset 7px 7px 7px r
 export default function DashboardLayout({ children }: PropsWithChildren) {
   const sidebarOpen = useDashboardStore((state) => state.sidebarOpen);
   const toggleSidebar = useDashboardStore((state) => state.toggleSidebar);
+  const [localeAnchor, setLocaleAnchor] = useState<HTMLElement | null>(null);
+  const [profileAnchor, setProfileAnchor] = useState<HTMLElement | null>(null);
+  const [currentLocale, setCurrentLocale] = useState(locales[0]);
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "background.default" }}>
@@ -40,29 +64,85 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
           bgcolor: "background.default",
           color: "text.primary",
           boxShadow: "none",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          px: { xs: 1, md: 3 },
+          zIndex: (theme) => theme.zIndex.drawer - 1,
+          left: { xs: 0, md: sidebarOpen ? `${drawerWidth}px` : 0 },
+          width: { xs: "100%", md: sidebarOpen ? `calc(100% - ${drawerWidth}px)` : "100%" },
+          px: { xs: 1.5, md: 3 },
           pt: 1.5,
+          transition: (theme) => theme.transitions.create(["left", "width"], { duration: theme.transitions.duration.shorter }),
         }}
       >
         <Toolbar
           sx={{
-            minHeight: 58,
+            minHeight: 64,
             borderRadius: 1,
             bgcolor: "background.default",
             boxShadow: neuGlow,
-            px: { xs: 1.5, md: 2 },
+            px: { xs: 1.1, md: 1.6 },
+            gap: 1.5,
           }}
         >
-          <IconButton onClick={toggleSidebar} edge="start" aria-label="menu" sx={{ mr: 1.5, color: "primary.main", boxShadow: neuGlow, bgcolor: "background.default" }}>
-            <Menu />
+          <Stack direction="row" spacing={1.5} alignItems="center" sx={{ display: { xs: "none", lg: "flex" } }}>
+            <SoftToolbarButton label="Toggle mini navigation" onClick={toggleSidebar}>
+              {sidebarOpen ? <MenuOpen /> : <DoubleArrow />}
+            </SoftToolbarButton>
+            <SoftToolbarButton label="Contacts">
+              <Contacts />
+            </SoftToolbarButton>
+            <SoftToolbarButton label="Chat">
+              <Chat />
+            </SoftToolbarButton>
+          </Stack>
+
+          <Stack direction="row" alignItems="center" spacing={1.25} sx={{ display: { xs: "flex", lg: "none" }, minWidth: 0 }}>
+            <Box sx={{ width: 40, height: 40, display: "grid", placeItems: "center", color: "primary.main" }}>
+              <DashboardCustomize sx={{ fontSize: 30 }} />
+            </Box>
+            <Typography variant="h6" color="primary.main" sx={{ display: { xs: "none", md: "block" }, fontWeight: 500, fontSize: 20, whiteSpace: "nowrap" }}>
+              Vuse Admin
+            </Typography>
+          </Stack>
+
+          <Box sx={{ flexGrow: 1 }} />
+
+          <SoftToolbarButton label="Open navigation" onClick={toggleSidebar} sx={{ display: { xs: "inline-flex", md: "none" }, mr: 1 }}>
+            <MenuIcon />
+          </SoftToolbarButton>
+          <SoftToolbarButton label="Settings" sx={{ mr: 1 }}>
+            <Settings />
+          </SoftToolbarButton>
+          <SoftToolbarButton label="Language" onClick={(event) => setLocaleAnchor(event.currentTarget)} sx={{ mr: 1 }}>
+            <Avatar sx={{ width: 30, height: 30, fontSize: 18, bgcolor: "transparent" }}>{currentLocale.flag}</Avatar>
+          </SoftToolbarButton>
+          <IconButton aria-label="User profile" onClick={(event) => setProfileAnchor(event.currentTarget)} sx={{ width: 44, height: 44, p: 0, mr: 0, color: "primary.main", borderRadius: "50%" }}>
+            <Avatar src={aliAvatar} sx={{ width: 40, height: 40, boxShadow: neuGlow }} />
           </IconButton>
-          <DashboardCustomize color="primary" />
-          <Typography variant="h6" color="primary.main" sx={{ ml: 1, display: { xs: "none", sm: "block" }, fontWeight: 500 }}>
-            Vuse Admin
-          </Typography>
         </Toolbar>
       </AppBar>
+
+      <MuiMenu anchorEl={localeAnchor} open={Boolean(localeAnchor)} onClose={() => setLocaleAnchor(null)} PaperProps={{ sx: menuPaperSx }}>
+        {locales.map((locale) => (
+          <MenuItem key={locale.value} onClick={() => { setCurrentLocale(locale); setLocaleAnchor(null); }} sx={menuItemSx}>
+            <ListItemAvatar>
+              <Avatar variant="rounded" sx={{ width: 25, height: 25, fontSize: 15, bgcolor: "transparent" }}>{locale.flag}</Avatar>
+            </ListItemAvatar>
+            <Typography sx={{ fontSize: 14.5 }}>{locale.text}</Typography>
+          </MenuItem>
+        ))}
+      </MuiMenu>
+
+      <MuiMenu anchorEl={profileAnchor} open={Boolean(profileAnchor)} onClose={() => setProfileAnchor(null)} PaperProps={{ sx: { ...menuPaperSx, minWidth: 180, boxShadow: "0 8px 18px rgba(0,131,143,.22)" } }}>
+        {profileItems.map((item, index) =>
+          item.divider ? (
+            <Divider key={`divider-${index}`} sx={{ my: 0.4 }} />
+          ) : (
+            <MenuItem key={item.text} onClick={() => setProfileAnchor(null)} sx={menuItemSx}>
+              <ListItemIcon sx={{ minWidth: 34, color: "text.secondary" }}>{item.icon}</ListItemIcon>
+              <Typography sx={{ fontSize: 14.5 }}>{item.text}</Typography>
+            </MenuItem>
+          ),
+        )}
+      </MuiMenu>
 
       <Drawer
         variant="persistent"
@@ -98,6 +178,14 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   );
 }
 
+function SoftToolbarButton({ label, onClick, children, sx = {} }: { label: string; onClick?: (event: MouseEvent<HTMLButtonElement>) => void; children: ReactNode; sx?: object }) {
+  return (
+    <IconButton aria-label={label} onClick={onClick} size="small" sx={{ ...toolbarButtonSx, ...sx }}>
+      {children}
+    </IconButton>
+  );
+}
+
 function UiComponentsSidebar() {
   const location = useLocation();
 
@@ -127,6 +215,55 @@ function UiComponentsSidebar() {
     </Stack>
   );
 }
+
+const locales = [
+  { text: "English", value: "en", flag: "🇺🇸" },
+  { text: "Français", value: "fr-FR", flag: "🇫🇷" },
+  { text: "Русский", value: "ru-RU", flag: "🇩🇪" },
+  { text: "日本語", value: "ja-JP", flag: "🇯🇵" },
+];
+
+const profileItems = [
+  { icon: <Person fontSize="small" />, text: "Profile" },
+  { icon: <AccountBalanceWallet fontSize="small" />, text: "Account" },
+  { icon: <Settings fontSize="small" />, text: "Settings" },
+  { icon: <Inbox fontSize="small" />, text: "Inbox" },
+  { divider: true },
+  { icon: <PowerSettingsNew fontSize="small" />, text: "Logout" },
+];
+
+const toolbarButtonSx = {
+  width: 40,
+  height: 40,
+  color: "primary.main",
+  bgcolor: "background.default",
+  boxShadow: neuGlow,
+  borderRadius: "50%",
+  transition: "box-shadow 140ms ease, background-color 140ms ease, transform 140ms ease, color 140ms ease",
+  "& .MuiSvgIcon-root": { fontSize: 22 },
+  "&:hover": { bgcolor: "background.default", color: "primary.dark", boxShadow: neuInset },
+  "&:active": { transform: "scale(.94)", boxShadow: neuInset },
+  "&:focus-visible": { outline: "2px solid rgba(0,131,143,.32)", outlineOffset: 2 },
+};
+
+const menuPaperSx = {
+  mt: 1,
+  bgcolor: "background.default",
+  borderRadius: 1,
+  backgroundImage: "none",
+  boxShadow: neuGlow,
+  minWidth: 178,
+  p: 0.5,
+};
+
+const menuItemSx = {
+  minHeight: 40,
+  borderRadius: 1,
+  mx: 0.25,
+  my: 0.2,
+  color: "text.primary",
+  "&:hover": { bgcolor: "rgba(0,131,143,.08)", color: "primary.main" },
+};
 
 function SidebarEntry({ entry, pathname, depth, index }: { entry: SidebarNavEntry; pathname: string; depth: number; index: number }) {
   if ("header" in entry) {
