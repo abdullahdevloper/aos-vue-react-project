@@ -4,7 +4,7 @@ Last updated: 2026-05-09
 
 ## Phase
 
-Style & User Interface / Programmatic Scrolling implementation.
+Style & User Interface / Forms implementation.
 
 Status: implemented; pending user visual approval.
 
@@ -25,8 +25,8 @@ Approval:
 - Style & User Interface / Border Radius = route preserved
 - Style & User Interface / Text & Typography = route preserved
 - Style & User Interface / Motion = route preserved
-- Style & User Interface / Programmatic Scrolling = implemented; pending user visual approval
-- Style & User Interface / Forms = not started
+- Style & User Interface / Programmatic Scrolling = route preserved
+- Style & User Interface / Forms = implemented; pending user visual approval
 
 ## Completed Files
 
@@ -34,41 +34,28 @@ Approval:
 - `migration-docs/phase-report.md`
 - `react-dashboard-template/src/App.tsx`
 - `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
-- `react-dashboard-template/src/pages/style-ui/ScrollPage.tsx`
+- `react-dashboard-template/src/pages/style-ui/FormsPage.tsx`
 
 ## Verification Table
 
 | Item | Vue expected | React implemented | Match level | Notes |
 |---|---|---|---|---|
-| Route | `/scroll` renders inside the dashboard app shell | `/scroll` added inside `DashboardRoute` | High | Forms remains pending |
-| Sidebar entry | Style & User Interface > Programmatic Scrolling | Programmatic Scrolling linked to `/scroll` | High | Approved Style UI routes preserved |
-| Page header hierarchy | `VuseSectionDefinition` title `Scroll`, namespace `Styles`, breadcrumb `User Interface > Scroll`, followed by `# Programmatic Scrolling` | React renders the same section title, namespace, breadcrumb labels, and main content heading | Pending visual review | Uses existing Vuse docs shell |
-| Documentation intro | Exact `headingText` from `src/lang/en/styles/Scroll.json` with inline code tokens | React renders exact text and Vue-like inline code styling for `goTo` and `$vuetify` | Pending visual review | Inline code follows Vue markdown styling |
-| Usage description | Vue `Example.vue` renders usage `desc` inside the example body | React usage description appears inside the example body before controls | Pending visual review | Header remains title/actions only |
-| Target controls | Heading `Target`, row radio group for `Number`, `Selector`, `DOMElement`, and conditional field/select | React implements the same radio group and conditional Number/Selector/DOMElement controls | High | Defaults match Vue source |
-| Options controls | Heading `Options`, Easing select, Duration slider 0-1000, Offset slider -500-500 | React implements all controls with Vuetify easing pattern names and matching defaults | High | Slider value labels are visible like Vue thumb labels |
-| Scroll action | Full-width primary `scroll` button calls `$vuetify.goTo(target, options)` | React button performs smooth scrolling for numeric, selector, and element targets using selected duration/easing/offset | Pending visual review | Targets dashboard main scroll container |
-| Element targets | Vue can scroll to Button or Radio group refs | React maps `Button` to the scroll button ref and `Radio group` to the Target heading ref | High | Matches visible choices |
-| Router section | `Using with router` text and `js_import_goto_router` code snippet | React renders exact router text and local snippet content | High | Link markdown rendered visually |
-| Anchor content | Sections `First`, `Second`, `Third`, each followed by three lorem ipsum paragraphs | React renders all three anchors with repeated exact Vue lorem ipsum text | High | Provides selector targets and long scroll area |
-| Example actions | Invert colors, View on Github, View source | React implements invert body color, visual GitHub action, and source expansion | High | Shared docs behavior preserved |
-| Responsive layout | Vue `v-container`, `v-row`, `v-col cols=12`; controls stack full-width | React controls are full-width stacked like Vue | High | No arbitrary custom breakpoints beyond matching stacked layout |
-| Visual identity | Pale Vuse background, soft inset example surface, Vuetify-like controls and typography | React uses Vuse docs shell, soft inset example card, teal accent controls, and Vue-scale docs text | Pending visual review | Needs user screenshot comparison before approval |
-
-## Scroll Behavior Verification
-
-| Scroll feature | Vue expected behavior | React before fix | React after fix | Match level | Notes |
-|---|---|---|---|---|---|
-| Number target | `target()` returns `Number(number)` and `goTo` computes `getOffset(number) - offset` | React added offset to the numeric target | React computes `number - offset` | High | Default `9999` still scrolls to bottom through native scroll clamping |
-| Selector target | `target()` returns selector string; Vuetify uses `document.querySelector`, cumulative target offset, minus cumulative container offset, minus offset | React queried inside page and used direct `offsetTop - container.offsetTop`, then added offset | React uses `document.querySelector`, cumulative offsets, container offset subtraction, and subtracts offset | High | Matches Vuetify `getOffset(target) - getOffset(container) - offset` formula |
-| DOMElement target | `target()` resolves computed `element` to Button or Radio group ref; Vuetify handles HTMLElement cumulative offset | React selected refs but used direct offset math and added offset | React resolves Button/Radio refs and uses cumulative HTMLElement offset math | High | The visible select choices remain `Button` and `Radio group` |
-| Duration | Vuetify duration controls `requestAnimationFrame` progress; `0` jumps immediately | React used duration but with clamped target and non-Vuetify offset math | React uses Vuetify-style `performance.now`, `requestAnimationFrame`, and immediate jump for duration `0` | High | Uses selected duration 0-1000 |
-| Offset | Vuetify subtracts `offset` from final target location | React added offset, reversing behavior | React subtracts offset for all target modes | High | Positive offset stops before target; negative offset moves past target |
-| Easing | Easing name maps to Vuetify `easing-patterns`; missing easing throws | React easing math matched names but target math was wrong | React uses the same easing formulas and selected easing names | High | Local implementation mirrors Vuetify source |
-| Scroll container | Vue default is `document.scrollingElement`; React dashboard has the scrollable area on `<main>` because body is hidden | React used `<main>` but with incorrect target formula | React keeps `<main>` as the effective container and applies Vuetify's container-relative formula | High | This is the React-shell equivalent of Vue's visible page scroll area |
-| Button click | Vue `scroll` button calls `$vuetify.goTo(target, options)` | React called custom scroll with inaccurate option semantics | React click resolves target/options and runs Vuetify-equivalent behavior | High | Existing button label and controls preserved |
-| Active/selected controls | Radio/select/slider values update target and options before click | React controls updated state correctly | Preserved | High | No visual/control behavior changed |
-| Router example | Documentation-only router snippet shown below usage | Implemented as documentation-only snippet | Preserved | High | No click behavior expected in Vue source |
+| Route | `/forms` renders inside the dashboard app shell | `/forms` added inside `DashboardRoute` | High | Other Style UI routes preserved |
+| Sidebar entry | Style & User Interface > Forms with input icon | Forms linked to `/forms` with input icon | High | Approved entries preserved |
+| Page header hierarchy | `VuseSectionDefinition` title `Forms`, icon `input`, breadcrumbs `User Interface > Forms` | React renders matching title, icon, and breadcrumb labels | Pending visual review | Forms has no namespace in Vue source |
+| Responsive layout | `v-row` with two `v-col md="6" cols="12"` columns | React uses two desktop columns and stacks on smaller screens | High | Matches Vue responsive props |
+| Form card | `Reactive Form Example` in a `neu-glow` card | React renders the same title in a soft raised Vuse card | Pending visual review | Needs screenshot comparison |
+| Validation card | `Reactive Form Validation` in a `neu-glow` card with `.json-pre` height 748px and blue text | React renders matching title, blue JSON-like pre, and 748px scrollable panel | Pending visual review | Mirrors Vuelidate-like state |
+| Text inputs | First, Last, Email, City, State, Pincode solo fields with dirty validation | React implements all fields, solo-like filled surfaces, blur/input dirty behavior, and Vue messages | Pending visual review | Pincode touches on input like Vue |
+| Bio textarea | Optional `Bio (optional)` textarea, no validation | React implements optional multiline textarea with no validation errors | High | Label text preserved |
+| Favorite animal | Solo select with `Dog`, `Cat`, `Rabbit`, `Turtle`, `Snake`; required | React implements the same item list and required validation | High | Label and values preserved |
+| Age slider | Slider `Age`, hint `Be honest`, min 1, max 100, thumb label, required | React implements same range, hint, thumb label, and required validation | Pending visual review | Age is dirty after slider commit |
+| Terms checkbox | Green checkbox with terms and conditions links; required | React implements checkbox, links, required state, and link click stop behavior | Pending visual review | Vue has no custom terms error message |
+| Terms dialog | `Terms` dialog max-width 70%, five repeated content paragraphs, `Ok` purple text button | React implements matching dialog content and Ok action | High | Content copied from Vue source |
+| Conditions dialog | `Conditions` dialog max-width 70%, five repeated content paragraphs, `Ok` purple text button | React implements matching dialog content and Ok action | High | Content copied from Vue source |
+| Cancel action | Text `Cancel` button resets form, form ref, and `$v` dirty state | React resets values and dirty/validation state | High | Matches visible behavior |
+| Register action | Text primary `Register`, disabled while `$v.$invalid`; valid submit shows success snackbar and resets | React disables while invalid; valid submit shows `Registration successful!` snackbar then resets | High | Snackbar is top-right inside form card |
+| Validation state | `$v` state updates as fields are touched and changed | React mirrors dirty, invalid, error, and rule booleans in JSON-like panel | Pending visual review | Not Vuelidate internals, but visible behavior/state is recreated |
 
 
 ## Build
@@ -80,7 +67,6 @@ Approval:
 
 ## Skipped Or Deferred
 
-- Forms: not implemented by active scope.
 - Vuetify Banners and later Vuetify batches: not implemented by active scope.
 - Pages, Charts, Widgets, and other Style UI pages: preserved; not modified for content.
 

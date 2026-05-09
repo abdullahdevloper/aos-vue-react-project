@@ -67,7 +67,7 @@ export const globalNavigation: SidebarNavEntry[] = [
   { icon: <FormatColorText />, title: "Text & Typography", badge: "new", path: "/text-typography" },
   { icon: <Slideshow />, title: "Motion", path: "/transitions" },
   { icon: <SwapVert />, title: "Programmatic Scrolling", path: "/scroll" },
-  { icon: <Input />, title: "Forms", disabled: true, pending: true },
+  { icon: <Input />, title: "Forms", path: "/forms" },
   { header: "Pages" },
   { icon: <People />, title: "Profile", path: "/pages/profile" },
   { icon: <Timer />, title: "Coming Soon", path: "/pages/coming-soon" },
