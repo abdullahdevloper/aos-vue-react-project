@@ -2085,3 +2085,48 @@ Implemented/fixed:
 Pending:
 
 - Theme Settings / Theme Builder color picker remains pending user visual approval.
+
+## Dashboard Operational Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Dashboard / Operational only.
+- Route `/dashboard/operational`.
+- Root redirect `/` restored to `/dashboard/operational` to match Vue.
+
+Implemented:
+
+- Removed the stale `/dashboard/operational` redirect to `/charts/chartjs`.
+- Added a Vue-equivalent Operational dashboard page inside the dashboard app shell.
+- Implemented the Vue Operational layout:
+  - Basic stats row with four cards.
+  - Revenue line chart card with Monthly/Weekly segmented toggle.
+  - Visits bar chart card.
+  - Lower three-column widget row:
+    - LatestMediaList.
+    - BlogPostCard plus TaskStatus.
+    - TicketCheckList plus MembersList.
+- Preserved Vue/Vuse visual identity:
+  - pale dashboard surface.
+  - soft neumorphic cards and icon buttons.
+  - compact typography and card spacing.
+  - Chart.js hover/tooltips.
+  - responsive `sm/lg/md`-style wrapping behavior.
+- Kept `/dashboard/analytical` pending/disabled and did not implement Analytical.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Not touched:
+
+- Vuetify.
+- animations.
+- App Contacts/Chat.
+- Directives.
+- approved page content outside routing needed for Dashboard Operational.

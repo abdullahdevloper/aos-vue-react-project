@@ -473,6 +473,106 @@ Approval:
 - Result: passed.
 - Notes: Vite reported the existing non-failing generated JS chunk-size warning.
 
+## Dashboard Audit
+
+Status: audit complete; implementation not started.
+
+Scope audited:
+
+- Dashboard / Operational
+- Dashboard / Analytical
+
+Vue sources inspected:
+
+- `src/config/navigation-items.js`
+- `src/router/routes.js`
+- `src/router/routes/vuse.js`
+- `src/views/Dashboards/OperationalDashboard/OperationalDashboard.vue`
+- `src/views/Dashboards/OperationalDashboard/Partials/BasicStats.vue`
+- `src/views/Dashboards/OperationalDashboard/Partials/SalesRevenue.vue`
+- `src/views/Dashboards/OperationalDashboard/Partials/OrdersVisits.vue`
+- `src/views/Dashboards/AnalyticalDashboard/AnalyticalDashboard.vue`
+- `src/views/Dashboards/AnalyticalDashboard/Partials/BasicStats.vue`
+- `src/views/Dashboards/AnalyticalDashboard/Partials/SalesRevenue.vue`
+- `src/views/Dashboards/AnalyticalDashboard/Partials/UiDesign.vue`
+- `src/views/Dashboards/AnalyticalDashboard/Partials/TwoColsStats.vue`
+- `src/views/Dashboards/AnalyticalDashboard/Partials/ProjectTable.vue`
+- `src/data/widgets/project.js`
+- related widget/chart/statistic/progress components already used elsewhere in the migration
+
+React sources inspected:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/routes/pages.tsx`
+
+Findings:
+
+| Dashboard item | Vue expected | React current | Gap |
+|---|---|---|---|
+| Root redirect | `/` redirects to `/dashboard/operational` | `/` redirects to `/charts/chartjs` | Stale redirect |
+| Operational route | `/dashboard/operational` renders Operational dashboard in app shell | Redirects to `/charts/chartjs` | Missing page and incorrect route behavior |
+| Analytical route | `/dashboard/analytical` renders Analytical dashboard in app shell | No route; sidebar item disabled/pending | Missing page/route |
+| Dashboard sidebar | Dashboard group with Operational and Analytical | Group exists; Operational linked, Analytical pending | Operational link targets stale redirect; Analytical missing |
+| Operational content | Stats, Revenue line chart toggle, Visits bar chart, and reused Widgets list/card/stat cards | Not implemented | Full Operational dashboard missing |
+| Analytical content | Stats, Revenue comparison switch, UI Design card, TwoColsStats, ProjectTable | Not implemented | Full Analytical dashboard missing |
+| Prototype dashboard | Not a Vue route/page | `/prototype-dashboard` renders an old generic/prototype dashboard | Should not be treated as completed dashboard work |
+
+Audit document:
+
+- `migration-docs/dashboard-audit.md`
+
+Recommended next implementation slice:
+
+- Dashboard / Operational only.
+- Add real `/dashboard/operational` content and restore root `/` redirect to `/dashboard/operational`.
+- Keep `/dashboard/analytical` pending until its own slice.
+
+No React code was changed for this audit.
+
+## Dashboard Operational Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Dashboard / Operational only.
+- Route `/dashboard/operational`.
+- Root redirect `/` only as needed to match Vue.
+
+Files changed:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/pages/dashboard/OperationalDashboardPage.tsx`
+- `migration-docs/progress.md`
+- `migration-docs/phase-report.md`
+
+Verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Root redirect | `/` redirects to `/dashboard/operational` | `/` now redirects to `/dashboard/operational` | High | Matches `src/router/routes.js` behavior |
+| Operational route | `/dashboard/operational` renders Operational dashboard in app shell | Route now renders `OperationalDashboardPage` inside `DashboardLayout` | High | Removed stale redirect to `/charts/chartjs` |
+| Analytical scope | `/dashboard/analytical` exists in Vue but is a separate slice | React Analytical remains disabled/pending and unimplemented | High | Explicitly not implemented in this pass |
+| Basic stats | Four `BasicStatistic` cards: Sales, New Users, Traffic, Performance | Four soft statistic cards with same labels, values, icons, percent text, and subtext | Pending visual review | Uses React-local dashboard component to avoid touching approved Widgets pages |
+| Revenue chart | Card title `Revenue`; Monthly/Weekly bottom navigation; line chart height `402px` | Revenue card with Monthly/Weekly segmented control and Chart.js line chart | Pending visual review | Toggle switches datasets; tooltip/hover enabled |
+| Visits chart | Card title `Visits`; two-dataset bar chart height `410px` | Visits card with grouped Chart.js bar chart for Visits and Order | Pending visual review | Tooltip/hover enabled |
+| Lower widget row | Three equal columns with LatestMediaList, BlogPostCard + TaskStatus, TicketCheckList + MembersList | Implemented matching three-column dashboard row | Pending visual review | Recreated locally from approved widget visual patterns |
+| Ticket checklist | Filter buttons, add-new input, checkbox rows, menu actions, status tags | Implemented active/completed filters, enter-to-add, checkbox updates, row menu, and tags | Pending visual review | Matches visible behavior from approved List widgets |
+| Responsive behavior | Stats `cols=12 sm=6 lg=3`; charts `md=7/md=5`; lower widgets three columns stacking on small screens | React uses `xs/sm/lg/md` Grid equivalents | High | Dashboard app shell unchanged |
+| Visual style | `vuse-content-wrapper`, `v-container fluid`, `neu-glow` cards, teal/cyan accents | Uses Vuse soft cards, pale background inheritance, compact typography, and soft controls | Pending visual review | Needs user screenshot comparison |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Approval:
+
+- Dashboard / Operational remains pending user visual approval.
+
 ## Skipped Or Deferred
 
 - Toolbar actions for Contacts and Chat are visual-only because implementing those pages is outside active scope.
