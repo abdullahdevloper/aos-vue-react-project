@@ -2172,3 +2172,60 @@ Not touched:
 - App Contacts/Chat.
 - Directives.
 - approved page content outside routing needed for Dashboard Operational.
+
+## App Contacts Implementation
+
+Status: visual fidelity corrected; pending user visual approval.
+
+Scope:
+
+- App / Contacts only.
+- Route `/app/contacts`.
+- Shared App inner layout only as needed for Contacts.
+- Sidebar App / Contacts entry enabled.
+- App / Chat remains disabled/pending.
+
+Implemented:
+
+- Added `/app/contacts` route inside `DashboardLayout`.
+- Added Contacts sidebar navigation path while keeping Chat pending.
+- Created a shared App inner layout matching Vue `InnerBaseLayout` needs:
+  - inset soft outer surface.
+  - inner sidebar slot.
+  - header slot.
+  - scrollable content region.
+- Rebuilt Contacts page with:
+  - Vuse section definition: `Contacts`, `Applications > Contacts`, contacts icon.
+  - Contacts sidenav with authenticated user header and menu filters.
+  - Contacts toolbar with select-all, search, bulk delete, search toggle, and add action.
+  - Contacts list rows with checkbox, avatar, name, responsive email/phone columns, favorite star, and row delete menu.
+  - Search/filter behavior for all contacts, frequent contacts, and favourite contacts.
+  - Create/edit contact dialog with cover image, avatar, fields, validation, and Save/Edit actions.
+  - Delete confirmation dialog matching Vue text.
+  - React-side copies of required contact avatar/default user assets.
+
+Latest visual/data fidelity correction:
+
+- Removed the extra React breadcrumb because Vue `Contacts.vue` passes `namespace="Applications"` but no breadcrumbs to `vuse-section-definition`.
+- Tightened Contacts inner container padding/height closer to Vue `InnerBaseLayout`.
+- Updated Contacts sidenav filter avatars to exact text indicators `AL`, `FR`, and `FA` with Vue-like circular soft buttons and active inset background.
+- Reworked contact rows to closer Vue `v-list-item` density: 40px avatars, compact checkbox spacing, responsive email/phone columns, selected row highlight, and action dots.
+- Corrected contact phone display to plain 9-digit values matching the Vue `getMathRandom(9)` source format.
+- Preserved exact Vue names, avatars, emails, and row order from `src/data/dummyData.js`.
+- Note: Vue `is_favourite` and `is_frequent` are initialized from `Math.random() >= 0.5`; React uses deterministic fixture flags so visual review remains stable while preserving the same fields and filter behavior.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Not touched:
+
+- App / Chat implementation.
+- Dashboard.
+- Directives.
+- Vuetify.
+- animations.
+- approved page content.

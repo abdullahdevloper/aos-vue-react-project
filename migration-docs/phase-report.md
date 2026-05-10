@@ -704,6 +704,122 @@ Approval:
 - Vue color picker internals were not copied; React uses Vuse-like color menus for the same visible Theme Builder actions.
 - Page content for Forms, Scroll, Motion, Typography, Border Radius, Helpers, Icons, Color, Vuetify, Pages, Charts, and Widgets was preserved.
 
+## App Section Audit
+
+Status: audit complete; implementation not started.
+
+Scope audited:
+
+- App / Contacts
+- App / Chat
+
+Vue sources inspected:
+
+- `src/config/navigation-items.js`
+- `src/router/routes/applications.js`
+- `src/views/Applications/Contacts/Contacts.vue`
+- `src/views/Applications/Contacts/partials/sidenav.vue`
+- `src/views/Applications/Contacts/partials/ContactRow.vue`
+- `src/views/Applications/Contacts/partials/ContactToolbar.vue`
+- `src/views/Applications/Chat/Chat.vue`
+- `src/views/Applications/Chat/partials/UserListNav.vue`
+- `src/views/Applications/Chat/partials/ChatToolbar.vue`
+- `src/layouts/Inner/Layout.vue`
+- `src/data/dummyData.js`
+
+React sources inspected:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/routes`
+- `react-dashboard-template/src/pages`
+
+Findings:
+
+| App item | Vue expected | React current | Gap |
+|---|---|---|---|
+| Contacts route | `/app/contacts` renders Contacts in the app shell | No route exists; sidebar item disabled/pending | Missing route and page |
+| Chat route | `/app/chat` renders Chat in the app shell | No route exists; sidebar item disabled/pending | Missing route and page |
+| App sidebar | App section with Contacts and Chat entries | Section exists with both entries disabled/pending | Enable per slice only after implementation |
+| Shared inner layout | Contacts/Chat use `InnerBaseLayout` with inset outer surface, app sidenav, header, and scrollable content | No React equivalent exists for App pages | Need shared App inner layout during first implementation slice |
+| Contacts page | Section definition, contacts sidenav, toolbar, search, selection, contact rows, favorite toggle, delete confirm, create/edit dialog, validation, datepicker | Not implemented | Full Contacts slice missing |
+| Chat page | Section definition, user list nav, search, active group, user details menu, conversations, composer, send behavior, delayed incoming message | Not implemented | Full Chat slice missing |
+
+Audit document:
+
+- `migration-docs/app-audit.md`
+
+Recommended next implementation slice:
+
+- App / Contacts only.
+- Add `/app/contacts`, enable Contacts sidebar entry, and build shared App inner layout only as needed.
+- Keep App / Chat disabled/pending until its own slice.
+
+## App Contacts Implementation
+
+Status: visual fidelity corrected; pending user visual approval.
+
+Scope:
+
+- App / Contacts only.
+- Route `/app/contacts`.
+- Shared App inner layout only as needed for Contacts.
+- Sidebar App / Contacts entry only as needed.
+
+Files changed:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/pages/app/AppInnerLayout.tsx`
+- `react-dashboard-template/src/pages/app/ContactsPage.tsx`
+- `react-dashboard-template/src/assets/app/contacts/*`
+- `migration-docs/progress.md`
+- `migration-docs/phase-report.md`
+
+Shared layout note:
+
+- `AppInnerLayout.tsx` was created because Vue Contacts and Chat both use `src/layouts/Inner/Layout.vue`. The React layout is scoped under `src/pages/app/` and is currently used only by Contacts, so approved pages are not affected.
+
+Verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/app/contacts` renders Contacts inside the app shell | Added `/app/contacts` inside `DashboardLayout` | High | Chat route not added |
+| Sidebar | App > Contacts visible; Chat visible separately | Contacts is enabled with `/app/contacts`; Chat remains disabled/pending | High | Section order unchanged |
+| Section definition | title `Contacts`, namespace `Applications`, contacts icon | Implemented Vuse-style section definition and breadcrumb | Pending visual review | Uses local styling matching prior Vuse pages |
+| Inner layout | `InnerBaseLayout` with inset outer sheet, sidebar, header, scrollable content | Added app-scoped inner layout with inset surface, sidebar slot, header slot, scroll region | Pending visual review | Created only for App pages |
+| Contacts sidenav | Auth user avatar/name, menu filters, active `neu-glow-inset-primary`, responsive drawer | Implemented auth header, All/Frequently/Favourite filters, active inset state, desktop/mobile drawer behavior | Pending visual review | Mobile behavior approximates Vue breakpoints through MUI md/sm |
+| Contacts toolbar | Select-all, search field, bulk delete, search FAB on small screens, add FAB | Implemented select-all, search/filter, bulk delete, search toggle, and add action | Pending visual review | Visual review needed for toolbar density |
+| Contact rows | Checkbox, avatar, full name, responsive email/phone columns, favorite star, more/delete menu | Implemented row selection, avatar/name/email/phone, favorite toggle, delete menu | Pending visual review | Email hidden below md; phone hidden below lg |
+| Search/filter | Search all contacts by firstname, lastname, email, phone; menu filters frequent/favourite | Implemented same filter behavior | High | Deterministic fixture data used for stable visual review |
+| Create/edit dialog | Scrollable 375px dialog, cover image, avatar, fields, validation, Save/Edit | Implemented cover image, current avatar/name/designation, required/phone/email validation, Save/Edit mode | Pending visual review | Date picker is represented by the visible birthdate text field/hint; native picker UI is not reproduced yet |
+| Delete confirm | title `Delete Contact ?`, subtitle, Cancel/Delete | Implemented confirmation dialog with exact text | High | Deletes selected target |
+| Assets | Vue avatar/default user assets | Copied required assets into `react-dashboard-template/src/assets/app/contacts/` | High | Vue `public/` remains untouched |
+| Chat scope | Chat remains separate slice | Chat remains disabled/pending and unimplemented | High | No Chat code added |
+
+Visual/data fidelity correction:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Header/breadcrumb | `Contacts.vue` uses `vuse-section-definition` with `title="Contacts"`, `namespace="Applications"`, and no breadcrumbs prop | React showed `Applications > Contacts` breadcrumb | Removed extra breadcrumb and matched the simple Vue section header shape | High | Contacts-only change |
+| Inner container | Vue `InnerBaseLayout` has inset surface with compact container padding | React padding/height felt too loose | Reduced app inner padding and adjusted content height closer to Vue | Pending visual review | Shared App layout currently used only by Contacts |
+| Contacts sidenav indicators | Vue filter avatars show first two characters: `AL`, `FR`, `FA` | React used mixed-case slice text | Uses exact `AL`, `FR`, `FA` circular soft buttons with active inset state | High | Menu labels unchanged |
+| Contact data shape | Vue contacts are derived from `users` with exact names, avatars, emails, row order, and `phone: getMathRandom(9)` | React had custom formatted phone numbers | React now preserves exact names/avatars/emails/order and uses plain 9-digit phone values matching source format | High | Exact phone digits in Vue are random per load |
+| Favourite/frequent flags | Vue initializes with `Math.random() >= 0.5` | React used fixed flags without documenting source mismatch | React keeps deterministic flags for stable visual review and documents Vue randomness | Documented exception | Same fields/filter behavior preserved |
+| Row density/layout | Vue `v-list-item` rows with compact checkbox, 40px avatar, name/email/phone columns, star, more menu | React rows were taller with 42px avatars and wider spacing | Rows are tighter, use 40px avatars, selected row highlight, compact checkbox, and closer email/phone column styling | Pending visual review | Responsive column hiding preserved |
+| Checkbox/action styling | Vue checkbox uses sidebar color and compact row action icons | React used primary-colored generic checkbox sizing | Checkbox color/size and row action spacing tuned toward Vue | Pending visual review | Behavior unchanged |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Approval:
+
+- App / Contacts remains pending user visual approval.
+
 ## Visual Mismatch Learning Checklist
 
 - Example header/body placement must match Vue exactly; do not place documentation text in the white example header when Vue shows it in the example body.
