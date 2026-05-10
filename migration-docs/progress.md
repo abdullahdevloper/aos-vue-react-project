@@ -1681,3 +1681,407 @@ Not touched:
 - Icons, Helpers, Border Radius, Typography, Motion, Scroll, Forms.
 - Vuetify Banners or later Vuetify batches.
 - Pages, Charts, Widgets.
+
+## Global Toolbar / Theme Settings Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- DashboardLayout shared shell.
+- Global Toolbar / App Shell Theme Settings only.
+- Theme/settings shell state needed for the toolbar, sidebar, footer, and app theme.
+
+Vue source inspected:
+
+- `src/layouts/App/Toolbar.vue`
+- `src/layouts/App/AppSettingsDrawer.vue`
+- `src/components/AppSettings/Index.vue`
+- `src/components/AppSettings/Theme.vue`
+- `src/components/AppSettings/Visibility.vue`
+- `src/components/AppSettings/HeaderSettings.vue`
+- `src/components/AppSettings/SidenavSettings.vue`
+- `src/components/AppSettings/FooterSettings.vue`
+- `src/components/AppSettings/LanguageSelection.vue`
+- `src/store/modules/theme.js`
+- `src/store/modules/header.js`
+- `src/store/modules/sidebar.js`
+- `src/store/modules/footer.js`
+- `src/config/theme.js`
+- `src/config/navigations/header.js`
+- `src/config/navigations/sidebar.js`
+- `src/config/navigations/footer.js`
+
+Implemented:
+
+- Added the Vue-like temporary right/left Theme Settings drawer from the toolbar Settings button.
+- Recreated the drawer title/header, close button, and sections:
+  - `Visibility`
+  - `Theme Builder`
+  - `Header Setting`
+  - `Sidebar Setting`
+  - `Footer Setting`
+  - `Language Selection`
+- Added settings state for:
+  - sidebar/header/footer visibility
+  - primary/secondary colors
+  - header/footer colors
+  - dark mode, semi-dark mode, RTL
+  - header alignment, shrinked header, hide-on-scroll flag, floating header
+  - sidebar menu style, collapse sidebar, left/right position
+  - footer position, alignment, padless footer
+  - language selection
+- Wired visible shell effects where the Vue setting changes visible shell state:
+  - primary/secondary theme color updates
+  - dark mode updates MUI theme background/text mode
+  - semi-dark mode darkens the sidebar shell
+  - RTL changes app direction and moves sidebar/settings drawer behavior
+  - header/footer visibility toggles
+  - header color, density, floating, and clipped width behavior
+  - sidebar collapse and left/right position
+  - footer visibility, color, fixed/padless/inset behavior
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- No page content was modified.
+- Forms, Scroll, Motion, Typography, Border Radius, Helpers, Icons, Color, Vuetify, Pages, Charts, and Widgets were not changed.
+
+## Global Toolbar / Theme Settings Follow-up Fixes
+
+Status: fixed; pending user visual approval.
+
+Addressed user-reported mismatches:
+
+- Removed modal-like blocking behavior from Theme Settings drawer to match Vue `temporary + hide-overlay` behavior.
+- Preserved main/content scrolling while Theme Settings is open.
+- Preserved sidebar scrolling and sidebar clickability while Theme Settings is open.
+- Implemented Vue-like collapsed sidebar behavior:
+  - icon-only at collapsed width
+  - expand on mouse hover
+  - collapse again on mouse leave
+  - keep mini width as layout offset and expand visually on hover
+- Improved collapsed sidebar visual behavior:
+  - section headers become icon-only dots in collapsed state
+  - centered icon alignment
+  - compact active pill behavior
+- Fixed Header Setting > Alignment behavior to reflect Vue `Below/Above` (clipped) relationship between header and sidebar.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+## Global Toolbar / Theme Settings Refinement Pass
+
+Status: refined; pending user visual approval.
+
+Refinements completed:
+
+- Re-verified Vue app shell references (`Toolbar.vue`, `Sidebar.vue`, `Footer.vue`, `AppSettingsDrawer.vue`, `components/AppSettings/**`, `store/**`, `config/**`).
+- Improved mini/collapse sidebar fidelity:
+  - mini icon-only state remains at compact width.
+  - expand-on-hover and collapse-on-leave behavior kept and refined.
+  - section headers switch to icon-only markers in mini state.
+  - icon alignment/spacing and active-pill geometry tuned for mini mode.
+- Improved Header Setting > Alignment fidelity:
+  - clipped/below-above state now affects sidebar logo region and top spacing like Vue (`logo + spacer` vs clipped compact spacer).
+- Improved sidebar menu-style fidelity from Theme Settings:
+  - `Default`, `Flat`, `Rounded`, `Shaped` now affect sidebar item radius behavior directly.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+## Global Toolbar / Theme Settings Full Verification Pass
+
+Status: verified/fixed; pending user visual approval.
+
+Additional fixes completed in this pass:
+
+- Implemented visible `Hide on Scroll` header behavior on dashboard main scroll container:
+  - scroll down hides header
+  - scroll up/top reveals header
+  - disabling the setting restores header immediately
+- Connected Language Selection to shared dashboard store locale (not local visual state only).
+- Re-verified drawer open/close, independent drawer scrolling, and non-blocking page/sidebar interaction while drawer is open.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+## Global Toolbar / Theme Settings Vue-Parity Audit Pass
+
+Status: audited and corrected; pending user visual approval.
+
+Completed:
+
+- Re-read AGENTS.md and re-inspected Vue shell/settings sources.
+- Created Theme Settings behavior map in `migration-docs/phase-report.md`.
+- Corrected Header Setting > Alignment layout behavior:
+  - `Below` keeps toolbar beside the sidebar and no longer hides under it.
+  - `Above` puts toolbar above the sidebar with higher z-index and clips the sidebar below the toolbar.
+  - Floating margin/radius is disabled when `Above`/clipped is active, matching Vue class logic.
+  - Clipped mode now shows the toolbar logo/toggle block like Vue.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+## Global Sidebar / Navigation Fidelity Fix Pass
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- DashboardLayout shared shell.
+- Sidebar navigation state/visual behavior.
+- Theme Settings sidebar-related behavior only.
+
+Vue source inspected:
+
+- `src/layouts/App/Sidebar.vue`
+- `src/layouts/App/Toolbar.vue`
+- `src/layouts/App/AppSettingsDrawer.vue`
+- `src/components/UI/NavigationItems/ItemIcon.vue`
+- `src/components/UI/NavigationItems/ListGroup.vue`
+- `src/components/UI/NavigationItems/ListSubGroup.vue`
+- `src/components/UI/NavigationItems/NavigationItem.vue`
+- `src/components/AppSettings/SidenavSettings.vue`
+- `src/config/navigation-items.js`
+- `src/store/modules/sidebar.js`
+- `src/store/modules/header.js`
+- `src/store/modules/theme.js`
+- `src/config/navigations/sidebar.js`
+- `src/sass/_sidebar.scss`
+
+Implemented/fixed:
+
+- Matched Vue sidebar widths:
+  - expanded width `280`
+  - mini width `80`
+- Matched Vue logo/spacer behavior more closely:
+  - logo area removed from normal flow
+  - sidebar spacer follows Vue `75`/`15` clipped logic
+  - semi-dark logo strip uses Vue-like `#363636`
+- Improved mini/collapse behavior:
+  - child groups do not render nested icon rows while collapsed
+  - labels remain hidden while mini
+  - section headers become mini icon markers
+  - hover expands the drawer visually and mouse leave collapses it again
+- Improved semi-dark sidebar:
+  - navigation labels, disabled text, and active items now use dark-sidebar-safe colors
+  - active inset state uses dark-compatible inset shadow
+- Theme Settings language and sidebar-related state preserved.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Not touched:
+
+- No page content was modified.
+- Vuetify, Pages, Charts, Widgets, Forms, Scroll, Motion, Typography, Border Radius, Helpers, Icons, and Color page content were not changed.
+
+## Theme Settings / Sidebar Setting Correction Pass
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Theme Settings / Sidebar Setting only.
+- DashboardLayout sidebar behavior.
+- Dashboard shell state/store for sidebar menu style.
+
+Vue source inspected:
+
+- `src/components/AppSettings/SidenavSettings.vue`
+- `src/layouts/App/Sidebar.vue`
+- `src/layouts/App/AppSettingsDrawer.vue`
+- `src/components/UI/NavigationItems/ListGroup.vue`
+- `src/components/UI/NavigationItems/ListSubGroup.vue`
+- `src/components/UI/NavigationItems/NavigationItem.vue`
+- `src/store/modules/sidebar.js`
+- `src/config/navigations/sidebar.js`
+- `src/sass/_sidebar.scss`
+
+Implemented/fixed:
+
+- Added Sidebar Setting behavior audit and verification tables to `migration-docs/phase-report.md`.
+- Matched Vuex menu-style replacement behavior:
+  - selecting Default/Flat/Rounded/Shaped now resets inactive menu-style flags before applying the selected value.
+- Fixed Flat menu style:
+  - active sidebar items no longer keep the Vuse inset active shadow in flat mode, matching Vue `_sidebar.scss`.
+- Refined group expansion behavior:
+  - sidebar groups now initialize from the active route path instead of forcing every top-level group open.
+  - active parent groups still auto-expand when the route is active.
+- Preserved mini/collapse behavior:
+  - 80px icon-only sidebar
+  - expand on hover
+  - collapse on mouse leave
+  - labels and child rows return when expanded
+- Preserved sidebar position behavior:
+  - left/right drawer placement
+  - opposite-side Theme Settings drawer
+  - shaped active radius side flip
+- Preserved non-blocking settings drawer behavior:
+  - no page/sidebar scroll lock
+  - no pointer blocker over sidebar
+
+Pending:
+
+- Theme Settings / Sidebar Setting remains pending user visual approval.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+## Theme Settings / RTL Correction Pass
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Theme Settings / RTL behavior.
+- DashboardLayout shared shell direction.
+- Toolbar/sidebar/footer/drawer layout direction.
+- Dashboard shell state/store only as needed.
+
+Vue source inspected:
+
+- `src/components/AppSettings/Theme.vue`
+- `src/components/AppSettings/LanguageSelection.vue`
+- `src/components/AppSettings/SidenavSettings.vue`
+- `src/layouts/App/Toolbar.vue`
+- `src/layouts/App/Sidebar.vue`
+- `src/layouts/App/Footer.vue`
+- `src/layouts/App/AppSettingsDrawer.vue`
+- `src/store/modules/theme.js`
+- `src/store/modules/sidebar.js`
+- `src/config/theme.js`
+
+Implemented/fixed:
+
+- Added RTL behavior audit and verification tables to `migration-docs/phase-report.md`.
+- Matched Vue RTL coupling:
+  - RTL still updates app direction state.
+  - RTL still moves the sidebar to the right like `Theme.vue`.
+- Applied RTL beyond sidebar-only behavior:
+  - `document.documentElement.dir` updates between `ltr` and `rtl`.
+  - DashboardLayout root, main content area, sidebar, and settings drawer now receive explicit direction.
+- Fixed toolbar direction behavior:
+  - action spacing uses logical inline-end spacing instead of physical right margin.
+  - locale/profile menus receive RTL/LTR direction and matching horizontal origins.
+- Fixed sidebar RTL spacing:
+  - section markers, section headers, nested item indentation, pending/badge spacing, and external-link icon spacing use logical inline spacing.
+- Preserved existing fixed behavior:
+  - drawer remains non-blocking.
+  - sidebar scroll/click behavior remains available.
+  - collapse/mini hover behavior remains intact.
+  - menu style behavior remains intact.
+
+Pending:
+
+- Theme Settings / RTL remains pending user visual approval.
+
+## Theme Settings / RTL Layout Offset Fix Pass
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- RTL app shell layout.
+- Sidebar positioning/layout offset.
+- Theme Settings drawer side/layout behavior.
+- DashboardLayout shared shell only.
+
+Vue source inspected:
+
+- `src/layouts/App/Sidebar.vue`
+- `src/layouts/App/Toolbar.vue`
+- `src/layouts/App/Footer.vue`
+- `src/layouts/App/AppSettingsDrawer.vue`
+- `src/components/AppSettings/Theme.vue`
+- `src/components/AppSettings/SidenavSettings.vue`
+- `src/store/modules/theme.js`
+- `src/store/modules/sidebar.js`
+- `src/config/theme.js`
+
+Implemented/fixed:
+
+- Fixed RTL content overlap:
+  - LTR reserves sidebar space from the left.
+  - RTL reserves sidebar space from the right.
+  - main content no longer sits under the right sidebar.
+- Fixed mini/collapsed offset:
+  - collapsed sidebar reserves `80px`.
+  - expanded sidebar reserves `280px`.
+  - hover-expanded mini sidebar keeps the content offset at `80px`, matching Vue `expand-on-hover`.
+- Fixed drawer layout model:
+  - sidebar drawer paper keeps its visual width.
+  - drawer root no longer adds fragile flex reservation.
+  - content offset is controlled explicitly.
+- Fixed Theme Settings drawer behavior:
+  - drawer still opens opposite the sidebar like Vue.
+  - drawer root no longer pushes app layout.
+  - drawer remains non-blocking and independently scrollable.
+- Preserved LTR behavior and existing Theme Settings functions.
+
+Pending:
+
+- Theme Settings / RTL remains pending user visual approval.
+
+## Theme Settings / Theme Builder Color Picker Flow Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Theme Settings / Theme Builder color selection flow only.
+- React shared shell color picker controls.
+
+Vue source inspected:
+
+- `src/components/AppSettings/Theme.vue`
+- `src/components/VuseColorPicker.vue`
+
+Implemented/fixed:
+
+- Replaced the small one-step swatch grid with a Vue-like two-step color picker:
+  - first step: base color palette
+  - second step: shade palette for the selected base color
+- Added Vue-style selected color field above the palette:
+  - inset dark field
+  - editable hex input
+  - synchronized with selected swatch and active checkmark
+- Added selected swatch/checkmark behavior for base and shade colors.
+- Added back and close actions in the picker header.
+- Kept reset behavior inside resettable header/footer color pickers.
+- Did not change Sidebar, RTL, Vuetify, approved pages, or unrelated Theme Settings groups.
+
+Pending:
+
+- Theme Settings / Theme Builder color picker remains pending user visual approval.

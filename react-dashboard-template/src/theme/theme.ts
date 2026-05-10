@@ -1,12 +1,12 @@
 import { createTheme } from "@mui/material/styles";
 
-export const buildTheme = (darkMode = false, rtl = false) =>
+export const buildTheme = (darkMode = false, rtl = false, primaryColor = "#00838f", secondaryColor = "#ffb74d") =>
   createTheme({
     direction: rtl ? "rtl" : "ltr",
     palette: {
       mode: darkMode ? "dark" : "light",
-      primary: { main: "#00838f", light: "#80deea", dark: "#006064", contrastText: "#fff" },
-      secondary: { main: "#ffb74d", light: "#ffe0b2", dark: "#ef6c00", contrastText: "#fff" },
+      primary: { main: primaryColor, light: "#80deea", dark: "#006064", contrastText: "#fff" },
+      secondary: { main: secondaryColor, light: "#ffe0b2", dark: "#ef6c00", contrastText: "#fff" },
       background: {
         default: darkMode ? "#292d32" : "#f2f3f7",
         paper: darkMode ? "#292d32" : "#f2f3f7",
@@ -52,7 +52,7 @@ export const buildTheme = (darkMode = false, rtl = false) =>
       MuiSlider: {
         styleOverrides: {
           root: {
-            color: "#00838f",
+            color: primaryColor,
           },
           rail: {
             opacity: 1,
@@ -67,7 +67,7 @@ export const buildTheme = (darkMode = false, rtl = false) =>
             borderRadius: 4,
             paddingInline: 14,
             "&.Mui-selected": {
-              color: "#00838f",
+              color: primaryColor,
               backgroundColor: "#f2f3f7",
               boxShadow: "inset -4px -4px 5px rgba(255,255,255,.85), inset 5px 5px 7px rgba(174,174,192,.32)",
             },

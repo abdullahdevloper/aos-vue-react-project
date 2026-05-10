@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import DashboardLayout from "./layouts/DashboardLayout";
 import { useDashboardStore } from "./store/useDashboardStore";
 import { buildTheme } from "./theme/theme";
@@ -37,7 +37,13 @@ import LockScreenPage from "./pages/pages/auth/LockScreenPage";
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
   const rtl = useDashboardStore((state) => state.rtl);
-  const theme = buildTheme(darkMode, rtl);
+  const primaryColor = useDashboardStore((state) => state.primaryColor);
+  const secondaryColor = useDashboardStore((state) => state.secondaryColor);
+  const theme = buildTheme(darkMode, rtl, primaryColor, secondaryColor);
+
+  useEffect(() => {
+    document.documentElement.dir = rtl ? "rtl" : "ltr";
+  }, [rtl]);
 
   return (
     <ThemeProvider theme={theme}>

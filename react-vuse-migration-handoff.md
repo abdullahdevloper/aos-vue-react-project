@@ -1,4 +1,4 @@
-# Handoff Context: Vuse Vue Template to React Parallel Rebuild
+# React Vuse Migration Handoff
 
 ## اللغة المطلوبة
 الردود بالعربية، مختصرة وواضحة.
@@ -7,313 +7,210 @@
 المشروع الأصلي هو قالب:
 Vuse: VueJs CLI Material Admin
 
-المسار:
-`/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo`
-
 الغرض:
-إنشاء نسخة React موازية للقالب، وليس حذف أو تعديل مشروع Vue.
+إنشاء نسخة React موازية للقالب، وليس حذف أو تعديل مشروع Vue الأصلي.
 
-## القاعدة الذهبية
+## المسار
+/root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo
+
+## قاعدة العمل
 مشروع Vue الأصلي read-only.
 
 ممنوع تعديل:
-- `src/`
-- `public/`
-- `scripts/`
-- `package.json`
-- `package-lock.json`
-- `babel.config.js`
-- `vue.config.js`
-- `webpack.config.js`
-- `README.md`
-- `AGENTS.md`
+- src/
+- public/
+- scripts/
+- package.json
+- package-lock.json
+- babel.config.js
+- vue.config.js
+- webpack.config.js
+- README.md
+- AGENTS.md
 
-كل عمل React يجب أن يكون داخل:
-`react-dashboard-template/`
+كل كود React داخل:
+react-dashboard-template/
 
 كل التقارير داخل:
-`migration-docs/`
+migration-docs/
 
-## الاستراتيجية الجديدة
-التحويل لا يتم دفعة واحدة.
+## الاستراتيجية
+العمل يتم Slice by Slice:
 
-يتم التحويل قسمًا قسمًا:
-1. UI Components
-   - Charts
-   - Widgets
-   - Vuetify
-2. Style & User Interface
-3. Pages
-4. App Shell / Dashboard Layout
+Audit → Implementation → Visual Review → Approval → Commit
 
-لا ينتقل Codex إلى القسم التالي إلا بعد الاعتماد البصري من المستخدم.
+لا يتم الانتقال لأي Slice قبل اعتماد المستخدم بصرياً.
 
-## المشكلة السابقة
-Codex أنشأ Prototype React بسيط وادّعى أن 49 مكونًا اكتملت، لكن النتيجة لم تنقل هوية قالب Vuse الأصلية.
-المطلوب ليس React/MUI dashboard عادي، بل نقل التصميم الفريد للقالب.
+## قواعد الجودة
+يجب مطابقة Vue الأصلي بصرياً وسلوكياً:
+- Vuse soft/neumorphic UI
+- pale #F2F3F7 background
+- soft shadows
+- Vue/Vuetify spacing/density
+- typography scale
+- hover/click/active states
+- dropdown/select alignment
+- responsive behavior من Vue الأصلي وليس breakpoints عشوائية
+- View source behavior
+- Invert example color behavior
+- كل الأزرار والتفاعلات الظاهرة في Vue
 
-## نمط Vuse المطلوب
-يجب الحفاظ على:
-- Neumorphic / soft UI
-- خلفية فاتحة `#F2F3F7`
-- بطاقات مرتفعة بظلال ناعمة `neu-glow`
-- active state بشكل inset
-- Sidebar بعرض قريب من 280px
-- radius عام قريب من 4px
-- primary accent قريب من teal/cyan
-- section headers في sidebar
-- nested expandable groups
-- active navigation pills
-- circular soft icon buttons
-- تصميم قريب جدًا من Vue/Vuetify الأصلي
-- عدم استخدام generic MUI styling
+## الحالة المعتمدة
 
-## AGENTS.md
-تم تعديله ليحتوي على:
-- حماية مشروع Vue
-- حماية AGENTS.md
-- قواعد Vuse Visual Fidelity
-- عدم اعتبار القسم مكتملًا إلا بعد اعتماد المستخدم بصريًا
+### UI Components
+- Charts = Approved
+- Widgets = Approved
+  - Cards = Approved
+  - Lists = Approved
+  - Statistic = Approved
+  - Chart = Approved
+  - Document Cards = Approved
 
-## Codex config
-المسار:
-`/root/.codex/config.toml`
+### Global Sidebar
+- Global Sidebar Navigation Fidelity = Approved
 
-الإعدادات المهمة:
-```toml
-model = "gpt-5.5"
-model_reasoning_effort = "medium"
+### Pages
+- Pages / Errors = Approved
+  - /pages/error/404
+  - /pages/error/500
+- Pages / Authentication = Approved
+  - Login = Approved
+  - Signup = Approved
+  - Forgot Password = Approved
+  - Lock Screen = Approved
+- Pages / Coming Soon = Approved
+- Pages / Maintenance = Approved
+- Pages / Profile = Approved
+- Pages section = Approved
 
-sandbox_mode = "workspace-write"
-approval_policy = "never"
+### Vuetify
+Vuetify متوقف مؤقتاً ولا يتم استكماله إلا بأمر صريح من المستخدم.
 
-[sandbox_workspace_write]
-network_access = true
-```
+المعتمد:
+- Api Explorer = Approved
+- Alerts = Approved
+- Avatars = Approved
+- Badges = Approved
 
-## تشغيل Vue الأصلي
+غير منفذ:
+- Banners = Not started
+- Batch B وما بعده = Not started
 
-حدث خطأ مع Node 24 بسبب `fibers@4.0.3`.
+### Style & User Interface
+Audit مكتمل في:
+migration-docs/style-ui-audit.md
 
-الحل الناجح كان استخدام Node 12:
+المعتمد:
+- Color = Approved
+- Icons = Approved
+- Helpers = Approved
+- Border Radius = Approved
 
-```bash
-cd /root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo
-nvm use 12.22.12
-npm run serve -- --host 0.0.0.0 --port 8080
-```
+التالي:
+- Text & Typography
+- Route: /text-typography
 
-Vue يعمل للمقارنة على:
+غير منفذ بعد:
+- Text & Typography
+- Motion
+- Programmatic Scrolling
+- Forms
 
-`http://SERVER_IP:8080`
+## آخر نقطة تنفيذ مؤكدة
+آخر Slice معتمد:
+Style & User Interface / Border Radius
 
-## تشغيل React
+الخطوة التالية:
+Style & User Interface / Text & Typography
 
-```bash
-cd /root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/react-dashboard-template
-npm run dev -- --host 0.0.0.0 --port 5173
-```
+## البرومبت التالي المقترح
 
-React يعمل على:
+Start implementing Style & User Interface, slice 5: Text & Typography page only.
 
-`http://SERVER_IP:5173`
-
-## الملفات المهمة
-
-- `AGENTS.md`
-- `migration-docs/PHASES.md`
-- `migration-docs/ui-components-audit.md`
-- `migration-docs/progress.md`
-- `migration-docs/phase-report.md`
-- `react-dashboard-template/`
-
-## Audit الحالي
-
-تم عمل audit لقسم UI Components فقط.
-
-نتائج audit:
-
-UI Components يحتوي:
-
-- Charts
-  - Spark Line
-  - ChartJS
-
-- Widgets
-  - Cards
-  - Lists
-  - Statistic
-  - Chart
-  - Document Cards
-
-- Vuetify
-  - Api Explorer
-  - Alerts
-  - Avatars
-  - Badges
-  - Banners
-  - Bars
-  - Buttons
-  - Form Control
-  - Tables
-  - Tabs
-  - وغيرها
-
-تم الاتفاق أن نبدأ فقط بـ:
-
-`UI Components / Charts`
-
-## حالة Charts
-
-Codex نفذ أول pass لقسم Charts:
-
-- `/charts/chartjs`
-- `/charts/spark-line`
-- sidebar shell
-- ChartJS examples
-- SparkLine examples
-
-لكن Charts لم تُعتمد بصريًا بعد.
-
-ثم تم إرسال برومبت visual correction لأن التصميم لم يكن مطابقًا لنمط Vuse.
-
-آخر رسالة من Codex قالت إنه:
-
-- استخدم Vue soft UI tokens
-- وجد:
-  - `#F2F3F7`
-  - neu-glow raised shadows
-  - inset active states
-  - compact 280px drawer
-  - 4px root radius
-  - teal primary
-  - transparent toolbar + raised avatar
-- عدّل 5 ملفات
-- شغّل `npm run build`
-- build نجح
-- كان سيحدّث migration docs
-
-لكن لا يوجد تأكيد نهائي أنه أنهى:
-
-- docs updated
-- protected files clean
-- Charts pending approval
-- Widgets/Vuetify untouched
-
-لذلك المرحلة الحالية هي:
-
-`UI Components / Charts visual correction pending verification`
-
-## ما يجب فعله الآن في الحساب الجديد
-
-أولًا افحص من جذر المشروع:
-
-```bash
-cd /root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo
-git status --short
-```
-
-ثم افحص الملفات المحمية:
-
-```bash
-git status --short -- src public scripts package.json package-lock.json babel.config.js vue.config.js webpack.config.js README.md AGENTS.md
-```
-
-يجب ألا يظهر شيء.
-
-ثم افحص التقرير:
-
-```bash
-tail -n 100 migration-docs/phase-report.md
-tail -n 100 migration-docs/progress.md
-```
-
-ثم شغّل build:
-
-```bash
-cd react-dashboard-template
-npm run build
-npm run dev -- --host 0.0.0.0 --port 5173
-```
-
-افتح:
-
-- `http://SERVER_IP:5173/charts/chartjs`
-- `http://SERVER_IP:5173/charts/spark-line`
-
-وقارن مع Vue:
-
-- `http://SERVER_IP:8080/charts/chartjs`
-- `http://SERVER_IP:8080/charts/spark-line`
-
-## إذا كانت جلسة Codex السابقة انقطعت
-
-أرسل في Codex جلسة جديدة هذا البرومبت:
-
-```text
-Continue from the current working tree. The Charts visual correction build already passed or was in progress.
-
-Do not restart from scratch.
-Do not recreate existing files unless they are incomplete or incorrect.
-Finish only the remaining Charts visual correction work, documentation updates, and protected-files verification.
+Use migration-docs/style-ui-audit.md as the source audit.
+Use the running Vue app and Vue source as the visual, behavior, and responsive reference.
 
 Active scope:
-- UI Components / Charts only
-- /charts/chartjs
-- /charts/spark-line
+- Style & User Interface / Text & Typography only
+- Route: /text-typography
+- Shared Style docs/example shell only as needed for Text & Typography
 
 Do not implement:
-- Widgets
-- Vuetify
-- Style & User Interface
+- Motion
+- Programmatic Scrolling
+- Forms
+- Vuetify Banners
+- Vuetify Batch B or later
 - Pages
+- Charts
+- Widgets
+- Color, Icons, Helpers, or Border Radius except do not break the approved routes
 
 Rules:
 - Do not modify protected Vue/root files.
 - Do not modify AGENTS.md.
 - Work only inside react-dashboard-template/ and migration-docs/.
 - Run npm run build only inside react-dashboard-template/.
-- Do not run npm commands from the repository root.
-- Keep Charts as pending user visual approval after fixes.
+- Keep Style & User Interface / Text & Typography pending user visual approval after this pass.
 
-Use the Vuse visual tokens already identified:
-- #F2F3F7 background
-- neu-glow raised shadows
-- inset active states
-- compact 280px drawer
-- 4px root radius
-- teal primary
-- transparent section toolbar with raised avatar
+Before implementation:
+Inspect the original Vue/Vuetify responsive behavior.
+Do not impose arbitrary breakpoints.
+Find how the Text & Typography page behaves through:
+- layout structure
+- typography examples
+- heading examples
+- font weight examples
+- text alignment examples
+- text transform examples
+- markdown/example blocks
+- spacing and density
+- mobile/tablet/desktop behavior if present
 
-Tasks:
-1. Inspect the current React Charts implementation before editing.
-2. Complete any missing Charts visual correction.
-3. Update migration-docs/progress.md and migration-docs/phase-report.md.
-4. Run npm run build inside react-dashboard-template.
-5. Run:
-   git status --short -- src public scripts package.json package-lock.json babel.config.js vue.config.js webpack.config.js README.md AGENTS.md
-6. If any protected path appears dirty, stop and revert only that accidental change.
+After implementation:
+- Run npm run build inside react-dashboard-template.
+- Update migration-docs/progress.md and migration-docs/phase-report.md.
+- Mark Text & Typography as pending user visual approval.
+- Confirm protected files are unchanged.
 
-At the end report:
-- visual fixes completed
-- remaining Charts gaps
-- build status
-- protected files status
-- confirmation that Charts remains pending user visual approval
-- confirmation that Widgets and Vuetify were not touched
-```
+## تشغيل Vue الأصلي
+Vue يحتاج Node 12 بسبب fibers/http_parser:
 
-## بعد اعتماد Charts بصريًا
+cd /root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo
+nvm use 12.22.12
+npm run serve -- --host 0.0.0.0 --port 8080
 
-اعمل commit:
+Vue URL:
+http://SERVER_IP:8080
 
-```bash
-git add react-dashboard-template migration-docs
-git commit -m "approve ui components charts visual slice"
-```
+## تشغيل React
+cd /root/frontend-team-backup/vuesConverter/vues_template/demo_extracted/demo/react-dashboard-template
+node -v
+npm run dev -- --host 0.0.0.0 --port 5173
 
-ثم ننتقل إلى:
+React URL:
+http://SERVER_IP:5173
 
-`UI Components / Widgets`
+## قبل كل commit
+نظّف build artifacts:
 
-ولا نبدأ Widgets قبل اعتماد Charts.
+git restore react-dashboard-template/dist react-dashboard-template/tsconfig.tsbuildinfo
+git clean -f react-dashboard-template/dist/assets
+
+ثم commit:
+
+git add migration-docs react-dashboard-template/src
+git commit -m "<slice approval message>"
+
+## عند فتح الحساب الجديد
+ابدأ بقراءة:
+- AGENTS.md
+- react-vuse-migration-handoff.md
+- migration-docs/progress.md
+- migration-docs/phase-report.md
+- migration-docs/style-ui-audit.md
+
+ثم تابع من:
+Style & User Interface / Text & Typography
+
+ولا تكمل Vuetify إلا إذا طلب المستخدم ذلك صراحة.
