@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Global Toolbar / App Bar Fidelity.
+- Active section: Dashboard / Analytical.
 
 ## Current Slice
 
-- Scope: DashboardLayout toolbar/top bar and shared app shell only.
-- Route: shared dashboard shell.
+- Scope: Dashboard / Analytical only.
+- Route: `/dashboard/analytical`.
 - Status: implemented; pending user visual approval.
-- Source audit: `migration-docs/style-ui-audit.md`
+- Source audit: `migration-docs/dashboard-audit.md`
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -37,7 +37,49 @@ Current rebuild strategy:
 - Style & User Interface / Text & Typography: route preserved.
 - Style & User Interface / Motion: route preserved.
 - Style & User Interface / Programmatic Scrolling: route preserved.
-- Style & User Interface / Forms: implemented; pending user visual approval.
+- Style & User Interface / Forms: approved.
+- Dashboard / Operational: approved.
+- Dashboard / Analytical: implemented; pending user visual approval.
+
+## Dashboard Analytical Implementation
+
+Status: visual fidelity corrected; pending user visual approval.
+
+Implemented route:
+
+- `/dashboard/analytical`
+
+Implemented Analytical dashboard content:
+
+- Basic stats: Customers, Closed Tickets, Downloads, Visits.
+- Revenue bar chart with `Last year comparison` switch.
+- UI Design progress card with circular progress, status sheet, and task progress rows.
+- TwoColsStats cards: Users, Happy Customers, Tickets, UI Users.
+- Projects table with project avatars, deadlines, progress bars, member avatars, member count, add action, and row action buttons.
+
+Latest visual fidelity correction:
+
+- Top statistic cards now follow the Vue `BasicStatistic` hierarchy: title in the card header, value and goal text in the body, progress bar below the goal text, and the icon avatar on the right.
+- Revenue chart colors, switch sizing, chart padding, bar sizing, labels, and default comparison state were tuned closer to the Vue Analytical dashboard.
+- UI Design progress card now hides right-side percentage text in task rows and uses Vue row labels/timelines exactly: `4 weeks`, `3 weeks`, `6 weeks`.
+- Dashboard sidebar child indicators for Operational and Analytical now use text-style `OP` and `AN` indicators instead of generic dashboard icons.
+- Projects section was corrected to a Vue-like `v-data-table` table layout inside a Vuse inset surface, matching headers, row order, owners, deadlines, progress values/colors, member avatars/count bubbles, percentage text, and action dots.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: Vite reported the existing non-failing generated JS chunk-size warning.
+
+Not touched:
+
+- Dashboard / Operational content.
+- Vuetify.
+- Animations.
+- App Contacts / Chat.
+- Directives.
+- Approved page/component slices.
 
 ## Global Toolbar / App Bar Fidelity
 

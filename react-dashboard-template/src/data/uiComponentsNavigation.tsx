@@ -52,8 +52,8 @@ export const globalNavigation: SidebarNavEntry[] = [
     title: "Dashboard",
     icon: <Dashboard />,
     children: [
-      { title: "Operational", icon: <Dashboard />, path: "/dashboard/operational" },
-      { title: "Analytical", icon: <Dashboard />, disabled: true, pending: true },
+      { title: "Operational", icon: <span style={{ display: "inline-flex", width: 24, justifyContent: "center", fontSize: 11, fontWeight: 700, letterSpacing: 0 }}>OP</span>, path: "/dashboard/operational" },
+      { title: "Analytical", icon: <span style={{ display: "inline-flex", width: 24, justifyContent: "center", fontSize: 11, fontWeight: 700, letterSpacing: 0 }}>AN</span>, path: "/dashboard/analytical" },
     ],
   },
   { header: "App" },

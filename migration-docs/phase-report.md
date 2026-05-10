@@ -573,6 +573,131 @@ Approval:
 
 - Dashboard / Operational remains pending user visual approval.
 
+## Dashboard Analytical Implementation
+
+Status: visual fidelity corrected; pending user visual approval.
+
+Scope:
+
+- Dashboard / Analytical only.
+- Route `/dashboard/analytical`.
+- Dashboard sidebar Analytical entry only as needed to expose the implemented route.
+
+Files changed:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/pages/dashboard/AnalyticalDashboardPage.tsx`
+- `migration-docs/progress.md`
+- `migration-docs/phase-report.md`
+
+Verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Analytical route | `/dashboard/analytical` renders Analytical dashboard in the app shell | Route added inside `DashboardLayout` and renders `AnalyticalDashboardPage` | High | Operational route was not modified |
+| Sidebar entry | Dashboard > Analytical is visible and navigates to `/dashboard/analytical` | Analytical sidebar item is enabled with the Vue route path | High | Pending/disabled state removed for this slice only |
+| Basic stats | Four `BasicStatistic` cards: Customers, Closed Tickets, Downloads, Visits with progress values and goal text | Four soft statistic cards with matching titles, values, icons, colors, progress bars, and goal text | Pending visual review | React-local implementation to avoid touching approved Widgets pages |
+| Revenue chart | Card title `Revenue`, switch labeled `Last year comparison`, current-year default, last-year datasets when enabled, 402px bar chart | Revenue card with switch, Chart.js bar chart, current/last year datasets, hidden legend, stacked axes, dashed y-grid, and tooltips | Pending visual review | Gradient bar colors approximate Vuetify utility gradients through Chart.js canvas gradients |
+| UI Design card | 60% circular progress, flash icon soft fab, `UI Design Progress`, `Good progress!`, and three task progress rows | Implemented circular progress, center icon/value, status sheet, and Sketch/XD/Implementation task rows | Pending visual review | Uses local Vuse-style soft card/sheet surfaces |
+| TwoColsStats | Four `ColumnarStatistic` cards: Users, Happy Customers, Tickets, UI Users | Implemented four two-column stat cards with matching icons/images, values, trend text, and likes labels | Pending visual review | Uses existing React-side Sketch and Adobe XD assets |
+| ProjectTable | Projects card with add icon, five project rows, 36px avatar, deadline, 5px progress bars, 25px member avatars, +N avatar, and action icon | Implemented full-width Projects table with matching rows, progress values/colors, member avatars/counts, add button, and row menu visual action | Pending visual review | Buttons are visual actions because Vue source has no local click handlers |
+| Responsive behavior | Stats `cols=12 sm=6 lg=3`; Revenue/UI `md=7/md=5`; TwoColsStats full-width row with four responsive columns; ProjectTable full-width | React uses matching MUI Grid breakpoints and table horizontal overflow only inside the table container | High | Dashboard app shell unchanged |
+| Visual style | `vuse-content-wrapper`, `v-container fluid`, soft `neu-glow` cards, teal/cyan accents, Vue-like typography and density | Uses Vuse soft cards, pale background inheritance, compact typography, soft icon buttons, and teal/cyan/pink/yellow accents | Pending visual review | Requires user screenshot comparison |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Protected files status:
+
+- Protected Vue/root paths were checked after implementation; no protected files were modified.
+
+Approval:
+
+- Dashboard / Analytical remains pending user visual approval.
+
+## Dashboard Analytical Projects Visual Fidelity Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Projects / ProjectTable section inside `/dashboard/analytical` only.
+
+Vue sources rechecked:
+
+- `src/views/Dashboards/AnalyticalDashboard/Partials/ProjectTable.vue`
+- `src/data/widgets/project.js`
+
+Mismatch/fix table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Projects card shell | Vue `v-card.neu-glow` with `pa-4` header and add icon button on the right | React used a generic MUI table card/header pattern | Header spacing, card padding, add button position, and soft icon button tuned to Vue layout | Pending visual review | Other Analytical sections untouched |
+| Table surface | Vue wraps `v-data-table` in a `neu-glow-inset` surface | React initially used generic table styling, then an over-corrected card-row layout | Rebuilt Projects as a semantic table inside a Vuse inset surface | Pending visual review | No card rows |
+| Header row | Vue has a table header row with columns: avatar, Name, Deadline, Progress, Members, Action; sortable columns reserve header indicator behavior | React card-row layout did not behave as a table header | Added a real `thead` header row with matching labels, alignment, and subtle sortable indicators for sortable columns | Pending visual review | Avatar/Members/Action remain non-sortable like Vue source |
+| Row structure | Vue `v-data-table` renders `<tr>` rows with `<td>` cells: avatar, name, deadline, progress, members, action | React row content was rendered as raised card-like grids | Rows now render as table rows/cells with fixed row height, dividers, padding, and table alignment | Pending visual review | Hover is a very subtle table row state, not a card shadow |
+| Project data | Vue uses `Projects` order and user indices from `src/data/widgets/project.js` | Several owners used the same user index | Owners, avatars, project names, deadlines, progress values, members, and count bubbles now follow the Vue data | High | Existing React avatar assets reused |
+| Progress display | User review requested percentage text beside the bar while retaining Vue values/colors | React showed percentage but in generic table layout | Progress bars remain 5px with percent text beside the bar in the Vuse row layout | Pending visual review | Colors mapped to Vue theme intent |
+| Member counts | Vue shows `+membesCount - 3` when count exceeds visible members | React showed the raw member count | Count bubble now shows `+1` and `+7` for rows with 4 and 10 total members | High | Matches Vue template behavior |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Approval:
+
+- Dashboard / Analytical remains pending user visual approval.
+
+## Dashboard Analytical Visual Fidelity Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Dashboard / Analytical page content only.
+- Dashboard sidebar child indicators for Operational/Analytical only.
+
+Vue sources rechecked:
+
+- `src/components/UI/Widgets/Cards/Statistics/BasicStatistic.vue`
+- `src/views/Dashboards/AnalyticalDashboard/Partials/BasicStats.vue`
+- `src/views/Dashboards/AnalyticalDashboard/Partials/SalesRevenue.vue`
+- `src/views/Dashboards/AnalyticalDashboard/Partials/UiDesign.vue`
+- `src/components/UI/ProgressBar/LinearProgressContent.vue`
+- `src/config/navigation-items.js`
+
+Mismatch/fix table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Top stat card hierarchy | `BasicStatistic` shows title in card title area, then value/goal/progress in body with icon avatar on the right | Icon was on the left and title/value were grouped together; progress sat above goal text | Title moved to top card header, value/goal/progress moved to body, icon avatar moved right, card height/padding tuned | Pending visual review | Operational page was not touched |
+| Top stat card density | Vue cards have roomier title/body spacing and soft `neu-glow` card height | React cards were more compact | Min height, title size, value size, body padding, progress height, and shadow rhythm adjusted | Pending visual review | Analytical-only component |
+| Revenue chart colors | User review expects Vue-like blue/purple stacked bars for the viewed state | Default chart used cyan/pink emphasis | Current-year bar gradients tuned to blue/purple; last-year remains blue/indigo family | Pending visual review | Dataset toggle behavior preserved |
+| Revenue chart sizing | Vue chart body is 402px with padded Chart.js layout and dashed y-grid | React chart was close but bars/padding felt off | Chart height preserved at 402px; padding, bar category/bar percentages, grid/tick styling adjusted | Pending visual review | Chart.js hover/tooltips preserved |
+| Last year switch | Vue `v-switch` is compact with label `Last year comparison`, default off | React switch was visually MUI-like and slightly oversized | Switch dimensions, thumb/track styling, spacing, and default off state adjusted | Pending visual review | Toggle still swaps datasets |
+| UI circular progress | Vue uses 180px circular progress, 20px width, pink lighten-3, center soft fab, and value text | React ring was thinner and center icon/value sizing differed | Ring thickness/color, center icon size, and value styling tuned | Pending visual review | Exact SVG stroke rendering differs slightly between Vuetify and MUI |
+| UI progress rows | Vue `LinearProgressContent` shows task title left and week text right above the bar; no visible right-side percent text | React showed `80%`, `70%`, `86%` on the right and week text as subtitle | Removed percent labels; row title and exact week text now sit left/right above progress line | High | Values still drive hidden progress bar length |
+| Dashboard child indicators | Visual review expects text-style child indicators `OP` and `AN` for Dashboard children | React used generic Dashboard icons for both children | Dashboard children now render text indicators `OP` and `AN` | Pending visual review | Shared sidebar touched only for Dashboard child indicator fidelity |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Approval:
+
+- Dashboard / Analytical remains pending user visual approval.
+
 ## Skipped Or Deferred
 
 - Toolbar actions for Contacts and Chat are visual-only because implementing those pages is outside active scope.

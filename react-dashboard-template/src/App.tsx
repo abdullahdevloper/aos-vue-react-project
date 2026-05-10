@@ -6,6 +6,7 @@ import { useDashboardStore } from "./store/useDashboardStore";
 import { buildTheme } from "./theme/theme";
 import { DashboardPage, ListsPage, SettingsPage, WidgetsPage } from "./routes/pages";
 import OperationalDashboardPage from "./pages/dashboard/OperationalDashboardPage";
+import AnalyticalDashboardPage from "./pages/dashboard/AnalyticalDashboardPage";
 import ChartJsPage from "./pages/ui-components/charts/ChartJsPage";
 import SparkLinePage from "./pages/ui-components/charts/SparkLinePage";
 import ColorsPage from "./pages/style-ui/ColorsPage";
@@ -52,6 +53,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard/operational" replace />} />
           <Route path="/dashboard/operational" element={<DashboardRoute><OperationalDashboardPage /></DashboardRoute>} />
+          <Route path="/dashboard/analytical" element={<DashboardRoute><AnalyticalDashboardPage /></DashboardRoute>} />
           <Route path="/charts" element={<DashboardRoute><Navigate to="/charts/chartjs" replace /></DashboardRoute>} />
           <Route path="/colors" element={<DashboardRoute><ColorsPage /></DashboardRoute>} />
           <Route path="/icons" element={<DashboardRoute><IconsPage /></DashboardRoute>} />
