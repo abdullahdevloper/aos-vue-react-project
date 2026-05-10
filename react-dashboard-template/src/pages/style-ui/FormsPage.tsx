@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { FormEvent, ReactNode } from "react";
+import type { FormEvent } from "react";
 import {
   Alert,
   Box,
@@ -17,7 +17,6 @@ import {
   FormControlLabel,
   FormHelperText,
   Grid,
-  InputLabel,
   MenuItem,
   Select,
   Slider,
@@ -88,7 +87,7 @@ export default function FormsPage() {
           { label: "Forms" },
         ]}
       />
-      <Box sx={{ mx: { xs: 0, md: 1.5 }, pb: 2 }}>
+      <Box sx={{ px: { xs: 0, sm: 1.5, md: 2 }, pb: 2, overflowX: "hidden" }}>
         <BasicForm />
       </Box>
     </Box>
@@ -132,9 +131,9 @@ function BasicForm() {
   }
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} sx={{ width: "100%", m: 0 }}>
       <Grid item xs={12} md={6}>
-        <Card sx={softCardSx}>
+        <Card sx={{ ...softCardSx, minHeight: { md: 848 } }}>
           <Snackbar
             open={snackbar}
             onClose={() => setSnackbar(false)}
@@ -150,7 +149,7 @@ function BasicForm() {
           <CardHeader title="Reactive Form Example" titleTypographyProps={{ sx: { fontSize: 24, fontWeight: 400 } }} sx={{ px: 2, pt: 2, pb: 0.5 }} />
 
           <Box component="form" onSubmit={submit}>
-            <CardContent sx={{ px: 2, pt: 2.5, pb: 0 }}>
+            <CardContent sx={{ px: 1.5, pt: 2.5, pb: 0 }}>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
                   <VuseTextField label="First name" value={form.first} onChange={(value) => update("first", value)} onBlur={() => touch("first")} errors={fieldErrors(validation.form.first, "first")} color="#00838f" required />
@@ -162,22 +161,31 @@ function BasicForm() {
                   <VuseTextField label="Email" value={form.email} onChange={(value) => update("email", value)} onBlur={() => touch("email")} errors={fieldErrors(validation.form.email, "email")} color="#7b1fa2" required />
                 </Grid>
                 <Grid item xs={12}>
-                  <VuseTextField label={<span>Bio <small>(optional)</small></span>} value={form.bio} onChange={(value) => update("bio", value)} multiline minRows={4} color="#009688" />
+                  <VuseTextField label="Bio (optional)" value={form.bio} onChange={(value) => update("bio", value)} multiline minRows={4} color="#009688" />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <FormControl fullWidth variant="filled" error={fieldErrors(validation.form.favoriteAnimal, "favoriteAnimal").length > 0} sx={selectSx("#e91e63")}>
-                    <InputLabel>Favorite animal</InputLabel>
-                    <Select value={form.favoriteAnimal} label="Favorite animal" onChange={(event) => update("favoriteAnimal", event.target.value)} onBlur={() => touch("favoriteAnimal")}>
+                    <Select
+                      displayEmpty
+                      value={form.favoriteAnimal}
+                      onChange={(event) => update("favoriteAnimal", event.target.value)}
+                      onBlur={() => touch("favoriteAnimal")}
+                      renderValue={(selected) => selected ? selected : <Box component="span" sx={{ color: "text.secondary" }}>Favorite animal</Box>}
+                    >
                       {animals.map((animal) => <MenuItem key={animal} value={animal}>{animal}</MenuItem>)}
                     </Select>
-                    {fieldErrors(validation.form.favoriteAnimal, "favoriteAnimal").map((error) => <FormHelperText key={error}>{error}</FormHelperText>)}
+                    {fieldErrors(validation.form.favoriteAnimal, "favoriteAnimal").length > 0
+                      ? fieldErrors(validation.form.favoriteAnimal, "favoriteAnimal").map((error) => <FormHelperText key={error}>{error}</FormHelperText>)
+                      : <FormHelperText> </FormHelperText>}
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Box sx={{ px: 1.2, pt: 0.35 }}>
-                    <Typography sx={{ color: fieldErrors(validation.form.age, "age").length ? "error.main" : "text.secondary", fontSize: 14 }}>Age</Typography>
-                    <Slider min={1} max={100} value={form.age === "" ? 1 : form.age} onChange={(_, value) => update("age", value as number)} onChangeCommitted={() => touch("age")} valueLabelDisplay="auto" sx={sliderSx} />
-                    <Typography sx={{ mt: -0.6, fontSize: 12, color: "text.secondary" }}>Be honest</Typography>
+                  <Box sx={{ px: 0.75, pt: 0.35 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, minHeight: 32 }}>
+                      <Typography sx={{ color: fieldErrors(validation.form.age, "age").length ? "error.main" : "text.secondary", fontSize: 15, lineHeight: 1 }}>Age</Typography>
+                      <Slider min={1} max={100} value={form.age === "" ? 1 : form.age} onChange={(_, value) => update("age", value as number)} onChangeCommitted={() => touch("age")} valueLabelDisplay="auto" sx={sliderSx} />
+                    </Box>
+                    <Typography sx={{ ml: 6.1, mt: -0.25, fontSize: 12, color: "text.secondary" }}>Be honest</Typography>
                     {fieldErrors(validation.form.age, "age").map((error) => <FormHelperText error key={error}>{error}</FormHelperText>)}
                   </Box>
                 </Grid>
@@ -191,11 +199,11 @@ function BasicForm() {
                   <VuseTextField label="Pincode" value={form.pincode} onChange={(value) => { update("pincode", value); touch("pincode"); }} onBlur={() => touch("pincode")} errors={fieldErrors(validation.form.pincode, "pincode")} color="#7b1fa2" required />
                 </Grid>
                 <Grid item xs={12}>
-                  <FormControl error={fieldErrors(validation.form.terms, "terms").length > 0} component="fieldset" sx={{ width: "100%" }}>
+                  <FormControl error={fieldErrors(validation.form.terms, "terms").length > 0} component="fieldset" sx={{ width: "100%", mt: 1.8 }}>
                     <FormControlLabel
-                      control={<Checkbox checked={form.terms} onChange={(event) => { update("terms", event.target.checked); touch("terms"); }} sx={{ color: "success.main", "&.Mui-checked": { color: "success.main" } }} />}
+                      control={<Checkbox checked={form.terms} onChange={(event) => { update("terms", event.target.checked); touch("terms"); }} sx={checkboxSx} />}
                       label={<TermsLabel onTerms={() => setTermsOpen(true)} onConditions={() => setConditionsOpen(true)} />}
-                      sx={{ alignItems: "flex-start", ml: -1, "& .MuiFormControlLabel-label": { pt: 1, fontSize: 16, color: "text.primary" } }}
+                      sx={{ alignItems: "center", ml: -0.15, "& .MuiFormControlLabel-label": { pt: 0, fontSize: 15.5, color: "text.secondary" } }}
                     />
                     {fieldErrors(validation.form.terms, "terms").map((error) => <FormHelperText key={error}>{error}</FormHelperText>)}
                   </FormControl>
@@ -203,7 +211,7 @@ function BasicForm() {
               </Grid>
             </CardContent>
 
-            <CardActions sx={{ px: 2, py: 1.2 }}>
+            <CardActions sx={{ px: 2, pt: 4.4, pb: 1.7 }}>
               <Button type="button" onClick={resetForm} sx={textButtonSx("text.secondary")}>Cancel</Button>
               <Box sx={{ flexGrow: 1 }} />
               <Button type="submit" disabled={invalid} sx={textButtonSx("primary.main")}>Register</Button>
@@ -218,8 +226,8 @@ function BasicForm() {
       <Grid item xs={12} md={6}>
         <Card sx={softCardSx}>
           <CardHeader title="Reactive Form Validation" titleTypographyProps={{ sx: { fontSize: 24, fontWeight: 400 } }} sx={{ px: 2, pt: 2, pb: 0.5 }} />
-          <CardContent sx={{ color: "#2196f3", minHeight: 748, maxHeight: 748, height: 748, overflowY: "auto", pt: 1.5 }}>
-            <Box component="pre" sx={{ m: 0, fontSize: 13, lineHeight: 1.45, fontFamily: "'Roboto Mono', Consolas, monospace", whiteSpace: "pre-wrap" }}>
+          <CardContent sx={jsonPanelSx}>
+            <Box component="pre" sx={{ m: 0, fontSize: 14, lineHeight: 1.38, fontFamily: "'Roboto Mono', Consolas, monospace", whiteSpace: "pre-wrap" }}>
               {JSON.stringify(validation, null, 2)}
             </Box>
           </CardContent>
@@ -229,14 +237,14 @@ function BasicForm() {
   );
 }
 
-function VuseTextField({ label, value, onChange, onBlur, errors = [], color, required = false, multiline = false, minRows }: { label: ReactNode; value: string; onChange: (value: string) => void; onBlur?: () => void; errors?: string[]; color: string; required?: boolean; multiline?: boolean; minRows?: number }) {
+function VuseTextField({ label, value, onChange, onBlur, errors = [], color, required = false, multiline = false, minRows }: { label: string; value: string; onChange: (value: string) => void; onBlur?: () => void; errors?: string[]; color: string; required?: boolean; multiline?: boolean; minRows?: number }) {
   return (
     <TextField
       value={value}
       onChange={(event) => onChange(event.target.value)}
       onBlur={onBlur}
-      label={label}
-      required={required}
+      placeholder={label}
+      inputProps={{ "aria-required": required || undefined }}
       fullWidth
       variant="filled"
       multiline={multiline}
@@ -340,34 +348,66 @@ const textFieldSx = (color: string) => ({
   "& .MuiFilledInput-root": {
     bgcolor: "#fff",
     borderRadius: 1,
-    boxShadow: "0 3px 10px rgba(174,174,192,.18)",
+    minHeight: 48,
+    boxShadow: "0 2px 6px rgba(38,50,56,.18)",
     border: "1px solid rgba(38,50,56,.06)",
     "&:before, &:after": { display: "none" },
     "&:hover": { bgcolor: "#fff", borderColor: `${color}66` },
     "&.Mui-focused": { bgcolor: "#fff", borderColor: color },
     "&.Mui-error": { borderColor: "#f44336" },
   },
-  "& .MuiFilledInput-input": { py: 1.85, fontSize: 15.5 },
-  "& .MuiInputLabel-root": { fontSize: 15.5, color: "text.secondary", "&.Mui-focused": { color } },
+  "& .MuiFilledInput-input": { py: 1.45, px: 1.5, fontSize: 15.5, color: "text.primary", "&::placeholder": { color: "text.secondary", opacity: 1 } },
+  "& .MuiFilledInput-inputMultiline": { py: 1.1 },
   "& .MuiFormHelperText-root": { minHeight: 18, mx: 0.5, mt: 0.65 },
 });
 
 const selectSx = (color: string) => ({
   ...textFieldSx(color),
-  "& .MuiSelect-select": { py: 1.85, fontSize: 15.5 },
+  "& .MuiFilledInput-root": {
+    ...textFieldSx(color)["& .MuiFilledInput-root"],
+    minHeight: 48,
+  },
+  "& .MuiSelect-select": { py: 1.45, px: 1.5, fontSize: 15.5, minHeight: "auto !important" },
+  "& .MuiSelect-icon": { right: 12, color: "text.secondary" },
 });
 
 const sliderSx = {
   color: "#fb8c00",
-  "& .MuiSlider-thumb": { width: 20, height: 20, boxShadow: "0 2px 7px rgba(38,50,56,.2)" },
+  flex: 1,
+  height: 2,
+  py: 1.2,
+  "& .MuiSlider-rail": { color: "rgba(38,50,56,.18)", opacity: 1 },
+  "& .MuiSlider-track": { border: 0, color: "#00a6b6" },
+  "& .MuiSlider-thumb": { width: 20, height: 20, bgcolor: "#fb8c00", boxShadow: "0 2px 5px rgba(38,50,56,.18)", "&:hover, &.Mui-focusVisible": { boxShadow: "0 2px 5px rgba(38,50,56,.22)" } },
   "& .MuiSlider-valueLabel": { bgcolor: "#fb8c00", color: "#fff" },
+};
+
+const checkboxSx = {
+  color: "#2e7d32",
+  p: 0.35,
+  mr: 1.2,
+  "&.Mui-checked": { color: "#2e7d32" },
+  "& .MuiSvgIcon-root": { fontSize: 20 },
+};
+
+const jsonPanelSx = {
+  color: "#2196f3",
+  minHeight: 748,
+  maxHeight: 748,
+  height: 748,
+  overflowY: "auto",
+  px: 2,
+  pt: 1.25,
+  pb: 1.5,
 };
 
 const textButtonSx = (color: string) => ({
   color,
-  textTransform: "none",
+  textTransform: "uppercase",
   fontWeight: 500,
-  px: 2,
+  letterSpacing: ".08em",
+  fontSize: 13,
+  px: 1.2,
   minHeight: 36,
   "&:hover": { bgcolor: "rgba(0,131,143,.08)" },
   "&.Mui-disabled": { color: "rgba(0,0,0,.26)" },

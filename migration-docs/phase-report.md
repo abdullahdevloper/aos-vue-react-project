@@ -428,6 +428,43 @@ Deferred checklist item:
 
 - App Shell motion/animation fidelity is deferred until after completing the project; it is not failed and not active. When resumed, compare Vue and React using the same route, viewport, sidebar state, RTL/LTR state, and Theme Settings state before editing.
 
+## Style UI Forms Visual Fidelity Fix
+
+Status: fixed; pending user visual approval.
+
+Vue source traced:
+
+- `src/views/Forms/Forms.vue`
+- `src/views/Forms/Partials/Basic.vue`
+
+Screenshot mismatches addressed:
+
+| Forms item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Required placeholders | Vue `v-text-field solo required` shows labels without visible `*` in the provided Vue screenshot | MUI `required` rendered visible asterisks in placeholders | Removed visible required asterisks while preserving validation and `aria-required` | High | First, Last, Email, City, State, Pincode |
+| Form card width/layout | Vue `v-container fluid` and `v-col md=6` cards occupy a wider two-column area with a Vue-like gap | React forms grid was visually narrower and more compressed | Forms content wrapper widened locally for `/forms`; two-card grid still uses `md=6` stacking behavior | Pending visual review | Page content only; App Shell untouched |
+| Solo field surfaces | Vue solo fields are white, 48px-ish, subtly raised, with compact placeholder text | React fields were taller with stronger/generic MUI filled styling | Tuned field height, padding, radius, shadow, placeholder color, and focus/hover border behavior | High | Validation behavior preserved |
+| Bio textarea | Vue textarea uses solo white surface with the same shadow family and larger body height | React textarea inherited generic filled density | Bio now uses the same placeholder-style solo surface and adjusted multiline padding | Pending visual review | Placeholder text remains `Bio (optional)` |
+| Favorite animal select | Vue select is a solo field with centered placeholder and right chevron | React select used `InputLabel`, causing label/value spacing differences | Select now uses `displayEmpty`, placeholder rendering, solo-like height, padding, chevron alignment, and reserved helper space | High | Items unchanged |
+| Age slider | Vue puts `Age` label inline with the slider, teal track, orange thumb, and hint below the line | React label sat above the slider and line/thumb spacing differed | Slider label, line, thumb, track, hint placement, and subtle shadow were realigned to Vue | Pending visual review | Behavior preserved |
+| Terms checkbox | Vue checkbox is a compact green square aligned with muted label and teal links | React checkbox/label were larger and vertically off | Tuned checkbox icon size, padding, color, label alignment, and link styling | High | Terms/conditions dialogs preserved |
+| Actions | Vue text buttons render uppercase `CANCEL` and `REGISTER`, with disabled Register muted at the right | React buttons displayed title case and different spacing | Buttons now use uppercase casing, Vue-like letter spacing, compact padding, disabled color, and wider top spacing | High | Submit/reset behavior preserved |
+| Validation panel | Vue `.json-pre` is 748px tall, blue monospace, padded, and scrollable | React panel was close but smaller in font/spacing and not quite Vue-like | JSON panel keeps 748px height, refined padding, font size, line height, color, and scrollbar behavior | High | Validation state content preserved |
+| Horizontal overflow | Vue `/forms` uses `v-container fluid` and `v-row` without a desktop horizontal page scrollbar | React wrapper used a large negative horizontal margin and MUI Grid spacing expanded beyond the content width | Removed the negative wrapper margin, added Forms-local content padding/overflow guard, and constrained the two-card Grid to `width: 100%; margin: 0` | High | Fix is limited to `/forms` layout sizing/spacing |
+| Forms left gutter | Vue card row starts after the dashboard content gutter, not flush under the sidebar | React card row could start too close to the sidebar because of negative margin | Restored a Vue-like local gutter using responsive Forms wrapper padding | Pending visual review | Sidebar/App Shell unchanged |
+| Lower content clipping | Vue form card leaves enough local space for checkbox/actions and does not clip the lower form area | Horizontal overflow and row sizing made the lower content feel clipped in React | Grid no longer overflows horizontally; existing form field/card styling preserved | Pending visual review | No form behavior changes |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Approval:
+
+- Style & User Interface / Forms remains pending user visual approval.
+
 
 ## Build
 
