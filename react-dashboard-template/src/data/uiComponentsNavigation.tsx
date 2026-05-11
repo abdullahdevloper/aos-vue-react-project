@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import {
   Article,
+  AspectRatio,
   BorderStyle,
   Build,
   Chat,
@@ -118,7 +119,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       { title: "Alerts", path: "/components/alerts", icon: <NotificationsActive /> },
       { title: "Avatars", path: "/components/avatars", icon: <Face /> },
       { title: "Badges", path: "/components/badge", icon: <LocalOffer /> },
-      { title: "Banners", disabled: true, pending: true },
+      { title: "Banners", path: "/components/banners", icon: <AspectRatio /> },
       {
         title: "Bars",
         children: [

@@ -28,7 +28,7 @@ Current rebuild strategy:
 - Vuetify / Alerts: approved.
 - Vuetify / Avatars: approved.
 - Vuetify / Badges: approved.
-- Vuetify / Banners: not started; intentionally paused.
+- Vuetify / Banners: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -40,6 +40,63 @@ Current rebuild strategy:
 - Style & User Interface / Forms: approved.
 - Dashboard / Operational: approved.
 - Dashboard / Analytical: implemented; pending user visual approval.
+
+## Vuetify Banners Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/components/banners`
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Banners`.
+- Later Vuetify items remain disabled/pending.
+
+Implemented Banners page:
+
+- Vuse section header with `Components`, page `Banners`, `aspect_ratio`-style icon, and Vue source breadcrumbs `Components > Vuetify > Badge`.
+- Exact Banners documentation intro from `src/lang/en/components/Banners.json`.
+- Usage playground with:
+  - tabs `default`, `single-line`, `sticky`
+  - `action` switch
+  - `icon` switch
+  - `elevation` slider from `0` to `24`
+  - invert playground colors action
+  - scrollable usage body and sticky banner behavior
+- Vue examples:
+  - Single-line.
+  - Two-line.
+  - Icon slot.
+  - Icon click event.
+  - Actions slot.
+
+Implemented behavior:
+
+- Sticky Banner switch in the single-line example.
+- Dismiss behavior in the Actions slot example.
+- Checkbox restore behavior in the Actions slot example.
+- Icon click event calls `alert("Hello, World!")`.
+- View source expansion with dark source panel and section tabs.
+- Invert example colors behavior.
+- Mode-aware banner surface colors for light and inverted examples.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Not touched:
+
+- Approved Vuetify Api Explorer, Alerts, Avatars, and Badges page content.
+- Charts / Sparkline.
+- Directives.
+- Dashboard.
+- App.
+- Animations.
 
 ## Dashboard Analytical Implementation
 

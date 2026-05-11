@@ -927,6 +927,179 @@ Protected files:
 
 - Protected-path status check returned no changes.
 
+## Vuetify Banners Audit
+
+Status: audit complete; implementation not started.
+
+Scope audited:
+
+- Vuetify / Banners only.
+- Vue route `/components/banners`.
+- React target route `/components/banners`.
+
+Vue sources inspected:
+
+- `src/config/navigation-items.js`
+- `src/router/routes/vuetify.js`
+- `src/views/Vuetify/BannersView.vue`
+- `src/lang/en/components/Banners.json`
+- `src/demo/components/DocPage.vue`
+- `src/demo/components/Usage.vue`
+- `src/demo/components/UsageExample.vue`
+- `src/demo/components/Example.vue`
+- `src/demo/usages/banners.vue`
+- `src/demo/examples/banners/usage.vue`
+- `src/demo/examples/banners/simple/single-line.vue`
+- `src/demo/examples/banners/simple/two-line.vue`
+- `src/demo/examples/banners/intermediate/icon-slot.vue`
+- `src/demo/examples/banners/intermediate/icon-event.vue`
+- `src/demo/examples/banners/intermediate/actions-slots.vue`
+- `src/demo/examples/banners/playground.vue`
+
+React sources inspected:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/pages`
+
+Audit findings:
+
+| Banners item | Vue expected | React current | Gap |
+|---|---|---|---|
+| Route | `/components/banners` via `Vuetify/BannersView` | No route registered | Missing Banners route/page |
+| Sidebar | `UI Components > Vuetify > Banners`, after Badges and before Bars | Entry exists but is disabled/pending | Needs enablement only during Banners implementation |
+| Page hierarchy | `Components / Banners` section definition, `v-container fluid`, `doc-page` | Missing | Needs Vue docs page reconstruction |
+| Breadcrumbs | Components, Vuetify, disabled `Badge` source text | Missing | Preserve or document source typo during implementation |
+| Main documentation | Exact `Banners.json` heading and heading text | Missing | Needs exact text and inline code styling |
+| Usage playground | Tabs `default`, `single-line`, `sticky`; switches `action`, `icon`; elevation slider; invert playground color | Missing | Needs `UsageExample`-equivalent behavior |
+| Usage component | Scrollable `v-banner` demo from `src/demo/usages/banners.vue` | Missing | Needs sticky/action/icon/elevation behavior |
+| Single-line example | `My Document` card, `Sticky Banner` switch, offline banner, `Get Online` action | Missing | Needs exact card and switch behavior |
+| Two-line example | Two-line text banner with `Dismiss` and `Retry` text buttons | Missing | Needs exact banner text/actions |
+| Icon slot example | Two-line banner with 40px deep-purple avatar icon slot | Missing | Needs exact icon/avatar/action styling |
+| Icon click example | Warning icon emits `click:icon` and calls `alert("Hello, World!")` | Missing | Needs click behavior |
+| Actions slot example | `Visible` checkbox, dismiss slot hides banner, checkbox restores it | Missing | Needs stateful dismiss behavior |
+| Example shell | Invert example colors, View on Github, View source, dark source panel tabs | Shared shell exists from approved Vuetify slices, Banners not wired | Needs Banners examples wired without regressing approved slices |
+| Responsive behavior | Vuetify docs shell full-width rows; usage `md=9/md=3` stacks below md | Missing for Banners | Needs Vue-equivalent responsive layout |
+| Light/dark/inverted | Example invert supported; source panel dark; usage invert independent | Missing for Banners | Needs mode-aware example styling |
+
+Audit document:
+
+- `migration-docs/vuetify-banners-audit.md`
+
+Recommended first implementation slice:
+
+- Vuetify / Banners only.
+- Add `/components/banners`.
+- Enable `UI Components > Vuetify > Banners`.
+- Implement the full Banners docs page, usage playground, examples, source panels, invert behavior, dismiss behavior, and icon-click alert.
+- Keep Vuetify Batch B and later paused.
+
+No React code was modified for this audit.
+
+## Vuetify Full Map Audit
+
+Status: audit complete; implementation not started.
+
+Scope audited:
+
+- Full Vue `UI Components > Vuetify` sidebar section.
+- Exact sidebar order from `src/config/navigation-items.js`.
+- Route/source mapping from `src/router/routes/vuetify.js` and `src/views/Vuetify/**`.
+- React route/sidebar status from `react-dashboard-template/src/App.tsx` and `react-dashboard-template/src/data/uiComponentsNavigation.tsx`.
+
+Audit document:
+
+- `migration-docs/vuetify-full-map-audit.md`
+
+Summary:
+
+| Vuetify status | Items |
+|---|---|
+| Approved | Api Explorer, Alerts, Avatars, Badges |
+| Audited but not implemented | Banners |
+| Missing / disabled pending | Bars, Bottom Navigation, Bottom Sheets, Breadcrumbs, Buttons, Calendars, Cards, Carousels, Chips, Dialogs, Dividers, Expansion Panels, Footers, Form Control, Grids, Groups, Hover, Icons, Images, Lazy, Lists, Menus, Navigation Drawers, Overlays, Paginations, Parallax, Pickers, Progress, Ratings, Sheets, Skeleton Loaders, Snackbars, Steppers, Subheaders, Tables, Tabs, Timelines, Tooltips, Treeview, VirtualScrollers |
+| Implemented pending approval | None in Vuetify section |
+| Known deferred mismatch | No active Vuetify Sparkline item. Spark Line belongs to UI Components / Charts, not Vuetify; keep Sparkline mismatches outside this Vuetify map unless Charts is reopened. |
+
+Route map verification:
+
+| Check | Result |
+|---|---|
+| Vue sidebar source traced | `src/config/navigation-items.js` |
+| Vue route source traced | `src/router/routes/vuetify.js` |
+| Vue source files traced | `src/views/Vuetify/**` |
+| React sidebar state traced | Vuetify full structure exists; unimplemented entries are disabled/pending |
+| React route state traced | Only Api Explorer, Alerts, Avatars, Badges routes are implemented |
+| React code modified | No |
+| Build run | No; docs-only audit |
+
+Next recommended Vuetify slice:
+
+- Vuetify / Banners only.
+- Route: `/components/banners`.
+- Source audit: `migration-docs/vuetify-banners-audit.md`.
+- Keep Vuetify Batch B and later paused until explicitly requested.
+
+## Vuetify Banners Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Banners only.
+- Route `/components/banners`.
+- Sidebar item `UI Components > Vuetify > Banners`.
+
+Affected React files:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/pages/ui-components/vuetify/BannersPage.tsx`
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/banners` renders `Vuetify/BannersView` | Added `/components/banners` inside `DashboardRoute` | High | Other Vuetify routes preserved |
+| Sidebar | `UI Components > Vuetify > Banners`, after Badges and before Bars | Enabled Banners with path `/components/banners`; later Vuetify items remain disabled/pending | High | Sidebar brand/logo unchanged |
+| Section hierarchy | `Components`, page `Banners`, section-definition icon, breadcrumbs `Components > Vuetify > Badge` | Rendered Vuse section header and preserved Vue source breadcrumb text `Badge` | High | Source appears to contain a Banners breadcrumb typo; preserved for fidelity |
+| Intro documentation | Exact `Banners.json` heading text with inline `v-banner` token and bold text | Rendered exact intro text with Vue-like inline code chip and bold text | Pending visual review | Markdown parser not reused; visible text preserved |
+| Usage documentation | `Banners can have 1-2 lines of text, actions and icon.` | Rendered under `Usage` heading | High | Same placement as Vue `Usage.vue` |
+| Usage tabs | `default`, `single-line`, `sticky` tabs | Implemented tab control with same options | Pending visual review | MUI ToggleButton styled toward Vuetify tabs |
+| Usage controls | Boolean switches `action`, `icon`; elevation slider `0-24` | Implemented switches and elevation slider | Pending visual review | Switch/slider styling adapted to Vuse |
+| Usage component | `src/demo/usages/banners.vue` scrollable banner demo with optional icon/action/sticky/elevation | Implemented scrollable 300px usage body, optional icon/action, sticky body, and elevation shadow | Pending visual review | Exact Vuetify elevation CSS approximated with React shadow formula |
+| Invert playground | UsageExample invert button toggles dark playground sheet | Implemented invert playground colors action | High | Independent from example-card invert |
+| Single-line example | Card with system bar, toolbar `My Document`, `Sticky Banner` switch, offline banner, `Get Online` action, grey body and inner sheet | Implemented matching card composition and sticky switch | Pending visual review | Needs screenshot comparison for card heights/spacings |
+| Two-line example | Banner with two text lines and primary text buttons `Dismiss`, `Retry` | Implemented two-line banner and actions | High | Visible button labels preserved |
+| Icon slot example | Two-line banner with 40px deep-purple avatar icon slot and two `Action` buttons | Implemented avatar lock icon slot and two action buttons | Pending visual review | Icon glyph uses MUI lock |
+| Icon click event | Warning wifi icon emits `click:icon`; method calls `alert("Hello, World!")` | Icon button calls `window.alert("Hello, World!")` | High | Browser alert behavior preserved |
+| Actions slot | Checkbox `Visible`; banner `No Internet connection`; dismiss slot hides banner; checkbox restores | Implemented checkbox state, Collapse transition, Dismiss hide, and restore behavior | High | Transition timing may differ from Vuetify `slide-y-transition` |
+| Example card shell | `neu-glow-inset` card, dense toolbar, invert/GitHub/source icons, dark source panel with template/style/script tabs | Implemented Banners-local example shell matching existing Vuetify pages | Pending visual review | GitHub action is visual only, as in prior slices |
+| View source | Source action expands dark `#2d2d2d` source panel | Implemented expandable dark panel with section tabs | High | Source snippets are Banners-specific visible references |
+| Invert example colors | Example body dark mode with readable banner surfaces | Implemented mode-aware example body and banner surfaces | Pending visual review | Light and inverted states require user screenshot review |
+| Responsive layout | Vue docs shell full-width examples; usage splits `md=9/md=3` and stacks below md | Implemented full-width examples and `xs=12/md=9` + `xs=12/md=3` usage grid | High | Follows Vue responsive structure |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Banners remains pending user visual approval.
+
+Not touched:
+
+- Approved Vuetify Api Explorer, Alerts, Avatars, and Badges page content.
+- Charts / Sparkline.
+- Directives.
+- Dashboard.
+- App.
+- Animations.
+- `.claude/`.
+
 ## Directives Section Audit
 
 Status: audit complete; implementation not started.

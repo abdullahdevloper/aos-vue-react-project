@@ -26,6 +26,7 @@ import ApiExplorerPage from "./pages/ui-components/vuetify/ApiExplorerPage";
 import AlertsPage from "./pages/ui-components/vuetify/AlertsPage";
 import AvatarsPage from "./pages/ui-components/vuetify/AvatarsPage";
 import BadgesPage from "./pages/ui-components/vuetify/BadgesPage";
+import BannersPage from "./pages/ui-components/vuetify/BannersPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -79,6 +80,7 @@ export default function App() {
           <Route path="/components/alerts" element={<DashboardRoute><AlertsPage /></DashboardRoute>} />
           <Route path="/components/avatars" element={<DashboardRoute><AvatarsPage /></DashboardRoute>} />
           <Route path="/components/badge" element={<DashboardRoute><BadgesPage /></DashboardRoute>} />
+          <Route path="/components/banners" element={<DashboardRoute><BannersPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
