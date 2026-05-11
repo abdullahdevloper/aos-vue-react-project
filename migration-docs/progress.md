@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Floating Action Buttons.
+- Active section: Vuetify / Button Groups.
 
 ## Current Slice
 
-- Scope: Vuetify / Floating Action Buttons only.
-- Route: `/components/buttons/floating-action-buttons`.
+- Scope: Vuetify / Button Groups only.
+- Route: `/components/buttons/button-groups`.
 - Status: implemented; pending user visual approval.
-- Source audit: `migration-docs/vuetify-bars-audit.md`
+- Source audit: `migration-docs/vuetify-batch-3-audit.md`
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -37,6 +37,7 @@ Current rebuild strategy:
 - Vuetify / Breadcrumbs: implemented; pending user visual approval.
 - Vuetify / Buttons: implemented; pending user visual approval.
 - Vuetify / Floating Action Buttons: implemented; pending user visual approval.
+- Vuetify / Button Groups: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -455,6 +456,74 @@ Not touched:
 - Button Groups.
 - Calendars.
 - Cards.
+
+## Vuetify Button Groups Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/components/buttons/button-groups`
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Buttons > Button Groups`.
+- `Calendars` and `Cards` remain disabled/pending.
+- Floating Action Buttons route/sidebar entry was preserved and not modified beyond coexistence in the same route/sidebar files.
+
+Vue source traced:
+
+- `src/views/Vuetify/Buttons/ButtonGroups.vue`
+- `src/lang/en/components/ButtonGroups.json`
+- `src/demo/examples/button-groups/usage.vue`
+- `src/demo/examples/button-groups/simple/rounded.vue`
+- `src/demo/examples/button-groups/simple/mandatory.vue`
+- `src/demo/examples/button-groups/simple/multiple.vue`
+- `src/demo/examples/button-groups/intermediate/app-bar.vue`
+- `src/demo/examples/button-groups/intermediate/qwerty.vue`
+
+Implemented Button Groups page:
+
+- Vuse section header with `Components`, page `ButtonGroups`, and breadcrumbs `Components > Vuetify > Button Groups`.
+- Exact Button Groups documentation intro and usage text from Vue language source.
+- Usage playground with:
+  - Exclusive selection.
+  - Multiple dense primary dark selection.
+  - No Options Selected state.
+  - Mandatory shaped state.
+  - Text Options group with deep-purple accent active color.
+  - Text & Icon Options borderless state.
+- Vue examples:
+  - Rounded buttons.
+  - Mandatory.
+  - Multiple.
+  - In toolbar.
+  - Selected action.
+- View source expansion and invert example colors behavior.
+
+Implemented behavior:
+
+- Toggle selection state, including nullable, mandatory, and multiple models.
+- Button ripple from pointer position for enabled group buttons.
+- Toolbar overflow menus for font and size controls.
+- Qwerty selected-action editor state with formatting and alignment toggles.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Not touched:
+
+- Floating Action Buttons page content.
+- Calendars.
+- Cards.
+- Directives.
+- App.
+- Dashboard.
+- Animations.
 - Directives.
 - App.
 - Dashboard.

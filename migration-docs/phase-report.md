@@ -2022,3 +2022,66 @@ Build status:
 Protected files:
 
 - Protected-path status check returned no changes.
+
+## Vuetify Button Groups Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Button Groups only.
+- Route `/components/buttons/button-groups`.
+- Enabled only `UI Components > Vuetify > Buttons > Button Groups`.
+- Kept `Calendars` and `Cards` disabled/pending.
+
+Vue source trace:
+
+- `src/views/Vuetify/Buttons/ButtonGroups.vue`
+  - Page id `ButtonGroups`, title `Button Groups`.
+  - Breadcrumbs: `Components > Vuetify > Button Groups`.
+  - Examples in order: `Rounded buttons`, `Mandatory`, `Multiple`, `In toolbar`, `Selected action`.
+- `src/lang/en/components/ButtonGroups.json`
+  - Heading text: `The v-btn-toggle component is a simple wrapper for v-item-group built specifically to work with v-btn.`
+  - Usage text: `Toggle buttons allow you to create a styled group of buttons that can selected or toggled under a single v-model`
+- `src/demo/examples/button-groups/usage.vue`
+  - Exclusive, Multiple, No Options Selected, Mandatory, Text Options, and Text & Icon Options groups.
+  - Tracks nullable, mandatory, multiple-array, text-value, and icon-value models.
+- `src/demo/examples/button-groups/simple/rounded.vue`
+  - Flat centered card with rounded `v-btn-toggle`.
+- `src/demo/examples/button-groups/simple/mandatory.vue`
+  - Flat centered card with mandatory `v-btn-toggle`.
+- `src/demo/examples/button-groups/simple/multiple.vue`
+  - Flat centered card with multiple model text.
+- `src/demo/examples/button-groups/intermediate/app-bar.vue`
+  - Dense toolbar with font and size overflow controls plus dense formatting/alignment toggle groups.
+- `src/demo/examples/button-groups/intermediate/qwerty.vue`
+  - WYSIWYG textarea card with formatting toggles, alignment toggles, and keyboard-style sheet.
+
+Implementation verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/buttons/button-groups` renders inside `DashboardLayout` | Added route to `App.tsx` | High | Full-page routes unaffected |
+| Sidebar | Enable only Buttons > Button Groups; keep Calendars and Cards pending | Button Groups linked; Calendars and Cards remain disabled/pending | High | Sidebar brand/logo unchanged |
+| Page hierarchy | `Components`, page `ButtonGroups`, breadcrumbs `Components > Vuetify > Button Groups` | Implemented with shared Vuse docs shell | Pending visual review | Matches Vue source casing |
+| Documentation text | Exact Button Groups intro and Usage text from language source | Implemented with Vue inline code styling for `v-btn-toggle`, `v-item-group`, `v-btn`, and `v-model` | High | No representative text |
+| Usage playground | Six Vue usage groups with matching initial models and responsive 12/6 columns | Implemented exclusive, multiple, nullable, mandatory, text, and icon toggle groups | Pending visual review | Uses local Vuetify-style toggle buttons rather than generic MUI toggle groups |
+| Rounded buttons | Centered flat card with rounded toggle group | Implemented centered rounded group with align icons | Pending visual review | Selection behavior preserved |
+| Mandatory | Centered flat card with mandatory selection model | Implemented mandatory behavior that prevents clearing the selected value | High | Visual review pending |
+| Multiple | Centered flat card with array model display | Implemented multiple selection and `Model:` output | High | Visual review pending |
+| In toolbar | Dense toolbar with overflow controls, dividers, spacer, dense formatting/alignment groups hidden on small screens | Implemented toolbar controls, menus, responsive md-up content, and toggle state | Pending visual review | `v-overflow-btn` is represented with Vuse-styled menu buttons |
+| Selected action | Qwerty textarea/editor card with formatting and alignment toggles | Implemented textarea value, formatting multiple model, alignment model, and keyboard sheet | Pending visual review | Exact initial textarea text preserved |
+| Ripple/click state | `v-btn` ripple and selected/pressed state | Local pointer-origin ripple added to Button Groups buttons | Pending visual review | Reuses accepted Buttons ripple behavior concept locally |
+| Source/invert | Vue example blocks include source and invert actions | Implemented View source and Invert example colors behavior | High | Dark/inverted visual review pending |
+| Out of scope | Do not touch Floating Action Buttons, Calendars, Cards, Directives, App, Dashboard, animations, `.claude/` | No intentional content changes outside route/sidebar/docs and Button Groups page | High | Floating Action Buttons page content unchanged |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Button Groups remains pending user visual approval.
