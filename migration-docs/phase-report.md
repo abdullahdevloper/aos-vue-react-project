@@ -839,6 +839,162 @@ Approval:
 
 No protected Vue/root files or `AGENTS.md` were modified.
 
+## Directives Click Outside Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Directives / Click Outside only.
+- Route `/directives/click-outside`.
+- Sidebar Directives / Click Outside entry enabled.
+- Intersect, Mutate, Resizing, Ripples, and Scrolling remain disabled/pending.
+
+Vue source trace:
+
+- `src/views/Vuetify/Directives/ClickOutside.vue`
+  - `namespace: "Directives"`.
+  - `page: "ClickOutside"`.
+  - `usage: "usage"`.
+  - `examples: ["close-conditional"]`.
+  - breadcrumbs `Directives` -> `/directives/Intersect`, then `Click Outside`.
+- `src/lang/en/directives/ClickOutside.json`
+  - heading text describes `v-click-outside`, `v-menu`, and `v-dialog`.
+  - usage description describes outside-click handler behavior.
+  - conditional handler description describes `closeOnOutsideClick`.
+- `src/demo/examples/click-outside/usage.vue`
+  - 256px by 256px `v-card`, `rounded="xl"`, centered.
+  - Starts with `Click Me`.
+  - Clicking card sets active state.
+  - Active card becomes primary/dark and shows `Click Outside`.
+  - Outside click resets active state.
+- `src/demo/examples/click-outside/close-conditional.vue`
+  - Two `v-list-item` rows.
+  - `Default Click Outside`.
+  - `Default w/ Close Conditional`.
+  - Right `mdi-record` icon is green when active and red when inactive.
+  - Standard row resets on outside click.
+  - Conditional row resets when `closeConditional()` returns true.
+
+Implementation verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/directives/click-outside` renders inside app shell | Added `/directives/click-outside` in `DashboardLayout` | High | Other Directives routes not added |
+| Sidebar | Click Outside visible with `new` badge; other Directives visible but pending | Enabled only Click Outside; Intersect, Mutate, Resizing, Ripples, Scrolling remain disabled/pending | High | Sidebar brand/logo unchanged |
+| Page hierarchy | Section title `ClickOutside`, namespace `Directives`, breadcrumbs `Directives > Click Outside` | Implemented with shared Vuse section definition/docs shell | Pending visual review | Breadcrumb target follows Vue `/directives/Intersect` |
+| Documentation text | Exact heading text with inline code styling for `v-click-outside`, `v-menu`, `v-dialog` | Implemented exact text and local inline code styling | High | Markdown links are represented as text because source text only includes inline-code tokens here |
+| Usage example | 256px rounded-xl card, `Click Me` -> primary/dark `Click Outside`, outside click resets | Implemented square card, active primary state, outside-click reset | High | Uses React document listener equivalent |
+| Conditional handler example | Two-row list with red/green `mdi-record` state icons and conditional outside-click handler | Implemented two rows, status icons, standard reset, conditional reset | High | Uses filled circle icon equivalent |
+| Example shell | Dense toolbar, Invert example color, View on Github, View source, dark source panel, source tabs | Implemented page-local Directives example block with invert, visual Github action, source expansion, `template`/`script` tabs | Pending visual review | Github button is visual-only, matching prior approved docs shell pattern |
+| Source panels | Vue source split into `template` and `script` tabs | Implemented source parsing and tab switching for both examples | High | No style section exists in Vue examples |
+| Responsive behavior | Docs container fluid; usage card remains fixed 256px; examples stack naturally | Implemented fluid docs content and fixed usage card | Pending visual review | Uses existing DashboardLayout scroll behavior |
+| Out of scope | Vuetify continuation, animations, Dashboard, App, approved slices untouched | No page content outside Directives Click Outside modified | High | App files already dirty from previous pending slice remain unrelated |
+
+Visual fidelity correction:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Example description placement | Vue `Example.vue` places `doc-text` description inside the example body, not in the toolbar | Description appeared in the white action toolbar | Description now renders inside the body above the live example | Pending visual review | Applies to Usage and Conditional handler blocks |
+| Examples section spacing | Vue docs shell keeps Examples heading and first example tighter to the section flow | React spacing was too loose/tall above the Conditional handler card | Section heading rhythm and margin before the card were tightened | Pending visual review | Click Outside page only |
+| Conditional handler card | Vue uses a dense toolbar and compact `neu-glow-inset` card | React card/header was taller with extra padding | Toolbar/header height, card margin, padding, and body height were reduced | Pending visual review | Source panel behavior preserved |
+| Conditional inner surface | Vue example body shows a white list surface behind the two rows | React rows sat on transparent body surface | Added a white inner list surface behind the two rows | Pending visual review | Inverted mode still darkens page body while preserving readable rows |
+| Row text and dots | Vue `v-list-item` rows have compact vertical spacing and right `mdi-record` icons | React row text and dot placement were off | Row min-height, text line-height, right action offset, and dot size were tuned | Pending visual review | Red/green active behavior preserved |
+| Inline code tokens | Vue markdown/code styling applies to `closeOnOutsideClick`, `true`, and `false` | Tokens were styled but color/background did not match closely enough | Inline code color/background/size were adjusted toward Vue docs styling | Pending visual review | Existing tokens such as `v-click-outside` also use same styling |
+
+Behavior correction:
+
+| Behavior | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Directive binding lifecycle | `v-click-outside` is bound to the element and checks outside clicks continuously | React listener was attached only while the item was active, which could miss parity with Vue directive lifecycle | Click-outside listener is now always bound and evaluates outside clicks like the directive | High | Page-local hook only |
+| Usage card inside click | Clicking inside the 256px card sets `active = true`, primary/dark card, text `Click Outside` | Visual state existed but depended on conditional listener setup | Inside click still sets active state; listener ignores inside clicks | High | Text/color state preserved |
+| Usage card outside click | Clicking outside invokes `onClickOutside()` and sets `active = false` | Outside reset could be incomplete under some click sequences | Document `click` / `touchend` outside the card resets to `Click Me` | High | Matches Vue click event semantics more closely than mousedown |
+| Standard row inside/outside | Clicking row sets `models.base = true`; outside click sets false | State existed but listener lifecycle was not directive-like | Row click sets green dot; outside click resets to red | High | Dot remains state-driven |
+| Conditional row close behavior | Clicking row sets `models.conditional = true`; outside handler runs only when `closeConditional()` returns true | Conditional close logic was embedded in the handler instead of the outside-click gate | Hook now supports `closeConditional`, blocks handler when false, and runs it when true | High | Mirrors Vue options object `{ handler, closeConditional }` |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Directives / Click Outside remains pending user visual approval.
+
+Protected files:
+
+- Protected-path status check returned no changes.
+
+## Directives Section Audit
+
+Status: audit complete; implementation not started.
+
+Scope audited:
+
+- Directives / Click Outside
+- Directives / Intersect
+- Directives / Mutate
+- Directives / Resizing
+- Directives / Ripples
+- Directives / Scrolling
+
+Vue sources inspected:
+
+- `src/config/navigation-items.js`
+- `src/router/routes/vuetify.js`
+- `src/views/Vuetify/Directives/ClickOutside.vue`
+- `src/views/Vuetify/Directives/Intersect.vue`
+- `src/views/Vuetify/Directives/Mutate.vue`
+- `src/views/Vuetify/Directives/Resizing.vue`
+- `src/views/Vuetify/Directives/Ripples.vue`
+- `src/views/Vuetify/Directives/Scrolling.vue`
+- `src/demo/examples/click-outside/*`
+- `src/demo/examples/intersect/*`
+- `src/demo/examples/mutate/*`
+- `src/demo/examples/resizing/*`
+- `src/demo/examples/ripples/*`
+- `src/demo/examples/scrolling/*`
+- `src/lang/en/directives/*.json`
+- `src/demo/components/DocPage.vue`
+- `src/demo/components/Example.vue`
+
+React sources inspected:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/pages`
+
+Findings:
+
+| Directives item | Vue route | React current | Gap |
+|---|---|---|---|
+| Click Outside | `/directives/click-outside` | Sidebar item visible but disabled/pending; no route/page | Missing route, page, outside-click examples |
+| Intersect | `/directives/Intersect` | Sidebar item visible but disabled/pending; no route/page | Missing route, page, IntersectionObserver examples |
+| Mutate | `/directives/mutate` | Sidebar item visible but disabled/pending; no route/page | Missing route, page, MutationObserver examples |
+| Resizing | `/directives/resizing` | Sidebar item visible but disabled/pending; no route/page | Missing route, page, resize listener example |
+| Ripples | `/directives/ripples` | Sidebar item visible but disabled/pending; no route/page | Missing route, page, ripple examples |
+| Scrolling | `/directives/scrolling` | Sidebar item visible but disabled/pending; no route/page | Missing route, page, scroll directive examples |
+
+Audit document:
+
+- `migration-docs/directives-audit.md`
+
+Recommended first implementation slice:
+
+- Directives / Click Outside only.
+- Add `/directives/click-outside`.
+- Enable only Directives / Click Outside in the sidebar.
+- Build shared Directives docs/example shell only as needed.
+- Keep Intersect, Mutate, Resizing, Ripples, and Scrolling disabled/pending.
+
+No React code was modified for this audit.
+
+Protected files:
+
+- Protected-path status check returned no changes.
+
 ## App Chat Implementation
 
 Status: implemented; pending user visual approval.

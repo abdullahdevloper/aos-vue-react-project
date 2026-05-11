@@ -2319,3 +2319,86 @@ Not touched:
 - Vuetify.
 - animations.
 - approved page content outside the shared App layout footer slot.
+
+## Directives Click Outside Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Directives / Click Outside only.
+- Route `/directives/click-outside`.
+- Sidebar Directives / Click Outside entry enabled.
+- Intersect, Mutate, Resizing, Ripples, and Scrolling remain disabled/pending.
+
+Implemented:
+
+- Added `/directives/click-outside` route inside `DashboardLayout`.
+- Enabled only the Click Outside sidebar item and preserved the `new` badge.
+- Rebuilt the Click Outside page from Vue sources:
+  - `src/views/Vuetify/Directives/ClickOutside.vue`
+  - `src/demo/examples/click-outside/usage.vue`
+  - `src/demo/examples/click-outside/close-conditional.vue`
+  - `src/lang/en/directives/ClickOutside.json`
+- Implemented Vue page hierarchy:
+  - namespace `Directives`.
+  - title `ClickOutside`.
+  - breadcrumbs `Directives > Click Outside`.
+  - docs heading text with inline `v-click-outside`, `v-menu`, and `v-dialog` code styling.
+- Implemented Usage example:
+  - 256px square rounded card.
+  - default text `Click Me`.
+  - active primary/dark state with text `Click Outside`.
+  - click outside resets active state.
+- Implemented Conditional handler example:
+  - two-row list.
+  - `Default Click Outside`.
+  - `Default w/ Close Conditional`.
+  - red/green `mdi-record` equivalent status icons.
+  - outside click reset behavior with conditional close logic.
+- Implemented docs example card shell behavior for this page:
+  - dense action toolbar.
+  - Invert example color.
+  - View on Github visual action.
+  - View source expansion.
+  - source panel tabs for `template` and `script`.
+  - dark source surface.
+
+Latest visual fidelity correction:
+
+- Moved example descriptions from the white action toolbar into the example body to match Vue `Example.vue`.
+- Tightened the Examples section top spacing and heading rhythm.
+- Reduced Conditional handler card/header height and padding closer to the Vue dense toolbar/card layout.
+- Added the white inner example surface behind the two conditional rows.
+- Tuned conditional row height, text placement, right-side red/green dot size and position, and hover state.
+- Adjusted inline code styling for `closeOnOutsideClick`, `true`, and `false` toward Vue markdown/code token styling.
+- Preserved View source, Invert example color, and outside-click behavior.
+
+Latest behavior correction:
+
+- Reworked the page-local click-outside hook to stay bound like Vue `v-click-outside` instead of only attaching conditionally after active state changes.
+- The hook now listens for document `click` / `touchend`, ignores clicks inside the bound element, and invokes the handler only for outside clicks.
+- Usage card behavior now matches Vue:
+  - inside click sets active primary state and text `Click Outside`.
+  - outside click resets to inactive text `Click Me`.
+- Conditional handler behavior now matches Vue:
+  - inside click sets the row active/green.
+  - outside click resets the standard row.
+  - the conditional row only invokes its outside handler when `closeConditional()` returns true, equivalent to `models.conditional`.
+- Red/green dot indicators are state-driven and remain interactive.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Not touched:
+
+- Intersect, Mutate, Resizing, Ripples, and Scrolling implementations.
+- Vuetify continuation.
+- animations.
+- Dashboard.
+- App Contacts / Chat.
+- approved slices.
