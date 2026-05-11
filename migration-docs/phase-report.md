@@ -1113,6 +1113,66 @@ Remaining gaps:
 - Vuetify / Bottom Navigation remains pending user visual approval.
 - Exact browser-side comparison against the running Vue page is still required for bottom nav dimensions, ripple/hover states, and hide-on-scroll/threshold transition timing.
 
+## Vuetify Bottom Sheets Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Bottom Sheets only.
+- Route `/components/bottom-sheets`.
+- Enabled only `UI Components > Vuetify > Bottom Sheets`.
+- Kept Breadcrumbs, Buttons, Floating Action, and Button Groups pending/disabled.
+- Bottom Navigation page content was not modified.
+
+Vue source trace:
+
+- `src/views/Vuetify/BottomSheets.vue`
+  - `namespace: "Components"`, `page: "BottomSheets"`.
+  - Breadcrumbs: `Components > Vuetify > Bottom Sheets`.
+  - Uses `doc-page` with usage booleans `inset`, `hide-overlay`, and `persistent`.
+  - Example order: `persistent`, `model`, `inset`, `player`, `open-in-list`.
+- `src/lang/en/components/BottomSheets.json`
+  - Provides main documentation text, usage text, example headings/descriptions, and prop notes.
+- `src/demo/usages/bottom-sheets.vue`
+  - `Open Playground` activator, purple dark button, sheet height `200px`, close button, and active prop labels.
+- `src/demo/examples/bottom-sheets/simple/persistent.vue`
+  - `v-bottom-sheet v-model="sheet" persistent`; `Open Persistent`; outside click should not close.
+- `src/demo/examples/bottom-sheets/simple/model.vue`
+  - External `Open v-model` button toggles `sheet`; close button closes.
+- `src/demo/examples/bottom-sheets/simple/inset.vue`
+  - `inset`; `Open Inset`; desktop sheet width reduced to 70%.
+- `src/demo/examples/bottom-sheets/complex/player.vue`
+  - `inset`; tile card; 3px progress at `50`; track title/subtitle and rewind/pause/fast-forward buttons with md breakpoint spacing.
+- `src/demo/examples/bottom-sheets/complex/open-in-list.vue`
+  - `Open In`; list subheader `Open in`; tile data `Keep`, `Inbox`, `Hangouts`, `Messenger`, `Google+`; CDN images; clicking item closes sheet.
+
+Verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/bottom-sheets` | Added route inside `DashboardLayout` | High | Full-page routes unaffected |
+| Sidebar | Bottom Sheets enabled; Breadcrumbs and Buttons remain pending | Enabled only Bottom Sheets | High | Sidebar brand/logo unchanged |
+| Page hierarchy | `Components`, page `BottomSheets`, breadcrumbs `Components > Vuetify > Bottom Sheets` | Implemented with shared Vuse docs shell | Pending visual review | Matches Vue source casing and breadcrumb label |
+| Documentation text | Exact main and usage text from `BottomSheets.json` | Implemented with inline code styling | High | Inline code chip styling follows existing Vuetify docs pages |
+| Usage playground | `Open Playground`, booleans `inset`, `hide-overlay`, `persistent`, active prop labels | Implemented activator, switches, 200px sheet, close button, active labels | Pending visual review | `hide-overlay` uses invisible backdrop |
+| Persistent | Outside click should not close; close button should close | Implemented persistent guard for backdrop/escape close and close button | High | Needs browser interaction review |
+| v-model control | Button toggles sheet without activator slot; close button closes | Implemented external `Open v-model` button and close button | High | Sheet state is React-controlled equivalent |
+| Inset | Desktop max width 70%; close text button; exact description text | Implemented 70% desktop width and close behavior | Pending visual review | Mobile remains full width |
+| Music Player | Inset bottom sheet with 3px progress, `The Walker`, `Fitz & The Trantrums`, and rewind/pause/fast-forward controls | Implemented track card, progress value 50, controls, and md spacing | Pending visual review | Uses MUI equivalent icons |
+| Open In List | List subheader `Open in`; Keep/Inbox/Hangouts/Messenger/Google+ with 32px tile avatars; item click closes | Implemented exact tile names/images and close-on-item-click | Pending visual review | Uses Vuetify CDN image URLs |
+| Sheet overlay/position | Bottom sheet slides from bottom with overlay unless hidden; inset width on desktop | Implemented bottom `Drawer` with backdrop, hidden overlay option, and inset paper width | Pending visual review | Exact transition timing still needs Vue comparison |
+| Source panels | Example source available from action icon | Implemented dark source panel with exact Vue snippets | High | Github icon visual only, matching existing docs pages |
+| Invert example colors | Example block invert action available | Implemented mode-aware example body inversion | Pending visual review | Open sheets themselves remain Vue-like light surfaces unless source specifies dark buttons |
+| Responsive behavior | Player controls use md spacing; inset desktop width 70% | Implemented md spacing and desktop inset width | Pending visual review | Needs viewport comparison |
+| Build | Build must pass inside `react-dashboard-template/` | `npm run build` passed | High | Existing Vite chunk-size warning remains |
+| Out of scope | Do not touch approved Vuetify slices, Bottom Navigation content, Breadcrumbs, Buttons, Directives, App, Dashboard, animations, `.claude/` | Page content outside Bottom Sheets was not modified | High | Shared route/sidebar touched only to register Bottom Sheets |
+
+Remaining gaps:
+
+- Vuetify / Bottom Sheets remains pending user visual approval.
+- Exact visual comparison against the running Vue page is still required for bottom sheet transition timing, overlay opacity, shadow strength, and inset positioning.
+
 ## Vuetify Toolbar Implementation
 
 Status: implemented; pending user visual approval.

@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Bottom Navigation.
+- Active section: Vuetify / Bottom Sheets.
 
 ## Current Slice
 
-- Scope: Vuetify / Bottom Navigation only.
-- Route: `/components/bottom-navigation`.
+- Scope: Vuetify / Bottom Sheets only.
+- Route: `/components/bottom-sheets`.
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/vuetify-bars-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -33,6 +33,7 @@ Current rebuild strategy:
 - Vuetify / Bars / Toolbar: implemented; pending user visual approval.
 - Vuetify / Bars / System bars: implemented; pending user visual approval.
 - Vuetify / Bottom Navigation: implemented; pending user visual approval.
+- Vuetify / Bottom Sheets: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -164,6 +165,71 @@ Not touched:
 
 - Approved Vuetify slices.
 - Bottom Sheets, Breadcrumbs, Buttons.
+- Directives.
+- App.
+- Dashboard.
+- Animations.
+
+## Vuetify Bottom Sheets Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/components/bottom-sheets`
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Bottom Sheets`.
+- `Breadcrumbs`, `Buttons`, `Floating Action`, and `Button Groups` remain disabled/pending.
+- Bottom Navigation route/sidebar entry was preserved and not modified beyond coexistence in the same route/sidebar files.
+
+Vue source traced:
+
+- `src/views/Vuetify/BottomSheets.vue`
+- `src/lang/en/components/BottomSheets.json`
+- `src/demo/usages/bottom-sheets.vue`
+- `src/demo/examples/bottom-sheets/simple/persistent.vue`
+- `src/demo/examples/bottom-sheets/simple/model.vue`
+- `src/demo/examples/bottom-sheets/simple/inset.vue`
+- `src/demo/examples/bottom-sheets/complex/player.vue`
+- `src/demo/examples/bottom-sheets/complex/open-in-list.vue`
+
+Implemented Bottom Sheets page:
+
+- Vuse section header with `Components`, page `BottomSheets`, and breadcrumbs `Components > Vuetify > Bottom Sheets`.
+- Exact Bottom Sheets documentation intro and usage text from Vue language source.
+- Usage playground with `inset`, `hide-overlay`, and `persistent` switches.
+- Vue examples:
+  - Persistent.
+  - `v-model` control.
+  - Inset.
+  - Music Player.
+  - Open In List.
+- View source expansion and invert example colors behavior.
+
+Implemented behavior:
+
+- Activator buttons open sheets.
+- Close buttons close sheets.
+- Persistent sheet ignores outside/backdrop and escape close.
+- `hide-overlay` usage option hides the overlay.
+- Inset sheets use 70% desktop width.
+- Open In List uses exact Keep/Inbox/Hangouts/Messenger/Google+ tile data and CDN images; clicking an item closes the sheet.
+- Music Player includes 50% progress bar, track text, and rewind/pause/fast-forward controls with responsive spacing.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Not touched:
+
+- Approved Vuetify slices.
+- Bottom Navigation page content.
+- Breadcrumbs and Buttons.
 - Directives.
 - App.
 - Dashboard.

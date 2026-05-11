@@ -130,7 +130,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         ],
       },
       { title: "Bottom Navigation", path: "/components/bottom-navigation", icon: <ViewHeadline /> },
-      { title: "Bottom Sheets", disabled: true, pending: true },
+      { title: "Bottom Sheets", path: "/components/bottom-sheets", icon: <ViewHeadline /> },
       { title: "Breadcrumbs", disabled: true, pending: true },
       {
         title: "Buttons",
