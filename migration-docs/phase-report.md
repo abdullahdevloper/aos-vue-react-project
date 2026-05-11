@@ -927,6 +927,70 @@ Protected files:
 
 - Protected-path status check returned no changes.
 
+## Vuetify Toolbar Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Bars / Toolbar only.
+- Route `/components/bars/toolbar`.
+- Sidebar item `UI Components > Vuetify > Bars > Toolbar`.
+- System bars remains disabled/pending.
+
+Affected React files:
+
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+- `react-dashboard-template/src/pages/ui-components/vuetify/ToolbarPage.tsx`
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/bars/toolbar` renders `Vuetify/Bars/Toolbar` | Added `/components/bars/toolbar` inside `DashboardRoute` | High | App Bars and Banners routes preserved |
+| Sidebar | Bars group contains `App Bars`, `Toolbar`, `System bars`; Toolbar enabled for this slice, System bars pending | Enabled Toolbar path; System bars remains disabled/pending | High | Sidebar brand/logo unchanged |
+| Section hierarchy | Namespace `Components`, page `Toolbars`, breadcrumbs `Components > Vuetify > Toolbar` | Rendered Vuse section header and breadcrumbs | High | Matches Vue source |
+| Documentation text | Toolbar intro and usage text from `Toolbars.json` | Rendered exact visible text with inline code/link styling | Pending visual review | Markdown parser not reused |
+| Usage controls | Booleans image/collapse/dense/extended/flat/prominent/short; elevation slider min 2 max 24; color select | Implemented switches, slider, select, and invert playground action | Pending visual review | Styled to Vuse docs controls |
+| Usage toolbar | `v-toolbar` with optional image, collapse, dense, extended, flat, prominent, short, elevation, color; nav/title/spacer/actions | Implemented Vuse toolbar primitive for the usage playground | Pending visual review | Responsive icon hiding is approximated to current docs shell |
+| Prominent toolbars | Grey 200px card with prominent extended toolbar | Implemented grey surface and prominent extended toolbar | Pending visual review | Height math follows Vuetify values |
+| Dense toolbars | Grey 200px card with dense 48px toolbar | Implemented dense toolbar | Pending visual review | |
+| Light and Dark | Light toolbar with back/search and dark narrow toolbar with reply/menu | Implemented two-column light/dark example | Pending visual review | |
+| Variations | Four md=6 toolbar cards: default, dark, primary dark, elevation-0 | Implemented four-card grid | Pending visual review | |
+| Prominent w/ Background | Prominent dark toolbar with `vbanner.jpg` background and export action | Implemented background toolbar with Vue image URL | Pending visual review | |
+| Extended | Grey card with extended toolbar | Implemented extended toolbar | Pending visual review | |
+| Extension height | Extended toolbar with `extension-height="100"` | Implemented 100px extension height | Pending visual review | |
+| Collapse | Collapsed toolbar with search and menu icons | Implemented collapsed width/radius with two icons | Pending visual review | |
+| Flexible toolbar and card toolbar | Primary extended flat toolbar with centered card offset by `margin-top:-64px` | Implemented primary extended surface and overlapping card toolbar | Pending visual review | |
+| Floating with search | 300px map card with dense floating toolbar, search field, my_location, menu | Implemented map background and inline floating search toolbar | Pending visual review | |
+| Contextual action bars | Multi-select changes toolbar color/content from `Photos` to `{n} selected`; close clears selection; export/delete appear | Implemented multiple select, selected count, dark contextual toolbar, close/reset, export/delete actions | Pending visual review | Select styling may need visual tuning |
+| Source panels | Example source action opens dark source panel | Implemented expandable source panel | High | Uses concise Vue-referential snippets |
+| Invert example colors | Example body can invert/darken | Implemented per example block | Pending visual review | |
+| Warning alert | `Components.Toolbars.buttonMargin` warning after docs content | Implemented warning alert text | Pending visual review | |
+| Responsive behavior | Usage options stack below md; examples full width; variation cards md=6 | Implemented matching grid behavior | High | Follows shared docs pattern |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Bars / Toolbar remains pending user visual approval.
+
+Not touched:
+
+- App Bars page content.
+- Banners page content.
+- System bars implementation.
+- Directives.
+- App.
+- Dashboard.
+- animations.
+
 ## Vuetify Banners Audit
 
 Status: audit complete; implementation not started.

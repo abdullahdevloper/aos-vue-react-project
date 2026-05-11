@@ -125,7 +125,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         title: "Bars",
         children: [
           { title: "App Bars", path: "/components/bars/app-bars", icon: <ViewHeadline /> },
-          { title: "Toolbar", disabled: true, pending: true },
+          { title: "Toolbar", path: "/components/bars/toolbar", icon: <ViewHeadline /> },
           { title: "System bars", disabled: true, pending: true },
         ],
       },

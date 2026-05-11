@@ -30,6 +30,7 @@ Current rebuild strategy:
 - Vuetify / Badges: approved.
 - Vuetify / Banners: implemented; pending user visual approval.
 - Vuetify / Bars / App Bars: implemented; pending user visual approval.
+- Vuetify / Bars / Toolbar: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -2585,3 +2586,62 @@ Not touched:
 - Dashboard.
 - App Contacts / Chat.
 - approved slices.
+
+## Vuetify Toolbar Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Bars / Toolbar only.
+- Route `/components/bars/toolbar`.
+- Sidebar item `UI Components > Vuetify > Bars > Toolbar`.
+- System bars remains disabled/pending.
+
+Vue sources traced:
+
+- `src/views/Vuetify/Bars/Toolbar.vue`
+- `src/demo/usages/toolbars.vue`
+- `src/demo/examples/toolbars/simple/prominent.vue`
+- `src/demo/examples/toolbars/simple/dense.vue`
+- `src/demo/examples/toolbars/simple/light-and-dark.vue`
+- `src/demo/examples/toolbars/simple/variations.vue`
+- `src/demo/examples/toolbars/simple/background.vue`
+- `src/demo/examples/toolbars/simple/extended.vue`
+- `src/demo/examples/toolbars/simple/extension-height.vue`
+- `src/demo/examples/toolbars/simple/collapse.vue`
+- `src/demo/examples/toolbars/intermediate/flexible-and-card.vue`
+- `src/demo/examples/toolbars/intermediate/floating-with-search.vue`
+- `src/demo/examples/toolbars/intermediate/contextual-action-bar.vue`
+- `src/lang/en/components/Toolbars.json`
+
+Implemented:
+
+- Added `/components/bars/toolbar` inside `DashboardLayout`.
+- Enabled only Bars > Toolbar in the sidebar.
+- Added Vue-equivalent Toolbar docs page with:
+  - section header and breadcrumbs `Components > Vuetify > Toolbar`.
+  - exact Toolbar intro and usage text.
+  - usage playground controls for image, collapse, dense, extended, flat, prominent, short, elevation, color, and invert.
+  - all 11 Vue Toolbar examples.
+  - View source and Invert example color behavior.
+  - warning alert for toolbar/app-bar icon button margin behavior.
+- Implemented contextual action bar selection behavior and close/reset action.
+- Implemented floating search toolbar over the Vue map image URL.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Not touched:
+
+- App Bars page content.
+- Banners page content.
+- System bars implementation.
+- Directives.
+- App.
+- Dashboard.
+- animations.
