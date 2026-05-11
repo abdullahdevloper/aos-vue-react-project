@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Bars / System bars.
+- Active section: Vuetify / Bottom Navigation.
 
 ## Current Slice
 
-- Scope: Vuetify / Bars / System bars only.
-- Route: `/components/bars/system-bar`.
+- Scope: Vuetify / Bottom Navigation only.
+- Route: `/components/bottom-navigation`.
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/vuetify-bars-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -32,6 +32,7 @@ Current rebuild strategy:
 - Vuetify / Bars / App Bars: implemented; pending user visual approval.
 - Vuetify / Bars / Toolbar: implemented; pending user visual approval.
 - Vuetify / Bars / System bars: implemented; pending user visual approval.
+- Vuetify / Bottom Navigation: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -96,6 +97,73 @@ Build:
 Not touched:
 
 - Banners, App Bars, and Toolbar page content.
+- Directives.
+- App.
+- Dashboard.
+- Animations.
+
+## Vuetify Bottom Navigation Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/components/bottom-navigation`
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Bottom Navigation`.
+- `Bottom Sheets`, `Breadcrumbs`, `Buttons`, `Floating Action`, and `Button Groups` remain disabled/pending.
+
+Vue source traced:
+
+- `src/views/Vuetify/BottomNavigation.vue`
+- `src/lang/en/components/BottomNavigation.json`
+- `src/demo/examples/bottom-navigation/usage.vue`
+- `src/demo/examples/bottom-navigation/simple/color.vue`
+- `src/demo/examples/bottom-navigation/simple/grow.vue`
+- `src/demo/examples/bottom-navigation/simple/horizontal.vue`
+- `src/demo/examples/bottom-navigation/simple/shift.vue`
+- `src/demo/examples/bottom-navigation/simple/toggle.vue`
+- `src/demo/examples/bottom-navigation/intermediate/hide-on-scroll.vue`
+- `src/demo/examples/bottom-navigation/intermediate/scroll-threshold.vue`
+
+Implemented Bottom Navigation page:
+
+- Vuse section header with `Components`, page `BottomNavigation`, and breadcrumbs `Components > Vuetify > Bottom Navigations`.
+- Exact Bottom Navigation documentation intro and usage text from Vue language source.
+- Usage example with active state controlled by button values `recent`, `favorites`, and `nearby`.
+- Vue examples:
+  - Color.
+  - Grow.
+  - Horizontal.
+  - Shift.
+  - Toggle.
+  - Hide on scroll.
+  - Scroll threshold.
+- View source expansion and invert example colors behavior.
+
+Implemented behavior:
+
+- Active item click state for usage and examples.
+- Grow layout makes buttons fill available width.
+- Horizontal layout places text beside icons.
+- Shift hides inactive text and shows active text.
+- Toggle button hides/shows the bottom navigation.
+- Hide-on-scroll uses the local example scroll area.
+- Scroll-threshold hides after local `scrollTop > 500`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Not touched:
+
+- Approved Vuetify slices.
+- Bottom Sheets, Breadcrumbs, Buttons.
 - Directives.
 - App.
 - Dashboard.

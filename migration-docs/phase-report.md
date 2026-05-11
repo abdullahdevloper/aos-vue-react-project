@@ -981,6 +981,138 @@ Remaining gaps:
 - System bars remains pending user visual approval.
 - Exact browser-side visual comparison against the running Vue page is still required for bar opacity, shadows, and card spacing.
 
+## Vuetify Batch 2 Audit
+
+Status: audit complete; implementation not started.
+
+Scope:
+
+- Bottom Navigation: `/components/bottom-navigation`
+- Bottom Sheets: `/components/bottom-sheets`
+- Breadcrumbs: `/components/breadcrumbs`
+- Buttons: `/components/buttons`
+
+Audit document:
+
+- `migration-docs/vuetify-batch-2-audit.md`
+
+Sources traced:
+
+- `src/config/navigation-items.js`
+- `src/router/routes/vuetify.js`
+- `src/views/Vuetify/BottomNavigation.vue`
+- `src/views/Vuetify/BottomSheets.vue`
+- `src/views/Vuetify/Breadcrumbs.vue`
+- `src/views/Vuetify/Buttons/Buttons.vue`
+- `src/lang/en/components/BottomNavigation.json`
+- `src/lang/en/components/BottomSheets.json`
+- `src/lang/en/components/Breadcrumbs.json`
+- `src/lang/en/components/Buttons.json`
+- `src/demo/examples/bottom-navigation/**`
+- `src/demo/examples/bottom-sheets/**`
+- `src/demo/examples/breadcrumbs/**`
+- `src/demo/examples/buttons/**`
+- `src/demo/usages/bottom-sheets.vue`
+- `src/demo/usages/breadcrumbs.vue`
+- `src/demo/usages/buttons.vue`
+- React routes/sidebar: `react-dashboard-template/src/App.tsx`, `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+
+Current React status:
+
+| Page | Vue route | React status | Notes |
+|---|---|---|---|
+| Bottom Navigation | `/components/bottom-navigation` | Missing route/page; sidebar disabled/pending | Needs usage plus color/grow/horizontal/shift/toggle/hide-on-scroll/scroll-threshold examples |
+| Bottom Sheets | `/components/bottom-sheets` | Missing route/page; sidebar disabled/pending | Needs usage plus persistent/model/inset/player/open-in-list examples |
+| Breadcrumbs | `/components/breadcrumbs` | Missing route/page; sidebar disabled/pending | Needs usage, header alert, large/divider/icon-dividers/item-slot examples |
+| Buttons | `/components/buttons` | Missing route/page; child sidebar item disabled/pending | Needs usage plus text/raised/depressed/dropdown/icon/floating/sizing/outlined/rounded/tile/block/loaders examples |
+
+Example classification summary:
+
+| Page | Static-heavy examples | Interactive examples | Risky behavior spikes |
+|---|---|---|---|
+| Bottom Navigation | Color, Grow, Horizontal | Usage, Shift, Toggle, Hide on scroll, Scroll threshold | Local scroll target hide/show; `scroll-threshold="500"` |
+| Bottom Sheets | None; all examples open a sheet | Usage, Persistent, v-model, Inset, Music Player, Open In List | Bottom-sheet overlay/portal, persistent outside-click blocking, inset desktop width |
+| Breadcrumbs | Large, Custom divider, Icon dividers, Item slot | Usage playground controls | Low risk; divider/custom-divider playground sync |
+| Buttons | Text, Raised, Depressed, Icon, Floating, Sizing, Outlined, Rounded, Tile, Block | Usage playground, Dropdown Variants, Loaders | `v-overflow-btn` menus/editable/segmented; 3000ms loaders and custom loader slots |
+
+Recommended first implementation slice:
+
+- Vuetify / Bottom Navigation only.
+- Route: `/components/bottom-navigation`.
+- Enable only `UI Components > Vuetify > Bottom Navigation`.
+- Keep Bottom Sheets, Breadcrumbs, Buttons, Floating Action, and Button Groups pending/disabled until explicitly requested.
+
+Reason:
+
+- It is the next Vue sidebar item after Bars/System bars.
+- It preserves original Vue sidebar order.
+- Its behavior is meaningful but narrower than Bottom Sheets and Buttons.
+
+No React code was modified for this audit. Build was not run because only migration docs changed.
+
+## Vuetify Bottom Navigation Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Bottom Navigation only.
+- Route `/components/bottom-navigation`.
+- Enabled only `UI Components > Vuetify > Bottom Navigation`.
+- Kept Bottom Sheets, Breadcrumbs, Buttons, Floating Action, and Button Groups pending/disabled.
+
+Vue source trace:
+
+- `src/views/Vuetify/BottomNavigation.vue`
+  - `namespace: "Components"`, `page: "BottomNavigation"`.
+  - Breadcrumbs: `Components > Vuetify > Bottom Navigations`.
+  - Uses `doc-page` with `usage="usage"` and examples in this order: `color`, `grow`, `horizontal`, `shift`, `toggle`, `hide-on-scroll`, `scroll-threshold`.
+- `src/lang/en/components/BottomNavigation.json`
+  - Provides main documentation text, usage text, example headings/descriptions, props and events.
+- `src/demo/examples/bottom-navigation/usage.vue`
+  - `v-model="bottomNav"`, initial `recent`, values `recent`, `favorites`, `nearby`.
+- `src/demo/examples/bottom-navigation/simple/color.vue`
+  - Active index `1`, `color="purple lighten-1"`.
+- `src/demo/examples/bottom-navigation/simple/grow.vue`
+  - Active index `1`, `grow`, `color="teal"`.
+- `src/demo/examples/bottom-navigation/simple/horizontal.vue`
+  - Active index `1`, `color="primary"`, `horizontal`.
+- `src/demo/examples/bottom-navigation/simple/shift.vue`
+  - Initial index `3`, `dark`, `shift`; inactive labels hidden until active.
+- `src/demo/examples/bottom-navigation/simple/toggle.vue`
+  - `Toggle Nav` button toggles `showNav`; active index `1`; `color="indigo"`.
+- `src/demo/examples/bottom-navigation/intermediate/hide-on-scroll.vue`
+  - Example-local card `height="200"`, `max-width="500"`; `scroll-target="#scroll-area-1"`, `hide-on-scroll`, `absolute`, `horizontal`; inner content height `1500px`.
+- `src/demo/examples/bottom-navigation/intermediate/scroll-threshold.vue`
+  - Same local card/scroll target shape with `scroll-threshold="500"` and `color="white"`.
+
+Verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/bottom-navigation` | Added route inside `DashboardLayout` | High | Full-page routes unaffected |
+| Sidebar | Bottom Navigation enabled; Bottom Sheets, Breadcrumbs, Buttons remain pending | Enabled only Bottom Navigation | High | Sidebar brand/logo unchanged |
+| Page hierarchy | `Components`, page `BottomNavigation`, breadcrumbs `Components > Vuetify > Bottom Navigations` | Implemented with shared Vuse docs shell | Pending visual review | Matches Vue source casing and breadcrumb label |
+| Documentation text | Exact main and usage docs from `BottomNavigation.json` | Implemented with inline code styling | High | Inline code chip styling follows existing Vuetify docs pages |
+| Usage | `v-model` active state with `recent`, `favorites`, `nearby`; initial `recent` | Implemented clickable active state with same values and labels | High | Uses matching History/Heart/Map marker icons |
+| Color | Active index `1`, purple lighten active color | Implemented active Favorites state and purple active color | Pending visual review | Background remains Vue-like light surface |
+| Grow | `grow` buttons fill width, active index `1`, teal active color | Implemented grow flex layout and teal active state | Pending visual review | Needs visual width comparison |
+| Horizontal | Text beside icon, active index `1`, primary active color | Implemented horizontal content flow | Pending visual review | Needs icon/text baseline review |
+| Shift | Dark bottom navigation, initial active Image, inactive labels hidden | Implemented dark shift behavior with hidden inactive labels | Pending visual review | Computed Vue color is not bound in source, so dark default is preserved |
+| Toggle | `Toggle Nav` text button hides/shows nav; active index persists | Implemented toggle button and collapse/show behavior | Pending visual review | Transition approximates Vuetify input-value movement |
+| Hide on scroll | Local scroll target hides nav when target is scrolled | Implemented local scroll card and hides when local `scrollTop > 0` | Pending visual review | Does not use page/window scroll |
+| Scroll threshold | Local scroll target with `scroll-threshold="500"` | Implemented local scroll card and hides when local `scrollTop > 500` | Pending visual review | Threshold behavior likely needs visual spike if user finds mismatch |
+| Source panels | Example source available from action icon | Implemented dark source panel with exact Vue snippets | High | Github icon visual only, matching existing docs pages |
+| Invert example colors | Example block invert action available where docs shell supports it | Implemented invert action for usage and example bodies | Pending visual review | Shift remains explicitly dark like Vue |
+| Responsive layout | Vuetify examples use standard docs layout; scroll cards fixed `200`/`500` geometry | Implemented full-width example blocks and fixed local scroll cards | Pending visual review | No arbitrary page-level breakpoint added |
+| Build | Build must pass inside `react-dashboard-template/` | `npm run build` passed | High | Existing Vite chunk-size warning remains |
+| Out of scope | Do not touch approved Vuetify slices, Bottom Sheets, Breadcrumbs, Buttons, Directives, App, Dashboard, animations, `.claude/` | Page content outside Bottom Navigation was not modified | High | Shared route/sidebar touched only to register Bottom Navigation |
+
+Remaining gaps:
+
+- Vuetify / Bottom Navigation remains pending user visual approval.
+- Exact browser-side comparison against the running Vue page is still required for bottom nav dimensions, ripple/hover states, and hide-on-scroll/threshold transition timing.
+
 ## Vuetify Toolbar Implementation
 
 Status: implemented; pending user visual approval.
