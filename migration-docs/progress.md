@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Bottom Sheets.
+- Active section: Vuetify / Breadcrumbs.
 
 ## Current Slice
 
-- Scope: Vuetify / Bottom Sheets only.
-- Route: `/components/bottom-sheets`.
+- Scope: Vuetify / Breadcrumbs only.
+- Route: `/components/breadcrumbs`.
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/vuetify-bars-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -34,6 +34,7 @@ Current rebuild strategy:
 - Vuetify / Bars / System bars: implemented; pending user visual approval.
 - Vuetify / Bottom Navigation: implemented; pending user visual approval.
 - Vuetify / Bottom Sheets: implemented; pending user visual approval.
+- Vuetify / Breadcrumbs: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -230,6 +231,71 @@ Not touched:
 - Approved Vuetify slices.
 - Bottom Navigation page content.
 - Breadcrumbs and Buttons.
+- Directives.
+- App.
+- Dashboard.
+- Animations.
+
+## Vuetify Breadcrumbs Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/components/breadcrumbs`
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Breadcrumbs`.
+- `Buttons`, `Floating Action`, and `Button Groups` remain disabled/pending.
+- Bottom Navigation and Bottom Sheets page content was not modified.
+
+Vue source traced:
+
+- `src/views/Vuetify/Breadcrumbs.vue`
+- `src/lang/en/components/Breadcrumbs.json`
+- `src/demo/usages/breadcrumbs.vue`
+- `src/demo/examples/breadcrumbs/simple/large.vue`
+- `src/demo/examples/breadcrumbs/simple/divider.vue`
+- `src/demo/examples/breadcrumbs/intermediate/icon-dividers.vue`
+- `src/demo/examples/breadcrumbs/intermediate/item-slot.vue`
+
+Implemented Breadcrumbs page:
+
+- Vuse section header with `Components`, page `Breadcrumbs`, and breadcrumbs `Components > Vuetify > Breadcrumbs`.
+- Exact Breadcrumbs documentation intro, header alert text, and usage text from Vue language source.
+- Usage playground with:
+  - `customDivider` switch.
+  - `large` switch.
+  - `Divider` select with `/`, `/`, `.`, `;`, `>`, `-`.
+- Vue examples:
+  - Large.
+  - Custom divider.
+  - Icon dividers.
+  - Item slot.
+- View source expansion and invert example colors behavior.
+
+Implemented behavior:
+
+- Enabled breadcrumb links prevent page navigation, matching demo-only behavior.
+- Disabled `Link 2` uses disabled text color and default cursor.
+- Custom divider swaps the selected text divider for the chevron icon.
+- Large mode increases breadcrumb font size.
+- Item slot example renders uppercase item text.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Not touched:
+
+- Approved Vuetify slices.
+- Bottom Navigation page content.
+- Bottom Sheets page content.
+- Buttons.
 - Directives.
 - App.
 - Dashboard.

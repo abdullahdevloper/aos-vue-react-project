@@ -1173,6 +1173,63 @@ Remaining gaps:
 - Vuetify / Bottom Sheets remains pending user visual approval.
 - Exact visual comparison against the running Vue page is still required for bottom sheet transition timing, overlay opacity, shadow strength, and inset positioning.
 
+## Vuetify Breadcrumbs Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Breadcrumbs only.
+- Route `/components/breadcrumbs`.
+- Enabled only `UI Components > Vuetify > Breadcrumbs`.
+- Kept Buttons, Floating Action, and Button Groups pending/disabled.
+- Bottom Navigation and Bottom Sheets page content was not modified.
+
+Vue source trace:
+
+- `src/views/Vuetify/Breadcrumbs.vue`
+  - `namespace: "Components"`, `page: "Breadcrumbs"`.
+  - Breadcrumbs: `Components > Vuetify > Breadcrumbs`.
+  - Uses `doc-page` with usage booleans `customDivider`, `large`, and Divider select options `/`, `/`, `.`, `;`, `>`, `-`.
+  - Example order: `large`, `divider`, `icon-dividers`, `item-slot`.
+- `src/lang/en/components/Breadcrumbs.json`
+  - Provides main documentation text, `headerAlert1`, usage text, example headings/descriptions, props, and slots.
+- `src/demo/usages/breadcrumbs.vue`
+  - Uses shared items and optional custom chevron divider slot.
+- `src/demo/examples/breadcrumbs/simple/large.vue`
+  - Renders default breadcrumbs and `large` breadcrumbs.
+- `src/demo/examples/breadcrumbs/simple/divider.vue`
+  - Renders divider `-` and divider `.`.
+- `src/demo/examples/breadcrumbs/intermediate/icon-dividers.vue`
+  - Uses icon divider slots `mdi-forward` and `mdi-chevron-right`.
+- `src/demo/examples/breadcrumbs/intermediate/item-slot.vue`
+  - Uses item slot to render uppercase crumb text.
+
+Verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/breadcrumbs` | Added route inside `DashboardLayout` | High | Full-page routes unaffected |
+| Sidebar | Breadcrumbs enabled; Buttons remain pending | Enabled only Breadcrumbs | High | Sidebar brand/logo unchanged |
+| Page hierarchy | `Components`, page `Breadcrumbs`, breadcrumbs `Components > Vuetify > Breadcrumbs` | Implemented with shared Vuse docs shell | Pending visual review | Matches Vue source casing and breadcrumb label |
+| Documentation text | Exact main text, header alert, and usage text from `Breadcrumbs.json` | Implemented with inline code styling and info alert | High | Alert visual needs Vue comparison |
+| Usage playground | `customDivider`, `large`, and Divider select alter rendered breadcrumbs | Implemented switches/select and chevron custom divider | Pending visual review | Select values preserve duplicate `/` option |
+| Shared data | `Dashboard`, `Link 1`, `Link 2`; `Link 2` disabled | Implemented exact labels/hrefs/disabled state | High | Link clicks are prevented for demo safety |
+| Large | Default and large breadcrumb rows | Implemented two rows with larger second row font | Pending visual review | Needs spacing/font comparison |
+| Custom divider | Divider `-` and divider `.` rows | Implemented both rows | Pending visual review | Needs baseline/divider spacing comparison |
+| Icon dividers | `mdi-forward` and `mdi-chevron-right` divider slots | Implemented FastForward and ChevronRight icon dividers | Pending visual review | Uses MUI icon equivalents |
+| Item slot | Uppercase crumb text using slot | Implemented uppercase breadcrumb row | High | Disabled state preserved |
+| Source panels | Example source available from action icon | Implemented dark source panel with Vue template snippets | High | Github icon visual only, matching existing docs pages |
+| Invert example colors | Example block invert action available | Implemented mode-aware example body inversion | Pending visual review | Breadcrumb disabled/enabled colors adapt to inverted body |
+| Responsive behavior | Simple inline breadcrumb rows; no special breakpoint props found | Implemented flex-wrap breadcrumb rows | Pending visual review | No arbitrary breakpoints added |
+| Build | Build must pass inside `react-dashboard-template/` | `npm run build` passed | High | Existing Vite chunk-size warning remains |
+| Out of scope | Do not touch approved Vuetify slices, Bottom Navigation, Bottom Sheets, Buttons, Directives, App, Dashboard, animations, `.claude/` | Page content outside Breadcrumbs was not modified | High | Shared route/sidebar touched only to register Breadcrumbs |
+
+Remaining gaps:
+
+- Vuetify / Breadcrumbs remains pending user visual approval.
+- Exact visual comparison against the running Vue page is still required for alert surface, breadcrumb spacing, divider alignment, and disabled text color.
+
 ## Vuetify Toolbar Implementation
 
 Status: implemented; pending user visual approval.
