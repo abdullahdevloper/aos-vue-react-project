@@ -111,7 +111,7 @@ export default function ContactsPage() {
   const mdUp = useMediaQuery(theme.breakpoints.up("md"));
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawer, setDrawer] = useState(true);
-  const [activeMenu, setActiveMenu] = useState<ContactMenu>("all");
+  const [activeMenu, setActiveMenu] = useState<ContactMenu>("favourite");
   const [search, setSearch] = useState("");
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [contacts, setContacts] = useState<ContactRecord[]>(initialContacts);
@@ -294,10 +294,10 @@ function ContactsSidenav({ drawer, mdUp, activeMenu, onToggle, onSelect }: { dra
               key={item.slug}
               onClick={() => onSelect(item.slug)}
               sx={{
-                minHeight: 52,
-                borderRadius: 1,
-                mb: 0.45,
-                px: 1,
+                minHeight: 48,
+                borderRadius: 999,
+                mb: 0.5,
+                px: 1.15,
                 color: active ? "primary.main" : "text.primary",
                 bgcolor: active ? "background.default" : "transparent",
                 boxShadow: active ? "inset -4px -4px 5px rgba(255,255,255,.82), inset 5px 5px 8px rgba(0,131,143,.18)" : "none",

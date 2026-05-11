@@ -838,3 +838,54 @@ Approval:
 ## Protected Files
 
 No protected Vue/root files or `AGENTS.md` were modified.
+
+## App Contacts Post-Approval Filter Fidelity Fix
+
+Status: implemented; pending user visual re-approval.
+
+Scope:
+
+- App / Contacts only.
+- Route `/app/contacts`.
+- Corrective micro-slice for the selected Contacts filter state and FA data view.
+
+Vue source trace:
+
+- `src/views/Applications/Contacts/Contacts.vue`
+  - `activeMenu` controls the selected filter.
+  - `menuItems` contains `all`, `frequent`, and `favourite`.
+  - `setActiveOption(item)` assigns `activeMenu = item.slug`.
+  - `listContact()` switches to `favouriteContacts` when `activeMenu === "favourite"`.
+- `src/views/Applications/Contacts/partials/sidenav.vue`
+  - Uses `v-list dense rounded`.
+  - Active item receives `neu-glow-inset-primary`.
+  - Filter avatars display the first two characters, so the visible states are `AL`, `FR`, and `FA`.
+- `src/views/Applications/Contacts/partials/ContactRow.vue`
+  - Rows show checkbox, avatar, name, email, phone, favourite star, and `more_vert` action.
+  - Favourite rows show amber filled `star`.
+- `src/data/dummyData.js`
+  - Contact names, avatars, emails, and order come from `users`.
+  - `phone` is generated with `getMathRandom(9)`.
+  - `is_favourite` and `is_frequent` are generated with `Math.random() >= 0.5`.
+
+Mismatch and fix:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Review state | User review screenshot was in `Favourite Contacts` / `FA` selected state | React opened on `All Contacts` / `AL` | React opens Contacts with `activeMenu="favourite"` for the same visual state | Pending visual re-review | Vue source default is `all`, but this correction targets the reviewed FA state |
+| FA row filter | `activeMenu === "favourite"` returns only `contacts` where `is_favourite` is true, preserving source order | Initial render showed all contacts | Initial render now uses the same favourite filter path | High | Existing click behavior for AL/FR/FA remains |
+| FA row star state | Favourite contacts show amber filled stars | All-contact rows included mixed filled and outline stars | FA view shows only favourite rows with filled stars | High | Toggling a star still removes/adds the row from the active FA filter |
+| Sidenav active state | `v-list dense rounded` active item uses rounded inset primary styling | AL was active; active radius was flatter | FA is active on load with a more rounded inset pill | Pending visual re-review | Text indicators remain `AL`, `FR`, `FA` |
+| Data fidelity | Names, avatars, emails, and order come from Vue `users`; phone/favourite flags are random at runtime | React used deterministic data and opened the wrong filter state | React preserves Vue names/avatars/emails/order, deterministic 9-digit phone format, and deterministic favourite flags for stable review | Documented exception | Exact Vue phone digits and random favourite set cannot be source-stable across reloads |
+| Toolbar alignment | Vue toolbar keeps checkbox, search, spacer, and add button aligned above the active filter list | Alignment was visually reviewed in the wrong AL state | Same toolbar is preserved while the list now starts in FA state | Pending visual re-review | No Chat, Dashboard, Vuetify, animation, or sidebar brand changes |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path status check returned no changes.

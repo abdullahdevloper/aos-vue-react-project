@@ -2214,6 +2214,14 @@ Latest visual/data fidelity correction:
 - Preserved exact Vue names, avatars, emails, and row order from `src/data/dummyData.js`.
 - Note: Vue `is_favourite` and `is_frequent` are initialized from `Math.random() >= 0.5`; React uses deterministic fixture flags so visual review remains stable while preserving the same fields and filter behavior.
 
+Post-approval visual mismatch correction:
+
+- User visual review compared against the `Favourite Contacts` / `FA` selected state.
+- React now opens Contacts in the same `FA` state for this re-review instead of showing `All Contacts` / `AL`.
+- The `FA` sidenav item now receives the active rounded inset pill on initial render.
+- Visible rows now come from the `favourite` filter path, preserving Vue order and showing only rows with filled favourite stars.
+- Contacts is reopened as pending visual re-approval for this filter-state correction.
+
 Build:
 
 - Command: `npm run build`
