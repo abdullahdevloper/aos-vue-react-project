@@ -927,6 +927,60 @@ Protected files:
 
 - Protected-path status check returned no changes.
 
+## Vuetify System Bars Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Bars / System bars only.
+- Route `/components/bars/system-bar`.
+- Enabled only `UI Components > Vuetify > Bars > System bars` for this slice.
+
+Vue source trace:
+
+- `src/views/Vuetify/Bars/SystemBars.vue`
+  - Page uses `doc-page` with `namespace="Components"`, `page="SystemBars"`, `playground="playground"`, and examples `color`, `window`, `themes`, and `lights-out`.
+- `src/lang/en/components/SystemBars.json`
+  - Provides the main documentation text, usage description, example headings/descriptions, and prop notes for `height`, `lights-out`, and `window`.
+- `src/demo/examples/system-bars/playground.vue`
+  - Uses a `v-card` background image `https://cdn.vuetifyjs.com/images/home/vuetify_layout1.svg`, height `200px`.
+  - Uses `v-system-bar color="orange"` with dynamic `height`, `lights-out`, and `window`.
+  - Controls: `Height - px` number field, `Toggle lights-out`, and `Toggle window`.
+- `src/demo/examples/system-bars/simple/color.vue`
+  - Three dark system bars: `primary`, `red lighten-2`, and `indigo darken-2`.
+- `src/demo/examples/system-bars/simple/window.vue`
+  - `v-system-bar window dark` with message, unread count, minimize, checkbox outline, and close icons.
+- `src/demo/examples/system-bars/simple/themes.vue`
+  - Light and dark status bars over `vuetify_layout1.svg`.
+- `src/demo/examples/system-bars/simple/lights-out.vue`
+  - Light and dark lights-out bars over `vuetify_layout2.svg`.
+
+Verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/bars/system-bar` | Added route inside `DashboardLayout` | High | Full-page routes unaffected |
+| Sidebar | Bars > System bars visible/enabled; Toolbar/App Bars remain as-is | Enabled only System bars with `/components/bars/system-bar` | High | Later Vuetify items remain pending/disabled |
+| Page hierarchy | `Components`, page `SystemBars`, breadcrumbs `Components > Vuetify > System Bars` | Implemented with shared Vuse docs shell | Pending visual review | Matches Vue source naming |
+| Documentation text | Exact main and usage text from `SystemBars.json` | Implemented with inline `v-system-bar` code styling | High | Inline code uses existing Vuse chip styling |
+| Usage playground | Image card, orange bar, `Height - px`, `Toggle lights-out`, `Toggle window` | Implemented same controls and bar content | Pending visual review | Height is clamped to Vue `1`-`30`; window uses 32px default when height is not overridden |
+| Playground behavior | Height changes bar height; lights-out reduces opacity; window toggles window styling | Implemented height, opacity, and window radius/height behavior | Pending visual review | User visual comparison still required |
+| Colored bar | `primary`, `red lighten-2`, `indigo darken-2` dark bars with status icons/time | Implemented three rows with matching status content | Pending visual review | Colors mapped to Vuetify palette equivalents |
+| Window bar | Dark window bar with message, unread text, controls | Implemented message and window controls | Pending visual review | Uses MUI icon equivalents for Vuetify icons |
+| Themes | Light and dark status bars over `vuetify_layout1.svg` | Implemented both with subheaders and image cards | Pending visual review | Uses original CDN image |
+| Lights out | Light and dark lights-out bars over `vuetify_layout2.svg` | Implemented both with reduced opacity | Pending visual review | Uses original CDN image |
+| Source panels | Vue example source available through action icon | Implemented dark source panels with exact Vue template snippets | High | Github icon visual only, matching existing Vuetify docs pages |
+| Invert example colors | Examples support invert action | Implemented mode-aware body inversion for examples and playground | Pending visual review | Light/dark examples remain individually visible |
+| Responsive layout | Vuetify docs examples stack in responsive grid | Implemented full-width examples and md usage options column | Pending visual review | No arbitrary page-content breakpoints beyond docs-shell pattern |
+| Build | Build must pass in `react-dashboard-template/` | `npm run build` passed | High | Existing non-blocking Vite chunk-size warning remains |
+| Out of scope | Do not touch Banners, App Bars, Toolbar, Directives, App, Dashboard, animations, approved slices, `.claude/` | Page content outside System bars was not modified | High | Shared route/sidebar touched only to register System bars |
+
+Remaining gaps:
+
+- System bars remains pending user visual approval.
+- Exact browser-side visual comparison against the running Vue page is still required for bar opacity, shadows, and card spacing.
+
 ## Vuetify Toolbar Implementation
 
 Status: implemented; pending user visual approval.
