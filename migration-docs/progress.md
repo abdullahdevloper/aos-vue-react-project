@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Buttons.
+- Active section: Vuetify / Floating Action Buttons.
 
 ## Current Slice
 
-- Scope: Vuetify / Buttons only.
-- Route: `/components/buttons`.
+- Scope: Vuetify / Floating Action Buttons only.
+- Route: `/components/buttons/floating-action-buttons`.
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/vuetify-bars-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -36,6 +36,7 @@ Current rebuild strategy:
 - Vuetify / Bottom Sheets: implemented; pending user visual approval.
 - Vuetify / Breadcrumbs: implemented; pending user visual approval.
 - Vuetify / Buttons: implemented; pending user visual approval.
+- Vuetify / Floating Action Buttons: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -394,6 +395,66 @@ Not touched:
 - Bottom Navigation page content.
 - Bottom Sheets page content.
 - Breadcrumbs page content.
+- Directives.
+- App.
+- Dashboard.
+- Animations.
+
+## Vuetify Floating Action Buttons Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/components/buttons/floating-action-buttons`
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Buttons > Floating Action`.
+- `Button Groups`, `Calendars`, and `Cards` remain disabled/pending.
+
+Vue source traced:
+
+- `src/views/Vuetify/Buttons/FloatingActionButtons.vue`
+- `src/lang/en/components/FloatingActionButtons.json`
+- `src/demo/examples/floating-action-buttons/usage.vue`
+- `src/demo/examples/floating-action-buttons/simple/small.vue`
+- `src/demo/examples/floating-action-buttons/simple/display-animation.vue`
+- `src/demo/examples/floating-action-buttons/intermediate/speed-dial.vue`
+- `src/demo/examples/floating-action-buttons/complex/lateral-screens.vue`
+
+Implemented Floating Action Buttons page:
+
+- Vuse section header with `Components`, page `FloatingActionButtons`, and breadcrumbs `Components > Vuetify > Floating Action`.
+- Documentation intro and usage text from Vue language source.
+- Usage layout with two responsive FAB placement cards.
+- Examples:
+  - Small variant with list layout, FAB dialog trigger, file-name field, and Submit close action.
+  - Display animation with Hide/Show control and FAB transition.
+  - FAB with speed-dial controls for hover, FAB location, direction, and transition.
+  - Lateral screens with tabs and tab-dependent FAB color/icon.
+- Local FAB ripple behavior matching the accepted Buttons ripple pattern.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Remaining visual-review risks:
+
+- Display animation section received a scoped fidelity fix for body padding, Hide/Show button placement, and lower FAB top/right positioning; still pending visual review.
+- Speed-dial transition timing and position must be compared closely with Vue.
+- FAB transition animation is recreated in React and needs visual review against Vuetify `v-fab-transition`.
+- Source panels use compact Vue snippets for long examples.
+
+Not touched:
+
+- Approved Vuetify slices.
+- Button Groups.
+- Calendars.
+- Cards.
 - Directives.
 - App.
 - Dashboard.

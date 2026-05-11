@@ -136,7 +136,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         title: "Buttons",
         children: [
           { title: "Buttons", path: "/components/buttons", icon: <ViewHeadline /> },
-          { title: "Floating Action", disabled: true, pending: true },
+          { title: "Floating Action", path: "/components/buttons/floating-action-buttons", icon: <ViewHeadline /> },
           { title: "Button Groups", disabled: true, pending: true },
         ],
       },
