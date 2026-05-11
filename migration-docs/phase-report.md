@@ -1230,6 +1230,85 @@ Remaining gaps:
 - Vuetify / Breadcrumbs remains pending user visual approval.
 - Exact visual comparison against the running Vue page is still required for alert surface, breadcrumb spacing, divider alignment, and disabled text color.
 
+## Vuetify Buttons Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Buttons only.
+- Route `/components/buttons`.
+- Enabled only `UI Components > Vuetify > Buttons > Buttons`.
+- Kept `Floating Action` and `Button Groups` pending/disabled.
+- Bottom Navigation, Bottom Sheets, and Breadcrumbs page content was not modified.
+
+Vue source trace:
+
+- `src/views/Vuetify/Buttons/Buttons.vue`
+  - `namespace: "Components"`, `page: "Buttons"`.
+  - Breadcrumbs: `Components > Vuetify > Buttons`.
+  - Usage booleans: `disabled`, `loading`, `block`.
+  - Usage slider: `elevation`, min `0`, max `24`, initial `2`.
+  - Usage selects: `Colors` and `Sizes`.
+  - Usage tabs: `raised`, `depressed`, `outlined`, `rounded`, `text`, `fab`, `icon`, `tile`.
+  - Example order: `text`, `raised`, `depressed`, `dropdown`, `icon`, `floating`, `sizing`, `outlined`, `rounded`, `tile`, `block`, `loaders`.
+- `src/lang/en/components/Buttons.json`
+  - Provides main documentation text, warning alert, usage text, example headings/descriptions, props, events, and slots.
+- `src/demo/usages/buttons.vue`
+  - Renders a centered `v-btn`, applies usage attrs, suppresses elevation for outlined/depressed/icon/text, and shows `mdi-account` for `fab`/`icon`.
+- `src/demo/examples/buttons/simple/*.vue`
+  - Provides static button variant matrices and dropdown/fab/icon/sizing examples.
+- `src/demo/examples/buttons/intermediate/loaders.vue`
+  - Uses loader state keys and resets each loading state after `3000ms`; includes custom loader text and rotating `cached` icon.
+
+Verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/buttons` | Added route inside `DashboardLayout` | High | Full-page routes unaffected |
+| Sidebar | Buttons child enabled; Floating Action and Button Groups remain pending | Enabled only `Buttons > Buttons` | High | Sidebar brand/logo unchanged |
+| Page hierarchy | `Components`, page `Buttons`, breadcrumbs `Components > Vuetify > Buttons` | Implemented with shared Vuse docs shell | Pending visual review | Matches Vue source casing and breadcrumb label |
+| Documentation text | Main text, warning alert, usage text from `Buttons.json` | Implemented with inline code styling and warning alert | Pending visual review | Alert surface needs Vue comparison |
+| Usage playground | Tabs, booleans, elevation slider, color and size selects | Implemented usage controls and live Vuse button | Pending visual review | Exact Vuetify ripple/elevation requires visual check |
+| Text/Raised/Depressed | Three responsive columns: small/default/large; normal/primary/error/disabled | Implemented matching matrices | Pending visual review | Button heights/shadows need comparison |
+| Dropdown variants | Overflow, Segmented, Editable overflow buttons with menus | Implemented selectable overflow-style controls | Partial | Needs close follow-up for exact `v-overflow-btn` segmented/editable behavior |
+| Icon | Normal and disabled icon rows with heart/star/cached/thumb-up; cached icon uses Vue `green` | Implemented normal and disabled icon rows; cached icon color changed to Vue green | Pending visual review | Uses MUI icon equivalents |
+| Floating | Six FABs with small/default/large sizes and colors; third button uses `mdi-plus` | Implemented six FABs; third button now uses plus icon equivalent instead of text `+` | Pending visual review | Icon/color sizing needs comparison |
+| Sizing | Text buttons and FABs from x-small through x-large | Implemented two responsive columns | Pending visual review | Responsive stack follows Vue sm split |
+| Outlined/Rounded/Tile/Block | Exact visible examples; Outlined FABs are transparent outlined buttons; Tile final button uses `mdi-vuetify` icon | Outlined FABs changed from filled to transparent outlined; Tile final button now uses a closer Vuetify-style mark instead of text `V` | Pending visual review | No Dropdown, Loaders, or Usage behavior changed |
+| Loaders | Five buttons; loading state disables and resets after `3000ms`; custom loader text and spinning cached icon | Implemented timer reset, disabled loading states, custom text, spinning cached icon | Pending visual review | Timing implemented; exact loader visuals need review |
+| Source panels | Example source available from action icon | Implemented source panels with compact Vue snippets for long repeated examples | Partial | Full source text parity may need a follow-up if user opens source panels for exact comparison |
+| Invert example colors | Example block invert action available except dropdown marked `uninverted` in Vue docs | Implemented invert action and preserved dropdown as uninverted | Pending visual review | Light/dark state comparison required |
+| Build | Build must pass inside `react-dashboard-template/` | `npm run build` passed | High | Existing Vite chunk-size warning remains |
+| Out of scope | Do not touch approved Vuetify slices, Bottom Navigation, Bottom Sheets, Breadcrumbs, Directives, App, Dashboard, animations, `.claude/` | Page content outside Buttons was not modified | High | Shared route/sidebar touched only to register Buttons |
+
+Remaining gaps:
+
+- Vuetify / Buttons remains pending user visual approval.
+- Dropdown/overflow button segmented/editable behavior may need a dedicated behavior fidelity pass.
+- Source panels for long repeated button examples use compact Vue snippets and may need exact full-source expansion if source-panel review is required.
+- Exact visual comparison against the running Vue page is still required for button heights, shadows, disabled/loading colors, ripple/hover states, and responsive spacing.
+
+### Buttons Static Variant Mismatch Fix
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Outlined FAB buttons | `v-btn outlined fab color="teal"` and `v-btn outlined large fab color="indigo"` render transparent with colored border/text | FAB buttons were filled because they used the normal `fab` style | FABs now keep the same size/layout but use transparent surface, colored border/text, and no fill shadow | Pending visual review | Scoped to Outlined example only |
+| Floating plus FAB | Third floating FAB uses `mdi-plus` icon | Rendered plain text `+` | Uses an icon-equivalent plus glyph from the existing icon set | Pending visual review | Layout preserved |
+| Tile Vuetify icon | Final tile example uses `mdi-vuetify` inside a large teal icon/tile button | Rendered a plain text `V` | Uses a closer Vuetify-style mark built in the button icon area | Pending visual review | No new asset copied |
+| Icon cached color | Cached icon button uses Vue `green` color | Used generic `success` color alias | Added explicit Vue green mapping and applied it to cached icon | High | Visual check still required for exact Vuetify hover/ripple |
+| Scope guard | Do not fix Dropdown, Loaders, Usage, or redesign Buttons | N/A | Dropdown, Loaders, Usage, and other pages were not intentionally changed | High | Buttons remains pending visual approval |
+
+### Buttons Ripple Interaction Fix
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Click ripple origin | `v-btn` uses Vuetify `v-ripple`, starting from actual click/touch point | Buttons had no visible Vuetify-like wave | Local ripple calculates pointer coordinates inside the clicked button and starts from that point | Pending visual review | Scoped to Buttons page `VButton` only |
+| Ripple expansion/fade | Ripple expands smoothly and fades out within the button bounds | No visible expansion/fade | Ripple expands with `cubic-bezier(.25,.8,.5,1)` and fades over `620ms` | Pending visual review | Tuned toward Vuetify-like timing |
+| Shape clipping | Ripple is clipped by text, rounded, FAB, icon, tile, and outlined button shapes | No local ripple layer | Button has `overflow: hidden`; ripple inherits the button border-radius clipping | Pending visual review | Tile remains square, FAB/icon remain circular |
+| Disabled/loading state | Disabled `v-btn` does not ripple | N/A | Ripple handler exits for disabled/loading buttons | High | Loading logic itself was not changed |
+| Scope guard | Do not fix Dropdown, Loaders, Usage logic, or redesign the page | N/A | Only reusable local ripple behavior was added to Buttons page button primitive | High | Dropdown variant logic and loader logic were not intentionally changed |
+
 ## Vuetify Toolbar Implementation
 
 Status: implemented; pending user visual approval.

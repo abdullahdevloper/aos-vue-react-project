@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Breadcrumbs.
+- Active section: Vuetify / Buttons.
 
 ## Current Slice
 
-- Scope: Vuetify / Breadcrumbs only.
-- Route: `/components/breadcrumbs`.
+- Scope: Vuetify / Buttons only.
+- Route: `/components/buttons`.
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/vuetify-bars-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -35,6 +35,7 @@ Current rebuild strategy:
 - Vuetify / Bottom Navigation: implemented; pending user visual approval.
 - Vuetify / Bottom Sheets: implemented; pending user visual approval.
 - Vuetify / Breadcrumbs: implemented; pending user visual approval.
+- Vuetify / Buttons: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -296,6 +297,103 @@ Not touched:
 - Bottom Navigation page content.
 - Bottom Sheets page content.
 - Buttons.
+- Directives.
+- App.
+- Dashboard.
+- Animations.
+
+## Vuetify Buttons Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/components/buttons`
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Buttons > Buttons`.
+- `Floating Action` and `Button Groups` remain disabled/pending.
+- Bottom Navigation, Bottom Sheets, and Breadcrumbs page content was not modified.
+
+Vue source traced:
+
+- `src/views/Vuetify/Buttons/Buttons.vue`
+- `src/lang/en/components/Buttons.json`
+- `src/demo/usages/buttons.vue`
+- `src/demo/examples/buttons/simple/text.vue`
+- `src/demo/examples/buttons/simple/raised.vue`
+- `src/demo/examples/buttons/simple/depressed.vue`
+- `src/demo/examples/buttons/simple/dropdown.vue`
+- `src/demo/examples/buttons/simple/icon.vue`
+- `src/demo/examples/buttons/simple/floating.vue`
+- `src/demo/examples/buttons/simple/sizing.vue`
+- `src/demo/examples/buttons/simple/outlined.vue`
+- `src/demo/examples/buttons/simple/rounded.vue`
+- `src/demo/examples/buttons/simple/tile.vue`
+- `src/demo/examples/buttons/simple/block.vue`
+- `src/demo/examples/buttons/intermediate/loaders.vue`
+
+Implemented Buttons page:
+
+- Vuse section header with `Components`, page `Buttons`, and breadcrumbs `Components > Vuetify > Buttons`.
+- Buttons documentation intro, warning alert, and usage text from Vue language source.
+- Usage playground with:
+  - tabs `raised`, `depressed`, `outlined`, `rounded`, `text`, `fab`, `icon`, `tile`
+  - `disabled`, `loading`, and `block` switches
+  - `elevation` slider from `0` to `24`
+  - `Colors` select with `deep-purple accent-4`, `primary`, `secondary`, `accent`
+  - `Sizes` select with `x-small`, `small`, `large`, `x-large`
+  - invert playground colors action
+- Vue examples:
+  - Text.
+  - Raised.
+  - Depressed.
+  - Button Dropdown Variants.
+  - Icon.
+  - Floating.
+  - Sizing.
+  - Outlined.
+  - Rounded.
+  - Tile.
+  - Block.
+  - Loaders.
+- Static variant fidelity follow-up:
+  - Outlined example FAB buttons now render as outlined transparent buttons like Vue.
+  - Floating example uses an icon-equivalent plus glyph instead of text `+`.
+  - Tile example uses a closer Vuetify-style mark instead of a plain text `V`.
+  - Icon example cached button uses Vue green instead of generic success color.
+- Ripple interaction follow-up:
+  - Buttons now use a local Vuetify-style click ripple that starts from the pointer position, expands inside button bounds, fades out, and is disabled for disabled/loading buttons.
+
+Implemented behavior:
+
+- Button disabled/loading states.
+- Pointer-position click ripple for local Buttons page variants.
+- Usage tab variants, color, size, elevation, and block behavior.
+- Dropdown variant menus with selectable values.
+- Loader buttons set loading/disabled state and reset after `3000ms`.
+- Custom loader text and rotating cached icon loader.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Remaining visual-review risks:
+
+- Dropdown/overflow button menu styling and editable/segmented behavior need close comparison with Vue.
+- Loader timing, disabled colors, and custom loader slots need visual/behavior review.
+- Source panels currently use compact Vue snippets for long repeated examples; full source parity may need a follow-up if visual review requires exact source text.
+
+Not touched:
+
+- Approved Vuetify slices.
+- Bottom Navigation page content.
+- Bottom Sheets page content.
+- Breadcrumbs page content.
 - Directives.
 - App.
 - Dashboard.

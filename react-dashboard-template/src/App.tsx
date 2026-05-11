@@ -33,6 +33,7 @@ import SystemBarsPage from "./pages/ui-components/vuetify/SystemBarsPage";
 import BottomNavigationPage from "./pages/ui-components/vuetify/BottomNavigationPage";
 import BottomSheetsPage from "./pages/ui-components/vuetify/BottomSheetsPage";
 import BreadcrumbsPage from "./pages/ui-components/vuetify/BreadcrumbsPage";
+import ButtonsPage from "./pages/ui-components/vuetify/ButtonsPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -93,6 +94,7 @@ export default function App() {
           <Route path="/components/bottom-navigation" element={<DashboardRoute><BottomNavigationPage /></DashboardRoute>} />
           <Route path="/components/bottom-sheets" element={<DashboardRoute><BottomSheetsPage /></DashboardRoute>} />
           <Route path="/components/breadcrumbs" element={<DashboardRoute><BreadcrumbsPage /></DashboardRoute>} />
+          <Route path="/components/buttons" element={<DashboardRoute><ButtonsPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
