@@ -29,6 +29,7 @@ Current rebuild strategy:
 - Vuetify / Avatars: approved.
 - Vuetify / Badges: approved.
 - Vuetify / Banners: implemented; pending user visual approval.
+- Vuetify / Bars / App Bars: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -96,6 +97,131 @@ Not touched:
 - Directives.
 - Dashboard.
 - App.
+- Animations.
+
+## Vuetify App Bars Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/components/bars/app-bars`
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Bars > App Bars`.
+- `Toolbar` and `System bars` remain disabled/pending.
+
+Implemented App Bars page:
+
+- Vuse section header with `Components > Vuetify > AppBars`.
+- Exact main App Bars documentation text from Vue source.
+- Usage playground with:
+  - `image`
+  - `collapse-on-scroll`
+  - `dense`
+  - `flat`
+  - `hide-on-scroll`
+  - `inverted-scroll`
+  - `prominent`
+  - `color` select
+  - invert playground colors
+  - local scroll container
+- Vue App Bars examples:
+  - Dense.
+  - Prominent w/ scroll shrink.
+  - Prominent w/ scroll shrink and image.
+  - Hiding on scroll.
+  - Collapsible bars.
+  - Elevate bar on scroll.
+  - Inverted scrolling.
+  - Toggle Navigation Drawers.
+  - Scroll threshold.
+  - Prominent w/ scroll shrink and image, fading on scroll.
+  - With menu.
+- Warning alert for toolbar/app-bar icon button margin behavior.
+- Functional `v-app-bar-nav-icon` documentation section.
+
+Implemented behavior:
+
+- Scroll-target behavior scoped to example-local scroll containers.
+- Shrink/dense state after scroll.
+- Hide-on-scroll and inverted-scroll visibility changes.
+- Collapse and collapse-on-scroll behavior.
+- Elevate-on-scroll shadow change.
+- Image fade and threshold behavior.
+- Temporary navigation drawer opened by nav icon.
+- Menu example with matching visible menu items.
+- Source panels and invert example colors behavior.
+
+Behavior spikes after user review:
+
+- Broad App Bars behavior fixes are paused.
+- `Prominent w/ scroll shrink` was updated first and kept unchanged after acceptance.
+- Vue source traced: `src/demo/examples/app-bars/simple/prominent.vue`.
+- React now uses the same local `scrolling-techniques` example container shape: max-height `600` and inner content height `1000`.
+- The app bar now starts at the Vuetify prominent height `128px` and shrinks progressively to `56px` using the Vuetify `computedContentHeight` formula.
+- Title font size and bottom padding now follow the Vuetify prominent/shrink formula more closely during scroll.
+- Scroll jitter fix: the prominent app bar is now positioned outside the scroll container's content flow, matching Vue's `absolute` app-bar behavior, so height changes no longer alter the measured scroll content.
+- Scroll updates are batched with `requestAnimationFrame` from the local container's `scrollTop` to avoid rapid state oscillation while scrolling upward.
+- `Prominent w/ scroll shrink and image` was updated as the next isolated spike.
+- Vue source traced: `src/demo/examples/app-bars/simple/img.vue`.
+- React now uses the same local `scrolling-techniques-2` container shape: max-height `600` and inner content height `1000`.
+- The image app bar uses the same progressive `128px` to `56px` shrink formula, remains outside the scroll content flow, and keeps the Vue image gradient visible during shrink.
+- `Collapsible bars` was updated as an isolated spike.
+- Vue source traced: `src/demo/examples/app-bars/simple/collapse.vue`.
+- React now uses the same local `scrolling-techniques-6` container shape: max-height `600` and inner content height `1000`.
+- The bar collapses when `collapseOnScroll` is true and the local scroll position is greater than `0`, matching Vue `collapse-on-scroll`.
+- When `collapseOnScroll` is false, the bar is collapsed immediately, matching Vue `:collapse="!collapseOnScroll"`.
+- The collapsing bar is positioned outside the scroll content flow to avoid scroll feedback loops and jitter.
+- `Elevate bar on scroll` was updated as an isolated spike.
+- Vue source traced: `src/demo/examples/app-bars/simple/elevate-on-scroll.vue`.
+- React now uses the same local `scrolling-techniques-7` container shape: max-height `600` and inner content height `1500`.
+- The white app bar is flat at `scrollTop === 0`, gains Vuetify-like elevation when local scroll is greater than `0`, and returns to flat when scrolled back to top.
+- The elevating bar is positioned outside the scroll content flow to avoid scroll feedback loops and jitter.
+- `Toggle Navigation Drawers` was updated as an isolated spike.
+- Vue source traced: `src/demo/examples/app-bars/intermediate/app-bar-nav.vue`.
+- Drawer opens from the app-bar nav icon as an in-card absolute temporary drawer, not a page-level drawer.
+- Drawer overlay/backdrop is scoped to the 400px example card and closes the drawer on outside click.
+- Dense nav list spacing, drawer width, active text color, and Home/Account selection state were aligned to Vue's `v-list nav dense` and `active-class="deep-purple--text text--accent-4"`.
+- `Scroll threshold` was updated as an isolated spike.
+- Vue source traced: `src/demo/examples/app-bars/intermediate/scroll-threshold.vue`.
+- React now uses the same local `scrolling-techniques-5` container shape: max-height `600` and inner content height `1500`.
+- The app bar uses Vue's `scroll-threshold="500"` formulas from `VAppBar`: height shrinks from `128px` to `56px` across the 500px threshold range, and image opacity fades from `1` to `0` across the same range.
+- The image/gradient app bar is positioned outside the scroll content flow to avoid scroll feedback loops and jitter.
+- `Prominent w/ scroll shrink and image, fading on scroll` was updated as an isolated spike.
+- Vue source traced: `src/demo/examples/app-bars/complex/img-fade.vue`.
+- React now uses the same local `scrolling-techniques-3` container shape: max-height `600` and inner content height `1000`.
+- The app bar starts expanded with the Vue `#6A76AB` image/gradient, shrinks smoothly with the extension tabs preserved, and fades the image using the Vue default threshold range.
+- The image-fade app bar is positioned outside the scroll content flow to avoid scroll feedback loops and jitter.
+- `Inverted scrolling` was updated as an isolated spike.
+- Vue source traced: `src/demo/examples/app-bars/simple/inverted-scroll.vue`.
+- React now uses the same local `scrolling-techniques-8` container shape: max-height `600` and inner content height `1500`.
+- The primary app bar starts hidden at the top, appears once local scroll passes the Vuetify-computed threshold of `8px`, and hides again when the local scroll returns to the top threshold.
+- The inverted app bar is positioned outside the scroll content flow to avoid scroll feedback loops and jitter.
+- `With menu` was updated as an isolated spike.
+- Vue source traced: `src/demo/examples/app-bars/complex/menu.vue`.
+- React now uses the same local `scrolling-techniques-4` container shape: max-height `600` and inner content height `1000`.
+- The app bar keeps the Vue image/gradient, fade-on-scroll, shrink-on-scroll, extension tabs, yellow dots activator, and menu items: `Click Me`, `Click Me`, `Click Me`, `Click Me 2`.
+- The menu opens from the yellow dots button with Vuetify-like bottom/right anchoring, width, shadow, item spacing, hover state, and closes on item click/outside click.
+- Other App Bars examples remain pending behavior review/fixes.
+- Vuetify / App Bars remains pending user visual approval.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Not touched:
+
+- Banners page content.
+- Approved Vuetify Api Explorer, Alerts, Avatars, and Badges page content.
+- Toolbar and System bars content.
+- Directives.
+- App.
+- Dashboard.
 - Animations.
 
 ## Dashboard Analytical Implementation

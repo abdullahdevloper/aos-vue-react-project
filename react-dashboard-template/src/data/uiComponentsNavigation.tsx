@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import {
   Article,
   AspectRatio,
+  ViewHeadline,
   BorderStyle,
   Build,
   Chat,
@@ -123,7 +124,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       {
         title: "Bars",
         children: [
-          { title: "App Bars", disabled: true, pending: true },
+          { title: "App Bars", path: "/components/bars/app-bars", icon: <ViewHeadline /> },
           { title: "Toolbar", disabled: true, pending: true },
           { title: "System bars", disabled: true, pending: true },
         ],
