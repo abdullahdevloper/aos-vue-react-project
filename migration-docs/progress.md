@@ -2237,3 +2237,85 @@ Not touched:
 - Vuetify.
 - animations.
 - approved page content.
+
+## App Chat Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- App / Chat only.
+- Route `/app/chat`.
+- Shared App inner layout extended only as needed for the Chat composer footer.
+- App / Contacts behavior preserved.
+
+Implemented:
+
+- Added `/app/chat` route inside `DashboardLayout`.
+- Enabled the App / Chat sidebar entry.
+- Rebuilt Chat page from Vue sources:
+  - `src/views/Applications/Chat/Chat.vue`
+  - `src/views/Applications/Chat/partials/UserListNav.vue`
+  - `src/views/Applications/Chat/partials/ChatToolbar.vue`
+  - `src/data/dummyData.js`
+- Implemented Vuse section definition with title `Chat` and chat icon.
+- Implemented user list nav with:
+  - `Search User` field.
+  - responsive drawer behavior.
+  - user avatars with status dots.
+  - active group inset state.
+  - unread bell when the latest message is unread.
+  - groups sorted by latest message timestamp.
+- Implemented chat toolbar with:
+  - mobile drawer toggle when drawer is closed.
+  - active user avatar/name.
+  - user details menu with Picsum cover, large tile avatar, close icon, name, designation, and About text.
+- Implemented conversation area with:
+  - Vue conversation data and row order.
+  - incoming and auth-user message alignment.
+  - 40px avatars.
+  - auth-user inset soft message bubbles.
+  - HTML message rendering for Vue `<b>MaterialCSS</b>` content.
+- Implemented message composer with:
+  - placeholder `Write your message ...`
+  - send icon.
+  - click send behavior.
+  - Enter-to-send convenience while preserving Shift+Enter multiline entry.
+  - scroll-to-bottom after sending.
+- Implemented delayed incoming unread message after 5000ms for group `7`, matching Vue mounted behavior.
+
+Latest visual fidelity correction:
+
+- Corrected the left Chat user/search list only.
+- Search area now matches the Vue toolbar slot more closely with a left magnifier and a full input field using placeholder `Search User`.
+- Selected Jack Johnson row now uses a rounded active pill with cyan outline and soft inset/background treatment.
+- User list row height, padding, avatar size, status dot placement, name/date typography, and scrollbar region were tightened toward Vue `v-list rounded`.
+- Unread notification icon placement was tuned for the delayed Mary Beveridge unread row.
+- Chat remains pending visual approval after this left-list correction.
+
+Latest search-area correction:
+
+- Corrected only the top search area in the left Chat panel.
+- The magnifier icon is now outside and adjacent to the white input field instead of being rendered inside the input adornment.
+- The input field now starts after the icon and uses placeholder `Search User`, avoiding the previous label-like rendering.
+- Search row height, padding, white field surface, input height, border radius, and divider position were tuned to the Vue `UserListNav` toolbar structure.
+
+Shared layout note:
+
+- `AppInnerLayout` gained an optional `footer` slot because Vue Chat places the `v-textarea` composer below the scrollable conversation content inside `inner-base-layout`.
+- The footer is optional and is not rendered for Contacts, so Contacts page content remains unchanged.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Not touched:
+
+- Dashboard.
+- Directives.
+- Vuetify.
+- animations.
+- approved page content outside the shared App layout footer slot.

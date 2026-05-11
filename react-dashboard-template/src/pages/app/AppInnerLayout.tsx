@@ -6,10 +6,12 @@ const neuInset = "inset -6px -6px 7px rgba(255,255,255,.86), inset 6px 6px 9px r
 export default function AppInnerLayout({
   sidebar,
   header,
+  footer,
   children,
 }: {
   sidebar: ReactNode;
   header: ReactNode;
+  footer?: ReactNode;
   children: ReactNode;
 }) {
   return (
@@ -22,6 +24,7 @@ export default function AppInnerLayout({
             <Divider sx={{ borderColor: "rgba(111,125,133,.18)" }} />
           </Box>
           <Box sx={{ flex: 1, minHeight: 0, overflow: "auto" }}>{children}</Box>
+          {footer ? <Box sx={{ flexShrink: 0 }}>{footer}</Box> : null}
         </Box>
       </Box>
     </Box>

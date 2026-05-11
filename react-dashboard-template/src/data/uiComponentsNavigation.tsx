@@ -58,7 +58,7 @@ export const globalNavigation: SidebarNavEntry[] = [
   },
   { header: "App" },
   { icon: <Contacts />, title: "Contacts", path: "/app/contacts" },
-  { icon: <Chat />, title: "Chat", disabled: true, pending: true },
+  { icon: <Chat />, title: "Chat", path: "/app/chat" },
   { header: "Style & User Interface" },
   { icon: <ColorLens />, title: "Color", path: "/colors" },
   { icon: <PhotoLibrary />, title: "Icons", path: "/icons" },

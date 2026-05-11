@@ -36,6 +36,7 @@ import SignupPage from "./pages/pages/auth/SignupPage";
 import ForgotPasswordPage from "./pages/pages/auth/ForgotPasswordPage";
 import LockScreenPage from "./pages/pages/auth/LockScreenPage";
 import ContactsPage from "./pages/app/ContactsPage";
+import ChatPage from "./pages/app/ChatPage";
 
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
@@ -56,6 +57,7 @@ export default function App() {
           <Route path="/dashboard/operational" element={<DashboardRoute><OperationalDashboardPage /></DashboardRoute>} />
           <Route path="/dashboard/analytical" element={<DashboardRoute><AnalyticalDashboardPage /></DashboardRoute>} />
           <Route path="/app/contacts" element={<DashboardRoute><ContactsPage /></DashboardRoute>} />
+          <Route path="/app/chat" element={<DashboardRoute><ChatPage /></DashboardRoute>} />
           <Route path="/charts" element={<DashboardRoute><Navigate to="/charts/chartjs" replace /></DashboardRoute>} />
           <Route path="/colors" element={<DashboardRoute><ColorsPage /></DashboardRoute>} />
           <Route path="/icons" element={<DashboardRoute><IconsPage /></DashboardRoute>} />

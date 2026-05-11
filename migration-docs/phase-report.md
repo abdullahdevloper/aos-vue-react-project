@@ -839,6 +839,90 @@ Approval:
 
 No protected Vue/root files or `AGENTS.md` were modified.
 
+## App Chat Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- App / Chat only.
+- Route `/app/chat`.
+- Shared `AppInnerLayout` extended only for an optional composer footer required by Chat.
+
+Vue source trace:
+
+- `src/views/Applications/Chat/Chat.vue`
+  - `page: "Chat"`, `drawer: true`, `activeGroupId: 1`, `search: ""`.
+  - Uses `inner-base-layout` with sidebar, header, scrollable messages, and a bottom `v-textarea`.
+  - Groups conversations by `group_id`.
+  - Active group defaults to id `1`.
+  - `filteredGroup` enriches groups with latest `lastMsg` and `msgOn`; `UserListNav` sorts by `msgOn` descending.
+  - Sends auth-user messages with current timestamp, clears editor, and scrolls the conversation container to bottom.
+  - Mounted hook pushes a delayed unread message into group `7` after `5000ms`.
+- `src/views/Applications/Chat/partials/UserListNav.vue`
+  - Drawer width `280`.
+  - Permanent on `mdAndUp`; absolute/floating/stateless on `smAndDown`.
+  - Search field slot label `Search User`.
+  - List rows show avatar/status dot, user name, `last_message`, unread bell, and active `neu-glow-inset-primary`.
+- `src/views/Applications/Chat/partials/ChatToolbar.vue`
+  - Shows drawer toggle only on small screens when drawer is closed.
+  - Shows active user avatar/name.
+  - Vertical dots opens the user detail menu with Picsum cover, tile avatar, close icon, name, designation, About heading, and mood text.
+- `src/data/dummyData.js`
+  - Chat uses `users`, `authUser`, `conversation`, and `groups`.
+
+Implementation verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/app/chat` renders Chat inside app shell | Added `/app/chat` in `DashboardLayout` | High | Contacts route preserved |
+| Sidebar entry | App > Chat visible and navigable when implemented | Enabled Chat with `/app/chat` | High | Sidebar brand/logo unchanged |
+| Shared inner layout | Chat composer sits below scrollable conversation content | Added optional `footer` slot to `AppInnerLayout` and used it only for Chat | High | Contacts receives no footer and remains visually unchanged |
+| Section definition | Title `Chat`, chat icon | Implemented Vuse-style section definition | Pending visual review | No namespace shown in Vue Chat source |
+| User list nav | 280px drawer, `Search User`, status-dot avatars, active inset row, unread bell | Implemented same controls, status dots, active inset styling, unread bell, group sorting by latest message | Pending visual review | Responsive behavior follows Vue md/sm split through MUI breakpoints |
+| Search behavior | Filters groups by `group.user.name` | Implemented case-insensitive user-name filter | High | No generic filter data |
+| Group switching | Clicking a group changes `activeGroupId`; Vue does not force scroll reset because code is commented | Implemented group switching without forced scroll reset | High | Active row updates |
+| Chat toolbar | Active avatar/name and detail menu | Implemented active user toolbar and details menu with cover/avatar/name/designation/About/mood | Pending visual review | Menu uses MUI surface styled toward Vuse |
+| Messages | Incoming rows normal direction; auth-user rows reverse direction; 40px avatars; auth-user bubble has `neu-glow-inset rounded` | Implemented incoming/auth alignment, 40px avatars, auth-user inset bubble, and non-auth rounded bubble | Pending visual review | HTML message rendering preserved for `MaterialCSS` |
+| Message composer | `Write your message ...`, auto-grow textarea, append paper-plane icon, click sends | Implemented multiline composer with send icon, click send, Enter send, Shift+Enter multiline | High | Enter-to-send is an added convenience; Vue send is append-icon click |
+| Send behavior | Pushes auth-user message, clears editor, scrolls conversation container to bottom | Implemented same push/clear/scroll behavior | High | Uses React ref for the scroll container |
+| Delayed unread message | After 5000ms, pushes unread message to group `7` from user `9` with exact message text | Implemented matching delayed unread message | High | Unread bell appears on latest unread group |
+| Data fidelity | Uses exact Vue users, groups, conversation message text, IDs, avatars, statuses, and last-message labels | React copied exact source data with local avatar imports | High | Avatar assets reused from Contacts asset copy |
+| Out of scope | Dashboard, Directives, Vuetify, animations, approved pages untouched | No page content outside Chat was modified | High | Shared layout touched only for Chat footer safety |
+
+Left user list visual correction:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Search area | Toolbar slot contains search icon on the left and full `Search User` field | React field used label-style rendering and did not match the provided Vue comparison | Search now uses a left magnifier and full placeholder `Search User` field | Pending visual review | Scoped to `UserListNav` only |
+| Active Jack Johnson row | Active group id `1` receives `neu-glow-inset-primary`; review expected a rounded cyan outlined pill | Active row was inset but flatter and lacked the expected outline | Active row now uses a rounded pill, cyan border/outline, soft background, and inset shadow | Pending visual review | Group switching behavior preserved |
+| User rows | Vue list rows are compact rounded `v-list-item` rows with 40px avatars, status dot, name, date subtitle | React rows were taller/looser and typography spacing differed | Row height, padding, avatar/status dot, name/date typography, and spacing were tightened toward Vue | Pending visual review | Width remains 280px like Vue |
+| Notification icon | Vue shows a small secondary bell at the row action edge when latest message is unread | React bell placement felt offset | Bell size and alignment tuned for the delayed Mary Beveridge unread row | Pending visual review | Delayed unread behavior unchanged |
+| Scrollbar/divider | Vue drawer has divider below toolbar and list scrollbar inside list area | React list did not reserve scroll area as tightly | List now owns the vertical scroll area with hidden horizontal overflow and preserved divider | Pending visual review | Drawer behavior unchanged |
+
+Search-area visual correction:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Search icon placement | Vue toolbar slot renders magnifier on the left, outside/adjacent to the solo search field | React rendered the magnifier as an input adornment inside the field | Magnifier now sits in its own left icon cell before the white field | Pending visual review | User rows/list were not changed |
+| Search text | White input field contains placeholder `Search User` | Prior styling could read as small label-like text near the icon | Field now uses only placeholder `Search User` inside the white input | Pending visual review | No floating label |
+| Search surface | Vue uses compact solo/dense white field in a 64px transparent toolbar with divider below | React field spacing and surface did not match the expected split icon/input structure | Search row keeps 64px height, Vue-like padding, white 40px field, compact radius, and preserved divider below | Pending visual review | Scoped to top search area |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- App / Chat remains pending user visual approval.
+
+Protected files:
+
+- Protected-path status check returned no changes.
+
 ## App Contacts Post-Approval Filter Fidelity Fix
 
 Status: implemented; pending user visual re-approval.
