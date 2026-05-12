@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Cards.
+- Active section: Vuetify / Carousels.
 
 ## Current Slice
 
-- Scope: Vuetify / Cards only.
-- Route: `/components/cards`.
+- Scope: Vuetify / Carousels only.
+- Route: `/components/carousels`.
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/vuetify-batch-3-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -40,6 +40,7 @@ Current rebuild strategy:
 - Vuetify / Button Groups: implemented; pending user visual approval.
 - Vuetify / Calendars: deferred/paused; first safe group attempted only; `/components/calendars` remains pending and not approved.
 - Vuetify / Cards: implemented; pending user visual approval.
+- Vuetify / Carousels: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -703,6 +704,72 @@ Build:
 - Working directory: `react-dashboard-template/`
 - Result: passed.
 - Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+## Vuetify Carousels Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/components/carousels`
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Carousels`.
+- Chips and later Vuetify items remain disabled/pending.
+- Calendars remains deferred/paused and not approved.
+
+Vue source traced:
+
+- `src/views/Vuetify/Carousels.vue`
+- `src/lang/en/components/Carousels.json`
+- `src/demo/usages/carousels.vue`
+- `src/demo/examples/carousels/simple/cycle.vue`
+- `src/demo/examples/carousels/simple/custom-transition.vue`
+- `src/demo/examples/carousels/simple/custom-icons.vue`
+- `src/demo/examples/carousels/simple/hide-controls.vue`
+- `src/demo/examples/carousels/simple/hide-delimiters.vue`
+- `src/demo/examples/carousels/intermediate/model.vue`
+
+Implemented Carousels page:
+
+- Vuse section header with `Components`, page `Carousels`, and breadcrumbs `Components > Vuetify > Carousels`.
+- Exact Carousels intro, sub-component text, and usage text from Vue language source.
+- Usage playground with `show-arrows`, `hide-delimiters`, and `cycle` switches plus model +/- controls.
+- Vue examples:
+  - Cycle.
+  - Custom transition.
+  - Custom delimiters.
+  - Hide controls.
+  - Hide delimiters.
+  - `v-model` control.
+- View source expansion and invert example colors behavior.
+
+Implemented behavior:
+
+- Carousel arrows and delimiters.
+- Cycle behavior on a 6000ms timer.
+- Show arrows on hover for Cycle.
+- Fade transition for Custom transition.
+- Custom minus delimiters and non-continuous model behavior for Custom delimiters.
+- Hide controls and hide delimiters.
+- Model +/- controls.
+- Basic pointer swipe left/right inside the carousel surface.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Not touched:
+
+- Cards page content.
+- Calendars implementation.
+- Chips or later Vuetify items.
+- Approved slices.
+- `.claude/`.
 - Directives.
 - App.
 - Dashboard.

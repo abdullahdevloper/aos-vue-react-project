@@ -3,6 +3,7 @@ import {
   Article,
   AspectRatio,
   ViewHeadline,
+  ViewCarousel,
   BorderStyle,
   Build,
   CalendarMonth,
@@ -143,7 +144,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       },
       { title: "Calendars", path: "/components/calendars", icon: <CalendarMonth /> },
       { title: "Cards", path: "/components/cards", icon: <CalendarMonth /> },
-      { title: "Carousels", disabled: true, pending: true },
+      { title: "Carousels", path: "/components/carousels", icon: <ViewCarousel /> },
       {
         title: "Chips",
         children: [
