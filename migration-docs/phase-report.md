@@ -2085,3 +2085,279 @@ Build status:
 Approval:
 
 - Vuetify / Button Groups remains pending user visual approval.
+
+## Vuetify Calendars Behavior Contract
+
+Status: contract prepared only; no React implementation started.
+
+Scope:
+
+- Vuetify / Calendars only.
+- Future route: `/components/calendars`.
+- Do not touch Cards or later Vuetify items until explicitly requested.
+
+Vue route/page source:
+
+- `src/views/Vuetify/Calendars.vue`
+  - `namespace: "Components"`.
+  - `page: "Calendars"`.
+  - `usage: "usage"`.
+  - `playground: "playground"`.
+  - Example order:
+    - `simple/weekly`
+    - `simple/daily`
+    - `intermediate/slots`
+    - `complex/events`
+    - `complex/category`
+    - `intermediate/nowline`
+    - `complex/dragndrop`
+  - Breadcrumbs: `Components > Vuetify > Calendars`.
+- `src/lang/en/components/Calendars.json`
+  - Heading: `# Calendars`.
+  - Intro describes daily, weekly, monthly, category views, event arrays, slots, timed/all-day events.
+  - Usage text defines `type`, `value`, event `name`, `start`, optional `end`, timed detection, and multi-day rendering.
+
+### Example Behavior Matrix
+
+| Example | Vue file/component | Vuetify components and props | Static / interactive | Trigger | Initial state | Expected Vue state/effect | Required React state/handlers |
+|---|---|---|---|---|---|---|---|
+| Playground | `src/demo/examples/calendars/playground.vue` | `v-row`; controls `v-col sm=12 lg=3`; calendar `v-col sm=12 lg=9`; absolute small primary `v-btn fab` prev/next; `v-select`; `v-checkbox`; `v-menu`; `v-date-picker`; `v-text-field`; `v-calendar height=600` with `v-model=start`, `type`, `start`, `end`, `min-weeks`, `max-days`, `now`, `dark`, `weekdays`, interval props, `short-*`, `color`, `events`, `event-overlap-mode`, `event-overlap-threshold=45`, `event-color`, `@change=getEvents` | Interactive; high risk | Prev/next buttons, type select, dark checkbox, short interval/month/weekday checkboxes, color select, start/end/today date menus, overlap mode select, weekdays select, conditional minimum weeks/intervals/max days/styling controls, calendar `change` | `start="2019-01-12"`, `end="2019-01-27"`, `now=null`, `type="month"`, `dark=false`, `shortIntervals=true`, `shortMonths=false`, `shortWeekdays=false`, `mode="stack"`, `weekdays=[0,1,2,3,4,5,6]`, `intervals={first:0, minutes:60, count:24, height:48}`, `minWeeks=1`, `maxDays=7`, `styleInterval="default"`, `color="primary"`, generated events empty until `@change` | Calendar regenerates random events for visible range. `hasEnd` only shows End Date for `custom-weekly` and `custom-daily`. `hasIntervals` only shows Intervals/Styling for `week`, `day`, `4day`, `custom-daily`. `showIntervalLabel` returns true at minute `0`. Workday/Past styling changes interval backgrounds. Date menu Cancel closes without save; OK saves menu return value. | Calendar model state: `start`, `end`, `now`, `type`, `dark`, `shortIntervals`, `shortMonths`, `shortWeekdays`, `color`, `mode`, `weekdays`, `intervals`, `minWeeks`, `maxDays`, `styleInterval`, `events`, three menu-open states. Handlers: `prev`, `next`, `getEvents(range)`, `getEventColor`, `showIntervalLabel`, `intervalStyle`, `formatDate`, deterministic or documented random event generation, date menu save/cancel, conditional controls. |
+| Usage | `src/demo/examples/calendars/usage.vue` | Top `v-sheet tile height=54 color="grey lighten-3" class="d-flex"`; icon prev/next `v-btn`; three dense outlined `v-select`; `v-calendar ref=calendar v-model=value :weekdays :type :events :event-overlap-mode :event-overlap-threshold=30 :event-color @change=getEvents`; calendar `v-sheet height=600` | Interactive; high risk | Prev/next buttons call `calendar.prev()` / `calendar.next()`; Type select; event overlap mode select; weekdays select; calendar `change` | `type="month"`, `mode="stack"`, `weekday=[0,1,2,3,4,5,6]`, `value=""`, `events=[]`, colors/names arrays | Calendar changes view span by prev/next and regenerates random events on `@change`; type switches between `month`, `week`, `day`, `4day`; mode switches `stack`/`column`; weekday options change rendered days. | State: `value`, `type`, `mode`, `weekday`, `events`. Handlers: `prev`, `next`, `setType`, `setMode`, `setWeekday`, `getEvents(range)`, `getEventColor`, `rnd`. Must preserve toolbar height/grey surface/select density. |
+| Weekly | `src/demo/examples/calendars/simple/weekly.vue` | `v-row`; `v-col`; `v-sheet height=400`; `v-calendar ref=calendar :now=today :value=today :events=events color=primary type=week`; mounted `scrollToTime("08:00")` | Mostly static plus mounted scroll | Component mount only | `today="2019-01-08"`; events: Weekly Meeting `2019-01-07 09:00-10:00`, Thomas' Birthday `2019-01-10`, Mash Potatoes `2019-01-09 12:30-15:30` | Week view displays fixed all-day/timed events and scrolls timed area to 08:00 after mount. | State: fixed `today` and events. Handler/effect: on mount scroll calendar time-grid container to 08:00 equivalent. |
+| Daily | `src/demo/examples/calendars/simple/daily.vue` | `v-row`; `v-col`; `v-sheet height=400`; `v-calendar color=primary type=day`; slots `day-header` and `interval` | Static | None | No data state | Day view renders custom `Today` text in present day header and each interval label as `{hour} o'clock`. | Calendar renderer must support `day-header` equivalent and interval-label override. No event data needed. |
+| Slots | `src/demo/examples/calendars/intermediate/slots.vue` | `v-sheet height=500`; `v-calendar :now=today :value=today color=primary`; slot `day` renders `v-row fill-height` and, for `past && tracked[date]`, colored `v-sheet` bars with `title=category[i]`, `color=colors[i]`, width `${percent}%`, `height=100%`, `tile` | Static | None | `today="2019-01-10"`; tracked dates `2019-01-01` through `2019-01-09`; colors `#1867c0`, `#fb8c00`, `#000000`; categories `Development`, `Meetings`, `Slacking` | Monthly calendar day cells before today show proportional vertical color bands by tracked percentages; present/future dates do not render tracked bands. | State: fixed `today`, `tracked`, `colors`, `category`. Renderer must expose day metadata including `past` and `date`, and support per-day custom content. |
+| Events | `src/demo/examples/calendars/complex/events.vue` | `v-row fill-height`; toolbar sheet `height=64`; `v-toolbar flat color=white`; outlined Today button; small text FAB prev/next; `v-toolbar-title` from `$refs.calendar.title`; right `v-menu` type selector; `v-calendar v-model=focus color=primary :events :event-color :type @click:event @click:more @click:date @change`; detail `v-menu v-model=selectedOpen :close-on-content-click=false :activator=selectedElement offset-x`; menu `v-card color="grey lighten-4" min-width=350 flat`; event color toolbar with edit/heart/dots and Cancel | Interactive; high risk | Today click, prev/next, type menu item clicks, click event, click more, click date, calendar change | `focus=""`, `type="month"`, `selectedEvent={}`, `selectedElement=null`, `selectedOpen=false`, `events=[]`; `mounted` calls `calendar.checkChange()` | Today resets `focus=""`; prev/next move calendar; type menu changes day/week/month/4day; click date or more sets `focus=date` and `type="day"`; click event opens detail menu anchored to native event target after 10ms, closing/reopening if already open; `updateRange` regenerates random timed/all-day events for visible range. | State: `focus`, `type`, `events`, `selectedEvent`, `selectedAnchor`, `selectedOpen`. Handlers: `setToday`, `prev`, `next`, `viewDay({date})`, `setType`, `showEvent({nativeEvent,event})`, `updateRange(range)`, `getEventColor`, menu close. Must preserve anchored popup behavior and event card toolbar. |
+| Category | `src/demo/examples/calendars/complex/category.vue` | Toolbar same Today/prev/next/title structure without type menu; `v-calendar v-model=focus color=primary type=category category-show-all :categories :events :event-color @change=fetchEvents`; `mounted` calls `calendar.checkChange()` | Interactive; medium-high risk | Today click, prev/next, calendar change | `focus=""`, `events=[]`, categories `John Smith`, `Tori Walker` | Category calendar displays both categories side-by-side even when empty. `fetchEvents` regenerates random events with category randomly assigned to one of the two categories. Prev/next moves focus range; Today resets focus. | State: `focus`, `events`, `categories`. Handlers: `setToday`, `prev`, `next`, `fetchEvents(range)`, `getEventColor`. Renderer must support category columns and `category-show-all`. |
+| Now Line | `src/demo/examples/calendars/intermediate/nowline.vue` | `v-sheet height=500`; `v-calendar ref=calendar v-model=value type=week`; slot `day-body` renders `.v-current-time` div, class `first` for first day of week, style `top: nowY`; mounted sets ready, calls `scrollToTime()`, `updateTime()`; CSS red line height `2px`, red dot `12px` on first day | Interactive/time-based; medium risk | Mount, 60s interval tick | `value=""`, `ready=false`; `nowY=-10px` until ready | On mount, `ready=true`, scrolls to nearest 30-minute block before current time, then every 60s calls `calendar.updateTimes()`; current-time line position follows `calendar.timeToY(calendar.times.now)`. | State: `value`, `ready`, current time. Effects: initial scroll to current time minus 30-minute bucket; interval update every 60s with cleanup. Renderer must compute time-to-y and draw red line/dot in week day body. |
+| Drag and Drop | `src/demo/examples/calendars/complex/dragndrop.vue` | `v-sheet height=600`; `v-calendar ref=calendar v-model=value color=primary type=4day :events :event-color :event-ripple=false @change=getEvents @mousedown:event=startDrag @mousedown:time=startTime @mousemove:time=mouseMove @mouseup:time=endDrag @mouseleave.native=cancelDrag`; event slot renders `.v-event-draggable` summary and `.v-event-drag-bottom` resize handle for timed events | Interactive; very high risk | Calendar change, mousedown timed event, mousedown time grid, mousemove time grid, mouseup time grid, mouseleave calendar, mousedown resize handle | `value=""`, random events after change; drag state: `dragEvent=null`, `dragStart=null`, `createEvent=null`, `createStart=null`, `extendOriginal=null`; colors are hex list | Mousedown on timed event begins drag. Mousedown on time either sets `dragTime` offset for active dragged event or creates new timed event at rounded 15-min start. Mousemove drags event preserving duration or resizes/creates event between min/max rounded times. Mouseup clears drag/create state. Mouseleave cancels new event or restores resized event end. Active dragged/created event color becomes rgba with 0.7 alpha. Bottom resize handle appears on hover. | State: `value`, `events`, `dragEvent`, `dragTime`, `createEvent`, `createStart`, `extendOriginal`. Handlers: `getEvents(range)`, `startDrag`, `startTime`, `extendBottom`, `mouseMove`, `endDrag`, `cancelDrag`, `roundTime`, `toTime`, `getEventColor`, `rnd`, `rndElement`. Must support event-ripple false, pointer capture, timed grid hit testing, create/drag/resize/cancel, and active translucent color. |
+
+### Date / Menu / Event / Popup / Drag / Drop / Now-Line Requirements
+
+| Behavior area | Vue expected | Required React contract |
+|---|---|---|
+| Date model | `v-calendar` accepts string date models and Date objects depending example; Playground uses formatted `YYYY-M-D` strings; Usage/Events use generated Date objects | Normalize internal dates while preserving displayed strings and event timing behavior; document any deterministic random replacement if used for visual stability |
+| Date menus | Playground uses `v-menu` + `v-date-picker`, Cancel, OK, `return-value.sync`, `scale-transition`, min width `290px`, offset-y | Date controls must open anchored menus, support cancel without save, OK save, and preserve dense outlined fields with event icon |
+| Event generation | Usage/Playground/Events/Category/DragDrop generate random events on calendar range change | React must regenerate on range change with same names/color pools and timed/all-day logic; if deterministic seeded random is used, document as review-stability exception |
+| Event popup | Events example anchors `v-menu` to clicked event target and opens after 10ms; if already open, close then reopen after 10ms | React must preserve anchored event detail menu, close/reopen behavior, event color toolbar, and Cancel close |
+| More/date clicks | Events example `click:more` and `click:date` both call `viewDay` | React calendar must support day drilldown from more/date to `type="day"` and `focus=date` |
+| Category | Category example uses `type="category"`, `category-show-all`, categories `John Smith`, `Tori Walker` | React must render category columns and keep both categories visible even if no event exists |
+| Now line | Now Line example uses `timeToY`, `times.now`, red line/dot, initial scroll, minute interval update | React must compute current time y-position, scroll initial time, draw first-column red dot, and clean up interval |
+| Drag/drop | DragDrop uses mouse event props from `v-calendar` and mousedown bottom handle | React must implement actual drag/move/create/resize/cancel behavior, not static events |
+| Calendar-local dark | Playground has `dark` checkbox passed directly to `v-calendar` | React must keep calendar-local dark independent from example-shell invert action |
+| Responsive | Playground controls `sm=12 lg=3`; calendar `sm=12 lg=9`; examples use fixed `v-sheet` heights `400`, `500`, `600` | React should follow same column wrapping and sheet heights; do not invent breakpoints |
+
+### Implementation Grouping Recommendation
+
+Can be implemented together:
+
+1. Static rendering foundation:
+   - Weekly.
+   - Daily.
+   - Slots.
+   - Shared calendar grid/time-grid renderer, fixed sheet heights, slot-like custom rendering.
+
+2. Basic interactive event navigation:
+   - Usage.
+   - Category.
+   - Shared prev/next, calendar title, range-change event generation, type/weekday/overlap controls.
+
+Needs separate behavior spikes:
+
+1. Playground.
+   - Many controls, date-picker menus, interval styling, custom daily/weekly logic, local dark mode.
+
+2. Events.
+   - Anchored event popup, click:more/date drilldown, close/reopen timing.
+
+3. Now Line.
+   - Time-to-y math, initial scroll, 60s timer.
+
+4. Drag and Drop.
+   - Full drag/move/create/resize/cancel lifecycle and hit testing.
+
+First safe implementation group:
+
+- Implement the static rendering foundation first: Weekly, Daily, and Slots.
+- Reason:
+  - It establishes the calendar visual shell, week/day/month grids, time intervals, fixed heights, event rendering, and custom slot content before high-risk menus and drag/drop.
+  - It avoids beginning with Playground or Drag and Drop, where incomplete behavior would create broad visual/behavior mismatches.
+
+Current status:
+
+- React Calendars route remains missing/disabled pending.
+- No React code changed for this contract.
+- No build run for this contract.
+
+## Vuetify Calendars First Safe Group Implementation
+
+Status: deferred/paused; first safe group attempted only; not visually approved.
+
+Scope:
+
+- Vuetify / Calendars only.
+- Route `/components/calendars`.
+- Route remains pending, not approved.
+- Implemented only:
+  - Weekly.
+  - Daily.
+  - Slots.
+- Enabled only `UI Components > Vuetify > Calendars`.
+- Did not implement Cards or later Vuetify items.
+- Did not implement remaining Calendars examples.
+
+Vue source traced:
+
+- `src/views/Vuetify/Calendars.vue`
+  - Page `Calendars`, namespace `Components`.
+  - Breadcrumbs `Components > Vuetify > Calendars`.
+  - Vue first safe examples: `simple/weekly`, `simple/daily`, `intermediate/slots`.
+- `src/lang/en/components/Calendars.json`
+  - Exact Calendars intro text.
+  - Example descriptions for Weekly, Daily, and Slots.
+- `src/demo/examples/calendars/simple/weekly.vue`
+  - `v-sheet height="400"`.
+  - `v-calendar :now="today" :value="today" :events="events" color="primary" type="week"`.
+  - Mounted `scrollToTime('08:00')`.
+- `src/demo/examples/calendars/simple/daily.vue`
+  - `v-sheet height="400"`.
+  - `v-calendar color="primary" type="day"`.
+  - `day-header` slot renders `Today` when present.
+  - `interval` slot renders `{{ hour }} o'clock`.
+- `src/demo/examples/calendars/intermediate/slots.vue`
+  - `v-sheet height="500"`.
+  - `v-calendar :now="today" :value="today" color="primary"`.
+  - `day` slot renders tracked percentage sheets for past dates.
+
+Implementation verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/calendars` inside dashboard layout | Added route in `App.tsx` | High | Full-page routes unaffected |
+| Sidebar | Enable `Calendars`; keep Cards and later items pending | Calendars linked; Cards remains disabled/pending | High | Sidebar brand/logo unchanged |
+| Page hierarchy | `Components`, page `Calendars`, breadcrumbs `Components > Vuetify > Calendars` | Implemented with shared Vuse docs shell | Pending visual review | Matches Vue source |
+| Documentation text | Exact Calendars intro from language source | Implemented intro with Vue-style inline code for `v-calendar` | High | Usage/playground text intentionally not shown because those examples are out of scope |
+| Example block structure | Vue docs examples with title, description, source, invert controls | Implemented Vuse example cards with View source and Invert example colors | Pending visual review | Shared page pattern retained |
+| Weekly | `v-calendar type="week"` height `400`, today `2019-01-08`, three fixed events, mounted scroll to `08:00` | Implemented week time grid, fixed all-day/timed events, and mount scroll to 08:00 equivalent | Pending visual review | Recreated only behavior needed by Weekly |
+| Daily | `v-calendar type="day"` height `400`, custom `Today` header, interval labels `{hour} o'clock` | Implemented day time grid with `Today` header and exact interval text pattern | Pending visual review | No event behavior required |
+| Slots | Month calendar height `500`, tracked past dates render colored percentage sheets with title metadata | Implemented month grid with Vue tracked data, colors, category titles, and past-date-only rendering | Pending visual review | Recreated only slot behavior needed by Slots |
+| Remaining Calendars examples | Playground, Usage, Events, Category, Now Line, Drag and Drop exist in Vue | Not implemented in this first safe group | Documented exception | Must be separate future slices/spikes |
+| Out of scope | Do not touch Cards, later Vuetify items, approved slices, `.claude/` | No intentional changes outside Calendars route/sidebar/docs/page | High | Build artifacts generated by required build |
+| Pause status | Calendars should not continue in this pass | Work paused after first safe group attempt | Deferred | User requested moving to next Vuetify item |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Calendars remains pending user visual approval and is not approved.
+- Calendars is deferred/paused after the first safe group attempt.
+- Next recommended Vuetify item in original Vue sidebar order: Vuetify / Cards (`/components/cards`).
+
+## Vuetify Cards Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Cards only.
+- Route `/components/cards`.
+- Enabled only `UI Components > Vuetify > Cards`.
+- Calendars remains deferred/paused and not approved.
+- Carousels and later Vuetify items remain disabled/pending.
+
+Vue source trace:
+
+- `src/views/Vuetify/Cards.vue`
+  - Page `Cards`, namespace `Components`.
+  - Breadcrumbs `Components > Vuetify > Cards`.
+  - Usage includes booleans `disabled`, `loading`, `image`, `subtitle`, `supportingText`, elevation slider `2..24`, and tabs `default`, `outlined`, `raised`, `shaped`, `tile`.
+  - Examples in order: `outlined`, `intermediate`, `info-card`, `media-with-text`, `grids`, `horizontal`, `custom-actions`, `twitter-card`, `loading`, `weather`, `advanced`.
+- `src/lang/en/components/Cards.json`
+  - Exact intro and usage documentation.
+  - Functional helper text for `v-card-actions`, `v-card-subtitle`, `v-card-text`, and `v-card-title`.
+- `src/demo/usages/cards.vue`
+- `src/demo/examples/cards/simple/outlined.vue`
+- `src/demo/examples/cards/intermediate/intermediate.vue`
+- `src/demo/examples/cards/intermediate/info-card.vue`
+- `src/demo/examples/cards/intermediate/media-with-text.vue`
+- `src/demo/examples/cards/intermediate/grids.vue`
+- `src/demo/examples/cards/complex/horizontal.vue`
+- `src/demo/examples/cards/complex/custom-actions.vue`
+- `src/demo/examples/cards/complex/twitter-card.vue`
+- `src/demo/examples/cards/complex/loading.vue`
+- `src/demo/examples/cards/complex/weather.vue`
+- `src/demo/examples/cards/complex/advanced.vue`
+
+Implementation verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/cards` inside dashboard layout | Added route in `App.tsx` | High | Full-page routes unaffected |
+| Sidebar | Enable Cards; keep Calendars deferred and Carousels/later pending | Cards linked; Calendars left deferred; Carousels remains disabled/pending | High | Sidebar brand/logo unchanged |
+| Page hierarchy | `Components`, page `Cards`, breadcrumbs `Components > Vuetify > Cards` | Implemented with shared Vuse docs shell | Pending visual review | Matches Vue source |
+| Documentation text | Exact Cards intro and usage text plus functional helper notes | Implemented with Vue-style inline code styling | High | No representative docs text |
+| Usage playground | `v-card width=342`, dynamic attrs, booleans, elevation slider, tabs | Implemented disabled/loading/image/subtitle/supportingText, elevation slider, and variants | Pending visual review | Watcher-like elevation reset applied when selecting non-default variants |
+| Outlined cards | `max-width=344` outlined list-item card with grey tile avatar and two text buttons | Implemented matching structure and actions | Pending visual review | Button ripple not customized in this pass |
+| Intermediate | Inline card with `store.jpg`, 200x200 image, vertical icon actions | Implemented using local static card image and icon column | Pending visual review | Local `/static/doc-images/cards/store.jpg` |
+| Information card | Word of the Day layout and Learn More action | Implemented matching text and action | Pending visual review | Deep purple action color |
+| Media with text | `docks.jpg` image header with title overlay, subtitle/text/actions | Implemented using local static image and orange text actions | Pending visual review | Overlay alignment recreated |
+| Grids | Indigo system/toolbar shell, three image cards, responsive card flex values | Implemented system bar, toolbar, image cards, and icon actions | Pending visual review | Uses local house/road/plane images |
+| Horizontal cards | Pink app shell and dark music cards with album images | Implemented pink shell, primary card, two horizontal album cards | Pending visual review | Uses local foster/halcyon images |
+| Custom actions | Sunshine image, Share/Explore, expand icon toggles hidden text with divider | Implemented expand/collapse behavior and exact hidden text | High | Visual transition pending review |
+| Twitter card | Cyan dark card, Twitter title, quote, avatar, heart/share counts | Implemented dark cyan card and counts | Pending visual review | Avatar remains external URL matching Vue |
+| Loading card | Cooking image, rating, chips, Reserve loading for 2000ms | Implemented image, rating, chip selection, Reserve loading state | Pending visual review | Cooking image uses Vue CDN URL because no local source asset exists |
+| Weather card | Weather layout, sun image, wind/humidity rows, tick-label slider, forecast list | Implemented slider state, weather rows, forecast list | Pending visual review | Sun image uses Vue CDN URL because no local source asset exists |
+| Advanced | Avatar header, mountain image, text, actions/icons | Implemented advanced card composition | Pending visual review | Mountain image uses Vue CDN URL because no local source asset exists |
+| Source/invert | Vue example block source panels and invert example colors | Implemented View source and Invert example colors behavior | Pending visual review | Explicit dark examples preserve dark surfaces |
+| Out of scope | Do not touch Calendars implementation, Carousels/later items, approved slices, `.claude/` | No intentional changes outside Cards route/sidebar/docs/page | High | Build artifacts generated by required build |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Cards remains pending user visual approval.
+
+### Cards Elevation Behavior Fix
+
+Status: fixed; pending user visual approval.
+
+Source trace:
+
+- `src/views/Vuetify/Cards.vue`
+  - Cards usage exposes `elevation` slider with `min=2`, `max=24`, initial `2`.
+  - Tabs include `default`, `outlined`, `raised`, `shaped`, and `tile`.
+- `src/demo/usages/cards.vue`
+  - Dynamic `attrs` are passed into `v-card`.
+  - Watchers on `outlined`, `raised`, `shaped`, and `tile` call `resetElevation()`, setting internal elevation to `undefined` so Vue defaults are restored after variant changes.
+  - `outlined` remains the non-elevated/bordered mode.
+
+Mismatch and fix:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Elevation control | Elevation belongs to the dynamic `v-card` attrs and should affect variants that support card shadows | Slider was disabled for every non-default mode | Slider remains active for default, raised, shaped, and tile | Pending visual review | Outlined stays non-elevated |
+| Raised mode | Raised has Vue elevated default but should still allow visible elevation changes when elevation attrs are applied | React forced raised to elevation `8`, ignoring slider changes | Raised uses the current slider elevation and starts at least at `8` when selected from low elevation | Pending visual review | Mirrors Vue raised default while keeping user control |
+| Shaped/tile modes | Shape/tile change border radius/layout but do not require shadow to be permanently disabled | React forced shaped/tile to low static shadow | Shaped and tile now use the current slider elevation | Pending visual review | Border radius behavior preserved |
+| Outlined mode | Outlined card has 0 elevation and soft border | React also had no shadow | Preserved no shadow and border behavior | High | Slider disabled only for outlined |
+| Shadow fidelity | Vuetify elevation uses layered shadows that scale with level | React used a single coarse shadow | React now uses a Vuetify-like three-layer elevation shadow with dark-mode strength adjustment | Pending visual review | Still pending visual approval |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Scope guard:
+
+- Only `Vuetify / Cards` elevation behavior was intentionally changed.
+- Calendars, Carousels, approved Vuetify slices, animations, and `.claude/` were not touched.

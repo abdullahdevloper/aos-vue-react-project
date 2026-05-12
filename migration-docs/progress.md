@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Button Groups.
+- Active section: Vuetify / Cards.
 
 ## Current Slice
 
-- Scope: Vuetify / Button Groups only.
-- Route: `/components/buttons/button-groups`.
+- Scope: Vuetify / Cards only.
+- Route: `/components/cards`.
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/vuetify-batch-3-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -38,6 +38,8 @@ Current rebuild strategy:
 - Vuetify / Buttons: implemented; pending user visual approval.
 - Vuetify / Floating Action Buttons: implemented; pending user visual approval.
 - Vuetify / Button Groups: implemented; pending user visual approval.
+- Vuetify / Calendars: deferred/paused; first safe group attempted only; `/components/calendars` remains pending and not approved.
+- Vuetify / Cards: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -524,6 +526,183 @@ Not touched:
 - App.
 - Dashboard.
 - Animations.
+
+## Vuetify Calendars First Safe Group Implementation
+
+Status: deferred/paused; first safe group attempted only; not visually approved.
+
+Implemented route:
+
+- `/components/calendars`
+- Route remains pending, not approved.
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Calendars`.
+- `Cards` and later Vuetify items remain disabled/pending.
+
+Vue source traced:
+
+- `src/views/Vuetify/Calendars.vue`
+- `src/lang/en/components/Calendars.json`
+- `src/demo/examples/calendars/simple/weekly.vue`
+- `src/demo/examples/calendars/simple/daily.vue`
+- `src/demo/examples/calendars/intermediate/slots.vue`
+
+Implemented Calendars page:
+
+- Vuse section header with `Components`, page `Calendars`, and breadcrumbs `Components > Vuetify > Calendars`.
+- Exact Calendars documentation intro from Vue language source.
+- Examples section for the first safe group only:
+  - Weekly.
+  - Daily.
+  - Slots.
+- Shared Vuse example block behavior:
+  - View source.
+  - Invert example colors.
+
+Implemented behavior:
+
+- Weekly:
+  - Fixed week view around `2019-01-08`.
+  - Fixed Vue events: `Weekly Meeting`, `Thomas' Birthday`, and `Mash Potatoes`.
+  - Timed event placement and all-day event display.
+  - Mounted scroll equivalent to `scrollToTime('08:00')`.
+- Daily:
+  - Day view with custom `Today` day-header slot equivalent.
+  - Interval labels rendered as `{hour} o'clock`.
+- Slots:
+  - Month-style grid with tracked day content.
+  - Past tracked dates render proportional colored bands using Vue percentages, colors, and category titles.
+
+Not implemented in this pass:
+
+- Calendars Playground.
+- Usage.
+- Events.
+- Category.
+- Now Line.
+- Drag and Drop.
+- Calendars work is paused before these remaining examples.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Not touched:
+
+- Cards and later Vuetify items.
+- Approved slices.
+- `.claude/`.
+
+Next recommended Vuetify item:
+
+- Vuetify / Cards (`/components/cards`), because it follows Calendars in the original Vue sidebar order.
+
+## Vuetify Cards Implementation
+
+Status: implemented; pending user visual approval.
+
+Implemented route:
+
+- `/components/cards`
+
+Implemented sidebar:
+
+- Enabled `UI Components > Vuetify > Cards`.
+- Calendars remains deferred/paused and not approved.
+- Carousels and later Vuetify items remain disabled/pending.
+
+Vue source traced:
+
+- `src/views/Vuetify/Cards.vue`
+- `src/lang/en/components/Cards.json`
+- `src/demo/usages/cards.vue`
+- `src/demo/examples/cards/simple/outlined.vue`
+- `src/demo/examples/cards/intermediate/intermediate.vue`
+- `src/demo/examples/cards/intermediate/info-card.vue`
+- `src/demo/examples/cards/intermediate/media-with-text.vue`
+- `src/demo/examples/cards/intermediate/grids.vue`
+- `src/demo/examples/cards/complex/horizontal.vue`
+- `src/demo/examples/cards/complex/custom-actions.vue`
+- `src/demo/examples/cards/complex/twitter-card.vue`
+- `src/demo/examples/cards/complex/loading.vue`
+- `src/demo/examples/cards/complex/weather.vue`
+- `src/demo/examples/cards/complex/advanced.vue`
+
+Implemented Cards page:
+
+- Vuse section header with `Components`, page `Cards`, and breadcrumbs `Components > Vuetify > Cards`.
+- Exact Cards documentation intro and usage text from Vue language source.
+- Functional helper notes for `v-card-actions`, `v-card-subtitle`, `v-card-text`, and `v-card-title`.
+- Usage playground with disabled/loading/image/subtitle/supportingText switches, elevation slider, and default/outlined/raised/shaped/tile variants.
+- Vue examples:
+  - Outlined cards.
+  - Intermediate.
+  - Information card.
+  - Media with text.
+  - Grids.
+  - Horizontal cards.
+  - Custom actions.
+  - Twitter card.
+  - Loading card.
+  - Weather card.
+  - Advanced.
+- View source expansion and invert example colors behavior.
+
+Implemented behavior:
+
+- Custom actions expand/collapse text.
+- Loading card Reserve button sets a loading state for 2000ms.
+- Loading card chip selection.
+- Weather slider value changes.
+- Usage playground options update the displayed card.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Not touched:
+
+- Calendars implementation.
+- Carousels or later Vuetify items.
+- Approved slices.
+- `.claude/`.
+
+### Cards Elevation Behavior Fix
+
+Status: fixed; pending user visual approval.
+
+Issue:
+
+- Cards usage playground elevation only changed the default mode.
+- Vue `v-card` elevation behavior should remain available for card variants that support elevation.
+
+Vue behavior traced:
+
+- `src/demo/usages/cards.vue` passes dynamic `attrs` into `v-card`.
+- `outlined`, `raised`, `shaped`, and `tile` changes reset the elevation value to Vue defaults, but do not mean all non-default variants should permanently ignore elevation.
+- `outlined` is the exception because it removes elevation shadow and uses a border.
+
+Fix:
+
+- Elevation slider now remains active for default, raised, shaped, and tile modes.
+- Outlined mode keeps no elevation shadow, matching Vue outlined card behavior.
+- Card shadows now use a Vuetify-like multi-layer elevation shadow rather than one fixed shadow.
+- Dark/inverted cards keep stronger dark-surface shadows.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
 - Directives.
 - App.
 - Dashboard.

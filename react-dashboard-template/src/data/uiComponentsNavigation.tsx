@@ -5,6 +5,7 @@ import {
   ViewHeadline,
   BorderStyle,
   Build,
+  CalendarMonth,
   Chat,
   ColorLens,
   Contacts,
@@ -140,8 +141,8 @@ export const globalNavigation: SidebarNavEntry[] = [
           { title: "Button Groups", path: "/components/buttons/button-groups", icon: <ViewHeadline /> },
         ],
       },
-      { title: "Calendars", disabled: true, pending: true },
-      { title: "Cards", disabled: true, pending: true },
+      { title: "Calendars", path: "/components/calendars", icon: <CalendarMonth /> },
+      { title: "Cards", path: "/components/cards", icon: <CalendarMonth /> },
       { title: "Carousels", disabled: true, pending: true },
       {
         title: "Chips",
