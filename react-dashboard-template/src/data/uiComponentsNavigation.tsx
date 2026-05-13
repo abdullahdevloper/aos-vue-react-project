@@ -149,7 +149,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         title: "Chips",
         children: [
           { title: "Chips", path: "/components/chips", icon: <LocalOffer /> },
-          { title: "Chip Groups", disabled: true, pending: true },
+          { title: "Chip Groups", path: "/components/chips/chip-groups", icon: <LocalOffer /> },
         ],
       },
       { title: "Dialogs", disabled: true, pending: true },

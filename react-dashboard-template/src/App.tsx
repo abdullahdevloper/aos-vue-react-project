@@ -40,6 +40,7 @@ import CalendarsPage from "./pages/ui-components/vuetify/CalendarsPage";
 import CardsVuetifyPage from "./pages/ui-components/vuetify/CardsPage";
 import CarouselsPage from "./pages/ui-components/vuetify/CarouselsPage";
 import ChipsPage from "./pages/ui-components/vuetify/ChipsPage";
+import ChipGroupsPage from "./pages/ui-components/vuetify/ChipGroupsPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -107,6 +108,7 @@ export default function App() {
           <Route path="/components/cards" element={<DashboardRoute><CardsVuetifyPage /></DashboardRoute>} />
           <Route path="/components/carousels" element={<DashboardRoute><CarouselsPage /></DashboardRoute>} />
           <Route path="/components/chips" element={<DashboardRoute><ChipsPage /></DashboardRoute>} />
+          <Route path="/components/chips/chip-groups" element={<DashboardRoute><ChipGroupsPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />

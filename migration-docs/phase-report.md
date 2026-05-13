@@ -2501,6 +2501,180 @@ Approval:
 
 - Vuetify / Chips remains pending user visual approval.
 
+## Vuetify Chip Groups Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Chip Groups only.
+- Route: `/components/chips/chip-groups`
+- Enabled `UI Components > Vuetify > Chips > Chip Groups`.
+- Chips, Dialogs, approved slices, animations, and `.claude/` were not touched intentionally.
+
+Source trace:
+
+- Main page: `src/views/Vuetify/Chips/ChipGroups.vue`
+- Documentation: `src/lang/en/components/ChipGroups.json`
+- Shared usage shell: `src/demo/components/Usage.vue`
+- Shared usage playground: `src/demo/components/UsageExample.vue`
+- Usage mixin: `src/demo/usages/usage.js`
+- Usage example: `src/demo/usages/chip-groups.vue`
+- Examples in exact Vue order:
+  - `src/demo/examples/chip-groups/simple/column.vue`
+  - `src/demo/examples/chip-groups/simple/mandatory.vue`
+  - `src/demo/examples/chip-groups/simple/multiple.vue`
+  - `src/demo/examples/chip-groups/intermediate/toothbrush.vue`
+  - `src/demo/examples/chip-groups/intermediate/blouse.vue`
+  - `src/demo/examples/chip-groups/complex/filter-results.vue`
+- Vuetify behavior reference:
+  - `node_modules/vuetify/lib/components/VItemGroup/VItemGroup.js`
+  - `node_modules/vuetify/lib/components/VSlideGroup/VSlideGroup.js`
+
+Implementation notes:
+
+- Rebuilt a local Chip Groups page from Vue source.
+- Preserved Vue page hierarchy: `Components`, page `ChipGroups`, breadcrumbs `Components > Vuetify > Chip Groups`.
+- Preserved exact intro and usage documentation text with Vue-like inline code styling.
+- Implemented Usage playground with the Vue booleans: `column`, `mandatory`, `multiple`.
+- Implemented chip-group selection behavior:
+  - normal single selection can toggle off.
+  - mandatory selects the first available chip by default and cannot clear the last active chip.
+  - multiple toggles chips independently.
+  - filter chips show the animated selected check state.
+- Implemented View source and Invert example colors behavior for example blocks.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/usages/chip-groups.vue`; `src/demo/components/UsageExample.vue` | 300px usage playground with right Options panel and `column`, `mandatory`, `multiple` switches; chips centered inside `v-container fill-height`; active class `primary--text` | Implemented source-driven usage card, options panel, switches, centered chip group, single/mandatory/multiple behavior, source-equivalent active class | Match | No tabs are present in Vue for ChipGroups usage |
+| Column | `src/demo/examples/chip-groups/simple/column.vue` | `v-row justify="space-around"`, `v-col cols=12 sm=6 md=4 lg=3`, `v-sheet elevation=10 pa-4`, wrapping chips | Implemented same responsive column widths, raised sheet, padding, `column` wrapping, exact tag order | Match | Uses local Vuse/Vuetify chip primitive |
+| Mandatory | `src/demo/examples/chip-groups/simple/mandatory.vue` | `v-sheet elevation=10 py-4 px-1`, mandatory group, first item selected by Vuetify mandatory behavior | Implemented same sheet spacing, default first selection, and last-active guard | Match | Mandatory behavior traced in `VItemGroup.js` |
+| Multiple | `src/demo/examples/chip-groups/simple/multiple.vue` | Same sheet layout; chips toggle independently with multiple selection | Implemented multiple array state, toggle-on/toggle-off behavior, exact tag order | Match | No mandatory guard because Vue example does not set mandatory |
+| Toothbrush card | `src/demo/examples/chip-groups/intermediate/toothbrush.vue` | Product card max-width 400; title `Toothbrush`; price `$4.99`; descriptive text; divider; `Select type`; mandatory chip group default `selection: 2`; deep-purple active text; Add to Cart button | Implemented product card, exact text, default Medium selection, mandatory selection, deep-purple active class, and full-width Add to Cart button | Match | Vue source typo `bristel` preserved |
+| Blouse product card | `src/demo/examples/chip-groups/intermediate/blouse.vue` | Product card max-width 400; title `Shirt Blouse`; price `$44.50`; exact text; sizes `04` through `14`; default value `"08"`; Add to Cart button | Implemented exact card text, size values, default `08` selection by value, mandatory behavior, and button | Match | Explicit string value behavior implemented |
+| Filter results | `src/demo/examples/chip-groups/complex/filter-results.vue` | Card max-width 400; deep-purple toolbar; close icon; title `Filter results`; two filter chip groups; amenities default `[1,4]`; neighborhoods default `[1]`; outlined filter chips | Implemented toolbar, sections, exact chip labels, default selected indexes, multiple toggle behavior, outlined filter style and animated check icon | Match | Close button is visual like Vue source, which has no handler |
+| Source/invert | Shared doc example shell | Header action icons, source panel, and invert example colors behavior | Implemented source toggle and invert state per example | Match | Example content that is explicitly white in Vue cards stays white |
+| Responsive behavior | Vue `v-row`, `v-col`, `v-container`, and usage `md=9/md=3` grid | Usage stacks below md; simple examples use Vue column proportions; product cards cap at 400px | Implemented matching responsive grid proportions and max-widths | Match | Pending user visual approval at matching viewport |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Chip Groups remains pending user visual approval.
+
+### Chip Groups Visual/Behavior Mismatch Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatches:
+
+- Click animation/ripple was not matching Vue across Chip Groups examples.
+- Selected chip styling was not matching Vue.
+- Mandatory and Multiple examples were visually and functionally inaccurate.
+
+Vue source rechecked:
+
+- `src/demo/usages/chip-groups.vue`
+- `src/demo/examples/chip-groups/simple/mandatory.vue`
+- `src/demo/examples/chip-groups/simple/multiple.vue`
+- `node_modules/vuetify/lib/components/VChip/VChip.js`
+- `node_modules/vuetify/lib/components/VItemGroup/VItemGroup.js`
+- `node_modules/vuetify/src/components/VChip/VChip.sass`
+- `node_modules/vuetify/src/components/VChipGroup/VChipGroup.sass`
+- `node_modules/vuetify/src/components/VSlideGroup/VSlideGroup.sass`
+
+Fixes completed:
+
+- Reworked chip click ripple to use click-position `currentColor` wave, clipped inside chip radius, with Vuetify-like timing.
+- Reworked selected chip style to match Vuetify group behavior:
+  - default chips keep grey surface only when inactive.
+  - active no-color chips use transparent surface, active text color, and current-color overlay.
+  - outlined active chips use active border/text color and subtle overlay.
+- Reworked chip-group layout to use a Vue `v-slide-group`-like wrapper/content structure:
+  - no visible browser scrollbar for non-column groups.
+  - `column` wraps chips with content padding.
+  - mandatory/multiple examples keep the source sheet width and clipped slide-group behavior.
+- Fixed Usage options behavior so `mandatory` and `multiple` are independent booleans like Vue, not mutually exclusive.
+- Fixed mandatory state synchronization so enabling `mandatory` selects the first chip and prevents clearing the final active chip.
+- Preserved multiple selection array behavior and `mandatory + multiple` minimum-one-selected behavior from `VItemGroup`.
+
+Verification table:
+
+| Example | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Click ripple | `v-chip` click ripple starts from click point, uses current color, expands/fades within chip bounds | Ripple color/timing felt generic and did not match grouped chips | Ripple now uses `currentColor`, click coordinates, clipped radius, and Vuetify-like 650ms expansion/fade | Pending visual review | Applies to Chip Groups local primitive only |
+| Active chip style | `active-class="primary--text"` or deep purple text; active no-color chip does not become a filled cyan/purple pill | Active style used generic selected/fill treatment | Active chip now has transparent base, colored text, and subtle current-color overlay; outlined active uses subtle overlay and colored border/text | Pending visual review | Based on `VChip.sass` and `VChipGroup.sass` |
+| Mandatory | First available chip selected by mandatory behavior; clicking selected chip cannot clear the only selection | Mandatory state did not fully sync when toggled and design used visible overflow style | Mandatory now defaults/syncs to first item, blocks clearing last active item, and uses v-slide-group-like clipped layout | Pending visual review | `VItemGroup.updateMandatory` behavior reproduced |
+| Multiple | Chips toggle independently with array model; no mandatory guard unless `mandatory` is also active | Multiple layout and interaction did not match source behavior closely enough | Multiple now keeps independent array state, supports toggle on/off, and preserves Vue slide-group layout | Pending visual review | Usage can combine with mandatory like Vue |
+| Usage booleans | `column`, `mandatory`, `multiple` are independent booleans from shared UsageExample | Mandatory and multiple were forced to disable each other | Switches are now independent; React state handles combined cases | Match | Source usage passes `booleans: ["column", "mandatory", "multiple"]` |
+
+Reusable checklist item:
+
+- Chip group/button-like Vuetify components must verify ripple from click point, active overlay/text styling, and combined boolean prop behavior before visual review.
+- Vuetify slide-group based components must verify overflow affix arrows, disabled arrow state, hidden item reveal behavior, and internal transform scrolling before visual review.
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Chip Groups remains pending user visual approval.
+
+### Chip Groups Slide Arrows Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatch:
+
+- Mandatory and Multiple did not match the Vue side arrow behavior for revealing hidden chips.
+
+Vue source rechecked:
+
+- `node_modules/vuetify/lib/components/VSlideGroup/VSlideGroup.js`
+- `node_modules/vuetify/src/components/VSlideGroup/VSlideGroup.sass`
+- `node_modules/vuetify/src/components/VSlideGroup/_variables.scss`
+- `node_modules/vuetify/src/components/VChipGroup/VChipGroup.sass`
+
+Fixes completed:
+
+- Added Vue-like `v-slide-group` affix buttons to non-column Chip Groups when content overflows.
+- Added 52px prev/next arrow areas matching `$slide-group-prev-basis`.
+- Added disabled prev/next states based on current internal scroll offset.
+- Added internal wrapper/content measurement and transform-based scrolling.
+- Preserved `column` behavior without arrows, matching Vue `v-chip-group--column`.
+- Kept Mandatory and Multiple selection behavior unchanged while fixing hidden-chip reveal behavior.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Mandatory hidden chips | Non-column `v-chip-group` uses `v-slide-group`; overflow chips are hidden and revealed with side arrows | Hidden chips could not be revealed with Vue-style side arrows | Added prev/next affixes and transform scroll by wrapper width | Pending visual review | Arrow area uses 52px like Vuetify |
+| Multiple hidden chips | Same `v-slide-group` overflow arrow behavior as Mandatory | Same missing arrow behavior | Added same slide-group overflow behavior | Pending visual review | Selection state preserved |
+| Disabled arrow state | Prev disabled at offset 0; next disabled at max offset | Not implemented | Implemented disabled state and pointer guard | Match | Uses measured content/wrapper widths |
+| Column mode | `column` wraps chips and removes horizontal pagination behavior | Column already wrapped | Column remains wrapped with no affix arrows | Match | No regression intended |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Chip Groups remains pending user visual approval.
+
 ### Chips In Selects Fix
 
 Status: fixed; pending user visual approval.
