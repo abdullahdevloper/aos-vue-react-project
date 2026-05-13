@@ -2936,6 +2936,200 @@ Approval:
 
 - Vuetify / Dividers remains pending user visual approval.
 
+## Vuetify Expansion Panels Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Expansion Panels only.
+- Route: `/components/expansion-panels`.
+- Enabled only `UI Components > Vuetify > Expansion Panels`.
+- Dividers, Footers, approved slices, animations backlog, and `.claude/` were not intentionally touched.
+- Calendars remains deferred/paused and not approved.
+
+Source trace:
+
+- Main page: `src/views/Vuetify/ExpansionPanels.vue`
+- Documentation: `src/lang/en/components/ExpansionPanels.json`
+- Route: `src/router/routes/vuetify.js`
+- Sidebar: `src/config/navigation-items.js`
+- Shared shell: `src/demo/components/DocPage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Playground.vue`, `src/demo/components/Example.vue`
+- Vuetify component source: `node_modules/vuetify/src/components/VExpansionPanel/*`
+
+Vue examples in exact order:
+
+1. Usage: `src/demo/examples/expansion-panels/usage.vue`
+2. Playground: `src/demo/examples/expansion-panels/playground.vue`
+3. Disabled: `src/demo/examples/expansion-panels/simple/disabled.vue`
+4. Readonly: `src/demo/examples/expansion-panels/simple/readonly.vue`
+5. Popout: `src/demo/examples/expansion-panels/simple/popout.vue`
+6. Inset: `src/demo/examples/expansion-panels/simple/inset.vue`
+7. Accordion: `src/demo/examples/expansion-panels/simple/accordion.vue`
+8. Focusable: `src/demo/examples/expansion-panels/simple/focusable.vue`
+9. External control: `src/demo/examples/expansion-panels/intermediate/external.vue`
+10. Custom icon: `src/demo/examples/expansion-panels/intermediate/custom-icons.vue`
+11. Advanced: `src/demo/examples/expansion-panels/complex/advanced.vue`
+
+Implemented:
+
+- Page hierarchy with `Components`, page `ExpansionPanels`, and breadcrumbs `Components > Vuetify > Expansion Panel`.
+- Exact documentation intro text with Vue-like inline code styling.
+- Usage, Playground, and all listed examples in Vue order.
+- Local `ExpansionPanels` primitive adapted from Vuetify source:
+  - default single-open behavior
+  - `multiple`
+  - `disabled`
+  - `readonly`
+  - `popout`
+  - `inset`
+  - `accordion`
+  - `focusable`
+  - `flat`
+  - `hover`
+  - `tile`
+  - active header height, content padding, elevation, borders, radius, icon rotation, and collapse transition
+- External control `all` / `none` behavior with panel model display.
+- Custom icon behavior with `mdi-menu-down`, primary `$expand`, teal check, and error alert equivalents.
+- Advanced example with trip name, location chip select, start/end date menu controls, header open/closed text fade state, and action buttons.
+- Source panels and invert example color behavior using the local Vuse docs shell.
+
+Self-verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `usage.vue` | Five default expansion panels; one body visible at a time when opened | Implemented five default local panels with single-open toggle | Pending visual review | Header/content text matches source |
+| Playground | `playground.vue` | Switches for Accordion, Popout, Inset, Multiple, Disabled, Readonly, Focusable, Flat, Hover, Tile controlling five panels | Implemented all switches and connected them to the local panel primitive | Pending visual review | Switch styling adapted to Vuetify/Vuse |
+| Disabled | `simple/disabled.vue` | Checkbox toggles disabled state; panel model starts `[0,1]`; disabled blocks header clicks and changes styles | Implemented checkbox, `[0,1]` initial state, disabled click guard and disabled text color | Pending visual review | Uses local checkbox styling |
+| Readonly | `simple/readonly.vue` | Checkbox toggles readonly; model starts `[0,1]`; readonly blocks toggles without disabled styling | Implemented readonly guard with styling preserved | Pending visual review | Matches source behavior contract |
+| Popout | `simple/popout.vue` | Active panel expands wider than inactive panels | Implemented popout active max-width transition | Pending visual review | Based on Vuetify variables |
+| Inset | `simple/inset.vue` | Active panel becomes narrower | Implemented inset active max-width transition | Pending visual review | Based on Vuetify variables |
+| Accordion | `simple/accordion.vue` | Active panel has no margin around it | Implemented accordion mode with no active panel margin | Pending visual review | Single-open behavior preserved |
+| Focusable | `simple/focusable.vue` | Header focus state overlay appears when focusable | Implemented focus overlay on keyboard focus | Pending visual review | Mouse focus behavior may need visual comparison |
+| External control | `intermediate/external.vue` | `all` opens indices `[0,1,2,3,4]`; `none` clears; panel model text updates | Implemented all/none buttons and live model text | Pending visual review | Buttons use local Vuetify-style ripple |
+| Custom icon | `intermediate/custom-icons.vue` | First group uses menu-down icon; second group uses custom action slot icons and disable-rotate on check/error | Implemented both groups with matching icon colors and rotation guards | Pending visual review | Material equivalents used for MDI glyphs |
+| Advanced | `complex/advanced.vue` | Three panels with slot headers reacting to open state; text field, chip select, date menus, action buttons | Implemented open-state header text, text input, location chip select, date menu popups, Cancel/Save buttons | Pending visual review | Date picker is locally recreated for visible behavior |
+| Route/sidebar | Vue route `/components/expansion-panels`; sidebar item after Dividers before Footers | React route registered and sidebar item enabled at same position | Match | Footers remains pending/disabled |
+| Out of scope | Do not touch Dividers, Footers, approved slices, animations, `.claude/` | No intentional content changes outside route/sidebar/docs and Expansion Panels page | High | Build artifacts generated by required build |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Expansion Panels remains pending user visual approval.
+
+### Expansion Panels Behavior/Visual Fixes
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatches:
+
+- Core expansion behavior was broken: panel body content was visible permanently instead of hidden until header click.
+- Focusable behavior did not match Vue.
+- Disabled and Readonly sections did not behave like Vue.
+- Custom icon section icons did not match Vue.
+- Advanced `Start and end dates` date picker did not match Vue.
+
+Fixes:
+
+- Refactored the local `ExpansionPanels` primitive so only `PanelHeader` renders in the clickable header and `PanelContent` renders inside the controlled collapse body.
+- Added a Vuetify-like header ripple/focus interaction while preserving disabled guards.
+- Changed Disabled and Readonly examples from fixed `value={[0, 1]}` to local `v-model`-equivalent state initialized to `[0, 1]`, so enabled mode can toggle panels while disabled/readonly mode blocks toggles.
+- Replaced the first Custom icon example with a dropdown-arrow equivalent for `mdi-menu-down`; preserved primary `$expand`, teal check, and error icon action-slot behavior.
+- Rebuilt the Advanced date menu into a closer Vuetify-style date picker surface: 290px menu, month header, chevrons, weekday row, 7-column day grid, circular selected day, and `Cancel` / `OK` actions.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Core expansion | Body hidden until header click; active state controls collapse | Body rendered permanently | Body now renders only inside controlled `Collapse` | Pending visual review | Applies to all examples |
+| Focusable | Focusable headers show Vuetify focus/ripple state and still toggle | Focus behavior felt incomplete | Header now has focus overlay and local ripple while preserving toggle | Pending visual review | Scoped to Expansion Panels |
+| Disabled | Model starts `[0,1]`; when disabled false, panels can toggle; when true, toggles blocked and disabled style applied | Value was fixed at `[0,1]`, so toggles could not persist | Added local model state with disabled guard | High | Matches source behavior contract |
+| Readonly | Model starts `[0,1]`; readonly blocks toggles without disabled styling | Value was fixed at `[0,1]`, so normal toggles could not persist | Added local model state with readonly guard | High | Styles remain non-disabled |
+| Custom icon | `expand-icon="mdi-menu-down"` uses dropdown arrow; action slot `$expand` uses primary expand icon; check/error do not rotate | First icon used an incorrect menu/hamburger shape | First icon now uses dropdown arrow equivalent; action slot icons preserved | Pending visual review | Material equivalents used for MDI |
+| Advanced date picker | `v-menu` with `v-date-picker no-title scrollable`, `Cancel`, `OK`, 290px min width | Simplified 4-column number grid | Rebuilt a 7-column date picker with month bar, weekdays, circular selected date, and actions | Pending visual review | Local recreation, no generic browser date input |
+| Scope guard | Fix only Expansion Panels | N/A | Only Expansion Panels page and migration docs updated | High | Build artifacts generated by required build |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Expansion Panels remains pending user visual approval.
+
+### Expansion Panels Ripple Size Fix
+
+Status: fixed; pending user visual approval.
+
+Mismatch reported:
+
+- Header click ripple showed an unnaturally large circle across the expansion panel header.
+
+Fix:
+
+- Limited the expansion-panel header ripple size to a smaller Vuetify-like pulse.
+- Reduced header ripple opacity.
+- Preserved natural ripple sizing for small local buttons such as `all`, `none`, `Cancel`, and `OK`.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Header click ripple | Subtle Vuetify ripple/focus feedback, not a huge page-wide circle | Ripple size was calculated from the full header width and appeared too large | Header ripple is now capped and lower opacity | Pending visual review | Scoped to Expansion Panels headers |
+| Button ripple | Small buttons keep normal bounded ripple | N/A | Button ripple remains natural-size | High | No unrelated examples touched |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Expansion Panels remains pending user visual approval.
+
+### Expansion Panels Advanced Date Menu Clipping Fix
+
+Status: fixed; pending user visual approval.
+
+Mismatch reported:
+
+- In Advanced > Start and end dates, part of the date picker was clipped/hidden.
+
+Fix:
+
+- Changed the local example card overflow from clipped to visible so floating menus can extend like Vuetify menus.
+- Added relative stacking to the example body.
+- Raised the date picker menu z-index so it appears above the expansion panel/card content.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Date picker visibility | `v-menu` / `v-date-picker` floats above surrounding card content without clipping | Date picker could be partially hidden by parent card clipping | Parent example allows overflow and picker z-index is raised | Pending visual review | Scoped to Expansion Panels docs/example block |
+| Scope guard | Fix only Expansion Panels Advanced date menu visibility | N/A | Only ExpansionPanelsPage and docs updated | High | No other page content touched |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Expansion Panels remains pending user visual approval.
+
 ### Chip Groups Visual/Behavior Mismatch Fix
 
 Status: fixed; pending user visual approval.
