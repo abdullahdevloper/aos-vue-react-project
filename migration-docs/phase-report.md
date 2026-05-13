@@ -2569,6 +2569,261 @@ Approval:
 
 - Vuetify / Chip Groups remains pending user visual approval.
 
+## Vuetify Dialogs Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Dialogs only.
+- Route: `/components/dialogs`
+- Enabled `UI Components > Vuetify > Dialogs`.
+- Chip Groups, Dividers, approved slices, animations, and `.claude/` were not touched intentionally.
+
+Source trace:
+
+- Main page: `src/views/Vuetify/Dialogs.vue`
+- Documentation: `src/lang/en/components/Dialogs.json`
+- Usage example: `src/demo/examples/dialogs/usage.vue`
+- Examples in exact Vue order:
+  - `src/demo/examples/dialogs/simple/without-activator.vue`
+  - `src/demo/examples/dialogs/simple/modal.vue`
+  - `src/demo/examples/dialogs/simple/scrollable.vue`
+  - `src/demo/examples/dialogs/simple/overflowed.vue`
+  - `src/demo/examples/dialogs/intermediate/form.vue`
+  - `src/demo/examples/dialogs/intermediate/loader.vue`
+  - `src/demo/examples/dialogs/intermediate/fullscreen.vue`
+  - `src/demo/examples/dialogs/complex/advanced.vue`
+- Shared docs shell: `doc-page` through `src/views/Vuetify/Dialogs.vue`.
+- Vue route/sidebar:
+  - `src/router/routes/vuetify.js`
+  - `src/config/navigation-items.js`
+
+Implemented:
+
+- Page hierarchy: `Components`, page `Dialogs`, breadcrumbs `Components > Vuetify > Dialogs`.
+- Exact documentation intro and example descriptions from Vue language source.
+- Usage example with activator button, overlay, width `500`, Privacy Policy card, divider, and `I accept` close action.
+- Dialog primitive local to Dialogs page with:
+  - overlay click close.
+  - persistent outside-click guard.
+  - Escape close only when not persistent.
+  - `hide-overlay`.
+  - fullscreen dialog.
+  - bottom transition for fullscreen examples.
+  - scrollable content areas.
+  - max-width/width behavior.
+- View source and invert example action controls.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/examples/dialogs/usage.vue` | Centered red lighten-2 `Click Me` activator; `v-dialog width=500`; Privacy Policy title in grey lighten-2; body text; divider; primary text `I accept` closes | Implemented matching activator, width, overlay, card sections, body text, divider, and close action | Match | Pending visual review for exact overlay opacity/transition |
+| Without activator | `src/demo/examples/dialogs/simple/without-activator.vue` | Primary `Open Dialog`; manual `.stop` click opens `max-width=290` location prompt; outside click closes; Disagree/Agree close | Implemented manual activator, 290px dialog, prompt text, text actions, outside/Escape close | Match | Scope only local dialog behavior |
+| Modal | `src/demo/examples/dialogs/simple/modal.vue` | Persistent location prompt; outside click does not close | Implemented persistent guard and same action close behavior | Match | Persistent click gives subtle scale feedback |
+| Scrollable | `src/demo/examples/dialogs/simple/scrollable.vue` | `scrollable max-width=300px`; Select Country card; fixed 300px scroll area; radio options; Close/Save close | Implemented 300px dialog, title/dividers, 300px scrollable radio list, Close/Save actions | Match | Country values derived from labels |
+| Overflowed | `src/demo/examples/dialogs/simple/overflowed.vue` | `width=600px`; long card content scrolls when larger than viewport; Disagree/Agree close | Implemented 600px dialog, max-height 90vh, scrollable card, long source text, actions | Match | Long text trimmed to the visible source body subset but preserves overflow behavior |
+| Form | `src/demo/examples/dialogs/intermediate/form.vue` | Persistent `max-width=600px`; User Profile form grid; text fields, select, autocomplete-like interests; Close/Save close | Implemented persistent 600px dialog, source labels, responsive grid, standard fields/selects, Close/Save | Match | Autocomplete rendered as adapted multi select field |
+| Loader | `src/demo/examples/dialogs/intermediate/loader.vue` | Purple darken-2 button disables/loading while active; hide-overlay persistent width 300; primary dark card; auto-close after 4s | Implemented loading button, disabled/loading state, hide-overlay persistent dialog, primary card, progress bar, 4s timeout | Match | Uses MUI progress adapted to Vuetify visual |
+| Fullscreen | `src/demo/examples/dialogs/intermediate/fullscreen.vue` | Fullscreen hide-overlay dialog with bottom transition; primary toolbar; close icon; Settings; Save; user/general lists; checkbox states false/true/false | Implemented fullscreen dialog, bottom transition, toolbar, close/save, lists, and checkbox state defaults | Match | Pending visual review for exact mobile/fullscreen density |
+| Nested dialogs | `src/demo/examples/dialogs/complex/advanced.vue` | Three opener buttons, menu, fullscreen dialog 1 with toolbar/menu/tooltip activator, nested dialog 2, nested dialog 3, menus, select list | Implemented all opener buttons, top menu, fullscreen dialog 1, toolbar menu, dialog 2 with select list/open dialog 3, dialog 3 menu and close | Match | Tooltip visual is represented by activator button only; source tooltip text has no persisted state |
+| Source/invert | Vue docs examples | Header action icons, source panel, invert action where not uninverted | Implemented source panel and invert actions; uninverted examples omit invert | Match | Source panels currently list traced source file paths for quick source reference |
+| Route/sidebar | Vue route `/components/dialogs`; sidebar `Dialogs` item after Chip Groups | React route registered and sidebar enabled at same position | Match | Dividers remains pending/disabled |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check pending below; no protected files intentionally modified.
+
+Approval:
+
+- Vuetify / Dialogs remains pending user visual approval.
+
+### Dialogs Fullscreen/Nested/Menu Layer Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatches:
+
+- Fullscreen dialog did not visibly show the `Save` button.
+- Nested dialogs did not match Vue and some visible elements were missing.
+- Nested dialog menus did not appear or appeared behind dialogs.
+- Form dialog Age/Interests menus still appeared behind the form.
+
+Fixes:
+
+- Fullscreen `Save` action now renders as a white text button on the primary toolbar, matching Vue toolbar contrast.
+- Nested dialogs now include the Vue tooltip activator behavior with `Tool Tip` placement on the right.
+- Raised all local Dialogs menu roots above the dialog stack:
+  - nested top menu.
+  - fullscreen toolbar menu.
+  - Dialog 3 menu.
+  - Form/Nested select menus.
+- Kept the fix scoped to `DialogsPage.tsx`.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Fullscreen Save | White `Save` text button on primary toolbar | Save existed but could appear invisible/low contrast | Save is forced white on toolbar | Pending visual review | Fullscreen only |
+| Nested tooltip | `Tool Tip Activator` shows `Tool Tip` tooltip to the right | Tooltip behavior missing | Added MUI tooltip adapted to Vue placement/text | Pending visual review | Nested Dialog 1 body |
+| Nested menus | Menus appear above dialogs | Menus could render behind dialog overlay/card | Menu root z-index raised above Dialogs stack | Pending visual review | Applies to nested menu instances |
+| Form select menus | Age/Interests menus appear above Form dialog | Menus still rendered behind form | Select menu root z-index raised above Dialogs stack | Pending visual review | Dialogs local select helper only |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Dialogs remains pending user visual approval.
+
+### Dialogs Form Select Menu Layer Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatch:
+
+- In the Form dialog, Age and Interests option menus appeared behind the form and were partially/fully hidden.
+
+Vue expected:
+
+- Select/autocomplete menus open above the dialog card content as dependent overlays.
+
+Fix:
+
+- Raised the Dialogs local `VSelectField` menu paper above the dialog stack.
+- Added Vuetify-like menu shadow and max-height.
+- Scoped the fix to Dialogs select fields only.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Age menu | Opens above the Form dialog card | Menu could render behind the form/card | Menu paper now uses higher z-index and visible shadow | Pending visual review | Dialogs only |
+| Interests menu | Multiple/autocomplete menu appears above the dialog | Menu could be obscured by the form | Menu paper now appears above dialog content | Pending visual review | Visual autocomplete fidelity still pending review |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Dialogs remains pending user visual approval.
+
+### Dialogs Form White Page Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatch:
+
+- In the Form example, clicking `Open Dialog` turned the whole page white.
+
+Root cause:
+
+- The React `Interests` field was rendered as a multiple select without an array `value`.
+- Vue `v-autocomplete multiple` starts with an empty array model. MUI multiple select requires the same shape at runtime; otherwise it can throw when the dialog mounts.
+
+Fix:
+
+- Added local controlled state to the Dialogs `VSelectField`.
+- Single selects now start as an empty string.
+- Multiple selects now start as an empty array, matching Vue multiple model shape.
+- The fix is scoped to `DialogsPage.tsx` and affects the Dialogs Form/Nested select helpers only.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Form open | `Open Dialog` mounts persistent User Profile form dialog normally | Opening could crash/blank the page due to invalid multiple select value shape | Multiple select initializes with `[]`; dialog mounts without blank page | Pending visual review | Build passed; browser visual recheck still required |
+| Age select | Single select model starts empty | Uncontrolled select | Controlled empty string | Match | Same helper as nested select |
+| Interests select | Multiple autocomplete model starts as an empty array | No array value provided | Controlled empty array | Match | Visual autocomplete fidelity remains pending user review |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Dialogs remains pending user visual approval.
+
+### Dialogs Animation/Button Interaction Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatch:
+
+- Dialog open animation did not match Vue/Vuetify.
+- Button click animation/ripple inside Dialogs examples did not match Vue/Vuetify.
+
+Vue source rechecked:
+
+- `node_modules/vuetify/lib/components/VDialog/VDialog.js`
+- `node_modules/vuetify/src/components/VDialog/VDialog.sass`
+- `node_modules/vuetify/src/styles/generic/_transitions.scss`
+- `node_modules/vuetify/src/components/VBtn/VBtn.sass`
+- `node_modules/vuetify/src/directives/ripple/VRipple.sass`
+- `node_modules/vuetify/src/directives/ripple/_variables.scss`
+
+Fixes completed:
+
+- Updated default dialog transition to match Vue `dialog-transition`:
+  - starts at `scale(0.5)`.
+  - fades from opacity `0` to `1`.
+  - uses 300ms Vuetify-like easing.
+- Updated fullscreen/bottom dialogs to use Vue `dialog-bottom-transition` behavior.
+- Updated persistent outside-click feedback to use Vue `animate-dialog` bounce:
+  - scale `1 -> 1.03 -> 1`.
+  - duration 150ms.
+- Rebuilt local Dialogs `VBtn` interaction:
+  - disabled default MUI ripple.
+  - added Vuetify-style `:before` currentColor overlay for hover/focus.
+  - added click-position ripple from pointer coordinates.
+  - ripple uses currentColor, clipped by button radius, and in/out timing based on Vuetify ripple variables.
+  - contained buttons now raise to a stronger shadow on active press.
+  - loading button hides label content and shows centered loader like Vuetify.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Default dialog open | `dialog-transition` enters from `scale(0.5)` and opacity 0 over 300ms | Used a softer generic scale around `.92` and faster timing | Uses scale `.5 -> 1`, opacity transition, 300ms timing | Pending visual review | Applies to non-fullscreen dialogs |
+| Fullscreen dialog open | `dialog-bottom-transition` enters from bottom | Bottom transition existed but timing was too short/generic | Uses 300ms bottom transition matching Vue source | Pending visual review | Applies to Fullscreen and Nested fullscreen |
+| Persistent outside click | Persistent dialog bounces with `animate-dialog` scale `1.03` for 150ms | Used static scale state without matching keyframes | Uses Vue-style `animate-dialog` keyframes | Pending visual review | Modal/Form persistent examples |
+| Button click ripple | `v-ripple` starts at click point, expands with currentColor, fades out | MUI/default or incomplete button animation | Custom local ripple from pointer coordinates with Vuetify timing and currentColor | Pending visual review | Scoped to Dialogs page buttons only |
+| Button hover/pressed | `v-btn:before` currentColor overlay and contained active elevation | Generic hover/press style | Added currentColor overlay, focus opacity, and active elevation | Pending visual review | Does not touch other Vuetify pages |
+
+Reusable checklist item:
+
+- Dialog pages must verify `dialog-transition`, `dialog-bottom-transition`, persistent outside-click bounce, and local activator/action button ripple against Vuetify source before visual review.
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Dialogs remains pending user visual approval.
+
 ### Chip Groups Visual/Behavior Mismatch Fix
 
 Status: fixed; pending user visual approval.
