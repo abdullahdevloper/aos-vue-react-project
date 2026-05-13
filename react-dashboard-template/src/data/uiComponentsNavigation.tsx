@@ -155,7 +155,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       { title: "Dialogs", path: "/components/dialogs", icon: <ViewHeadline /> },
       { title: "Dividers", path: "/components/dividers", icon: <ViewHeadline /> },
       { title: "Expansion Panels", path: "/components/expansion-panels", icon: <ViewHeadline /> },
-      { title: "Footers", disabled: true, pending: true },
+      { title: "Footers", path: "/components/footer", icon: <ViewHeadline /> },
       {
         title: "Form Control",
         children: [
