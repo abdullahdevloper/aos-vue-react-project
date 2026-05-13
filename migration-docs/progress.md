@@ -11,13 +11,13 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Dialogs.
+- Active section: Vuetify / Dividers.
 
 ## Current Slice
 
-- Scope: Vuetify / Dialogs only.
-- Route: `/components/dialogs`.
-- Status: implemented; pending user visual approval.
+- Scope: Vuetify / Dividers only.
+- Route: `/components/dividers`.
+- Status: implemented; click animation fix applied; pending user visual approval.
 - Source audit: `migration-docs/vuetify-batch-3-audit.md`
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
@@ -44,6 +44,7 @@ Current rebuild strategy:
 - Vuetify / Chips: implemented; pending user visual approval.
 - Vuetify / Chip Groups: implemented; visual/behavior mismatch fixes applied; pending user visual approval.
 - Vuetify / Dialogs: implemented; pending user visual approval.
+- Vuetify / Dividers: implemented; click animation fix applied; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

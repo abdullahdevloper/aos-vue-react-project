@@ -2646,6 +2646,69 @@ Approval:
 
 - Vuetify / Dialogs remains pending user visual approval.
 
+## Vuetify Dividers Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Dividers only.
+- Route: `/components/dividers`
+- Enabled `UI Components > Vuetify > Dividers`.
+- Dialogs, Expansion Panels, approved slices, animations, and `.claude/` were not touched intentionally.
+- Calendars remains deferred/paused and not approved.
+
+Source trace:
+
+- Main page: `src/views/Vuetify/DividersView.vue`
+- Documentation: `src/lang/en/components/Dividers.json`
+- Vue route/sidebar:
+  - `src/router/routes/vuetify.js`
+  - `src/config/navigation-items.js`
+- Examples in exact Vue page order:
+  - `src/demo/examples/dividers/simple/inset.vue`
+  - `src/demo/examples/dividers/simple/vertical.vue`
+  - `src/demo/examples/dividers/simple/vertical-inset.vue`
+  - `src/demo/examples/dividers/intermediate/subheaders.vue`
+  - `src/demo/examples/dividers/intermediate/divider-list-portrait.vue`
+- Divider style source:
+  - `node_modules/vuetify/src/components/VDivider/VDivider.sass`
+  - `node_modules/vuetify/src/components/VDivider/_variables.scss`
+
+Implementation notes:
+
+- Vue `DividersView.vue` does not pass a `usage` prop to `doc-page`; React therefore implements the Examples section only, matching the Vue page.
+- Divider primitive is local to `DividersPage.tsx` and reproduces:
+  - horizontal `thin` top border.
+  - vertical `thin` right border.
+  - horizontal inset margin `72px`.
+  - vertical inset top margin `8px` and max-height `calc(100% - 16px)`.
+  - divider role and aria orientation.
+- Example block shell includes View source and Invert example colors actions.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Inset dividers | `src/demo/examples/dividers/simple/inset.vue` | Centered `sm=6 offset-sm=3` card with two-line list, Today subheader, 3 list items, avatars, and inset dividers after first two items | Implemented matching responsive width, list data, avatars, HTML title/subtitle rendering, and 72px inset dividers | Match | Uses exact source data/URLs |
+| Vertical dividers | `src/demo/examples/dividers/simple/vertical.vue` | Purple dark toolbar, title, vertical divider with `mx-4`, My Home, hidden-sm-and-down toolbar buttons separated by vertical dividers, nav icon | Implemented toolbar, color, text, vertical dividers, responsive hidden button group, and nav icon | Match | Button ripple not added because example source has no custom click state |
+| Vertical inset dividers | `src/demo/examples/dividers/simple/vertical-inset.vue` | Teal dark toolbar with vertical inset dividers, same content as vertical example | Implemented teal toolbar and inset vertical divider top/max-height behavior | Match | Uses Vuetify inset constants |
+| Dividers and subheaders | `src/demo/examples/dividers/intermediate/subheaders.vue` | Centered `sm=8 md=6` card, orange toolbar, Message Board title, search icon, two-line list with Today/Yesterday/Last Week subheaders and inset dividers | Implemented exact source list data, toolbar, subheaders, inset dividers, avatars, and list rows | Match | Source HTML in titles/subtitles rendered |
+| Dividers in Portrait View | `src/demo/examples/dividers/intermediate/divider-list-portrait.vue` | Centered `sm=8` card, cyan dark title bar `Sarah Mcbeal`, chevron/edit/dots icons, contact list rows with inset dividers, 200px image | Implemented card, title bar, actions, phone/email/location rows, inset dividers, and 200px image | Match | Material icon equivalents used for MDI icons |
+| Route/sidebar | Vue route `/components/dividers`; sidebar item after Dialogs | React route registered and sidebar item enabled at same position | Match | Expansion Panels remains pending/disabled |
+| Invert/source | Vue doc example shell actions | React example blocks include source toggle and invert color action | Match | Source panels list traced Vue source file paths |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Dividers remains pending user visual approval.
+
 ### Dialogs Fullscreen/Nested/Menu Layer Fix
 
 Status: fixed; pending user visual approval.
@@ -2823,6 +2886,55 @@ Build status:
 Approval:
 
 - Vuetify / Dialogs remains pending user visual approval.
+
+### Dividers Click Animation Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Vuetify / Dividers only.
+- Route: `/components/dividers`.
+- No other Vuetify pages, approved slices, animations backlog, or `.claude/` were intentionally touched.
+
+Mismatch reported:
+
+- Click animation across the Dividers page did not match Vue/Vuetify.
+
+Source recheck:
+
+- `node_modules/vuetify/src/directives/ripple/VRipple.sass`
+- `node_modules/vuetify/src/directives/ripple/_variables.scss`
+- `node_modules/vuetify/src/components/VBtn/VBtn.sass`
+- Dividers examples in `src/demo/examples/dividers/**`
+
+Fix:
+
+- Added a local Dividers-only Vuetify-style ripple primitive.
+- Ripple now starts from the actual pointer position, expands within the clicked element, uses `currentColor`, fades out, and is clipped by the element radius.
+- Applied the ripple to Dividers example icon buttons, toolbar buttons, list rows, action buttons, portrait rows, and portrait title bar controls.
+- Kept source/view/invert action buttons visually stable and did not change Dividers content layout.
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Ripple origin | `v-ripple` starts from click/touch coordinate | Local ripple computes pointer position from the clicked element bounds | Pending visual review | Scoped to Dividers page |
+| Ripple timing | Vuetify expands then fades with short in/out timing | Local keyframes use 250ms expand and 300ms fade-out style timing | Pending visual review | Based on Vuetify ripple variables |
+| Ripple clipping | Ripple remains inside button/list/card bounds | Ripple layer is absolutely positioned and clipped by inherited radius | Pending visual review | Applies to icon, row, and text buttons |
+| Disabled/static guard | Non-clickable static content should not animate | Static divider surfaces remain unchanged | High | Only interactive rows/buttons use the local ripple |
+| Scope guard | Fix only Dividers | No intentional changes outside Dividers page and migration docs | High | Build artifacts generated by required build |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Dividers remains pending user visual approval.
 
 ### Chip Groups Visual/Behavior Mismatch Fix
 
