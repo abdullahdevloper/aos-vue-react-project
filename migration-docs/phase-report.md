@@ -2428,3 +2428,235 @@ Build status:
 Approval:
 
 - Vuetify / Carousels remains pending user visual approval.
+
+## Vuetify Chips Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Chips only.
+- Route `/components/chips`.
+- Enabled only `UI Components > Vuetify > Chips > Chips`.
+- Chip Groups and later Vuetify items remain disabled/pending.
+- Calendars remains deferred/paused and not approved.
+- Carousels page content was not touched.
+
+Vue source trace:
+
+- `src/views/Vuetify/Chips/Chips.vue`
+  - Page `Chips`, namespace `Components`.
+  - Breadcrumbs `Components > Vuetify > Chips`.
+  - Usage controls: `close-icon`, `icon`, `color`, `close`, `avatar`, `value`, and tabs `filter`, `label`, `link`, `outlined`, `pill`.
+  - Examples in order: Colored, Icon, Outlined, Label, Sizes, Draggable, Filter, No ripple, Closable, Action chips, In selects, Custom lists, Additional filtering, Expandable.
+- `src/lang/en/components/Chips.json`
+  - Exact Chips intro, usage text, example titles/descriptions, and event/prop documentation.
+- `src/demo/usages/chips.vue`
+- `src/demo/examples/chips/simple/colored.vue`
+- `src/demo/examples/chips/simple/icon.vue`
+- `src/demo/examples/chips/simple/outlined.vue`
+- `src/demo/examples/chips/simple/label.vue`
+- `src/demo/examples/chips/simple/sizes.vue`
+- `src/demo/examples/chips/simple/draggable.vue`
+- `src/demo/examples/chips/simple/filter.vue`
+- `src/demo/examples/chips/simple/no-ripple.vue`
+- `src/demo/examples/chips/intermediate/closable.vue`
+- `src/demo/examples/chips/intermediate/action-chips.vue`
+- `src/demo/examples/chips/intermediate/in-selects.vue`
+- `src/demo/examples/chips/complex/photos.vue`
+- `src/demo/examples/chips/complex/filtering.vue`
+- `src/demo/examples/chips/complex/expandable.vue`
+
+Implementation verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route | `/components/chips` inside dashboard layout | Added route in `App.tsx` | High | Full-page routes unaffected |
+| Sidebar | Enable Chips; keep Chip Groups and later items pending | Chips linked; Chip Groups remains disabled/pending | High | Sidebar brand/logo unchanged |
+| Page hierarchy | `Components`, page `Chips`, breadcrumbs `Components > Vuetify > Chips` | Implemented with shared Vuse docs shell | Pending visual review | Matches Vue source |
+| Documentation text | Exact Chips intro and usage text | Implemented with Vue-style inline code styling | High | No representative docs text |
+| Usage playground | Dynamic `v-chip` attrs for close icon, icon, color, close/avatar/value, and filter/label/link/outlined/pill tabs | Implemented controls and dynamic chip rendering | Pending visual review | `link` is visual-only because Vue usage has no route click target |
+| Colored | Default, primary, secondary, red, and green chips | Implemented matching chip colors and labels | Pending visual review | Material palette approximated to Vuetify values |
+| Icon | Account/avatar, premium/star, cake, numeric avatar, closable confirmed chips | Implemented matching icons, close buttons, and close alert | Pending visual review | Uses Material icon equivalents |
+| Outlined | Success, primary pill, deep-purple, and indigo outlined chips | Implemented outlined chips with inherited border/text color | Pending visual review | Server icon uses closest available Material storage icon |
+| Label and sizes | Label border radius and x-small through x-large chip sizes | Implemented label chips and size scale | Pending visual review | Size scale pending visual review |
+| Draggable, filter, no ripple | Draggable chip, active filter icon switch, ripple disabled example | Implemented draggable attribute, active switch, and no-ripple chip | Pending visual review | Drag payload behavior is browser-native like Vue demo |
+| Closable | Four closeable chips with reset button after all close | Implemented chip removal and reset button | High | State-driven, not static |
+| Action chips | Card with weather image, weather row, divider, and alert actions | Implemented matching card and alert behavior | Pending visual review | Uses Vue card/weather asset URLs or local matching asset path |
+| In selects | Combobox-style chip selection/add/remove | Implemented chip add on Enter and chip close/remove | Pending visual review | Recreated visible behavior without generic MUI chip styling |
+| Custom lists | Photo Info card, selectable category chips, search field, disabled/loading Next reset | Implemented search, category selection, chip removal, loading reset | Pending visual review | State follows Vue source |
+| Additional filtering | Search News field, keyword chips while searching, filtered article list | Implemented search filtering and keyword chip display | Pending visual review | Uses exact Vue article data and image URLs |
+| Expandable | Pill chip opens menu with John Leider profile and email row | Implemented menu open/close and matching profile content | Pending visual review | Uses Vue John image URL |
+| Source/invert | Vue example block source panels and invert example colors | Implemented View source and Invert example colors behavior | Pending visual review | Some explicit white cards remain white like Vue card examples |
+| Out of scope | Do not touch Carousels, Chip Groups, later Vuetify items, approved slices, `.claude/` | No intentional changes outside Chips route/sidebar/docs/page | High | Build artifacts generated by required build |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Chips remains pending user visual approval.
+
+### Chips In Selects Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Vuetify / Chips In selects example only.
+- Usage playground, simple examples, Closable, and other complex examples were preserved.
+
+Source recheck:
+
+- `src/demo/examples/chips/intermediate/in-selects.vue`
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Field structure | `v-combobox` with `chips`, `clearable`, `multiple`, `prepend-icon="filter_list"`, `solo`, label `Your favorite hobbies` | Rebuilt as one solo combobox-like field with outer filter icon, white raised input surface, clear icon, dropdown arrow, internal input, and chips inside field | Pending visual review | No generic detached chip list remains |
+| Initial data | Chips: `Programming`, `Playing video games`, `Watching movies`, `Sleeping`; items: `Streaming`, `Eating` | Implemented exact initial chips and option items | High | Source data matched |
+| Selection slot | Each selected chip renders `<strong>{{ item }}</strong> (interest)`, close button, selected/input-value behavior, and click select | Chips render bold item text plus `(interest)`, close removes item, click marks chip selected with filter active state | Pending visual review | Selection highlight approximates slot selected state |
+| Add/select behavior | Typing and Enter can create values; menu item click adds existing items; selected items disappear from available options | Implemented Enter-to-add, dropdown option click, duplicate guard, and available option filtering | Pending visual review | Dropdown placement/animation pending visual review |
+| Delete/clear behavior | `@click:close` removes one chip; clearable removes selections | Implemented close remove, clear all, and Backspace remove-last when input empty | High | Matches visible behavior expected from combobox |
+| Scope guard | Do not touch other Chips examples or approved slices | No intentional changes outside In selects and docs | High | Build artifacts generated by required build |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Chips remains pending user visual approval.
+
+### Chips Closable Example Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Vuetify / Chips Closable example only.
+- Usage playground and simple examples were preserved.
+- Action chips, In selects, Custom lists, Additional filtering, and Expandable were intentionally not changed.
+
+Source recheck:
+
+- `src/demo/examples/chips/intermediate/closable.vue`
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Initial chips | Four centered chips: `Closable`, red `Remove`, green outlined `Success`, orange outlined label `Complete` | Preserved exact order/text and variant attrs through `VChip` | Pending visual review | Shared chip primitive provides close icon/ripple/spacing |
+| Close behavior | `@click:close` sets the matching chip boolean to false | Close button removes only the clicked chip using state | High | Uses functional state update to avoid stale state |
+| Reset behavior | When all chips are hidden, primary dark `Reset Chips` button appears and restores all four | Implemented primary/dark reset button with Vuetify-like size, uppercase transform, shadow, and hover | Pending visual review | Text source remains `Reset Chips`; visual transform follows Vuetify button style |
+| Invert behavior | Example is marked `uninverted`, so it stays default/light | Preserved uninverted/default behavior | High | No dark-mode override added |
+| Scope guard | Do not touch other Chips examples or approved slices | No intentional changes outside Closable example and docs | High | Build artifacts generated by required build |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Chips remains pending user visual approval.
+
+### Chips Usage Playground Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Vuetify / Chips Usage playground only.
+- Simple examples, Closable, Action chips, In selects, Custom lists, Additional filtering, and Expandable were intentionally not changed in this pass.
+
+Source recheck:
+
+- `src/demo/components/Usage.vue`
+- `src/demo/components/UsageExample.vue`
+- `src/demo/usages/chips.vue`
+- `src/views/Vuetify/Chips/Chips.vue`
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Usage layout | `v-card outlined`, left `md=9`, right `md=3`, tabs on top of preview, 300px preview sheet, right Options header and scroll area | Rebuilt Usage card with 75%/25% grid, top tab rail, 300px preview area, right-side Options panel, divider, and `maxHeight=300` options scroll | Pending visual review | Scoped to Chips Usage only |
+| Tabs | `FILTER`, `LABEL`, `LINK`, `OUTLINED`, `PILL` in source order with primary active text/underline | Implemented uppercase tabs in exact order with cyan active underline/text | Pending visual review | Uses custom button styling, not generic MUI tabs |
+| Options order | User-required order: Avatar, Value, Close icon, Icon, Color | Implemented Avatar switch, Value switch, Close icon select, Icon select, Color select | Pending visual review | `Close icon` controls close button visibility and close icon choice |
+| Dynamic options | Available controls should be derived from the active tab contract, not one fixed React panel | Options are now rendered from `usageControlsByTab`; Filter omits the close-icon control, while Label/Link/Outlined/Pill expose Avatar, Value, Close icon, Icon, Color | Pending visual review | Rebuilt to avoid the previous static panel |
+| FILTER tab controls | Vue FILTER tab shows `Close`, `Avatar`, `Value`, `Close icon`, `Icon`, `Color` in that order | FILTER now renders that exact order; Close switch controls close visibility and Close icon select changes the icon only | Pending visual review | LABEL/LINK/OUTLINED/PILL were left untouched in this pass |
+| FILTER Value switch | Vuetify `input-value` updates `isActive`, which controls the filter icon, while the chip remains rendered because visibility is controlled by `active` | Value no longer hides the usage chip; it toggles only the filter active/check icon state | Pending visual review | Based on `node_modules/vuetify/lib/components/VChip/VChip.js` and `toggleable` mixin |
+| FILTER icon choices | `mdi-close-outline`, `mdi-vuetify`, and `mdi-google` should render close-outline/Vuetify/Google equivalents | Updated close-outline to an outlined close icon, `mdi-vuetify` to a custom Vuetify-style glyph, and `mdi-google` to the Google icon | Pending visual review | MDI font is not used directly; custom/Material equivalents are the closest local match |
+| FILTER active animation | Vue `v-chip` uses `VExpandXTransition` for the filter icon when `input-value` changes | Filter icon now expands/collapses horizontally with width, margin, opacity, and scale transitions | Pending visual review | Also fixes the simple Filter example through the shared primitive |
+| Option styling | Vue right panel uses grey header, divider, inset switches, dense filled clearable selects, scrollable body | Implemented grey header, divider, inset-style switches, filled dense native selects, clear buttons, and thin-scrollbar options body | Pending visual review | Select popup native browser styling remains a likely minor difference |
+| Preview attrs | `v-chip v-bind="attrs" :input-value="attrs.value"` with optional avatar/icon and active tab attrs | Preview updates tab variant, avatar, value/input-value, close icon/close, icon, and color | Pending visual review | `value` starts unset/null like Vue; `value=false` or close hides preview chip |
+| Pill state | `pill` should not force red color or icon unless selected via attrs | PILL now starts neutral and only changes when color/icon/avatar controls are selected | High | Fixes previous red/icon approximation |
+| Scope guard | Do not fix complex examples or other Vuetify items | No intentional changes outside Chips Usage and docs | High | Build artifacts generated by required build |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Chips remains pending user visual approval.
+
+### Chips Primitive and Simple Examples Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Vuetify / Chips shared primitive and simple examples only.
+- Fixed examples: Colored, Icon, Outlined, Label, Sizes, Draggable, Filter, No ripple.
+- Usage playground, Closable, Action chips, In selects, Custom lists, Additional filtering, and Expandable were intentionally not fixed in this pass.
+
+Source recheck:
+
+- `src/demo/examples/chips/simple/colored.vue`
+- `src/demo/examples/chips/simple/icon.vue`
+- `src/demo/examples/chips/simple/outlined.vue`
+- `src/demo/examples/chips/simple/label.vue`
+- `src/demo/examples/chips/simple/sizes.vue`
+- `src/demo/examples/chips/simple/draggable.vue`
+- `src/demo/examples/chips/simple/filter.vue`
+- `src/demo/examples/chips/simple/no-ripple.vue`
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Shared chip primitive | Vuetify `v-chip` height, padding, radius, `ma-2` spacing, icon/avatar/close alignment, disabled guard, ripple clipped to chip | Updated custom `VChip` size map, padding, radius, margins, icon/avatar spacing, close button sizing, disabled click/ripple guard, and clipped ripple opacity | Pending visual review | Shared primitive affects later examples visually, but no later behavior was changed |
+| Sizes | `x-small`, `small`, default, `large`, `x-large` use Vuetify scale | Adjusted heights to 20, 24, 32, 44, 52 with matching font/icon scale | Pending visual review | Needs screenshot comparison |
+| Colored | Default, primary, secondary, red/white, green/white | Preserved exact chip order and labels with Vuse/Vuetify colors | Pending visual review | Yellow usage text contrast guarded for future primitive use |
+| Icon | MDI account, star, cake, numeric avatar, check-circle close, delete close | Preserved order; switched cake equivalent to a closer `Cake` icon; close alert behavior retained | Pending visual review | Icons remain Material equivalents, not MDI font glyphs |
+| Outlined | Outlined border/text color, pill account chip, close icon visual | Improved outlined border/radius/spacing through primitive | Pending visual review | Server icon remains nearest available Material equivalent |
+| Label | Label chips use card-like radius and close icon alignment | Improved label radius and close/icon spacing through primitive | Pending visual review | No close handler in Vue example, so visual close remains only |
+| Draggable | `draggable` chip with Vue cursor/drag affordance | Preserved draggable attribute and adjusted chip sizing | Pending visual review | Native browser drag behavior |
+| Filter | Inactive chips show no filter icon; active switch shows check/plus/minus filter icons | Preserved active switch behavior and improved active icon placement | Pending visual review | Switch styling unchanged in this pass |
+| No ripple | `:ripple="false"` disables chip ripple | Preserved no-ripple path while normal chips keep custom ripple | High | Needs click review |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Chips remains pending user visual approval.

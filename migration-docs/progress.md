@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-11
+Last updated: 2026-05-12
 
 ## Strategy Status
 
@@ -11,12 +11,12 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Carousels.
+- Active section: Vuetify / Chips.
 
 ## Current Slice
 
-- Scope: Vuetify / Carousels only.
-- Route: `/components/carousels`.
+- Scope: Vuetify / Chips only.
+- Route: `/components/chips`.
 - Status: implemented; pending user visual approval.
 - Source audit: `migration-docs/vuetify-batch-3-audit.md`
 - Build: passed inside `react-dashboard-template/`.
@@ -41,6 +41,7 @@ Current rebuild strategy:
 - Vuetify / Calendars: deferred/paused; first safe group attempted only; `/components/calendars` remains pending and not approved.
 - Vuetify / Cards: implemented; pending user visual approval.
 - Vuetify / Carousels: implemented; pending user visual approval.
+- Vuetify / Chips: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -3377,3 +3378,198 @@ Not touched:
 - App.
 - Dashboard.
 - animations.
+
+## Vuetify Chips Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Chips only.
+- Route `/components/chips`.
+- Sidebar item `UI Components > Vuetify > Chips > Chips`.
+- Chip Groups and later Vuetify items remain disabled/pending.
+- Calendars remains deferred/paused and not approved.
+- Carousels page content was not touched.
+
+Vue sources traced:
+
+- `src/views/Vuetify/Chips/Chips.vue`
+- `src/lang/en/components/Chips.json`
+- `src/demo/usages/chips.vue`
+- `src/demo/examples/chips/simple/colored.vue`
+- `src/demo/examples/chips/simple/icon.vue`
+- `src/demo/examples/chips/simple/outlined.vue`
+- `src/demo/examples/chips/simple/label.vue`
+- `src/demo/examples/chips/simple/sizes.vue`
+- `src/demo/examples/chips/simple/draggable.vue`
+- `src/demo/examples/chips/simple/filter.vue`
+- `src/demo/examples/chips/simple/no-ripple.vue`
+- `src/demo/examples/chips/intermediate/closable.vue`
+- `src/demo/examples/chips/intermediate/action-chips.vue`
+- `src/demo/examples/chips/intermediate/in-selects.vue`
+- `src/demo/examples/chips/complex/photos.vue`
+- `src/demo/examples/chips/complex/filtering.vue`
+- `src/demo/examples/chips/complex/expandable.vue`
+
+Implemented:
+
+- Added `/components/chips` inside `DashboardLayout`.
+- Enabled only Chips in the Vuetify Chips sidebar group.
+- Added Vue-equivalent Chips docs page with exact page hierarchy, breadcrumbs, intro text, usage text, usage playground, and example source panels.
+- Implemented examples: Colored, Icon, Outlined, Label, Sizes, Draggable, Filter, No ripple, Closable, Action chips, In selects, Custom lists, Additional filtering, and Expandable.
+- Implemented visible behaviors for chip close, filter active state, action alerts, combobox-style chip add/remove, custom list selection/search/reset, news filtering keywords, expandable menu, View source, and Invert example colors.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Not touched:
+
+- Carousels page content.
+- Chip Groups and later Vuetify items.
+- approved slices.
+- animations.
+- `.claude/`.
+
+### Chips Primitive and Simple Examples Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the shared Chips primitive and simple examples:
+  - Colored
+  - Icon
+  - Outlined
+  - Label
+  - Sizes
+  - Draggable
+  - Filter
+  - No ripple
+
+Fixed:
+
+- Updated shared chip height, padding, radius, margins, outlined/label/pill behavior, avatar spacing, icon spacing, close icon sizing, disabled click/ripple guard, and ripple clipping/opacity.
+- Matched Vuetify size scale more closely for `x-small`, `small`, default, `large`, and `x-large`.
+- Updated the simple Icon example to use a closer cake icon equivalent for `mdi-cake-variant`.
+- Preserved filter active/inactive icon behavior and no-ripple behavior.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Still pending:
+
+- Usage playground.
+- Closable.
+- Action chips.
+- In selects.
+- Custom lists.
+- Additional filtering.
+- Expandable.
+
+### Chips Usage Playground Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Usage playground section inside `/components/chips`.
+
+Fixed:
+
+- Rebuilt the playground to follow Vue `UsageExample.vue`: tabs across the top of the preview area, 300px preview body, right-side Options panel, and independent Options scroll area.
+- Tabs now appear in Vue order: `FILTER`, `LABEL`, `LINK`, `OUTLINED`, `PILL`.
+- Active tab underline/text color use the Vue primary accent.
+- Options panel now uses Vue-like right column sizing, header, divider, filled selects, inset-style switches, and spacing.
+- Visible options now follow the requested order: Avatar switch, Value switch, Close icon select, Icon select, Color select.
+- `Close icon` now controls the close button and icon; `Value`, `Avatar`, `Icon`, `Color`, and the active tab update the preview chip state.
+- PILL now starts from the neutral Vue chip state unless color/icon/avatar attrs are selected.
+- Tightened the Usage grid to Vue's `md=9`/`md=3` split and added clearable select buttons plus thin scrollbar styling for the Options body.
+- Rebuilt the options logic from the active tab contract instead of rendering one fixed panel for every tab.
+- `Value` now starts in the Vue unset/null state; switching it off sets `input-value=false` and hides the chip, and close sets the same inactive state.
+- FILTER tab correction: options now render in Vue order `Close`, `Avatar`, `Value`, `Close icon`, `Icon`, `Color`; the Close switch controls close-button visibility while Close icon only selects the close icon.
+- FILTER Value switch correction: `input-value` no longer hides the chip; it now only controls the filter active/check icon like Vuetify `VChip`.
+- FILTER icon fidelity correction: `mdi-close-outline` now uses an outlined close icon, `mdi-vuetify` and `mdi-google` use closer visual equivalents, and the filter active icon now expands/collapses with a Vue-like horizontal transition instead of appearing instantly.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Still pending:
+
+- Closable.
+- Action chips.
+- In selects.
+- Custom lists.
+- Additional filtering.
+- Expandable.
+
+### Chips Closable Example Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Closable example inside `/components/chips`.
+
+Fixed:
+
+- Matched Vue chip order/text: `Closable`, `Remove`, `Success`, `Complete`.
+- Close actions now remove each chip through state exactly like Vue.
+- When all chips are closed, the Vue-like primary/dark reset button appears and restores all chips.
+- Preserved uninverted/default visual behavior.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Still pending:
+
+- Action chips.
+- In selects.
+- Custom lists.
+- Additional filtering.
+- Expandable.
+
+### Chips In Selects Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the In selects example inside `/components/chips`.
+
+Fixed:
+
+- Rebuilt the example as a Vue-like `v-combobox` surface instead of a plain text field plus detached chips.
+- Chips now render inside the solo input surface with `<strong>{item}</strong> (interest)` content.
+- Prepend filter icon, clear button, dropdown arrow, menu options, chip selection state, close removal, Enter-to-add, Backspace remove-last, and option click selection are implemented.
+- Initial data and option data match Vue: `Programming`, `Playing video games`, `Watching movies`, `Sleeping`; options `Streaming`, `Eating`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite chunk-size warning remains.
+
+Still pending:
+
+- Action chips.
+- Custom lists.
+- Additional filtering.
+- Expandable.
