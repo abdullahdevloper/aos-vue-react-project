@@ -3578,3 +3578,31 @@ Still pending:
 - Custom lists.
 - Additional filtering.
 - Expandable.
+
+### Vuetify Autocompletes Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented Vuetify / Autocompletes at `/components/forms-control/autocompletes`.
+- Enabled only the Form Control > Autocompletes sidebar item.
+- Kept Combobox, File Inputs, later Form Control items, Calendars, animations, and approved slices unchanged.
+
+Implemented:
+
+- Source-driven Vue example order: Usage, Searching an API, Custom filter on autocomplete, Dense, Slots, Asynchronous items, Advanced slots, State selector.
+- Preserved Vue documentation text, alert text, breadcrumbs, source-panel controls, invert controls, and example block shell.
+- Added a local Vuetify-like autocomplete primitive covering single/multiple values, chips, dense/filled/outlined/solo/solo-inverted states, clearable values, menu filtering, async search triggers, custom list slots, and state-selector readonly/edit behavior.
+- Registered route `/components/forms-control/autocompletes`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Autocompletes remains pending user visual approval.

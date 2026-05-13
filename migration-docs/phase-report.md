@@ -2501,6 +2501,60 @@ Approval:
 
 - Vuetify / Chips remains pending user visual approval.
 
+### Vuetify Autocompletes Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Autocompletes only.
+- Route: `/components/forms-control/autocompletes`.
+- Sidebar: enabled only `Vuetify > Form Control > Autocompletes`.
+- Combobox, File Inputs, approved slices, animations, and `.claude/` were not touched.
+- Calendars remains deferred/paused and not approved.
+
+Source trace:
+
+- Main page: `src/views/Vuetify/FormControls/Autocompletes.vue`.
+- Text: `src/lang/en/components/Autocompletes.json`, `src/lang/en/components/Selects.json`.
+- Usage: `src/demo/usages/autocompletes.vue`.
+- Examples, in exact Vue order:
+  - `src/demo/examples/autocompletes/simple/api.vue`
+  - `src/demo/examples/autocompletes/simple/customFilter.vue`
+  - `src/demo/examples/autocompletes/simple/dense.vue`
+  - `src/demo/examples/autocompletes/intermediate/slots.vue`
+  - `src/demo/examples/autocompletes/intermediate/asynchronous.vue`
+  - `src/demo/examples/autocompletes/intermediate/advanced.vue`
+  - `src/demo/examples/autocompletes/complex/stateSelector.vue`
+- Shared shell behavior: `src/demo/components/DocPage.vue` confirms order `headingText`, `Usage`, `alerts`, `examples`.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Route/sidebar | `src/router/routes/vuetify.js`, `src/config/navigation-items.js` | `/components/forms-control/autocompletes` under Form Control > Autocompletes | Route registered and sidebar item enabled; Combobox/File Inputs remain pending | Match | Pending visual review |
+| Page shell | `Autocompletes.vue`, `DocPage.vue` | Components/Vuetify breadcrumbs, intro text, Usage, alerts, examples | Reproduced hierarchy and moved alerts after Usage to match `DocPage.vue` | Match | Uses existing React doc shell |
+| Usage | `src/demo/usages/autocompletes.vue` | Filled rounded autocomplete with filter select options | Implemented filled rounded state list and exact filter options | Pending visual review | Local autocomplete primitive, not generic MUI Autocomplete |
+| Searching an API | `simple/api.vue` | Red card, public API autocomplete, dynamic fetch, selected fields, Clear action | Implemented red surfaces, API fetch with fallback on runtime failure, selected field list, Clear action | Pending visual review | Network availability may affect live data |
+| Custom filter | `simple/customFilter.vue` | Purple profile card, edit toggle, custom state filter, Save snackbar | Implemented edit toggle, disabled fields, custom name/abbr filtering, Save snackbar | Pending visual review | Snackbar timing matches 2000ms |
+| Dense | `simple/dense.vue` | Outlined/Solo/Filled dense autocomplete variants with chips | Implemented dense variants and initial chip values | Pending visual review | Needs screenshot comparison for exact field height |
+| Slots | `intermediate/slots.vue` | Blue-grey media card, grouped people list, avatar chips, auto-update controls | Implemented image card, grouped menu, avatar chips, update loading, auto-update switch | Pending visual review | Uses source image URLs and avatar paths |
+| Asynchronous items | `intermediate/asynchronous.vue` | Teal toolbar autocomplete filters states after search delay | Implemented local 500ms delayed state filtering and solo-inverted toolbar field | Pending visual review | Same local search behavior |
+| Advanced slots | `intermediate/advanced.vue` | Orange crypto toolbar, coin chips, tabs disabled until selection | Implemented coin search, selected chip, and tab enable state | Pending visual review | Coin API represented by source-equivalent local examples to avoid blocking network |
+| State selector | `complex/stateSelector.vue` | Readonly/editable state autocomplete with outer edit/check icon and hint | Implemented readonly/edit toggle, city prepend icon, hint, check/edit outer action | Pending visual review | Transition is lightweight and should be visually reviewed |
+| Source/invert controls | Shared example shell | View source and invert example color controls remain available | Implemented in Autocompletes example block | Pending visual review | Source panel shows source file references |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Autocompletes remains pending user visual approval.
+
 ## Vuetify Footers Implementation
 
 Status: implemented; pending user visual approval.
