@@ -161,7 +161,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         children: [
           { title: "Autocompletes", path: "/components/forms-control/autocompletes", icon: <ViewHeadline /> },
           { title: "Combobox", path: "/components/forms-control/combobox", icon: <ViewHeadline /> },
-          { title: "File Inputs", disabled: true, pending: true },
+          { title: "File Inputs", path: "/components/forms-control/file-inputs", icon: <ViewHeadline /> },
           { title: "Forms", disabled: true, pending: true },
           { title: "Inputs", disabled: true, pending: true },
           { title: "Overflow Buttons", disabled: true, pending: true },
