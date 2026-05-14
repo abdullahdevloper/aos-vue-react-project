@@ -3635,6 +3635,118 @@ Approval:
 
 - Vuetify / Combobox remains pending user visual approval.
 
+### Vuetify Forms Visual Correction
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Corrected only Vuetify / Forms at `/components/forms-control/forms`.
+
+Fixed:
+
+- Playground structure now follows the Vue `v-row` / switch row / form body hierarchy more closely.
+- `Max characters` now uses a Vue-like slider row instead of the previous mismatched generic control.
+- `Vuelidate` and `Vee-validate` examples now use tighter Vue-like form card spacing and default light raised buttons.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Forms remains pending user visual approval.
+
+### Vuetify Inputs Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented Vuetify / Inputs at `/components/forms-control/inputs`.
+- Enabled only the Inputs sidebar item under Form Control.
+- Kept Overflow Buttons and later Form Control items pending/disabled.
+- Kept Calendars deferred/paused and not approved.
+
+Implemented:
+
+- Source-driven page hierarchy with `Components > Vuetify > Inputs` breadcrumbs.
+- Usage example for `v-input` prepend/default/append/messages areas.
+- Info alert for `v-input` attribute behavior.
+- Playground with `Max error count`, Success/Error/Hide details/Persistent hint switches, Success/Error actions, prepend/append click alerts, success/error/hint/message states.
+- Examples in Vue order: Loading, Hint, Success, Error, Multiple errors, Rules, Auto hiding details, Slots, Slot events.
+- View source and invert example color controls in the shared example-card style.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Inputs remains pending user visual approval.
+
+### Vuetify Inputs Structure and Design Correction
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Corrected only Vuetify / Inputs at `/components/forms-control/inputs`.
+
+Fixed:
+
+- Reworked section heading scale and spacing to better match Vue `BaseHeading`.
+- Reduced example toolbar height and body padding to match Vue dense `Example.vue` structure.
+- Limited dashed `v-input` region styling to Usage and Slot events, matching Vue `#input-usage` source instead of applying it to every section.
+- Tightened Playground row spacing and placed the final `v-input` in the same row/body flow as Vue.
+- Updated info alert surface to closer Vue `grey lighten-3` colored-border styling.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Inputs remains pending user visual approval.
+
+### Vuetify Forms Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented Vuetify / Forms at `/components/forms-control/forms`.
+- Enabled only the Form Control > Forms sidebar item.
+- Kept Inputs, later Form Control items, Calendars, animations, and approved slices unchanged.
+
+Implemented:
+
+- Source-driven Vue order: Usage, Playground, Creating rules, Validation with submit & clear, Vuelidate, Vee-validate.
+- Preserved Vue documentation text, breadcrumbs, source-panel controls, invert controls, and example block shell.
+- Added page-scoped Vuetify-like form primitives for text fields, selects, checkboxes, switches, sliders, and buttons.
+- Implemented validation rules, submit/validate, reset form, reset validation, lazy validation switch, Vuelidate dirty/touch behavior, and Vee-validate submit/clear behavior.
+- Registered route `/components/forms-control/forms`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Forms remains pending user visual approval.
+
 ### Combobox Multiple/Dense Selection Fix
 
 Status: fixed; pending user visual approval.
