@@ -3606,3 +3606,134 @@ Build:
 Approval:
 
 - Vuetify / Autocompletes remains pending user visual approval.
+
+### Vuetify Combobox Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented Vuetify / Combobox at `/components/forms-control/combobox`.
+- Enabled only the Form Control > Combobox sidebar item.
+- Kept Autocompletes, File Inputs, later Form Control items, Calendars, animations, and approved slices unchanged.
+
+Implemented:
+
+- Source-driven Vue order: Usage, Multiple combobox, Dense, No data with chips, Advanced custom options.
+- Preserved Vue documentation text, warning/error/info alert text, breadcrumbs, source-panel controls, invert controls, and example block shell.
+- Added a local page-scoped Vuetify-like combobox primitive covering multiple values, chips, small chips, readonly, dense/outlined/filled/solo states, clearable values, hide-selected filtering, Enter-to-create custom items, chip removal, no-data creation prompts, and inline list editing for the advanced example.
+- Registered route `/components/forms-control/combobox`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Combobox remains pending user visual approval.
+
+### Combobox Multiple/Dense Selection Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Combobox examples: `Multiple combobox` readonly row and `Dense` dropdown selected-state behavior.
+
+Fixed:
+
+- `I'm readonly` now behaves visually as a non-openable readonly chip field and no longer shows the dropdown arrow.
+- Dense dropdown now marks preselected values (`Vuetify`, `Programming`) in the menu with selected styling and a check icon.
+- Clicking an already-selected item in multiple mode now toggles/removes it like Vuetify multiple selection.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Combobox remains pending user visual approval.
+
+### Combobox Usage Click-Outside Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Combobox dropdown close behavior used by `/components/forms-control/combobox`.
+
+Fixed:
+
+- Added local click-outside handling for the page-scoped Combobox primitive.
+- Opening the Usage dropdown and then clicking outside now closes the menu.
+- Inside clicks continue to keep the menu open for item selection/editing.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Combobox remains pending user visual approval.
+
+### Combobox Usage Dropdown and Options Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Usage playground inside `/components/forms-control/combobox`.
+
+Fixed:
+
+- Opening the single-value Combobox dropdown now uses Vue-like `search-input` state instead of filtering by the current selected model text.
+- The default dropdown now shows the available items instead of being trapped by `Vuetify`.
+- Typing updates the search filter; selecting an item updates model and visible input; Enter creates the typed custom value.
+- `persistent-hint` now controls persistent hint visibility; without it the hint appears only while the combobox is active/open.
+- Removed the custom no-data slot from Usage because Vue source does not expose a `noData` option in this playground.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Combobox remains pending user visual approval.
+
+### Combobox Usage Behavior Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Usage playground behavior inside `/components/forms-control/combobox`.
+
+Fixed:
+
+- Corrected single-value combobox editing so the input no longer snaps back to `Vuetify` while the user clears/types.
+- Separated the combobox search input state from the selected model value, matching Vue `:search-input.sync` behavior more closely.
+- Enter-to-create now uses the current typed search text in both single and multiple modes.
+- Clearable now clears both model and visible search/input text.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Combobox remains pending user visual approval.

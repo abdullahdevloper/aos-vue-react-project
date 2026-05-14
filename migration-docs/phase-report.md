@@ -2555,6 +2555,189 @@ Approval:
 
 - Vuetify / Autocompletes remains pending user visual approval.
 
+### Vuetify Combobox Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Combobox only.
+- Route: `/components/forms-control/combobox`.
+- Sidebar: enabled only `Vuetify > Form Control > Combobox`.
+- Autocompletes, File Inputs, approved slices, animations, and `.claude/` were not touched.
+- Calendars remains deferred/paused and not approved.
+
+Source trace:
+
+- Main page: `src/views/Vuetify/FormControls/Combobox.vue`.
+- Text: `src/lang/en/components/Combobox.json`, `src/lang/en/components/Selects.json`.
+- Usage: `src/demo/usages/combobox.vue`, `src/demo/usages/usage.js`.
+- Examples, in exact Vue order:
+  - `src/demo/examples/combobox/simple/combobox-multiple.vue`
+  - `src/demo/examples/combobox/simple/dense.vue`
+  - `src/demo/examples/combobox/intermediate/no-data.vue`
+  - `src/demo/examples/combobox/intermediate/advanced.vue`
+- Shared shell behavior: `src/demo/components/DocPage.vue` confirms order `headingText`, `Usage`, `alerts`, `examples`.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Route/sidebar | `src/router/routes/vuetify.js`, `src/config/navigation-items.js` | `/components/forms-control/combobox` under Form Control > Combobox | Route registered and sidebar item enabled; File Inputs remains pending | Match | Pending visual review |
+| Page shell | `Combobox.vue`, `DocPage.vue` | Components/Vuetify breadcrumbs, intro text, Usage, alerts, examples | Reproduced hierarchy and alert order after Usage | Match | Uses existing React doc shell |
+| Usage | `src/demo/usages/combobox.vue` | Combobox with items `Gaming`, `Programming`, `Vue`, `Vuetify`, model `Vuetify`, custom values, options for hide-selected/multiple/persistent-hint/small-chips/clearable/type | Implemented exact options, model reset behavior for multiple, type variants, custom Enter creation, no-data create prompt | Pending visual review | Native select menu styling may need later visual tuning |
+| Multiple combobox | `simple/combobox-multiple.vue` | Four rows: plain multiple, chips, scoped-slot avatar chips, readonly chips; shared model `Vuetify`, `Programming` | Implemented four rows with shared state, chips, avatar initials, readonly mode, selection/removal behavior | Pending visual review | Needs screenshot comparison for exact field/chip density |
+| Dense | `simple/dense.vue` | One outlined dense multiple combobox with selected `Vuetify`, `Programming` | Implemented outlined dense field and exact item list | Pending visual review | Exact Vuetify dense height needs visual approval |
+| No data with chips | `intermediate/no-data.vue` | Multiple small chips, hide-selected, persistent hint `Maximum of 5 tags`, no-data slot creates new item on Enter, max 5 values | Implemented small chips, hint, hide-selected filtering, no-data creation prompt, Enter creation, and max-5 guard | Pending visual review | Menu animation pending visual review |
+| Advanced custom options | `intermediate/advanced.vue` | Solo small-chip combobox with header, custom filter, create chip with rotating colors, object model, inline item edit with pencil/check | Implemented header, custom objects, created item color rotation, selected colored chips, inline edit input, pencil/check action | Pending visual review | Visual parity of inline edit/menu actions requires screenshot review |
+| Source/invert controls | Shared example shell | View source and invert example color controls remain available | Implemented in Combobox example block | Pending visual review | Source panel shows source file references |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Combobox remains pending user visual approval.
+
+### Combobox Multiple/Dense Selection Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only `Multiple combobox` readonly row and `Dense` dropdown selected-state behavior inside Vuetify / Combobox.
+- Autocompletes, File Inputs, approved slices, animations, and `.claude/` were not touched.
+
+Mismatch:
+
+- User reported `I'm readonly` did not match Vue.
+- User reported Dense dropdown did not show the preselected options, so the selected state did not match Vue.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Multiple combobox readonly | `v-combobox` with `chips`, `multiple`, `readonly`; selected chips visible and field is not interactive | Field showed chips but retained normal dropdown affordance | Readonly field keeps chips visible, suppresses dropdown opening and hides dropdown arrow | Pending visual review | Label color also avoids focused/primary state |
+| Dense selected menu items | Dense outlined multiple combobox with selected `Vuetify`, `Programming`; dropdown should expose selected item state | Dropdown listed items without selected-state styling/check | Menu rows now mark selected items with cyan selected background and check icon | Pending visual review | Applies to multiple combobox menus |
+| Multiple selected item click | Vuetify multiple selection toggles selected items in the menu | Clicking selected item did nothing | Clicking selected item now removes it; clicking unselected adds it | Pending visual review | Preserves custom item creation |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Combobox remains pending user visual approval.
+
+### Combobox Usage Click-Outside Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed Combobox dropdown close behavior inside Vuetify / Combobox.
+- Autocompletes, File Inputs, approved slices, animations, and `.claude/` were not touched.
+
+Mismatch:
+
+- User reported that the Usage dropdown stayed open after clicking outside it.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Outside click close | Vuetify menu closes when focus/click moves outside the combobox/menu | Dropdown stayed open after outside clicks | Added page-scoped `pointerdown` outside detection through a combobox ref | Pending visual review | Applies to the local Combobox primitive |
+| Inside interaction | Clicking inside input/menu should not close before selection/editing | N/A | Inside clicks are ignored by the outside handler | Match | Selection still closes single mode through existing logic |
+| Search cleanup | Closing menu clears transient `search-input` | Search could persist with open menu | Outside close now clears transient search | Pending visual review | Model value is preserved |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Combobox remains pending user visual approval.
+
+### Combobox Usage Dropdown and Options Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Usage playground behavior inside Vuetify / Combobox.
+- Autocompletes, File Inputs, approved slices, animations, and `.claude/` were not touched.
+
+Mismatch:
+
+- User reported that the Usage section still did not match and that dropdown behavior had issues and did not follow Options.
+- React was filtering the single combobox dropdown by the selected model text (`Vuetify`) instead of using the separate Vue `search-input.sync` state.
+- React also showed the custom no-data create row in Usage even though Vue source does not expose a `noData` option in the playground controls.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Dropdown open in single mode | Current `model` can display `Vuetify`, while `search-input` starts independent/null | Dropdown was filtered by visible model text and effectively trapped around `Vuetify` | Dropdown filtering now uses separate search state; initial open shows available items | Pending visual review | Matches Vue separation of `model` and `search` |
+| Search/filter | Typing updates `search-input.sync` and filters menu | Search and display/model fallback were coupled | Typing updates both visible input and search filter until selection | Pending visual review | Selection resets search like Vue |
+| Options: hide-selected | Should hide selected items from menu when enabled | Could be hard to verify because menu started filtered by `Vuetify` | Hide-selected now applies against full available list when dropdown opens | Pending visual review | Applies to model text list |
+| Options: persistent-hint | Hint is persistent only with `persistent-hint`, otherwise contextual | Hint was always visible because a hint string existed | Hint persists only with option enabled; otherwise appears while active/open | Pending visual review | More faithful to Vuetify hint behavior |
+| Usage no-data slot | Vue template has no-data slot only if `attrs.noData`, but no `noData` option is defined in this playground | React always passed `noDataCreate` in Usage | Removed custom no-data slot from Usage; Enter creation remains available | Match | No visible `noData` option exists in Vue Usage config |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Combobox remains pending user visual approval.
+
+### Combobox Usage Behavior Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Usage playground behavior inside Vuetify / Combobox.
+- Autocompletes, File Inputs, approved slices, animations, and `.claude/` were not touched.
+
+Mismatch:
+
+- User reported that the Combobox functions in the Usage section did not work.
+- React was tying the visible single-value input directly to the selected model fallback, so clearing or typing could snap back to `Vuetify` instead of behaving like Vue `:search-input.sync`.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Single Usage input editing | `search-input.sync` lets the user clear/type independent of current `model` | Empty typed value fell back to selected `model` text | Added separate `inputText` state for single mode | Pending visual review | Keeps model and search synchronized on selection |
+| Enter-to-create | Pressing Enter creates the typed custom value | Could use stale/blocked search value in single mode | Uses current typed text for single and multiple modes | Pending visual review | Menu no-data text uses current typed value |
+| Clearable | Clear removes selected value and visible text | Cleared model but visible text could repopulate from model fallback | Clears model, search, and visible input text together | Pending visual review | Applies only when clearable is enabled |
+| Multiple mode | Multiple uses array model and search input clears after create/select | Existing behavior mostly worked | Preserved multiple search behavior and reset after selection | Pending visual review | No unrelated examples changed |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Combobox remains pending user visual approval.
+
 ## Vuetify Footers Implementation
 
 Status: implemented; pending user visual approval.

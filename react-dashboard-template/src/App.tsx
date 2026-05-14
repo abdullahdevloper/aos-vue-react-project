@@ -46,6 +46,7 @@ import DividersPage from "./pages/ui-components/vuetify/DividersPage";
 import ExpansionPanelsPage from "./pages/ui-components/vuetify/ExpansionPanelsPage";
 import FootersPage from "./pages/ui-components/vuetify/FootersPage";
 import AutocompletesPage from "./pages/ui-components/vuetify/AutocompletesPage";
+import ComboboxPage from "./pages/ui-components/vuetify/ComboboxPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -119,6 +120,7 @@ export default function App() {
           <Route path="/components/expansion-panels" element={<DashboardRoute><ExpansionPanelsPage /></DashboardRoute>} />
           <Route path="/components/footer" element={<DashboardRoute><FootersPage /></DashboardRoute>} />
           <Route path="/components/forms-control/autocompletes" element={<DashboardRoute><AutocompletesPage /></DashboardRoute>} />
+          <Route path="/components/forms-control/combobox" element={<DashboardRoute><ComboboxPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
