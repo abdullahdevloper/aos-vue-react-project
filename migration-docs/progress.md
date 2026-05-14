@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Footers.
+- Active section: Vuetify / Textareas.
 
 ## Current Slice
 
-- Scope: Vuetify / Footers only.
-- Route: `/components/footer`.
+- Scope: Vuetify / Textareas only.
+- Route: `/components/forms-control/textarea`.
 - Status: implemented; pending user visual approval.
-- Source audit: `migration-docs/vuetify-batch-3-audit.md`
+- Source audit: Vue Textareas sources traced directly from `src/views/Vuetify/FormControls/Textarea.vue`, `src/demo/examples/textarea/**`, and `src/lang/en/components/Textarea.json`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -47,6 +47,8 @@ Current rebuild strategy:
 - Vuetify / Dividers: implemented; click animation fix applied; pending user visual approval.
 - Vuetify / Expansion Panels: implemented; core expansion, focusable, disabled/readonly, custom icon, and advanced date picker fixes applied; pending user visual approval.
 - Vuetify / Footers: implemented; pending user visual approval.
+- Vuetify / Sliders: implemented; shared slider/range behavior rebuilt; pending user visual approval.
+- Vuetify / Textareas: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -3635,6 +3637,156 @@ Approval:
 
 - Vuetify / Combobox remains pending user visual approval.
 
+### Vuetify Sliders Remaining Blockers Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only remaining Vuetify / Sliders blockers at `/components/forms-control/sliders`.
+- Targeted sections: Inverse label, Custom Range slider, Ticks.
+
+Fixed:
+
+- Inverse label keeps the label after the track with Vue-like start spacing while remaining draggable.
+- Custom Range slider now uses Material icon equivalents for the Vue MDI season icons and uses the Vuetify thumb-label rotation/orientation.
+- Ticks now render as Vuetify-style square tick marks, use `tick-size`, show only during drag for plain `ticks`, always show for `ticks="always"` or tick labels, and switch filled/unfilled color against the active track range.
+
+PASS/FAIL:
+
+- Inverse label: PASS.
+- Custom Range slider: PASS.
+- Ticks styling: PASS.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Sliders remains pending user visual approval.
+
+### Vuetify Textareas Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Textareas at `/components/forms-control/textarea`.
+- Enabled only the Form Control > Textareas sidebar item.
+- Kept Sliders, Textfields, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Implemented:
+
+- Source-driven Vue order: Usage, Playground, Icons, Auto grow, Background color, Browser autocomplete, Clearable, Counter, No resize, Rows, Beautiful Forms.
+- Preserved Vue documentation text and inline code styling from `src/lang/en/components/Textarea.json`.
+- Added local Vuetify-like textarea primitive covering default, solo, filled, outlined, auto-grow, row height, rows, counter, clearable, no-resize, loading, persistent hint, rounded, shaped, single-line, icons, background color, and focus/error states.
+- Implemented the signup box example with purple system bar/toolbar, fields, bio textarea, checkbox terms dialog, Clear and disabled Submit behavior.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Textareas remains pending user visual approval.
+
+### Vuetify Textareas Remaining Blockers Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Auto grow, No resize, and Beautiful Forms in `/components/forms-control/textarea`.
+
+Fixed:
+
+- Auto grow now expands vertically while typing using measured `scrollHeight`.
+- No resize now keeps the textarea editable while preventing manual resize.
+- Beautiful Forms Bio textarea now uses the corrected auto-grow behavior, with Clear, validation-disabled Submit, and Terms dialog interactions preserved.
+
+PASS/FAIL:
+
+- Auto grow behavior: PASS.
+- No resize behavior: PASS.
+- Beautiful Forms visual layout: PASS.
+- Beautiful Forms interactions: PASS.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Textareas remains pending user visual approval.
+
+### Vuetify Sliders Custom Range Synced Icons Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Custom Range slider icon visibility in `/components/forms-control/sliders`.
+
+Fixed:
+
+- Both Custom Range thumb icons now appear together when interacting/dragging either thumb or the track.
+- Both icons now hide together on outside click.
+- Two-thumb range behavior and season icon value updates are preserved.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Sliders remains pending user visual approval.
+
+### Vuetify Sliders Custom Range and Inverse Label Follow-up
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Custom Range slider and Inverse label in `/components/forms-control/sliders`.
+
+Fixed:
+
+- Custom Range slider thumb icons now appear only while the thumb is active/focused and hide on outside click, matching Vuetify `genThumbLabel`.
+- Custom Range slider keeps two-thumb range behavior and season icon value updates.
+- Inverse label example now uses local state so dragging updates the value instead of staying fixed at `30`.
+
+PASS/FAIL:
+
+- Custom Range slider icon visibility on drag: PASS.
+- Custom Range slider icon hide on outside click: PASS.
+- Custom Range slider two-thumb behavior: PASS.
+- Custom Range slider icon interaction: PASS.
+- Inverse label drag behavior: PASS.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Sliders remains pending user visual approval.
+
 ### Vuetify Selection Controls Implementation
 
 Status: implemented; pending user visual approval.
@@ -3656,6 +3808,64 @@ Implemented:
 - Playground with disabled, read-only, error, success, color select, loading, flat, inset, mandatory, multiple, row, indeterminate, checkbox/radio/switch controls.
 - Vue example order: Checkboxes Boolean, Array, States, Colors, Inline with textfield; Radios Default, Direction, Colors; Switches Boolean, Array, States, Colors, Flat, Inset; Label slot.
 - Local Vuetify-like checkbox, radio, switch, select, ripple, source panel, and invert example behavior.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selection Controls remains pending user visual approval.
+
+### Vuetify Sliders Implementation
+
+Status: implemented; pending user visual approval.
+
+Route:
+
+- `/components/forms-control/sliders`
+
+Scope:
+
+- Implemented only Vuetify / Sliders.
+- Enabled only the Sliders sidebar item.
+- Textareas and Textfields remain disabled/pending.
+- Calendars remains deferred/paused and not approved.
+
+Implemented:
+
+- Usage intro and Usage slider.
+- Playground with min, max, disabled, readonly, vertical, range, and volume slider/range slider.
+- Vue example order from `Sliders.vue`: Min & Max values, Disabled, Readonly, Icons, Vertical sliders, Thumb, Inverse label, Custom Range slider, Ticks, Custom colors, Range, Validation, Slots/metronome.
+- Local Vuetify-like slider primitive with track/fill/thumb/range/ticks/tick labels/thumb labels/vertical/readonly/disabled/colors/source panel/invert behavior.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Sliders remains pending user visual approval.
+
+### Vuetify Selection Controls Label Slot Progress Fidelity Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Corrected only `Label slot` progress inside `/components/forms-control/selection-controls`.
+
+Fixed:
+
+- Rebuilt the 24px circular progress using Vuetify's original radius, viewBox, stroke width, dash array, dash offset, and rotate/dash animation timing.
+- Progress now uses inherited `currentColor` like Vuetify instead of forcing the primary color.
+- Inactive state keeps the faint Vuetify underlay circle; active state uses the indeterminate overlay arc.
 
 Build:
 

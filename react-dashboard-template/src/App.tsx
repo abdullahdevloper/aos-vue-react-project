@@ -53,6 +53,8 @@ import InputsPage from "./pages/ui-components/vuetify/InputsPage";
 import OverflowButtonsPage from "./pages/ui-components/vuetify/OverflowButtonsPage";
 import SelectsPage from "./pages/ui-components/vuetify/SelectsPage";
 import SelectionControlsPage from "./pages/ui-components/vuetify/SelectionControlsPage";
+import SlidersPage from "./pages/ui-components/vuetify/SlidersPage";
+import TextareasPage from "./pages/ui-components/vuetify/TextareasPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -133,6 +135,8 @@ export default function App() {
           <Route path="/components/forms-control/overflow-btns" element={<DashboardRoute><OverflowButtonsPage /></DashboardRoute>} />
           <Route path="/components/forms-control/selects" element={<DashboardRoute><SelectsPage /></DashboardRoute>} />
           <Route path="/components/forms-control/selection-controls" element={<DashboardRoute><SelectionControlsPage /></DashboardRoute>} />
+          <Route path="/components/forms-control/sliders" element={<DashboardRoute><SlidersPage /></DashboardRoute>} />
+          <Route path="/components/forms-control/textarea" element={<DashboardRoute><TextareasPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
