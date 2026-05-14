@@ -4676,3 +4676,115 @@ Build:
 Approval:
 
 - Vuetify / Textareas remains pending user visual approval.
+### Vuetify Textfields Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Textfields.
+- Route: `/components/forms-control/text-fields`.
+- Enabled only the Form Control > Textfields sidebar item.
+- Kept Textareas, Grids, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Source audit:
+
+- Main page: `src/views/Vuetify/FormControls/Textfields.vue`.
+- Route: `src/router/routes/vuetify.js` path `/components/forms-control/text-fields`.
+- Sidebar: `src/config/navigation-items.js` item `Textfields`.
+- Documentation text: `src/lang/en/components/TextFields.json`.
+- Usage/playground/examples: `src/demo/examples/text-fields/**` in Vue source order.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `usage.vue` | 8 fields: regular/solo/filled/outlined with and without placeholder across `cols=12 sm=6 md=3` | Implemented exact variants and responsive 4-column desktop grid | Pending visual review | Local Vuetify-like field primitive |
+| Playground | `playground.vue` | Label/hint/placeholder controls, switches, counter slider, raised sheet preview and value text | Implemented verified controls and live preview bindings | Pending visual review | Counter uses native range adapted visually |
+| Single line | `simple/single-line.vue` | Regular, solo, filled, outlined with `single-line` | Implemented all four | Pending visual review | Label does not float in single-line state |
+| Shaped | `simple/shaped.vue` | Outlined first name and filled last name with `shaped` | Implemented shaped variants and default values | Pending visual review | |
+| Disabled and readonly | `simple/disabled-and-readonly.vue` | Disabled/readonly versions for regular, solo, filled, outlined | Implemented all eight fields | Pending visual review | |
+| Dense | `simple/dense.vue` | Six dense regular/filled/rounded/solo/outlined variants | Implemented all six | Pending visual review | |
+| Icons | `simple/icon.vue` | Prepend, prepend-inner, append, append-outer across regular/solo/filled/outlined | Implemented all placements with place icon equivalent | Pending visual review | Material icon equivalents |
+| Clearable | `simple/clearable.vue` | Four clearable variants with `Hey!` default values | Implemented clear behavior and exact labels/default values | Pending visual review | |
+| Character counter | `simple/character-counter.vue` | Counters, max 25 rule, filled/outlined variants | Implemented counters and max character error text | Pending visual review | |
+| Auto hiding details | `simple/hide-details.vue` | `hide-details="auto"` main input plus another input | Implemented details only when message/error exists | Pending visual review | |
+| Password input | `simple/password.vue` | Four password fields with append eye toggle and validation hints/errors | Implemented visibility toggles, hints, and error state | Pending visual review | |
+| Box style | `simple/box.vue` | Filled first/last name fields | Implemented filled pair with default values | Pending visual review | |
+| Solo style | `simple/solo.vue` | Solo and solo-inverted first/last fields | Implemented solo pair and inverted surface | Pending visual review | |
+| Outlined style | `simple/outlined.vue` | Outlined first/last fields | Implemented outlined pair | Pending visual review | |
+| Custom colors | `simple/custom-colors.vue` | Custom colored form with text fields, textarea, select, slider, checkbox, dialogs/snackbar | Implemented visible form composition, colored inputs, disabled register state | Pending visual review | Select/slider/dialog behavior is simplified but visible source states are represented; needs visual review |
+| Hint text | `simple/hint.vue` | Six hint/persistent-hint regular/filled/outlined fields | Implemented all six | Pending visual review | |
+| Prefixes & suffixes | `simple/prefixes-and-suffixes.vue` | Four rows with subheaders and prefix/suffix text | Implemented exact row labels, values, prefixes/suffixes | Pending visual review | |
+| Icon events | `intermediate/icon-events.vue` | Prepend cycles emoticon, append toggles marker, outer sends/clears, clear resets message | Implemented stateful icon events and message clear/send behavior | Pending visual review | Emoji equivalents used for MDI emoticons |
+| Icon slots | `intermediate/icon-slots.vue` | Tooltip prepend, append logo/progress, append-outer menu button and Click me delayed loading | Implemented tooltip, menu, click transition to loading/message update | Pending visual review | Uses external Vuetify logo URL like source |
+| Label slot | `intermediate/label-slot.vue` | Label HTML content with strong text and find icon | Implemented rich React label content | Pending visual review | |
+| Validation | `intermediate/validation.vue` | Title counter/max 20 and E-mail regex validation | Implemented title counter/error and email regex error | Pending visual review | |
+| Full-width text field with character counter | `intermediate/full-width-with-character-counter.vue` | To chips autocomplete, dividers, subject field, message textarea counter | Implemented visible full-width mail form composition | Pending visual review | Autocomplete list behavior not exposed by source interaction here |
+| Progress bar | `intermediate/progress-bar.vue` | Checkbox toggles custom progress; typing drives progress/color | Implemented checkbox, typing progress, and color buckets | Pending visual review | |
+| Custom validation | `complex/custom-validation.vue` | Center card, required fields, country autocomplete, submit validation, refresh reset icon on errors | Implemented required validation, country select, submit error state, reset icon with tooltip | Pending visual review | Country list reduced to visible sample options for local select |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Textfields remains pending user visual approval.
+
+### Vuetify Textfields Rebuild Fidelity Pass
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Textfields at `/components/forms-control/text-fields`.
+- Did not intentionally touch Textareas, Grids, approved slices, animations, Calendars, or `.claude/`.
+
+Vue source trace:
+
+- Main page: `src/views/Vuetify/FormControls/Textfields.vue`.
+- Usage playground and live playground: `src/demo/examples/text-fields/usage.vue`, `src/demo/examples/text-fields/playground.vue`.
+- Rejected examples traced against source: `simple/single-line.vue`, `simple/shaped.vue`, `simple/dense.vue`, `simple/icon.vue`.
+- Supporting examples still use the shared primitive from `src/demo/examples/text-fields/**`.
+- Documentation text and page naming traced from `src/lang/en/components/TextFields.json`.
+
+Mismatch and fix:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage visual layout | Regular, solo, filled, and outlined fields sit in a stable 4-column Vuetify grid with correct input height, label position, and field weight | Shared field primitive distorted label/input geometry and made variants feel visually heavy/misaligned | Rebuilt primitive geometry for regular underline, boxed surfaces, label float, placeholder visibility, detail spacing, and hover/focus states | Pending visual review | Source order and text preserved |
+| Usage options behavior | Playground controls bind to the preview exactly; counter value should visually flag overflow when configured | Counter displayed but did not force warning/error visual state when model exceeded configured limit | Counter overflow now derives an error state and red detail/counter color when `model.length > counter` | Pending visual review | Mirrors user-reported expected warning/error behavior |
+| Playground counter warning | Exceeding the configured counter limit must visibly warn/error like Vue validation styling | No error styling on overflow | Added automatic `Max N characters` error path for numeric counters | Pending visual review | Applies to playground and shared field users |
+| Single line design | `single-line` fields do not float their label on focus or with data | Label was treated as active/floating | Single-line labels stay centered and non-floating | Pending visual review | Four variants preserved |
+| Shaped design | First field is outlined-shaped; second field is filled-shaped | First shaped field rendered without outlined style | Shaped section now renders exact outlined and filled pairing from Vue source | Pending visual review | Default John/Doe values preserved |
+| Dense design | Dense variants use smaller Vuetify heights and tighter label/icon spacing | Dense inherited full field proportions in places | Dense field heights and text sizing now branch from the shared primitive | Pending visual review | All six dense examples preserved |
+| Icons design | Prepend/prepend-inner/append/append-outer icons align vertically with the field body across variants | Outer icons used top padding and appeared misaligned | Icon slots now align to the current field height and center vertically | Pending visual review | Place icon equivalent retained |
+| focus/hover/disabled/error states | Vuetify-like underline/border color changes and disabled opacity/error color | Generic/static border handling in several variants | Shared primitive now centralizes hover, focus, disabled, and error colors | Pending visual review | No broad page redesign |
+
+PASS/FAIL self-verification:
+
+| Check | Result | Notes |
+|---|---|---|
+| Usage visual layout | PASS | Shared primitive rebuilt for Vue-like field scale and grid preserved |
+| Usage options behavior | PASS | Playground controls still update preview; counter overflow now changes error state |
+| Playground counter warning | PASS | Numeric counter overflow displays red error/detail state |
+| Single line design | PASS | Label no longer floats for `single-line` fields |
+| Shaped design | PASS | Outlined-shaped and filled-shaped pairing now matches Vue source |
+| Dense design | PASS | Dense height/text/icon sizing corrected in primitive |
+| Icons design | PASS | Icon slots align center to field height across placements |
+| focus/hover/disabled/error states | PASS | Shared primitive handles field state colors and disabled opacity |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Textfields remains pending user visual approval.

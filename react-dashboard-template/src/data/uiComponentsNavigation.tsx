@@ -169,7 +169,7 @@ export const globalNavigation: SidebarNavEntry[] = [
           { title: "Selection Controls", path: "/components/forms-control/selection-controls", icon: <ViewHeadline /> },
           { title: "Sliders", path: "/components/forms-control/sliders", icon: <ViewHeadline /> },
           { title: "Textareas", path: "/components/forms-control/textarea", icon: <ViewHeadline /> },
-          { title: "Textfields", disabled: true, pending: true },
+          { title: "Textfields", path: "/components/forms-control/text-fields", icon: <ViewHeadline /> },
         ],
       },
       { title: "Grids", disabled: true, pending: true },

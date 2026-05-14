@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-12
+Last updated: 2026-05-14
 
 ## Strategy Status
 
@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Textareas.
+- Active section: Vuetify / Textfields.
 
 ## Current Slice
 
-- Scope: Vuetify / Textareas only.
-- Route: `/components/forms-control/textarea`.
+- Scope: Vuetify / Textfields only.
+- Route: `/components/forms-control/text-fields`.
 - Status: implemented; pending user visual approval.
-- Source audit: Vue Textareas sources traced directly from `src/views/Vuetify/FormControls/Textarea.vue`, `src/demo/examples/textarea/**`, and `src/lang/en/components/Textarea.json`.
+- Source audit: Vue Textfields sources traced directly from `src/views/Vuetify/FormControls/Textfields.vue`, `src/demo/examples/text-fields/**`, and `src/lang/en/components/TextFields.json`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -49,6 +49,7 @@ Current rebuild strategy:
 - Vuetify / Footers: implemented; pending user visual approval.
 - Vuetify / Sliders: implemented; shared slider/range behavior rebuilt; pending user visual approval.
 - Vuetify / Textareas: implemented; pending user visual approval.
+- Vuetify / Textfields: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -3696,6 +3697,62 @@ Build:
 Approval:
 
 - Vuetify / Textareas remains pending user visual approval.
+
+### Vuetify Textfields Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Textfields at `/components/forms-control/text-fields`.
+- Enabled only the Form Control > Textfields sidebar item.
+- Kept Textareas, Grids, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Implemented:
+
+- Source-driven Vue order: Usage, Playground, Single line, Shaped, Disabled and readonly, Dense, Icons, Clearable, Character counter, Auto hiding details, Password, Box, Solo, Outlined, Custom colors, Hint, Prefixes & suffixes, Icon events, Icon slots, Label slot, Validation, Full-width character counter, Progress bar, Custom validation.
+- Preserved Vue documentation text and inline code styling from `src/lang/en/components/TextFields.json`.
+- Added local Vuetify-like text field primitive covering regular, filled, outlined, solo, solo-inverted, dense, shaped, rounded, single-line, disabled, readonly, clearable, counters, hints, loading/progress, icons, prefixes/suffixes, validation and event callbacks.
+- Registered route `/components/forms-control/text-fields`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Textfields remains pending user visual approval.
+
+### Vuetify Textfields Rebuild Fidelity Pass
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Rebuilt only Vuetify / Textfields shared field fidelity inside `/components/forms-control/text-fields`.
+- Kept Textareas, Grids, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Fixed:
+
+- Reworked the local textfield primitive to better match Vue/Vuetify field height, label float geometry, regular underline, outlined border, filled/solo surfaces, shaped radius, dense sizing, icon alignment, hover/focus/error states, and detail/counter spacing.
+- Rebuilt counter overflow behavior so the Playground preview turns error/warning red when model text exceeds the configured counter value.
+- Corrected Single line so labels do not float on focus or with data.
+- Corrected Shaped so the first field is outlined-shaped and the second field is filled-shaped like Vue source.
+- Improved Dense and Icons sections through the shared primitive instead of section-specific approximations.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Textfields remains pending user visual approval.
 
 ### Vuetify Textareas Remaining Blockers Fix
 
