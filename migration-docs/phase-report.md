@@ -2602,6 +2602,111 @@ Approval:
 
 - Vuetify / Inputs remains pending user visual approval.
 
+### Vuetify Overflow Buttons Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Overflow Buttons route only: `/components/forms-control/overflow-btns`.
+- Enabled only the Overflow Buttons sidebar entry under Form Control.
+- Selects and later Form Control entries remain pending/disabled.
+- Calendars remains deferred/paused and not approved.
+
+Vue source trace:
+
+- Main page: `src/views/Vuetify/FormControls/OverflowBtns.vue`
+- Route/sidebar: `src/router/routes/vuetify.js`, `src/config/navigation-items.js`
+- Text: `src/lang/en/components/OverflowBtns.json`
+- Shared alert text: `src/lang/en/components/Selects.json`
+- Shared docs shell: `src/demo/components/DocPage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Playground.vue`, `src/demo/components/Example.vue`, `src/demo/components/Examples.vue`
+- Examples:
+  - `src/demo/examples/overflow-btns/usage.vue`
+  - `src/demo/examples/overflow-btns/playground.vue`
+  - `src/demo/examples/overflow-btns/simple/counter.vue`
+  - `src/demo/examples/overflow-btns/simple/disabled.vue`
+  - `src/demo/examples/overflow-btns/simple/dense.vue`
+  - `src/demo/examples/overflow-btns/simple/editable.vue`
+  - `src/demo/examples/overflow-btns/simple/filled.vue`
+  - `src/demo/examples/overflow-btns/simple/hint.vue`
+  - `src/demo/examples/overflow-btns/simple/loading.vue`
+  - `src/demo/examples/overflow-btns/simple/menu-props.vue`
+  - `src/demo/examples/overflow-btns/simple/readonly.vue`
+  - `src/demo/examples/overflow-btns/simple/segmented.vue`
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Route/sidebar | `src/router/routes/vuetify.js`, `src/config/navigation-items.js` | `/components/forms-control/overflow-btns` under Form Control > Overflow Buttons | Route registered and sidebar item enabled | Match | Selects remains pending |
+| Page hierarchy | `OverflowBtns.vue` | `Components`, page `OverflowBtns`, breadcrumb label `Overflow Buttons` | Implemented with `DocPage` and Vuse section shell | Match | Pending visual review |
+| Heading text | `src/lang/en/components/OverflowBtns.json` | `v-overflow-btn` intro text with inline code tokens | Implemented source text and inline code styling | Match | Pending visual review |
+| Alerts | `src/lang/en/components/Selects.json` | Error object items alert and warning menu auto alert | Implemented both alerts in same page position before Playground | Pending visual review | Alert surface adapted to Vuse shell |
+| Usage | `usage.vue` | `v-container id="dropdown-example-1"` with `Overflow Btn` and font items | Implemented single overflow button with font item list | Pending visual review | Menu behavior local recreation |
+| Playground | `playground.vue` | Switches for Editable, Segmented, Loading, Disabled, Readonly, Filled, Reverse, Dense, Persistent hint, Menu to top; one `v-overflow-btn` using those attrs | Implemented all switches and mapped them to the local Overflow button primitive | Pending visual review | Exact Vuetify transition timing may need screenshot/interaction review |
+| Counter | `simple/counter.vue` | Object items 100/75/50/25/0%, label `Overflow Btn w/ counter`, `counter` | Implemented item order, selection, and character counter | Pending visual review | Counter displays selected text length |
+| Disabled | `simple/disabled.vue` | Disabled overflow button prevents interaction and dims | Implemented disabled opacity and open guard | High | Pending visual review |
+| Dense | `simple/dense.vue` | Dense field/list item height with font items | Implemented reduced field and menu item heights | Pending visual review | Needs screenshot review |
+| Editable | `simple/editable.vue` | Editable overflow button can be typed directly and select percentage items | Implemented direct input editing plus menu selection | Pending visual review | Local recreation of direct text edit behavior |
+| Filled | `simple/filled.vue` | Filled surface alternative box style | Implemented filled background and no underline emphasis | Pending visual review | Needs visual comparison |
+| Hint | `simple/hint.vue` | `menu-props="top"` and hint `Select font` | Implemented top menu and hint behavior | Pending visual review | Hint shown on focus/open like Vuetify |
+| Loading | `simple/loading.vue` | Loading linear progress below field | Implemented primary linear progress at field bottom | Pending visual review | Local recreation |
+| Menu props | `simple/menu-props.vue` | Menu opens toward top | Implemented `menuTop` placement | Pending visual review | Needs viewport review |
+| Read-only | `simple/readonly.vue` | Inactive without disabled color | Implemented readonly open guard without opacity dim | High | Pending visual review |
+| Segmented | `simple/segmented.vue` | Additional divider between content and dropdown icon with list/favorite/delete items | Implemented segmented divider, item order, selection | Pending visual review | Icons are source text items, as Vue source uses text strings |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path status check required after implementation.
+
+Approval:
+
+- Vuetify / Overflow Buttons remains pending user visual approval.
+
+### Vuetify Overflow Buttons Size Correction
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatch:
+
+- All Overflow Buttons sections had incorrect sizing.
+
+Source recheck:
+
+- `src/demo/components/Example.vue`
+- `src/demo/examples/overflow-btns/usage.vue`
+- `src/demo/examples/overflow-btns/playground.vue`
+- `src/demo/examples/overflow-btns/simple/dense.vue`
+- `src/demo/examples/overflow-btns/simple/segmented.vue`
+
+Correction table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Field height | Vuetify default overflow button uses standard form-control field height; dense is smaller but not tiny | Default and dense fields were too compressed | Default height adjusted to 56px, dense to 48px | Pending visual review | Local recreation |
+| Field width | Vue example sits inside `v-container`, not full oversized width | Field max width was too wide | Max width reduced and container padding increased | Pending visual review | Applies to all examples |
+| Menu item height | Vuetify menu list items use 48px default and smaller dense rows | Dense menu rows were too small | Dense rows adjusted to 40px; default remains 48px | Pending visual review | Behavior preserved |
+| Dropdown icon zone | Segmented/default icon zone should match Vuetify control proportions | Default icon zone was narrow | Default icon zone adjusted, segmented width preserved | Pending visual review | Divider behavior preserved |
+| Example body height | Vue examples leave enough vertical room for details/hints/menu affordance | Several bodies were visually cramped | Simple example min-heights increased | Pending visual review | No content/behavior changes |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Overflow Buttons remains pending user visual approval.
+
 ### Vuetify Inputs Structure and Design Correction
 
 Status: fixed; pending user visual approval.

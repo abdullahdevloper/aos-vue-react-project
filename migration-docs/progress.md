@@ -3691,6 +3691,65 @@ Approval:
 
 - Vuetify / Inputs remains pending user visual approval.
 
+### Vuetify Overflow Buttons Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented Vuetify / Overflow Buttons at `/components/forms-control/overflow-btns`.
+- Enabled only the Overflow Buttons sidebar item under Form Control.
+- Kept Selects and later Form Control items pending/disabled.
+- Kept Calendars deferred/paused and not approved.
+
+Implemented:
+
+- Source-driven page hierarchy with `Components > Vuetify > Overflow Buttons` breadcrumbs.
+- Usage example for `v-overflow-btn`.
+- Vue Selects alerts reused by the Overflow Buttons page.
+- Playground controls: Editable, Segmented, Loading, Disabled, Readonly, Filled, Reverse, Dense, Persistent hint, Menu to top.
+- Examples in Vue order: Counter, Disabled, Dense, Editable, Filled, Hint, Loading, Menu props, Read-only, Segmented.
+- Menu open/close, outside click close, item selection, editable text input, segmented divider, loading bar, disabled/readonly guards, dense height, filled surface, top menu, hint/counter behavior.
+- View source and invert example color controls in the Vuse example-card shell.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Overflow Buttons remains pending user visual approval.
+
+### Vuetify Overflow Buttons Size Correction
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Corrected only Vuetify / Overflow Buttons sizing at `/components/forms-control/overflow-btns`.
+
+Fixed:
+
+- Adjusted overflow button default and dense heights closer to Vuetify field sizing.
+- Reduced max field width and restored container padding closer to Vue `v-container`.
+- Adjusted menu item heights and dropdown icon area sizing.
+- Increased simple example body heights so field/hint/menu spacing is not visually cramped.
+- Kept existing menu, editable, segmented, loading, disabled, readonly, dense, filled, top-menu behavior intact.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Overflow Buttons remains pending user visual approval.
+
 ### Vuetify Inputs Structure and Design Correction
 
 Status: fixed; pending user visual approval.
