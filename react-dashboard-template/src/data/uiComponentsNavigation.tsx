@@ -172,7 +172,7 @@ export const globalNavigation: SidebarNavEntry[] = [
           { title: "Textfields", path: "/components/forms-control/text-fields", icon: <ViewHeadline /> },
         ],
       },
-      { title: "Grids", disabled: true, pending: true },
+      { title: "Grids", path: "/components/grids", icon: <ViewHeadline /> },
       {
         title: "Groups",
         children: [

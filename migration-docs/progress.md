@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Textfields.
+- Active section: Vuetify / Grids.
 
 ## Current Slice
 
-- Scope: Vuetify / Textfields only.
-- Route: `/components/forms-control/text-fields`.
+- Scope: Vuetify / Grids only.
+- Route: `/components/grids`.
 - Status: implemented; pending user visual approval.
-- Source audit: Vue Textfields sources traced directly from `src/views/Vuetify/FormControls/Textfields.vue`, `src/demo/examples/text-fields/**`, and `src/lang/en/components/TextFields.json`.
+- Source audit: Vue Grids sources traced directly from `src/views/Vuetify/Grids.vue`, `src/demo/examples/grids/**`, `src/views/Vuetify/ViewportBreakpoints.vue`, and `src/lang/en/components/Grids.json`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -50,6 +50,7 @@ Current rebuild strategy:
 - Vuetify / Sliders: implemented; shared slider/range behavior rebuilt; pending user visual approval.
 - Vuetify / Textareas: implemented; pending user visual approval.
 - Vuetify / Textfields: implemented; pending user visual approval.
+- Vuetify / Grids: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -4367,3 +4368,52 @@ Build:
 Approval:
 
 - Vuetify / Combobox remains pending user visual approval.
+
+### Vuetify Grids Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Grids at `/components/grids`.
+- Enabled only the Grids sidebar item.
+- Kept Textfields, Item Groups, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Implemented:
+
+- Source-driven Vue order: Usage, Playground, Auto sizing columns, Equal width columns, One column width, Variable content width, Grow and Shrink, Row and column breakpoints, Unique layouts, Vertical alignment, Horizontal alignment, No gutters, Column wrapping, Order classes, Order last / first, Offset, Offset breakpoint, Margin utilities, Nested grid, Spacers, and Viewport Breakpoints.
+- Added page-scoped Vuetify-like grid primitives for `v-container`, `v-row`, `v-col`, and `v-spacer` behavior, including 12-column sizing, no-gutters, offsets, order, alignment, justify, auto columns, and Vuetify breakpoint thresholds.
+- Registered route `/components/grids` and enabled the sidebar item.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Grids remains pending user visual approval.
+
+### Vuetify Grids Shared Primitive Fidelity Fix
+
+Status: fixed; pending user visual approval.
+
+Fixed:
+
+- Corrected `no-gutters` direct column padding behavior.
+- Corrected Vuetify breakpoint cascade behavior in the shared `VCol` primitive.
+- Corrected affected Vuetify spacing helper scale to 4px increments.
+- Corrected Row and column breakpoints dynamic text/layout at Vuetify thresholds.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Grids remains pending user visual approval.

@@ -4735,6 +4735,62 @@ Approval:
 
 - Vuetify / Textfields remains pending user visual approval.
 
+### Vuetify Grids Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Grids.
+- Route: `/components/grids`.
+- Enabled only the Grids sidebar item.
+- Kept Textfields, Item Groups, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Source audit:
+
+- Main page: `src/views/Vuetify/Grids.vue`.
+- Documentation text: `src/lang/en/components/Grids.json`.
+- Usage and playground: `src/demo/examples/grids/usage.vue`, `src/demo/examples/grids/playground.vue`.
+- Examples in exact Vue order: `simple/auto`, `simple/equal`, `simple/one-column-width`, `intermediate/variable-content`, `intermediate/grow-shrink`, `intermediate/row-column-breakpoint`, `intermediate/unique-layouts`, `simple/vertical-alignment`, `simple/horizontal-alignment`, `simple/no-gutters`, `intermediate/wrapping`, `advanced/order`, `advanced/order-first-last`, `advanced/offset`, `advanced/offset-breakpoint`, `intermediate/margin`, `advanced/nested-grid`, `simple/spacer`.
+- Breakpoints table: `src/views/Vuetify/ViewportBreakpoints.vue`.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/examples/grids/usage.vue` | Grey lighten-5 container, no-gutters row, three `cols=12 sm=4` outlined tile cards | Implemented same responsive columns and card text | Pending visual review | Uses page-scoped grid primitives |
+| Playground | `src/demo/examples/grids/playground.vue` | 300px grey row with three cards; Align and Justify selects update row flex props | Implemented align/justify state, selects, and live row layout | Pending visual review | Options match Vue arrays |
+| Auto sizing columns | `simple/auto.vue` | Two no-gutter rows with equal auto columns and first row `mb-6` | Implemented generated 2/3 column rows | Pending visual review | |
+| Equal width columns | `simple/equal.vue` | Four equal columns split by `v-responsive width=100%` after second item | Implemented flex-basis 100% break between second and third cards | Pending visual review | |
+| One column width | `simple/one-column-width.vue` | Auto rows where middle column is `cols=6` then `cols=5` | Implemented exact row sizing/text | Pending visual review | |
+| Variable content width | `intermediate/variable-content.vue` | Centered row with `lg=2`, `md=auto`, `lg=2`; second row auto/default mix | Implemented breakpoint-aware auto and fixed columns | Pending visual review | |
+| Grow and Shrink | `intermediate/grow-shrink.vue` | Four equal columns, then `cols=8` and `cols=4` | Implemented exact layout and text | Pending visual review | |
+| Row and column breakpoints | `intermediate/row-column-breakpoint.vue` | Top row changes at sm/md/lg; second row uses `cols='sm'` | Implemented responsive sm/md/lg widths and equal `sm` columns | Pending visual review | Vue computed values are represented by breakpoint CSS |
+| Unique layouts | `intermediate/unique-layouts.vue` | Three rows with `cols=12 md=8`, `cols=6 md=4`, and `cols=6` patterns | Implemented exact responsive column structure | Pending visual review | |
+| Vertical alignment | `simple/vertical-alignment.vue` | Three 150px rows with align start/center/end plus align-self row | Implemented align and align-self rows | Pending visual review | |
+| Horizontal alignment | `simple/horizontal-alignment.vue` | Five rows with justify start/center/end/space-around/space-between and two `md=4` columns | Implemented all justify rows | Pending visual review | |
+| No gutters | `simple/no-gutters.vue` | No-gutter `cols=12 sm=6 md=8` and `cols=6 md=4` | Implemented exact no-gutter layout | Pending visual review | |
+| Column wrapping | `intermediate/wrapping.vue` | `cols=9`, `cols=4`, `cols=6` wraps because 9+4 exceeds 12 | Implemented wrapping via flex column widths | Pending visual review | |
+| Order classes | `advanced/order.vue` | Unordered, order 12, order 1 columns | Implemented CSS order values | Pending visual review | |
+| Order last / first | `advanced/order-first-last.vue` | `order=last`, unordered, `order=first` | Implemented first/last mapping to -1/13 | Pending visual review | |
+| Offset | `advanced/offset.vue` | md offsets 4, 3, and 3 across three rows | Implemented breakpoint margin-left offsets | Pending visual review | |
+| Offset breakpoint | `advanced/offset-breakpoint.vue` | sm/md/lg offsets change by breakpoint | Implemented sm/md/lg offset rules | Pending visual review | |
+| Margin utilities | `intermediate/margin.vue` | Auto margin helpers push columns apart | Implemented md auto margins and auto cols | Pending visual review | |
+| Nested grid | `advanced/nested-grid.vue` | `sm=9` parent with nested no-gutter row and lightgrey cards | Implemented nested row/columns and grey nested card backgrounds | Pending visual review | |
+| Spacers | `simple/spacer.vue` | `v-spacer` fills space between columns | Implemented flex-grow spacer behavior | Pending visual review | |
+| Viewport Breakpoints | `src/views/Vuetify/ViewportBreakpoints.vue` | Neu-glow simple table with caption, icons, codes, types, ranges, footnote | Implemented matching table content and shell below examples | Pending visual review | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Grids remains pending user visual approval.
+
 ### Vuetify Textfields Rebuild Fidelity Pass
 
 Status: fixed; pending user visual approval.
@@ -4788,3 +4844,39 @@ Build:
 Approval:
 
 - Vuetify / Textfields remains pending user visual approval.
+
+### Vuetify Grids Shared Primitive Fidelity Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the shared Grids primitives and first root mismatches inside `/components/grids`.
+- Did not touch Item Groups, approved slices, animations, Calendars, or `.claude/`.
+
+Source-driven fixes:
+
+- `VRow no-gutters` now removes direct `VCol` padding through inherited gutter variables, matching Vuetify's `no-gutters` behavior.
+- `VCol` breakpoint props now cascade upward instead of resetting to default auto columns at every undefined breakpoint.
+- Vuetify spacing helpers now use the 4px scale for affected helpers: `ma-3`, `pa-6`, `ma-5`, `pa-5`, `mb-6`, and card `pa-2`.
+- Row and column breakpoints now show source-equivalent responsive text: xs/md `col-6`, sm `col-9`/`col-3`, lg `col-3`/`col-9`, using Vuetify thresholds 600/960/1264.
+
+PASS/FAIL:
+
+| Check | Result | Notes |
+|---|---|---|
+| no-gutters | PASS | `VRow noGutters` sets direct column gutter variables to 0 so child `VCol` padding is removed |
+| breakpoint cascade | PASS | `VCol` only emits breakpoint rules for explicitly provided props, preserving lower breakpoint sizing until overridden |
+| spacing helper scale | PASS | Corrected affected Vuetify helper scale to 4px increments |
+| row/column breakpoint text/layout | PASS | Layout and visible text now follow Vue computed behavior across xs/sm/md/lg thresholds |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Grids remains pending user visual approval.
