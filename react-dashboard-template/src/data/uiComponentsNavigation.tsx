@@ -176,7 +176,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       {
         title: "Groups",
         children: [
-          { title: "Item Groups", disabled: true, pending: true },
+          { title: "Item Groups", path: "/components/groups/item-groups", icon: <ViewHeadline /> },
           { title: "Slide Groups", disabled: true, pending: true },
           { title: "Windows", disabled: true, pending: true },
         ],

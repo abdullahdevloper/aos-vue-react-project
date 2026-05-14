@@ -4880,3 +4880,45 @@ Build:
 Approval:
 
 - Vuetify / Grids remains pending user visual approval.
+
+### Vuetify Item Groups Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Item Groups.
+- Route: `/components/groups/item-groups`.
+- Enabled only the Groups > Item Groups sidebar item.
+- Kept Grids, Slide Groups, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Source audit:
+
+- Main page: `src/views/Vuetify/Groups/ItemGroups.vue`.
+- Route: `src/router/routes/vuetify.js` path `/components/groups/item-groups`.
+- Sidebar: `src/config/navigation-items.js` item `Item Groups`.
+- Documentation text: `src/lang/en/components/ItemGroups.json` and `src/lang/en/mixins/BaseItemGroup.json`.
+- Visible Vue examples in exact page order: `usage`, `simple/multiple`, `simple/mandatory`, `simple/active-class`, `intermediate/toggle-pictures`, `complex/post`.
+- `src/demo/examples/item-groups/playground.vue` exists but is not rendered by `src/views/Vuetify/Groups/ItemGroups.vue`; it was audited but intentionally not added to the visible React page.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/examples/item-groups/usage.vue` | Single-select `v-item-group`, three `cols=12 md=4` dark cards, active card turns primary and shows `Active` text via scroll-y transition | Implemented single-select cards with active primary surface, dark inactive surface, ripple, and active text transition | Pending visual review | Initial state has no selected card like Vue |
+| Multiple | `simple/multiple.vue` | `v-item-group multiple`, any number of cards can be selected/deselected | Implemented multi-select add/remove behavior and active styling | Pending visual review | |
+| Mandatory | `simple/mandatory.vue` | `mandatory` group always keeps at least one card selected | Implemented initial first selection and blocked deselecting the last active card | Pending visual review | |
+| With active class | `simple/active-class.vue` | Uses `active-class="primary"` instead of explicit color prop; active cards receive primary class | Implemented active primary styling through activeClass path | Pending visual review | |
+| Custom groups | `intermediate/toggle-pictures.vue` | Max-width 400 card, four CDN images in `cols=12 md=6`, multiple image selection with heart/heart-outline icon | Implemented image grid, CDN image paths, multiple selection, heart icons, ripple, and responsive columns | Pending visual review | |
+| Chips | `complex/post.vue` | Post card with blue-grey toolbar, filled title/text fields, divider, Tags subheader, multi-select chips with purple active text, and success Post button | Implemented post card shell, filled field visuals, tag chip multi-select behavior, divider/action layout, and success button | Pending visual review | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Item Groups remains pending user visual approval.

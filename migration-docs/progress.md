@@ -4417,3 +4417,30 @@ Build:
 Approval:
 
 - Vuetify / Grids remains pending user visual approval.
+
+### Vuetify Item Groups Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Item Groups at `/components/groups/item-groups`.
+- Enabled only the Groups > Item Groups sidebar item.
+- Kept Grids, Slide Groups, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Implemented:
+
+- Source-driven Vue order: Usage, Multiple, Mandatory, With active class, Custom groups, Chips.
+- Preserved Vue documentation text, breadcrumbs, example block shell, View source, and Invert example color controls.
+- Implemented selected/active state, mandatory behavior, multiple selection/deselection, image heart toggles, chip group selection, card ripple/hover/pressed behavior, and responsive `cols=12 md=4/md=6` layouts.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Item Groups remains pending user visual approval.
