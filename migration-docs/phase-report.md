@@ -2501,6 +2501,162 @@ Approval:
 
 - Vuetify / Chips remains pending user visual approval.
 
+### Vuetify Selection Controls Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Selection Controls only.
+- Route: `/components/forms-control/selection-controls`.
+- Enabled only `Form Control > Selection Controls`.
+- Sliders and later Form Control items remain disabled/pending.
+- Calendars remains deferred/paused and not approved.
+
+Vue source traced:
+
+- `src/views/Vuetify/FormControls/SelectionControls.vue`
+- `src/lang/en/components/SelectionControls.json`
+- `src/demo/examples/selection-controls/usage.vue`
+- `src/demo/examples/selection-controls/playground.vue`
+- `src/demo/examples/selection-controls/simple/checkboxes-boolean.vue`
+- `src/demo/examples/selection-controls/simple/checkboxes-array.vue`
+- `src/demo/examples/selection-controls/simple/checkboxes-states.vue`
+- `src/demo/examples/selection-controls/simple/checkboxes-colors.vue`
+- `src/demo/examples/selection-controls/intermediate/checkboxes-inline-textfield.vue`
+- `src/demo/examples/selection-controls/simple/radios-default.vue`
+- `src/demo/examples/selection-controls/simple/radios-direction.vue`
+- `src/demo/examples/selection-controls/simple/radios-colors.vue`
+- `src/demo/examples/selection-controls/simple/switches-boolean.vue`
+- `src/demo/examples/selection-controls/simple/switches-array.vue`
+- `src/demo/examples/selection-controls/simple/switches-states.vue`
+- `src/demo/examples/selection-controls/simple/switches-colors.vue`
+- `src/demo/examples/selection-controls/simple/switches-flat.vue`
+- `src/demo/examples/selection-controls/simple/switches-inset.vue`
+- `src/demo/examples/selection-controls/intermediate/label-slot.vue`
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `usage.vue` | Checkbox true label, radio group 1-3, switch true label | Implemented with local state and live labels | Pending visual review | Uses local Vuse/Vuetify-styled controls |
+| Playground | `playground.vue` | State controls, color select, checkbox/radio/switch preview controls | Implemented all visible toggles, color options, indeterminate, row/multiple/mandatory handling | Pending visual review | Needs visual review for exact Vuetify density |
+| Checkboxes - Boolean | `simple/checkboxes-boolean.vue` | Two boolean checkboxes with live labels | Implemented true/false labels and toggles | Pending visual review | Exact text preserved |
+| Checkboxes - Array | `simple/checkboxes-array.vue` | Array display with John/Jacob checkbox values | Implemented array state display and value toggles | Pending visual review | Array displayed via JSON-like output |
+| Checkboxes - States | `simple/checkboxes-states.vue` | On/off/indeterminate and disabled states in columns | Implemented static control state grid | Pending visual review | Light text labels preserved |
+| Checkboxes - Colors | `simple/checkboxes-colors.vue` | Built-in/contextual color checkbox grid | Implemented all listed colors and initial selected set | Pending visual review | Uses local Material/Vuetify color map |
+| Checkboxes - Inline with a textfield | `intermediate/checkboxes-inline-textfield.vue` | Checkbox inline with text fields; second field disabled until checked | Implemented inline rows and enabled/disabled textfield behavior | Pending visual review | Uses adapted standard text field styling |
+| Radios - Default | `simple/radios-default.vue` | Non-mandatory radio group with live selected/null display | Implemented radio state and deselect-to-null behavior | Pending visual review | Exact labels preserved |
+| Radios - Direction | `simple/radios-direction.vue` | Column radio group, divider, row radio group | Implemented column/row groups and divider | Pending visual review | Initial null states preserved |
+| Radios - Colors | `simple/radios-colors.vue` | Two color radio columns with selected red/primary | Implemented all colors and selected states | Pending visual review | Uses local color map |
+| Switches - Boolean | `simple/switches-boolean.vue` | Two boolean switches with live labels | Implemented true/false switches | Pending visual review | Exact text preserved |
+| Switches - Array | `simple/switches-array.vue` | Array display with John/Jacob switches | Implemented array state and value toggles | Pending visual review | Array displayed via JSON-like output |
+| Switches - States | `simple/switches-states.vue` | On/off, disabled, loading switch states | Implemented state grid including warning loading spinner | Pending visual review | Local spinner inside thumb |
+| Switches - Colors | `simple/switches-colors.vue` | Built-in/contextual color switch grid | Implemented all listed colors and initial selected set | Pending visual review | Uses local color map |
+| Switches - Flat | `simple/switches-flat.vue` | Grey sheet with flat switches and live labels | Implemented grey sheet, flat thumb no shadow, live labels | Pending visual review | Sheet padding and color matched from source |
+| Switches - inset | `simple/switches-inset.vue` | Inset switches in padded sheet | Implemented inset track/thumb size and live labels | Pending visual review | Needs visual comparison for exact track width |
+| Label slot | `intermediate/label-slot.vue` | HTML labels, tooltip link, radio label slots, progress label slot | Implemented custom labels, tooltip link, colored strong labels, and circular progress label | Pending visual review | Tooltip is local MUI-adapted |
+
+Implemented files:
+
+- `react-dashboard-template/src/pages/ui-components/vuetify/SelectionControlsPage.tsx`
+- `react-dashboard-template/src/App.tsx`
+- `react-dashboard-template/src/data/uiComponentsNavigation.tsx`
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path status check required after implementation.
+
+Approval:
+
+- Vuetify / Selection Controls remains pending user visual approval.
+
+### Vuetify Selection Controls States/Progress Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatches:
+
+- Playground `Error` still needed closer target-control behavior.
+- `Checkboxes - States` interactions still did not match Vue.
+- `Switches - States` interactions still did not match Vue.
+- `Label slot` progress shown after enabling `Turn on the progress` was still visually different.
+
+Source recheck:
+
+- `src/demo/examples/selection-controls/simple/checkboxes-states.vue`
+- `src/demo/examples/selection-controls/simple/switches-states.vue`
+- `src/demo/examples/selection-controls/intermediate/label-slot.vue`
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Checkboxes - States interaction | Non-disabled state checkboxes keep initial source states but respond to user clicks; disabled examples do not | Non-disabled state controls were fixed/static | Added local state for on/off/indeterminate controls; disabled controls remain locked | Pending visual review | Indeterminate click clears indeterminate and checks the box |
+| Switches - States interaction | Non-disabled on/off/loading switches respond to user clicks; disabled examples do not | Non-disabled switches were fixed/static | Added local state for on/off/loading controls; loading state remains visible while toggling | Pending visual review | Warning loading color preserved |
+| Label slot progress | `v-progress-circular :indeterminate="switchMe" :value="0" size="24"` appears as compact 24px indeterminate arc only when active | Previous CSS border spinner did not resemble Vuetify enough | Replaced with SVG arc animation matching indeterminate circular progress behavior more closely | Pending visual review | Hidden when inactive like value 0 |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selection Controls remains pending user visual approval.
+
+### Vuetify Selection Controls Visual/Behavior Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatches:
+
+- Playground `Error` checkbox did not make the target `I'm...` controls react or recolor like Vue.
+- Playground `Success` checkbox did not make the target `I'm...` controls react or recolor like Vue.
+- `Checkboxes - States` behavior was not matching Vue.
+- `Switches - States` behavior was not matching Vue.
+- `Switches - inset` and Playground inset switch were clipped.
+- `Label slot` progress style did not match Vue.
+
+Source recheck:
+
+- `src/demo/examples/selection-controls/playground.vue`
+- `src/demo/examples/selection-controls/simple/checkboxes-states.vue`
+- `src/demo/examples/selection-controls/simple/switches-states.vue`
+- `src/demo/examples/selection-controls/simple/switches-inset.vue`
+- `src/demo/examples/selection-controls/intermediate/label-slot.vue`
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Playground Error | `:error="error"` visibly applies error color/state to the target switch, radio group, and checkbox | Target controls kept neutral color when error was toggled | Error state now recolors borders/tracks/thumbs and labels red | Pending visual review | Scoped to target `I'm...` controls |
+| Playground Success | `:success="success"` visibly applies success color/state to the target switch, radio group, and checkbox | Target controls kept neutral color when success was toggled | Success state now recolors borders/tracks/thumbs and labels green | Pending visual review | Success/error color priority follows Vue-like state coloring |
+| Checkboxes - States | Static source states: on, off, indeterminate, disabled on/off; non-disabled controls still have Vuetify interaction feedback | Static controls were treated as non-interactive with no ripple | Non-disabled static state controls keep their fixed state but still show bounded ripple | Pending visual review | Disabled controls remain non-interactive |
+| Switches - States | Static source states: on, off, disabled on/off, warning loading on/off; non-disabled controls retain click feedback | Static controls had no interaction feedback | Non-disabled state switches keep fixed state with ripple; loading warning spinner preserved | Pending visual review | Does not mutate source states |
+| Inset clipping | `v-switch inset` track/thumb must render fully in Playground and Inset example | Inset track was clipped by the local ripple container width | Ripple container expands for inset switches so the full track/thumb is visible | Pending visual review | Applies only local Selection Controls primitive |
+| Label slot progress | `v-progress-circular :indeterminate="switchMe" :value="0" size="24"` appears as compact Vuetify circular progress in label | Generic MUI CircularProgress looked visually different | Replaced label progress with a compact 24px Vuetify-like circular indicator that animates only when active | Pending visual review | Still local CSS recreation, no generic spinner |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selection Controls remains pending user visual approval.
+
 ### Vuetify Forms Visual Correction
 
 Status: fixed; pending user visual approval.

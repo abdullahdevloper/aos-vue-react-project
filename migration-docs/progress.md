@@ -3379,7 +3379,7 @@ Not touched:
 - App Bars page content.
 - Banners page content.
 - System bars implementation.
-- Directives.
+- Directives.dasd
 - App.
 - Dashboard.
 - animations.
@@ -3634,6 +3634,91 @@ Build:
 Approval:
 
 - Vuetify / Combobox remains pending user visual approval.
+
+### Vuetify Selection Controls Implementation
+
+Status: implemented; pending user visual approval.
+
+Route:
+
+- `/components/forms-control/selection-controls`
+
+Scope:
+
+- Implemented only Vuetify / Selection Controls.
+- Enabled only the Selection Controls sidebar item.
+- Sliders, Textareas, and Textfields remain disabled/pending.
+- Calendars remains deferred/paused and not approved.
+
+Implemented:
+
+- Usage example.
+- Playground with disabled, read-only, error, success, color select, loading, flat, inset, mandatory, multiple, row, indeterminate, checkbox/radio/switch controls.
+- Vue example order: Checkboxes Boolean, Array, States, Colors, Inline with textfield; Radios Default, Direction, Colors; Switches Boolean, Array, States, Colors, Flat, Inset; Label slot.
+- Local Vuetify-like checkbox, radio, switch, select, ripple, source panel, and invert example behavior.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selection Controls remains pending user visual approval.
+
+### Vuetify Selection Controls States/Progress Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Corrected only `/components/forms-control/selection-controls`.
+
+Fixed:
+
+- `Checkboxes - States` non-disabled controls now toggle interactively like Vue instead of staying visually static.
+- `Switches - States` non-disabled and loading controls now toggle interactively like Vue.
+- Disabled state controls remain non-interactive.
+- `Label slot` progress now uses a Vue-like SVG circular indeterminate arc when `Turn on the progress` is active.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selection Controls remains pending user visual approval.
+
+### Vuetify Selection Controls Visual/Behavior Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Corrected only `/components/forms-control/selection-controls`.
+
+Fixed:
+
+- Playground `Error` and `Success` now visibly recolor the target `I'm...` switch, radio, and checkbox controls.
+- Checkboxes - States and Switches - States keep their Vue source states while preserving click ripple on non-disabled controls.
+- Inset switches in Playground and Switches - inset are no longer clipped.
+- Label slot progress indicator now uses a compact 24px Vuetify-like circular progress treatment instead of the generic MUI spinner.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selection Controls remains pending user visual approval.
 
 ### Vuetify Forms Visual Correction
 
