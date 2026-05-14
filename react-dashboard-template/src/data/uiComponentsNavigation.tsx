@@ -165,7 +165,7 @@ export const globalNavigation: SidebarNavEntry[] = [
           { title: "Forms", path: "/components/forms-control/forms", icon: <ViewHeadline /> },
           { title: "Inputs", path: "/components/forms-control/inputs", icon: <ViewHeadline /> },
           { title: "Overflow Buttons", path: "/components/forms-control/overflow-btns", icon: <ViewHeadline /> },
-          { title: "Selects", disabled: true, pending: true },
+          { title: "Selects", path: "/components/forms-control/selects", icon: <ViewHeadline /> },
           { title: "Selection Controls", disabled: true, pending: true },
           { title: "Sliders", disabled: true, pending: true },
           { title: "Textareas", disabled: true, pending: true },

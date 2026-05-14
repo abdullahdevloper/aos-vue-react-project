@@ -2670,6 +2670,173 @@ Approval:
 
 - Vuetify / Overflow Buttons remains pending user visual approval.
 
+### Vuetify Selects Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Vuetify / Selects route only: `/components/forms-control/selects`.
+- Enabled only the Selects sidebar entry under Form Control.
+- Selection Controls and later Form Control entries remain pending/disabled.
+- Calendars remains deferred/paused and not approved.
+
+Vue source trace:
+
+- Main page: `src/views/Vuetify/FormControls/Selects.vue`
+- Route/sidebar: `src/router/routes/vuetify.js`, `src/config/navigation-items.js`
+- Text and alerts: `src/lang/en/components/Selects.json`
+- Shared docs shell: `src/demo/components/DocPage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Playground.vue`, `src/demo/components/Example.vue`, `src/demo/components/Examples.vue`
+- Examples:
+  - `src/demo/examples/selects/usage.vue`
+  - `src/demo/examples/selects/playground.vue`
+  - `src/demo/examples/selects/simple/disabled.vue`
+  - `src/demo/examples/selects/simple/readonly.vue`
+  - `src/demo/examples/selects/simple/light.vue`
+  - `src/demo/examples/selects/simple/icons.vue`
+  - `src/demo/examples/selects/simple/multiple.vue`
+  - `src/demo/examples/selects/simple/dense.vue`
+  - `src/demo/examples/selects/simple/custom-text-and-value.vue`
+  - `src/demo/examples/selects/intermediate/menu-props.vue`
+  - `src/demo/examples/selects/intermediate/slots.vue`
+  - `src/demo/examples/selects/intermediate/selection-appearance.vue`
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Route/sidebar | `src/router/routes/vuetify.js`, `src/config/navigation-items.js` | `/components/forms-control/selects` under Form Control > Selects | Route registered and sidebar item enabled | Match | Selection Controls remains pending |
+| Page hierarchy | `Selects.vue` | `Components`, page `Selects`, breadcrumbs `Components > Vuetify > Selects` | Implemented with `DocPage` and Vuse section shell | Match | Pending visual review |
+| Heading and alerts | `src/lang/en/components/Selects.json` | Heading text plus object items, auto menu, and autocomplete alerts | Implemented source text and all three alerts in Vue position | Match | Alert styling adapted to Vuse shell |
+| Usage | `usage.vue` | 2-column grid with Standard, Filled, Outlined, Solo select styles | Implemented four select variants with Vue labels/items | Pending visual review | Local recreation of v-select styling |
+| Playground | `playground.vue` | Switches for disabled/readonly/chips/multiple/icons/slots/selection slot and one live select | Implemented all switches and mapped them to local `VSelect` behavior | Pending visual review | Icon glyphs use Material equivalents |
+| Disabled | `simple/disabled.vue` | Disabled select labeled `Disabled` | Implemented disabled opacity and open guard | High | Pending visual review |
+| Read-only | `simple/readonly.vue` | Readonly select labeled `Read-only`, inactive but normal color | Implemented readonly open guard without disabled opacity | High | Pending visual review |
+| Light theme | `simple/light.vue` | Card with four multiple chip selects: standard, filled, outlined, solo | Implemented card/grid and preselected chips `foo`, `bar`, `fizz`, `buzz` | Pending visual review | Chip spacing needs visual review |
+| Icons | `simple/icons.vue` | Two-row subheader/select layout with map prepend and appended outer icon | Implemented subheaders, selected Florida/Texas values, and map icons | Pending visual review | Menu-props auto behavior not separately visible |
+| Multiple | `simple/multiple.vue` | Two multiple selects with persistent hints; second uses chips | Implemented multiple selection, chips, and persistent hints | Pending visual review | Menu max-height uses local 400px |
+| Dense | `simple/dense.vue` | Four dense variants matching Usage layout | Implemented dense standard/filled/outlined/solo variants | Pending visual review | Local size recreation |
+| Customized item text/value | `simple/custom-text-and-value.vue` | Return-object state select, persistent hint `${state}, ${abbr}` | Implemented object items using `state` label and hint sync | Pending visual review | Stores selected state label locally |
+| Custom menu props | `intermediate/menu-props.vue` | Menu forced to top with offset | Implemented top menu placement | Pending visual review | Needs viewport review |
+| Prepend/Append item slots | `intermediate/slots.vue` | Favorite Fruits multiple select with Select All prepended item and append summary | Implemented fruit list, select-all toggle, all/some/none icons, divider, and append summary text | Pending visual review | Large fruit menu is locally recreated |
+| Change selection appearance | `intermediate/selection-appearance.vue` | Multiple select shows first chip and `(+N others)` | Implemented custom selection rendering with initial `foo`, `bar`, `fizz` | Pending visual review | Matches visible slot behavior |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path status check required after implementation.
+
+Approval:
+
+- Vuetify / Selects remains pending user visual approval.
+
+### Vuetify Selects Playground Chips and Append Icon Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatch:
+
+- In Selects Playground, `chips` and `append icon` did not match Vue.
+
+Source recheck:
+
+- `src/demo/examples/selects/playground.vue`
+
+Correction table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Append icon | `:append-icon="appendIcon ? 'mdi-plus' : ''"` changes the select's internal append icon area | React rendered the plus as an outer appended icon outside the field | Plus now renders inside the select append/dropdown icon area | Pending visual review | Scoped to Selects Playground primitive |
+| Chips single value | `chips` affects selected display from the current model, including initial `Foo` when `Multiple` is off | React rendered chip style only when `multiple && chips` | Chips now render selected values whenever `chips` is enabled | Pending visual review | Vue model remains `Foo` by default |
+| Chip close icon | Vue uses `chips`, not `deletable-chips`, so playground chips are not closable | React chips showed delete icons in multiple chip mode | Playground chips no longer show delete icons | Pending visual review | Selection removal still happens via menu toggle for multiple mode |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selects remains pending user visual approval.
+
+### Vuetify Selects Playground Interaction Animation Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatch:
+
+- In Selects Playground, interaction animation did not match Vue/Vuetify.
+
+Source recheck:
+
+- `src/demo/examples/selects/playground.vue`
+- Vue uses default `v-switch` and `v-select` controls, so interaction motion should follow Vuetify switch ripple/thumb transition, select field ripple, menu open transition, and menu item ripple.
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Switch interaction | `v-switch` click shows controlled ripple and smooth thumb/track transition | Added clipped local ripple, disabled broad MUI ripple, and tuned thumb/track transition for Playground switches | Pending visual review | Scoped to Selects Playground switches |
+| Select field click | `v-select` field gives a bounded Vuetify-like click ripple and smooth border/label state change | Added field ripple from click position plus label/border transition | Pending visual review | Disabled/readonly do not ripple/open |
+| Dropdown opening | Vuetify menu opens with short transform/opacity transition from the field | Added Playground-only menu scale/opacity enter transition with stable menu placement | Pending visual review | Other Selects examples keep previous behavior |
+| Menu row click | `v-list-item` rows show clipped ripple and selected state transition | Added menu item ripple from click position and smoother selected/check opacity transition | Pending visual review | Single select still closes after selecting; multiple remains open |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selects remains pending user visual approval.
+
+### Vuetify Selects Playground, Light Theme, and Selection Appearance Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported mismatches:
+
+- Playground controls/elements still did not match Vue design closely enough.
+- In Light theme, dropdown menus were clipped at the bottom of the section.
+- Change selection appearance did not behave like Vue.
+- Click interaction animation across the Selects page did not match Vue/Vuetify.
+
+Source recheck:
+
+- `src/demo/examples/selects/playground.vue`
+- `src/demo/examples/selects/simple/light.vue`
+- `src/demo/examples/selects/intermediate/selection-appearance.vue`
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Playground controls | `v-row justify="space-around"` with default `v-switch` motion and `v-select` interaction | Kept Playground structure and extended Vuetify-like ripple/menu motion to the active page select primitive | Pending visual review | Further pixel tuning may be needed after screenshot review |
+| Light theme dropdown clipping | Light example `v-card` with `v-select attach` should allow menu to display like Vue | Inner light example card and example body now allow visible overflow so dropdown is not clipped by the card/section | Pending visual review | Scoped to Selects page example block/light card |
+| Change selection appearance | `v-select v-model="value"` updates `value`, selection slot shows first chip and `(+N others)` as selection changes | Replaced fixed value with local state and `onChange`, preserving the first-chip/count rendering | Pending visual review | Initial value remains `foo`, `bar`, `fizz` from Vue |
+| Page-wide click animation | Vuetify `v-select` fields and list items show ripple/active transitions across examples | Select primitive now enables the local Vuetify-like field/menu-item ripple by default for the Selects page | Pending visual review | Disabled/readonly remain non-interactive |
+
+Build status:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selects remains pending user visual approval.
+
 ### Vuetify Overflow Buttons Size Correction
 
 Status: fixed; pending user visual approval.

@@ -3723,6 +3723,113 @@ Approval:
 
 - Vuetify / Overflow Buttons remains pending user visual approval.
 
+### Vuetify Selects Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented Vuetify / Selects at `/components/forms-control/selects`.
+- Enabled only the Selects sidebar item under Form Control.
+- Kept Selection Controls and later Form Control items pending/disabled.
+- Kept Calendars deferred/paused and not approved.
+
+Implemented:
+
+- Source-driven page hierarchy with `Components > Vuetify > Selects` breadcrumbs.
+- Usage example with Standard, Filled style, Outlined style, and Solo field.
+- Three Vue alerts: object items, menu auto warning, browser autocomplete info.
+- Playground controls for disabled, readonly, chips, multiple, append/prepend icons, append/prepend slots, append/prepend item slots, and selection slot.
+- Examples in Vue order: Disabled, Read-only, Light theme, Icons, Multiple, Dense, Customized item text/value, Custom menu props, Prepend/Append item slots, Change selection appearance.
+- Menu open/close, outside click close, single/multiple selection, chips display/removal, selected state, readonly/disabled guards, top menu, hints, custom item text/value, select-all slot, append summary slot, and selection summary slot.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selects remains pending user visual approval.
+
+### Vuetify Selects Playground Chips and Append Icon Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Corrected only the Playground behavior/styling inside `/components/forms-control/selects`.
+
+Fixed:
+
+- `Append icon` now maps to Vue `append-icon` inside the select field, replacing the dropdown icon area, instead of rendering as an outer appended icon.
+- `Chips` now renders selected values as Vuetify-like chips even when `Multiple` is off.
+- Playground chips no longer show a delete icon because Vue source uses `chips`, not `deletable-chips`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+
+### Vuetify Selects Playground Interaction Animation Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Playground interaction motion inside `/components/forms-control/selects`.
+
+Fixed:
+
+- Playground switches now use a clipped local ripple from the click point instead of the generic MUI ripple feel.
+- Playground select field now has a Vuetify-like click ripple and smoother label/border transition.
+- Playground dropdown now opens with a short Vuetify-like scale/opacity transition.
+- Playground menu rows now show a clipped click ripple and smoother selected-state transition.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selects remains pending user visual approval.
+
+### Vuetify Selects Playground, Light Theme, and Selection Appearance Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only `/components/forms-control/selects`.
+
+Fixed:
+
+- Playground/select click animation now applies to all Selects page fields and menu rows, not only the Playground select.
+- Light theme dropdowns are no longer clipped by the inner card/example body.
+- Change selection appearance now uses live state like Vue, so selecting/removing items updates the displayed first chip and `(+N others)` text.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selects remains pending user visual approval.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Selects remains pending user visual approval.
+
 ### Vuetify Overflow Buttons Size Correction
 
 Status: fixed; pending user visual approval.

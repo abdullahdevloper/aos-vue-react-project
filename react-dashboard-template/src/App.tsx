@@ -51,6 +51,7 @@ import FileInputsPage from "./pages/ui-components/vuetify/FileInputsPage";
 import VuetifyFormsPage from "./pages/ui-components/vuetify/VuetifyFormsPage";
 import InputsPage from "./pages/ui-components/vuetify/InputsPage";
 import OverflowButtonsPage from "./pages/ui-components/vuetify/OverflowButtonsPage";
+import SelectsPage from "./pages/ui-components/vuetify/SelectsPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -129,6 +130,7 @@ export default function App() {
           <Route path="/components/forms-control/forms" element={<DashboardRoute><VuetifyFormsPage /></DashboardRoute>} />
           <Route path="/components/forms-control/inputs" element={<DashboardRoute><InputsPage /></DashboardRoute>} />
           <Route path="/components/forms-control/overflow-btns" element={<DashboardRoute><OverflowButtonsPage /></DashboardRoute>} />
+          <Route path="/components/forms-control/selects" element={<DashboardRoute><SelectsPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
