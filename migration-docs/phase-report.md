@@ -4922,3 +4922,47 @@ Build:
 Approval:
 
 - Vuetify / Item Groups remains pending user visual approval.
+
+### Vuetify Slide Groups Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Slide Groups.
+- Route: `/components/groups/slide-groups`.
+- Enabled only the Groups > Slide Groups sidebar item.
+- Kept Item Groups, Windows, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Source audit:
+
+- Main page: `src/views/Vuetify/Groups/SlideGroups.vue`.
+- Route: `src/router/routes/vuetify.js` path `/components/groups/slide-groups`.
+- Sidebar: `src/config/navigation-items.js` item `Slide Groups`.
+- Documentation text: `src/lang/en/components/SlideGroups.json`.
+- Usage/playground/examples: `src/demo/examples/slide-groups/usage.vue`, `src/demo/examples/slide-groups/playground.vue`, and `src/demo/examples/slide-groups/simple/*.vue`.
+- Visible Vue order: Usage, Playground, Custom icons, Active class, Multiple, Mandatory, Pseudo Carousel, Centered active item.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `usage.vue` | Max-width 700 sheet, `multiple show-arrows`, 25 rounded depressed option buttons, active purple/white class | Implemented horizontal rail, arrows, 25 option buttons, multiple selection, purple active state, and ripple | Pending visual review | |
+| Playground | `playground.vue` | Switches for multiple, mandatory, arrows, custom prev/next icons, center-active; max-width 800 elevation sheet with 15 cards | Implemented all switches and live slide group behavior for selection, custom icons, arrows, mandatory, multiple, and center-active | Pending visual review | Uses page-scoped switch styling |
+| Custom icons | `simple/custom-icons.vue` | Prev `mdi-minus`, next `mdi-plus`, show-arrows, 15 selectable cards | Implemented minus/plus arrows and card selection | Pending visual review | MUI icon equivalents |
+| Active class | `simple/active-class.vue` | Active class `success`, inactive grey lighten-1 cards, white close icon when active | Implemented success active card state and close icon transition | Pending visual review | |
+| Multiple | `simple/multiple.vue` | Multiple cards can be selected/deselected | Implemented multi-select model behavior | Pending visual review | |
+| Mandatory | `simple/mandatory.vue` | At least one item remains selected | Implemented first-item initial selection and last-active deselect protection | Pending visual review | |
+| Pseudo Carousel | `simple/carousel.vue` | Selected card expands a grey lighten-4 200px detail sheet with `Selected {model}` | Implemented selected detail sheet with expand transition | Pending visual review | |
+| Centered active item | `simple/center-active.vue` | Selected active item is centered in the horizontal rail | Implemented scroll-to-center on selected item | Pending visual review | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Slide Groups remains pending user visual approval.

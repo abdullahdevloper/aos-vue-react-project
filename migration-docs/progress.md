@@ -4444,3 +4444,29 @@ Build:
 Approval:
 
 - Vuetify / Item Groups remains pending user visual approval.
+
+### Vuetify Slide Groups Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Slide Groups at `/components/groups/slide-groups`.
+- Enabled only the Groups > Slide Groups sidebar item.
+- Kept Item Groups, Windows, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Implemented:
+
+- Source-driven Vue order: Usage, Playground, Custom icons, Active class, Multiple, Mandatory, Pseudo Carousel, Centered active item.
+- Implemented horizontal scrolling rails, arrows, custom minus/plus icons, selected state, multiple and mandatory behavior, center-active scrolling, pseudo-carousel detail sheet, ripple/pressed behavior, and responsive sheet widths.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Slide Groups remains pending user visual approval.

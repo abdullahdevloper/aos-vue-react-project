@@ -58,6 +58,7 @@ import TextareasPage from "./pages/ui-components/vuetify/TextareasPage";
 import TextfieldsPage from "./pages/ui-components/vuetify/TextfieldsPage";
 import GridsPage from "./pages/ui-components/vuetify/GridsPage";
 import ItemGroupsPage from "./pages/ui-components/vuetify/ItemGroupsPage";
+import SlideGroupsPage from "./pages/ui-components/vuetify/SlideGroupsPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -143,6 +144,7 @@ export default function App() {
           <Route path="/components/forms-control/text-fields" element={<DashboardRoute><TextfieldsPage /></DashboardRoute>} />
           <Route path="/components/grids" element={<DashboardRoute><GridsPage /></DashboardRoute>} />
           <Route path="/components/groups/item-groups" element={<DashboardRoute><ItemGroupsPage /></DashboardRoute>} />
+          <Route path="/components/groups/slide-groups" element={<DashboardRoute><SlideGroupsPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
