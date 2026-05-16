@@ -544,28 +544,82 @@ function RippleLayer({ ripples, color }: { ripples: Ripple[]; color: string }) {
 }
 
 function VProgressCircular({ active }: { active: boolean }) {
+  const size = 24;
+  const width = 4;
+  const radius = 20;
+  const viewBoxSize = radius / (1 - width / size);
+  const circumference = Math.round(2 * Math.PI * radius * 1000) / 1000;
+  const strokeWidth = (width / size) * viewBoxSize * 2;
   return (
-    <Box sx={{ ml: 1, width: 24, height: 24, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+    <Box
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={active ? undefined : 0}
+      sx={{
+        ml: 1,
+        width: size,
+        height: size,
+        position: "relative",
+        display: "inline-flex",
+        verticalAlign: "middle",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "rgba(0,0,0,.87)",
+      }}
+    >
       <Box
         component="svg"
-        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={`${viewBoxSize} ${viewBoxSize} ${2 * viewBoxSize} ${2 * viewBoxSize}`}
         sx={{
-          width: 24,
-          height: 24,
-          opacity: active ? 1 : 0,
-          animation: active ? "selectionProgressRotate 1.4s linear infinite" : "none",
-          "@keyframes selectionProgressRotate": {
+          width: "100%",
+          height: "100%",
+          m: "auto",
+          position: "absolute",
+          inset: 0,
+          transformOrigin: "center center",
+          animation: active ? "progressCircularRotate 1.4s linear infinite" : "none",
+          "@keyframes progressCircularRotate": {
             "0%": { transform: "rotate(0deg)" },
             "100%": { transform: "rotate(360deg)" },
           },
-          "@keyframes selectionProgressDash": {
-            "0%": { strokeDasharray: "1, 80", strokeDashoffset: 0 },
-            "50%": { strokeDasharray: "48, 80", strokeDashoffset: -18 },
-            "100%": { strokeDasharray: "48, 80", strokeDashoffset: -62 },
+          "@keyframes progressCircularDash": {
+            "0%": { strokeDasharray: "1, 200", strokeDashoffset: "0px" },
+            "50%": { strokeDasharray: "100, 200", strokeDashoffset: "-15px" },
+            "100%": { strokeDasharray: "100, 200", strokeDashoffset: "-125px" },
           },
         }}
       >
-        <Box component="circle" cx="12" cy="12" r="9" fill="none" stroke={primary} strokeWidth="2.4" strokeLinecap="round" sx={{ animation: active ? "selectionProgressDash 1.4s ease-in-out infinite" : "none" }} />
+        {!active && (
+          <Box
+            component="circle"
+            cx={2 * viewBoxSize}
+            cy={2 * viewBoxSize}
+            r={radius}
+            fill="transparent"
+            stroke="rgba(0,0,0,.1)"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={0}
+          />
+        )}
+        <Box
+          component="circle"
+          cx={2 * viewBoxSize}
+          cy={2 * viewBoxSize}
+          r={radius}
+          fill="transparent"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          strokeDasharray={active ? "80, 200" : circumference}
+          strokeDashoffset={active ? "0px" : `${circumference}px`}
+          strokeLinecap={active ? "round" : "butt"}
+          sx={{
+            transition: "all .6s ease-in-out",
+            animation: active ? "progressCircularDash 1.4s ease-in-out infinite" : "none",
+          }}
+        />
       </Box>
     </Box>
   );
