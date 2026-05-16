@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Images.
+- Active section: Vuetify / Lazy.
 
 ## Current Slice
 
-- Scope: Vuetify / Images only.
-- Route: `/components/images`.
+- Scope: Vuetify / Lazy only.
+- Route: `/components/lazy`.
 - Status: implemented; pending user visual approval.
-- Source audit: Vue Images sources traced directly from `src/views/Vuetify/Images.vue`, `src/demo/usages/images.vue`, `src/demo/examples/images/**`, and `src/lang/en/components/Images.json`.
+- Source audit: Vue Lazy sources traced directly from `src/views/Vuetify/Lazy.vue`, `src/demo/examples/lazy/usage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Example.vue`, and `src/lang/en/components/Lazy.json`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -52,6 +52,7 @@ Current rebuild strategy:
 - Vuetify / Textfields: implemented; pending user visual approval.
 - Vuetify / Grids: implemented; pending user visual approval.
 - Vuetify / Images: rebuilt from Vue source after rejection; Usage and Height sizing fixes applied; pending user visual approval.
+- Vuetify / Lazy: implemented; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

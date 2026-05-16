@@ -5463,6 +5463,60 @@ Approval:
 
 - Vuetify / Images remains pending user visual approval.
 
+### Vuetify Lazy Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Lazy at `/components/lazy`.
+- Enabled only the Lazy sidebar item.
+- Did not touch Images, Lists, approved slices, animations, Calendars, or `.claude/`.
+- Calendars remains deferred/paused and not approved.
+
+Complete Vue trace:
+
+- Main page: `src/views/Vuetify/Lazy.vue`.
+- Generic docs wrapper: `src/demo/components/DocPage.vue`.
+- Usage wrapper: `src/demo/components/Usage.vue`.
+- Example wrapper/source-panel behavior: `src/demo/components/Example.vue`.
+- Usage example: `src/demo/examples/lazy/usage.vue`.
+- Documentation text: `src/lang/en/components/Lazy.json`.
+
+Source behavior map:
+
+- `src/views/Vuetify/Lazy.vue` uses `usage: "usage"` rather than an object playground; Vue renders a normal `Example` block under the `Usage` heading.
+- Vue page order is heading text, Usage example, then info alert.
+- Lazy usage example uses a local `v-responsive` scroll container with `max-height="400"` and `overflow-y-auto`.
+- Inner content uses `height="200vh"`, a `min-height="50vh"` spacer, a text marker, then `v-lazy`.
+- `v-lazy` uses `v-model="isActive"`, `options.threshold: 0.5`, `min-height="200"`, and `transition="fade-transition"`.
+- The lazy card is not rendered until the lazy target intersects the local scroll container at threshold.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `src/views/Vuetify/Lazy.vue` | `vuse-content-wrapper`, section definition, `v-container fluid`, `doc-page` with `usage` and `alerts` | React route uses shared `DocPage`, exact breadcrumbs, heading text, Usage section, and alert order | PASS | Pending visual approval |
+| Usage block type | `src/demo/components/Usage.vue` | Since `usage` is a string, render `Example`, not `UsageExample` options playground | React renders a standard example block with no fake options panel | PASS | |
+| Lazy scroll container | `src/demo/examples/lazy/usage.vue` | Local scroll container, `max-height=400`, `overflow-y-auto` | React uses local 400px max-height scroll container | PASS | |
+| Scroll content | `src/demo/examples/lazy/usage.vue` | `Scroll down`, 200vh content, 50vh spacer, `The card will appear below:` text | Same text, heights, spacer, and spacing | PASS | |
+| Lazy activation | `src/demo/examples/lazy/usage.vue` | `v-lazy` activates at IntersectionObserver threshold `0.5` against local scroll area | React uses `IntersectionObserver` with local root and threshold `0.5`; content stays hidden until activated | PASS | Pending visual approval |
+| Lazy reveal | `src/demo/examples/lazy/usage.vue` | Fade transition reveals a max-width 336 card | React reveals the card with fade/collapse transition and max-width 336 | PASS | Pending visual approval |
+| Lazy card content | `src/demo/examples/lazy/usage.vue` | Title `Card title` and exact card text | Same title and text | PASS | |
+| Alert | `src/views/Vuetify/Lazy.vue`, `src/lang/en/components/Lazy.json` | Info alert after usage with v-intersect/polyfill text | React renders info alert after Usage with matching text and links | PASS | |
+| Source/invert controls | `src/demo/components/Example.vue` | Example toolbar supports invert colors, GitHub, and View source | React block includes invert, GitHub, and source expansion | PASS | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Lazy remains pending user visual approval.
+
 ### Vuetify Images Height Section Correction
 
 Status: fixed; pending user visual approval.

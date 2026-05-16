@@ -63,6 +63,7 @@ import WindowsPage from "./pages/ui-components/vuetify/WindowsPage";
 import HoverPage from "./pages/ui-components/vuetify/HoverPage";
 import VuetifyIconsPage from "./pages/ui-components/vuetify/VuetifyIconsPage";
 import ImagesPage from "./pages/ui-components/vuetify/ImagesPage";
+import LazyPage from "./pages/ui-components/vuetify/LazyPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -153,6 +154,7 @@ export default function App() {
           <Route path="/components/hover" element={<DashboardRoute><HoverPage /></DashboardRoute>} />
           <Route path="/components/icons" element={<DashboardRoute><VuetifyIconsPage /></DashboardRoute>} />
           <Route path="/components/images" element={<DashboardRoute><ImagesPage /></DashboardRoute>} />
+          <Route path="/components/lazy" element={<DashboardRoute><LazyPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
