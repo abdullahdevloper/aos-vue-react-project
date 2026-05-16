@@ -4966,3 +4966,231 @@ Build:
 Approval:
 
 - Vuetify / Slide Groups remains pending user visual approval.
+
+### Vuetify Windows Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Windows.
+- Route: `/components/groups/windows`.
+- Enabled only the Groups > Windows sidebar item.
+- Kept Slide Groups, Hover, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Source audit:
+
+- Main page: `src/views/Vuetify/Groups/Windows.vue`.
+- Route: `src/router/routes/vuetify.js` path `/components/groups/windows`.
+- Sidebar: `src/config/navigation-items.js` item `Windows`.
+- Documentation text: `src/lang/en/components/Windows.json`.
+- Rendered Vue page content: `usage`, `playground`, and example `complex/account`.
+- Additional source files audited but not rendered by main page examples: `simple/onboarding.vue`, `simple/reverse.vue`, `simple/vertical.vue`.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/examples/windows/usage.vue` | Vertical `v-window` controlled by mandatory item-group radio buttons, 3 article panes with avatar/title/account icon and lorem paragraphs | Implemented side radio controls, vertical window frame, article pane layout, elevation, and selected pane state | Pending visual review | |
+| Playground | `src/demo/examples/windows/playground.vue` | Switches for automatic switching, show arrows, vertical, reverse; 3-pane window with optional arrows and 1s autorun | Implemented all four switches, autorun interval, arrows, vertical axis switching, reverse transition style, and next/prev wrap behavior | Pending visual review | Touch-specific props are not used by the Vue example |
+| Account creation | `src/demo/examples/windows/complex/account.vue` | Max-width 500 signup card, dynamic title/avatar step, three window panes, Back/Next disabled at bounds | Implemented dynamic title, step avatar, email/password/welcome panes, Back/Next behavior, disabled states, divider/actions | Pending visual review | Uses Vuetify logo URL from source |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Windows remains pending user visual approval.
+
+### Vuetify Windows Remaining Blockers Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Windows sections requested by user review: Usage, Playground vertical behavior, and Account creation Sign-up behavior.
+- Did not touch Slide Groups, Hover, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+| Section | Vue source | Key Vue behavior | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/examples/windows/usage.vue` | `v-item-group mandatory` controls `v-window v-model="window" vertical`; default `window=0`; clicking record buttons changes active item and shows only the selected vertical pane | `WindowFrame` now renders a true active pane instead of sizing against the full stacked pane set; record controls remain mandatory and update active pane | Pending visual review | Spacing corrected for `mr-6`, `mr-4`, and `mb-4` source helper scale |
+| Playground vertical | `src/demo/examples/windows/playground.vue` | `vertical` switch toggles Y-axis window behavior; `show-arrows` exposes prev/next; `autorun` increments every 1s and wraps | Active pane frame now switches axis by `vertical`, keeps only one visible pane, supports arrow wrap and autorun wrap | Pending visual review | Transition axis is represented without exposing hidden panes |
+| Account creation Sign-up | `src/demo/examples/windows/complex/account.vue` | `step=1` default, dynamic title/avatar, editable text fields, Back disabled at 1, Next disabled at 3, Next/Back change `v-window` item values 1/2/3 | Account fields are editable, step panes are shown as true active panes, dynamic title/avatar and Back/Next bounds remain wired | Pending visual review | Email default value preserved |
+
+PASS/FAIL:
+
+| Check | Result | Notes |
+|---|---|---|
+| Usage behavior | PASS | Mandatory side controls select exactly one active pane and hidden panes no longer affect layout |
+| Playground vertical behavior | PASS | Vertical option switches the pane axis and keeps a single active pane visible |
+| Account creation Sign-up behavior | PASS | Step 1 default, editable email field, Back/Next disabled bounds, and step transitions are wired |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Windows remains pending user visual approval.
+
+### Vuetify Windows Usage and Playground Behavior Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Windows Usage and Playground behavior.
+- Kept Account creation and other Windows examples unchanged except for the shared window frame support required by Usage and Playground.
+- Did not touch Slide Groups, Hover, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+| Section | Vue source | v-window props/state | Vue expected behavior | React after fix | Match level | Notes |
+|---|---|---|---|---|---|---|
+| Usage | `src/demo/examples/windows/usage.vue` | `v-window v-model="window" class="elevation-1" vertical`; default `window=0`; side `v-item-group mandatory` writes the same `window` index | Clicking the side record buttons selects exactly one of three vertical article panes; hidden panes remain outside the viewport and do not corrupt switching | Usage now renders a stacked, clipped, source-faithful window track with fixed viewport height and vertical translation from the selected value | PASS | Side controls remain mandatory and synchronized with active pane |
+| Playground | `src/demo/examples/windows/playground.vue` | `v-window v-model="window" class="elevation-1" :vertical="vertical" :show-arrows="showArrows" :reverse="reverse"`; defaults `length=3`, `window=0`, all switches false | Automatic switching advances `window` every 1s and wraps; show arrows exposes prev/next; vertical changes axis; reverse changes transition direction; selected content follows `window` | Playground now uses the same stacked window frame with active index, vertical axis switching, reverse transition direction styling, arrow wrap, and autorun wrap | PASS | No continuous/cycle control exists in the Vue source beyond autorun wrap |
+
+Behavior verification:
+
+| Check | Result | Notes |
+|---|---|---|
+| Usage window switching | PASS | Record buttons select the same active `window` index and the visible pane changes immediately |
+| Playground active window | PASS | Active item state is shared by arrows, autorun, and switches without static mock state |
+| Playground vertical | PASS | Vertical switch changes the pane movement axis to Y like Vue |
+| Playground reverse/direction | PASS | Reverse switch changes transition direction styling while preserving selected pane content |
+| Playground next/prev | PASS | Arrows wrap through all three panes and stay scoped to the example frame |
+| All other Playground controls | PASS | Automatic switching, show arrows, vertical, and reverse controls all update live behavior |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Windows remains pending user visual approval.
+
+### Vuetify Hover Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Hover.
+- Route: `/components/hover`.
+- Enabled only the Hover sidebar item.
+- Kept Windows, Icons, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Source audit:
+
+- Main page: `src/views/Vuetify/Hover.vue`.
+- Route: `src/router/routes/vuetify.js` path `/components/hover`.
+- Sidebar: `src/config/navigation-items.js` item `Hover`.
+- Documentation text: `src/lang/en/components/Hover.json`.
+- Usage source: `src/demo/usages/hover.vue`.
+- Visible Vue examples in exact order: `simple/disabled`, `simple/open-and-close-delay`, `complex/hover-list`, `complex/transition`.
+- Shared usage mixin: `src/demo/usages/usage.js`.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/usages/hover.vue` | `v-hover v-bind="attrs"` wraps one 300px card; `hover ? 12 : 2` elevation; usage controls expose `value`, `disabled`, `open-delay`, `close-delay` | Implemented one-child hover wrapper, value/disabled switches, open/close delay sliders, delayed hover timers, and elevation 12/2 card behavior | Pending visual review | Usage controls are scoped to Hover only |
+| Disabled | `src/demo/examples/hover/simple/disabled.vue` | `v-hover disabled` keeps 350px card at elevation 2 regardless of mouse hover | Implemented disabled hover state so elevation does not activate | Pending visual review | |
+| Open/Close Delay | `src/demo/examples/hover/simple/open-and-close-delay.vue` | Two `sm=6` cards; first uses `open-delay=200`, second uses `close-delay=200`; hover elevation 16/2 | Implemented two-card layout, 200ms enter/leave delays, and elevation 16/2 behavior | Pending visual review | |
+| Hover list | `src/demo/examples/hover/complex/hover-list.vue` | Three image cards; inactive opacity .6; hovered card opacity 1/elevation 12; media buttons turn white only on hover | Implemented exact item data, image URLs, opacity/elevation transition, text layout, and icon reveal behavior | Pending visual review | Uses the Vue external image URLs from source |
+| Transitions | `src/demo/examples/hover/complex/transition.vue` | Kitchen image card; hover reveals orange price overlay through expand transition; floating orange cart FAB | Implemented image card, hover-driven orange reveal overlay, price text, floating cart button, and Vue text content | Pending visual review | |
+
+Behavior verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Hover activation | Mouse enter sets slot `hover=true`; mouse leave sets `hover=false` | Local `HoverBox` drives the same boolean hover state | PASS | |
+| Open delay | `open-delay` waits before activating hover | Enter timer waits configured milliseconds before activating | PASS | |
+| Close delay | `close-delay` waits before deactivating hover | Leave timer waits configured milliseconds before deactivating | PASS | |
+| Disabled | `disabled` turns off hover functionality | Disabled wrapper blocks hover activation and resets hover state | PASS | |
+| Usage value prop | `value=true` forces active hover state | Value switch keeps preview in active hover state | PASS | |
+| Invert example color | Example body switches dark surface while content remains scoped | Implemented per-example invert control without global styling | PASS | |
+| Source panel | View source expands a code panel for each example | Implemented source panel actions for usage/examples | PASS | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Hover remains pending user visual approval.
+
+### Vuetify Hover Transitions Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Hover / Transitions example inside `/components/hover`.
+- Did not touch Windows, Icons, approved slices, animations backlog, Calendars, or `.claude/`.
+
+Mismatch and fix:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Transitions price reveal | `v-expand-transition` reveals an absolutely positioned `.v-card--reveal` layer from the bottom of the image; layer keeps `height: 100%`, `bottom: 0`, orange darken-2, opacity `.5` | Overlay scaled from the top with `scaleY`, so the reveal direction/timing did not match Vue | Overlay is bottom anchored, clipped by the image area, and animates height from `0` to `100%` with Vuetify-like cubic timing and opacity | PASS | Preserves image, price text, orange layer, and floating cart button |
+
+Reusable visual mismatch rule:
+
+- Expand/reveal transitions must preserve the Vue transition origin and position. Do not replace bottom-anchored `v-expand-transition` reveals with generic scale transforms from another origin.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Hover remains pending user visual approval.
+
+### Vuetify Hover Transitions Hover Boundary Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Hover / Transitions example interaction boundary inside `/components/hover`.
+- Did not touch Windows, Icons, approved slices, animations backlog, Calendars, or `.claude/`.
+
+Mismatch and fix:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Transitions hover target | `v-hover` wraps the `v-card class="mx-auto" max-width="600"`, so the reveal activates only when the card itself is hovered | The React hover wrapper filled the example body width, so hovering empty section space could trigger the reveal | The hover wrapper is constrained to `maxWidth: 600` and centered around the card; the card fills only that wrapper | PASS | Surrounding example body no longer triggers the transition |
+
+Reusable visual mismatch rule:
+
+- Hover interaction wrappers must match the Vue wrapped element bounds. Do not let a wrapper expand to the whole example body when Vue wraps only a card/list item.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Hover remains pending user visual approval.

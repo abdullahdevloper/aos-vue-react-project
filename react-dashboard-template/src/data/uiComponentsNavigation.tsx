@@ -178,10 +178,10 @@ export const globalNavigation: SidebarNavEntry[] = [
         children: [
           { title: "Item Groups", path: "/components/groups/item-groups", icon: <ViewHeadline /> },
           { title: "Slide Groups", path: "/components/groups/slide-groups", icon: <ViewHeadline /> },
-          { title: "Windows", disabled: true, pending: true },
+          { title: "Windows", path: "/components/groups/windows", icon: <ViewHeadline /> },
         ],
       },
-      { title: "Hover", disabled: true, pending: true },
+      { title: "Hover", path: "/components/hover", icon: <ViewHeadline /> },
       { title: "Icons", disabled: true, pending: true },
       { title: "Images", disabled: true, pending: true },
       { title: "Lazy", disabled: true, pending: true },

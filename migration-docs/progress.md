@@ -4470,3 +4470,164 @@ Build:
 Approval:
 
 - Vuetify / Slide Groups remains pending user visual approval.
+
+### Vuetify Windows Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Windows at `/components/groups/windows`.
+- Enabled only the Groups > Windows sidebar item.
+- Kept Slide Groups, Hover, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Implemented:
+
+- Source-driven visible Vue order: Usage, Playground, Account creation.
+- Implemented active window state, side item controls, automatic switching, show-arrows next/prev behavior, vertical/reverse behavior, account stepper window, Back/Next bounds, source panels, and invert controls.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Windows remains pending user visual approval.
+
+### Vuetify Windows Remaining Blockers Fix
+
+Status: fixed; pending user visual approval.
+
+Fixed:
+
+- Usage now uses a true active pane frame so hidden vertical panes do not affect layout.
+- Playground vertical mode now switches the window pane axis while preserving arrows, reverse, and autorun behavior.
+- Account creation Sign-up flow now uses editable fields and true active step panes with Back/Next bounds.
+
+PASS/FAIL:
+
+- Usage behavior: PASS.
+- Playground vertical behavior: PASS.
+- Account creation Sign-up behavior: PASS.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Windows remains pending user visual approval.
+
+### Vuetify Windows Usage and Playground Behavior Fix
+
+Status: fixed; pending user visual approval.
+
+Fixed:
+
+- Re-traced Vue `usage.vue` and `playground.vue` before editing React.
+- Usage now uses a source-faithful stacked `v-window`-style frame so record buttons switch the selected pane correctly.
+- Playground controls now drive the window frame directly:
+  - active window index updates through arrows and automatic switching
+  - vertical mode changes the window axis
+  - reverse changes transition direction styling without changing the selected content
+  - show-arrows toggles previous/next controls
+  - automatic switching advances every second and wraps through all panes
+
+PASS/FAIL:
+
+- Usage window switching: PASS.
+- Playground active window: PASS.
+- Playground vertical: PASS.
+- Playground reverse/direction: PASS.
+- Playground next/prev: PASS.
+- All other Playground controls: PASS.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Windows remains pending user visual approval.
+
+### Vuetify Hover Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Hover at `/components/hover`.
+- Enabled only the Hover sidebar item.
+- Kept Windows, Icons, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Implemented:
+
+- Source-driven visible Vue order: Usage, Disabled, Open/Close Delay, Hover list, Transitions.
+- Usage playground with `value`, `disabled`, `open-delay`, and `close-delay` controls.
+- Hover state behavior with delayed enter/leave timers.
+- Disabled hover behavior.
+- Hover list opacity/elevation/buttons behavior.
+- Transition reveal card behavior.
+- View source and invert example color controls.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Hover remains pending user visual approval.
+
+### Vuetify Hover Transitions Fix
+
+Status: fixed; pending user visual approval.
+
+Fixed:
+
+- Corrected only the Hover / Transitions example.
+- Matched Vue `v-expand-transition` behavior by revealing the orange price overlay from the bottom with height animation instead of scaling from the top.
+- Preserved the kitchen image, `$14.99` overlay, opacity, card content, and floating cart button.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Hover remains pending user visual approval.
+
+### Vuetify Hover Transitions Hover Boundary Fix
+
+Status: fixed; pending user visual approval.
+
+Fixed:
+
+- Corrected only the Hover / Transitions example hover boundary.
+- The hover listener is now constrained to the example card itself, matching Vue where `v-hover` wraps the `v-card`.
+- Hovering the surrounding example body no longer triggers the `$14.99` reveal.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Hover remains pending user visual approval.
