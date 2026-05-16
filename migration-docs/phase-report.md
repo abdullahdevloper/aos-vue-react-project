@@ -6651,3 +6651,138 @@ Protected files:
 Approval:
 
 - Vuetify / Color Pickers remains pending user visual approval.
+
+### Vuetify Date Pickers Source-Driven Rebuild
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Date Pickers at `/components/pickers/date-pickers`.
+- Enabled only the Date Pickers sidebar/navigation entry under Pickers.
+- Did not touch Color Pickers, Time Pickers, approved slices, animations, Calendars, or `.claude/`.
+
+Complete Vue trace:
+
+- Main page: `src/views/Vuetify/Pickers/DatePickers.vue`.
+- Usage file: `src/demo/examples/date-pickers/usage.vue`.
+- Playground file: `src/demo/examples/date-pickers/playground.vue`.
+- Documentation text: `src/lang/en/components/DatePickers.json`.
+- Shared docs/example wrappers: `src/demo/components/DocPage.vue`, `src/demo/components/Example.vue`.
+- Vuetify picker internals/styles: `node_modules/vuetify/src/components/VDatePicker/*` and `node_modules/vuetify/src/components/VPicker/*`.
+- Example files in exact Vue order:
+  - `simple/date-colorable`
+  - `simple/date-allowed-dates`
+  - `simple/date-width`
+  - `simple/date-picker-date`
+  - `simple/date-internationalization`
+  - `simple/date-icons`
+  - `simple/date-readonly`
+  - `simple/date-current`
+  - `simple/month-light`
+  - `simple/month-colorable`
+  - `simple/month-allowed-months`
+  - `simple/month-multiple`
+  - `simple/month-width`
+  - `simple/month-internationalization`
+  - `simple/month-icons`
+  - `simple/month-readonly`
+  - `simple/month-current`
+  - `intermediate/date-dialog-and-menu`
+  - `intermediate/date-formatting`
+  - `intermediate/date-formatting-moment-datefns`
+  - `intermediate/date-multiple`
+  - `intermediate/date-range`
+  - `intermediate/date-birthday`
+  - `intermediate/date-events`
+  - `intermediate/month-dialog-and-menu`
+
+Implementation notes:
+
+- Added a local source-driven `VDatePicker` primitive rather than using a generic MUI DatePicker.
+- Matched source-verified picker defaults: `type=date`, `width=290`, portrait title/header/body layout, `showCurrent=true`, `firstDayOfWeek=0`, and date/month active picker modes.
+- Implemented title year/date area, table header navigation, year list, month table, date table, selected/current/disabled states, allowed dates, events dots, range selection, multiple selection, readonly/disabled behavior, color/header-color behavior, custom icons, locale/first-day-of-week formatting, full-width/landscape, no-title, menu/dialog actions, and field examples.
+- Preserved Vue page order and exact documentation strings from `DatePickers.json`.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page/docs/route | `DatePickers.vue`, `DatePickers.json` | `/components/pickers/date-pickers`, breadcrumbs, heading, usage, playground, examples | Route/sidebar enabled and page structure implemented | PASS | Pending visual approval |
+| Usage | `usage.vue` | Centered date picker with today model | Same centered picker and today model | PASS | |
+| Playground | `playground.vue` | Landscape/reactive/full-width/show-current/month/multiple/readonly/disabled/events switches drive picker | Same controls and picker props | PASS | |
+| Date colors | `simple/date-colorable.vue` | Two green date pickers, second with primary header | Same pair and colors | PASS | |
+| Date allowed dates | `simple/date-allowed-dates.vue` | Min/max and even-day allowed function | Same restriction behavior | PASS | |
+| Date width | `simple/date-width.vue` | Fixed 290px picker and full-width landscape picker | Same layout and props | PASS | |
+| Picker date watcher | `simple/date-picker-date.vue` | Full-width picker updates displayed month/year news area | Picker date callback updates news block | PASS | Random notes are deterministic in React for stability |
+| Date internationalization | `simple/date-internationalization.vue` | zh-cn Sunday-start and sv-se Monday-start pickers | Same locale/first-day behavior | PASS | |
+| Date icons | `simple/date-icons.vue` | Custom year/prev/next icons | Calendar year icon and skip prev/next icons implemented | PASS | |
+| Date readonly/current | `simple/date-readonly.vue`, `simple/date-current.vue` | Readonly blocks selection; current outline can hide or target date | Same state behavior | PASS | |
+| Month base/colors/allowed/multiple/width/i18n/icons/readonly/current | Month simple examples | Month picker variants and props match source | Same example order and behavior | PASS | |
+| Dialog/menu examples | `date-dialog-and-menu.vue`, `month-dialog-and-menu.vue` | Text fields open menu/dialog pickers with OK/Cancel or close-on-select | Local menu/dialog implementations with source labels/actions | PASS | Pending visual approval for overlay placement |
+| Formatting examples | `date-formatting.vue`, `date-formatting-moment-datefns.vue` | Formatted fields and ISO display update with picker | Same labels, formatting display, clear behavior | PASS | Uses native Intl for long display |
+| Multiple/range | `date-multiple.vue`, `date-range.vue` | Multiple toggles array; range selects interval and displays model | Same multiple/range mechanics | PASS | |
+| Birthday | `date-birthday.vue` | Birthday field with min/max and closes on date selection | Same field/min/max/close-on-select behavior | PASS | Starts with date picker shell; pending visual approval |
+| Events | `date-events.vue` | Array/function events show dots and event colors | Same event dot behavior | PASS | Deterministic array events |
+| Source/invert | `Example.vue` | Source and invert controls per example | Shared docs block controls preserved | PASS | Source panels currently show traced source file path identifiers |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Date Pickers remains pending user visual approval.
+
+### Vuetify Date Pickers Initial Render Blank Page Fix
+
+Status: fixed; pending user visual approval.
+
+User-reported issue:
+
+- Opening `/components/pickers/date-pickers` showed a blank white page without a visible browser console error.
+
+Diagnosis:
+
+- The route and sidebar registration were present.
+- The page component rendered successfully in isolation, but the Date Pickers page mounted all 25 source-ordered examples immediately.
+- Each example creates interactive date/month picker state and table UI, producing an unusually large first render for one route.
+
+Fix:
+
+- Kept Usage and Playground rendered immediately.
+- Added route-local lazy body rendering to `VuetifyExampleBlock` only for the below-fold Date Pickers examples.
+- Example card headers, documentation text, action icons, source toggles, ordering, and spacing still render in source order.
+- Example bodies mount when their card approaches the viewport via `IntersectionObserver`, preventing the initial white-page render load while keeping the slice scoped to Date Pickers.
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Route render | `/components/pickers/date-pickers` opens the Date Pickers docs page | Route/sidebar unchanged; page initial render no longer mounts all heavy examples at once | PASS | Pending visual approval |
+| Usage | First usage picker available immediately | Usage body remains immediate | PASS | |
+| Playground | Playground controls available immediately | Playground body remains immediate | PASS | |
+| Examples order | All Date Pickers examples remain in Vue order | All cards/docs/actions remain in the same source order | PASS | Bodies defer until near viewport |
+| Scope | Do not touch Color Pickers, Time Pickers, approved slices, animations, Calendars, or `.claude/` | Only Date Pickers page and reports changed | PASS | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Date Pickers remains pending user visual approval.
