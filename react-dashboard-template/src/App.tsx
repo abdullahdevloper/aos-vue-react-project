@@ -71,6 +71,7 @@ import NavigationDrawersPage from "./pages/ui-components/vuetify/NavigationDrawe
 import OverlaysPage from "./pages/ui-components/vuetify/OverlaysPage";
 import PaginationsPage from "./pages/ui-components/vuetify/PaginationsPage";
 import ParallaxPage from "./pages/ui-components/vuetify/ParallaxPage";
+import ColorPickersPage from "./pages/ui-components/vuetify/ColorPickersPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -169,6 +170,7 @@ export default function App() {
           <Route path="/components/overlays" element={<DashboardRoute><OverlaysPage /></DashboardRoute>} />
           <Route path="/components/paginations" element={<DashboardRoute><PaginationsPage /></DashboardRoute>} />
           <Route path="/components/parallax" element={<DashboardRoute><ParallaxPage /></DashboardRoute>} />
+          <Route path="/components/pickers/color-pickers" element={<DashboardRoute><ColorPickersPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />

@@ -6583,3 +6583,71 @@ Build:
 Approval:
 
 - Global Vuetify docs layout spacing remains pending user visual approval.
+
+### Vuetify Color Pickers Source-Driven Rebuild After Rejection
+
+Status: rebuilt; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Color Pickers at `/components/pickers/color-pickers`.
+- Did not touch Date Pickers, approved slices, animations, Calendars, or `.claude/`.
+
+Complete Vue trace:
+
+- Main page: `src/views/Vuetify/Pickers/ColorPickers.vue`.
+- Usage component: `src/demo/usages/color-pickers.vue`.
+- Shared usage wrapper: `src/demo/components/UsageExample.vue`.
+- Shared docs/example wrappers: `src/demo/components/DocPage.vue`, `src/demo/components/Example.vue`.
+- Documentation text: `src/lang/en/components/ColorPickers.json`.
+- Vuetify component internals/styles: `node_modules/vuetify/src/components/VColorPicker/*`.
+- Examples in exact Vue order:
+  - `src/demo/examples/color-pickers/simple/model.vue`
+  - `src/demo/examples/color-pickers/intermediate/swatches.vue`
+  - `src/demo/examples/color-pickers/intermediate/inputs.vue`
+  - `src/demo/examples/color-pickers/intermediate/canvas.vue`
+
+Source-verified defaults and behavior:
+
+- `v-color-picker` default color is red RGBA from `fromRGBA({ r: 255, g: 0, b: 0, a: 1 })`.
+- `mode` default is `rgba`; supported edit modes are `rgba`, `hsla`, and `hexa`.
+- `width=300`, `canvasHeight=150`, `dotSize=10`, `swatchesMaxHeight=150`.
+- Usage options order is booleans first (`disabled`, `hide-canvas`, `hide-inputs`, `hide-mode-switch`, `show-swatches`, `flat`), then sliders (`dot-size`, `swatches-max-height`), then select (`mode`).
+- Swatches are Vuetify rectangular 45x18 color cells in columns, not circular chips.
+- Model example changes the `v-model` output format (`hex`, `hexa`, `rgba`, `hsla`, `hsva`) while the picker edit mode remains the component default unless changed internally.
+
+Fix notes:
+
+- Rebuilt the shared React `VColorPicker` primitive around Vuetify source defaults: default red color, default `rgba` edit mode, 300px width, 150px canvas, 10px selection dot, preview controls padding, 30px preview dot, 10px slider tracks, 28px bordered inputs, and Vuetify rectangular swatches.
+- Rebuilt the Usage section to match Vue `UsageExample.vue`: outlined two-column card, 48px grey header bands, 300px preview area, right Options panel, inset switches, sliders, and filled dense mode select.
+- Corrected Model so the type buttons control the v-model output format and preserve separate values per format instead of incorrectly forcing picker edit modes.
+- Updated source panel content for Usage to the exact traced Vue usage component.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page/docs | `ColorPickers.vue`, `ColorPickers.json` | Heading text, Usage, then Model/Swatches/Inputs/Canvas | Same page order and documentation text | PASS | Pending visual approval |
+| Usage | `src/demo/usages/color-pickers.vue`, `UsageExample.vue` | Centered `v-color-picker` inside shared UsageExample wrapper; options drive attrs | Rebuilt two-column usage wrapper and option controls in source order | PASS | Pending visual approval |
+| Usage defaults | `ColorPickers.vue`, `VColorPicker.ts` | `mode` defaults to `rgba`; default internal color red; `dot-size=10`; `swatches-max-height=150` | Same defaults | PASS | |
+| Model | `simple/model.vue` | Buttons select `hex`, `hexa`, `rgba`, `hsla`, `hsva`; picker updates selected v-model value; output sheet reflects selected format | Same button order, separate model state per format, and output formatting | PASS | |
+| Swatches | `intermediate/swatches.vue`, `VColorPickerSwatches.ts/sass` | Three pickers; default swatches, custom swatches, max-height 300px; rectangular 45x18 cells | Same examples and rectangular Vuetify swatch geometry | PASS | |
+| Inputs | `intermediate/inputs.vue`, `VColorPickerEdit.ts/sass` | `hide-inputs`, `hide-mode-switch`, external `mode.sync` with select default `hsla` | Same section structure and external mode select values | PASS | |
+| Canvas | `intermediate/canvas.vue`, `VColorPickerCanvas.ts/sass` | `hide-canvas`, `canvas-height=300`, `dot-size=30` | Same props and interaction support | PASS | |
+| Source panels | `Example.vue`, traced Vue files | Source panel shows exact Vue snippet | Usage source replaced with exact snippet; examples preserved | PASS | |
+| Invert behavior | `UsageExample.vue`, `Example.vue` | Invert is scoped to example/usage surfaces | Existing scoped invert behavior preserved | PASS | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Color Pickers remains pending user visual approval.

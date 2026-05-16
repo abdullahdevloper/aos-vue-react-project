@@ -200,7 +200,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       {
         title: "Pickers",
         children: [
-          { title: "Color Pickers", disabled: true, pending: true },
+          { title: "Color Pickers", path: "/components/pickers/color-pickers", icon: <ViewHeadline /> },
           { title: "Date Pickers", disabled: true, pending: true },
           { title: "TIme Pickers", disabled: true, pending: true },
         ],
