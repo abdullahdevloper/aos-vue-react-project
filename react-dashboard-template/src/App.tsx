@@ -61,6 +61,7 @@ import ItemGroupsPage from "./pages/ui-components/vuetify/ItemGroupsPage";
 import SlideGroupsPage from "./pages/ui-components/vuetify/SlideGroupsPage";
 import WindowsPage from "./pages/ui-components/vuetify/WindowsPage";
 import HoverPage from "./pages/ui-components/vuetify/HoverPage";
+import VuetifyIconsPage from "./pages/ui-components/vuetify/VuetifyIconsPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -149,6 +150,7 @@ export default function App() {
           <Route path="/components/groups/slide-groups" element={<DashboardRoute><SlideGroupsPage /></DashboardRoute>} />
           <Route path="/components/groups/windows" element={<DashboardRoute><WindowsPage /></DashboardRoute>} />
           <Route path="/components/hover" element={<DashboardRoute><HoverPage /></DashboardRoute>} />
+          <Route path="/components/icons" element={<DashboardRoute><VuetifyIconsPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
