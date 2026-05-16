@@ -6741,6 +6741,221 @@ Approval:
 
 - Vuetify / Date Pickers remains pending user visual approval.
 
+### Vuetify Date Pickers Event Dot Placement Refinement
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Date Pickers event dot rendering.
+- Did not touch Time Pickers, Color Pickers, Calendars, approved slices, global animations, or `.claude/`.
+
+Source:
+
+- `node_modules/vuetify/src/components/VDatePicker/mixins/date-picker-table.ts` renders `v-date-picker-table__events` as a child of the date/month button.
+- `node_modules/vuetify/src/components/VDatePicker/VDatePickerTable.sass` positions the event dots inside that button area below the label.
+
+Fix:
+
+- Moved React event dots from the table cell overlay into the date/month button.
+- Shifted the label slightly upward only when events exist so dots sit underneath the number.
+- Kept event dots non-interactive so clicks still hit the date/month button.
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Date Pickers remains pending user visual approval.
+
+### Vuetify Date Pickers Remaining Blockers Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Date Pickers at `/components/pickers/date-pickers`.
+- Did not touch Time Pickers, Color Pickers, Calendars, approved slices, global animations, or `.claude/`.
+
+Source re-check:
+
+- Playground month/type behavior: `src/demo/examples/date-pickers/playground.vue`, `node_modules/vuetify/src/components/VDatePicker/VDatePicker.ts`.
+- Date Events: `src/demo/examples/date-pickers/intermediate/date-events.vue`, `node_modules/vuetify/src/components/VDatePicker/VDatePickerTable.sass`.
+- Formatting date: `src/demo/examples/date-pickers/intermediate/date-formatting.vue`.
+
+Fix notes:
+
+- Fixed the `Invalid time value` crash shown when toggling Playground Month picker by making `formatTitleDate` robust during Vue-style date/month model normalization (`YYYY-MM-DD` ⇄ `YYYY-MM`).
+- Moved date event dots below the day button so they no longer draw on top of the day number.
+- Rebuilt the rejected `Date pickers - formatting date` behavior from source:
+  - first field is editable, not readonly;
+  - blur parses `MM/DD/YYYY`;
+  - picker/date changes resync the formatted string like the Vue watcher;
+  - second field remains readonly.
+
+Verification table:
+
+| Rejected area | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Playground Month picker crash | `playground.vue`, `VDatePicker.ts` | Switching month type must not crash; title accepts month-shaped values | `formatTitleDate` now handles partial month/date values safely | PASS | Pending visual approval |
+| Events dot placement | `date-events.vue`, `VDatePickerTable.sass` | Event dots sit below the date number, not on top of it | Date event dots moved below the day button and made non-interactive | PASS | Pending visual approval |
+| Date pickers - Events | `date-events.vue` | Array/function event dots display without covering labels | Same event behavior preserved with corrected dot placement | PASS | Pending visual approval |
+| Date pickers - formatting date | `date-formatting.vue` | First text field editable, parses on blur, syncs formatted value when date changes; second field readonly | First field editable, date watcher equivalent added, parse guard added, second field readonly | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Date Pickers remains pending user visual approval.
+
+### Vuetify Date Pickers Rejected Sections Correction
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Date Pickers at `/components/pickers/date-pickers`.
+- Did not touch Time Pickers, Color Pickers, Calendars, approved slices, global animations, or `.claude/`.
+
+Source re-trace:
+
+- Main page and order: `src/views/Vuetify/Pickers/DatePickers.vue`.
+- Docs text: `src/lang/en/components/DatePickers.json`.
+- Playground: `src/demo/examples/date-pickers/playground.vue`.
+- Width: `src/demo/examples/date-pickers/simple/date-width.vue`.
+- Displayed month/year watcher: `src/demo/examples/date-pickers/simple/date-picker-date.vue`.
+- Internationalization: `src/demo/examples/date-pickers/simple/date-internationalization.vue`.
+- Dialog/menu: `src/demo/examples/date-pickers/intermediate/date-dialog-and-menu.vue`.
+- Birthday: `src/demo/examples/date-pickers/intermediate/date-birthday.vue`.
+- Events: `src/demo/examples/date-pickers/intermediate/date-events.vue`.
+- Shared wrappers: `src/demo/components/DocPage.vue`, `src/demo/components/Example.vue`.
+- Picker internals and transitions: `node_modules/vuetify/src/components/VDatePicker/*`, `node_modules/vuetify/src/components/VPicker/*`, `node_modules/vuetify/src/styles/generic/_transitions.scss`.
+
+Fix notes:
+
+- Added Vue-equivalent type watcher behavior so Playground Month picker switches to MONTH view and normalizes the model between `YYYY-MM-DD` and `YYYY-MM`.
+- Added `picker-date.sync` initial emission so the displayed month/year example updates the news panel like Vue immediately and on header changes.
+- Corrected Setting picker width structure to preserve Vue direct row order, 290px first picker, full-width landscape second picker, and spacing.
+- Corrected dialog/menu example spacing to include Vue spacer behavior and the `nudge-right="40"` menu offset for the third picker.
+- Corrected birthday picker to open with `activePicker = YEAR` and keep the menu flow/source min/max behavior.
+- Corrected Date Events to generate mounted-style event arrays from the source behavior and preserve function event color output.
+- Kept existing section order, docs text, local transitions, and lazy route-safety behavior.
+
+Self-verification:
+
+| Rejected area | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Playground Month picker | `playground.vue`, `VDatePicker.ts` type watcher | `Month picker` switch changes `type` to `month`, active view becomes MONTH, model is month-shaped, events use month function | Type-change watcher resets active picker and normalizes model; month events path preserved | PASS | Pending visual approval |
+| Events design | `date-events.vue`, `date-picker-table.ts`, `VDatePickerTable.sass` | Mounted array events, function events, 8px event dots with `green lighten-1`, red/yellow, red/blue outputs | Array events generated once on mount-equivalent render; function events/color behavior preserved | PASS | Random source behavior cannot be visually identical run-to-run |
+| Date width | `simple/date-width.vue` | Row align center; first picker `width="290"` with `mt-4`; second `full-width` and landscape on desktop, after first | Same order, first 290px picker, second flexing full-width landscape picker with source spacing | PASS | |
+| Displayed month/year change | `simple/date-picker-date.vue`, `VDatePicker.ts` created/tableDate watcher | `picker-date.sync` receives initial table date and updates notes on displayed month/year changes | Initial and subsequent `pickerDate` emissions implemented; news list updates using Vue random unique-note behavior | PASS | Pending visual approval |
+| Internationalization | `simple/date-internationalization.vue` | Two pickers: `first-day-of-week=0 locale=zh-cn`, `first-day-of-week=1 locale=sv-se` | Existing behavior preserved; type/model fixes do not alter it | PASS | |
+| In dialog and menu | `date-dialog-and-menu.vue` | Three columns with spacer behavior; menu uses scale transition, min-width 290, third menu has `nudge-right=40`; dialog width 290 | Spacer layout, min-width, scale entrance, and third menu offset corrected | PASS | Dialog visual remains pending visual approval |
+| Birthday picker | `date-birthday.vue` | Menu opens with picker active view set to YEAR, min 1950-01-01, max today, selecting date closes/saves | `initialActivePicker="YEAR"` added for birthday; min/max and close-on-date-select preserved | PASS | |
+| Date picker animations | Vuetify transitions source | Picker/tab/fade/scale transitions remain page-local | Existing local transitions preserved | PASS | |
+| Source/invert | `Example.vue` | Per-example source/invert controls preserved | Existing controls preserved | PASS | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Date Pickers remains pending user visual approval.
+
+### Vuetify Date Pickers Interaction Animation Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Date Pickers at `/components/pickers/date-pickers`.
+- Did not touch Color Pickers, Time Pickers, Calendars, approved slices, global animation backlog, or `.claude/`.
+
+Source re-trace:
+
+- Main page: `src/views/Vuetify/Pickers/DatePickers.vue`.
+- Usage/playground: `src/demo/examples/date-pickers/usage.vue`, `src/demo/examples/date-pickers/playground.vue`.
+- All source-ordered examples under `src/demo/examples/date-pickers/simple/*` and `src/demo/examples/date-pickers/intermediate/*`.
+- Shared wrappers: `src/demo/components/Example.vue`, `src/demo/components/DocPage.vue`.
+- Picker internals:
+  - `node_modules/vuetify/src/components/VDatePicker/VDatePicker.ts`
+  - `node_modules/vuetify/src/components/VDatePicker/VDatePickerTitle.ts`
+  - `node_modules/vuetify/src/components/VDatePicker/VDatePickerHeader.ts`
+  - `node_modules/vuetify/src/components/VDatePicker/mixins/date-picker-table.ts`
+  - `node_modules/vuetify/src/components/VPicker/VPicker.ts`
+  - `node_modules/vuetify/src/styles/generic/_transitions.scss`
+  - `node_modules/vuetify/src/styles/settings/_variables.scss`
+- Verified transition source:
+  - `$primary-transition`: `0.3s cubic-bezier(0.25, 0.8, 0.5, 1)`.
+  - `picker-transition` / `picker-reverse-transition`: `0.3s cubic-bezier(0, 0, 0.2, 1)`, vertical enter/leave.
+  - `tab-transition` / `tab-reverse-transition`: horizontal next/previous enter/leave.
+  - `fade-transition`: picker body active-view fade.
+  - `scale-transition`: date picker menu activator open behavior.
+
+Fix notes:
+
+- Added a local `AnimatedReplace` helper inside `DatePickersPage.tsx`; it is not global and is only used by this route.
+- Matched Vue next/previous direction logic, including RTL-aware tab direction derived from Vuetify `isReversing === !rtl`.
+- Added vertical title text animation for selected value changes using the Vue picker transition direction.
+- Added fade body switching for DATE/MONTH/YEAR view changes.
+- Added horizontal table/header transitions for displayed month/year changes.
+- Added source-matched scale entrance for picker menu/dialog surfaces.
+- Added Vuetify-like primary transition timing to selection, hover, and focus feedback on date/month cells.
+
+Self-verification:
+
+| Interaction | Vue source | Vue expected animation | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Selected date title value | `VDatePickerTitle.ts`, `_transitions.scss` | `picker-transition` or `picker-reverse-transition`; vertical slide with opacity, 300ms linear-out-slow-in | Local vertical animated replacement on title value | PASS | Direction based on value comparison |
+| Header displayed month/year | `VDatePickerHeader.ts`, `_transitions.scss` | `tab-transition` forward, `tab-reverse-transition` backward; RTL-aware | Local horizontal animated replacement on header value | PASS | Uses Vue `isReversing === !rtl` mapping |
+| Next/previous month table | `date-picker-table.ts`, `_transitions.scss` | Table leaves/enters horizontally with same tab direction | Local horizontal animated replacement around date/month table | PASS | Same 300ms primary timing |
+| DATE/MONTH/YEAR switching | `VPicker.ts`, `VDatePicker.ts`, `_transitions.scss` | Body default `fade-transition` when active picker key changes | Local fade replacement around active picker body | PASS | Scope is Date Pickers only |
+| Menu picker open | `date-dialog-and-menu.vue`, `month-dialog-and-menu.vue` | `v-menu transition="scale-transition"` | Local scale entrance on menu surfaces | PASS | Close remains immediate like current local implementation |
+| Dialog picker open | `v-dialog` default + `VPicker` body | Dialog picker appears with animated picker surface | Local scale entrance on dialog surface | PASS | Pending visual approval |
+| Selection/hover/focus feedback | `date-picker-table.ts`, `VDatePickerTable.sass`, `$primary-transition` | Button background/color/border/focus feedback transitions over primary transition | Date/month cells now use primary transition timing for background, color, border, shadow, opacity | PASS | MUI click ripple remains enabled for the local buttons |
+| Range/multiple selection | `VDatePicker.ts`, `date-picker-table.ts` | Existing selection state updates with same cell transition feedback | Existing selection mechanics preserved and now animated via cell transition | PASS | |
+| Source/invert controls | `Example.vue` | Per-example source/invert behavior | Existing controls preserved | PASS | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Date Pickers remains pending user visual approval.
+
 ### Vuetify Date Pickers Initial Render Blank Page Fix
 
 Status: fixed; pending user visual approval.
