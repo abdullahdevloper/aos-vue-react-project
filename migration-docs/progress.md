@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-14
+Last updated: 2026-05-16
 
 ## Strategy Status
 
@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Grids.
+- Active section: Vuetify / Images.
 
 ## Current Slice
 
-- Scope: Vuetify / Grids only.
-- Route: `/components/grids`.
+- Scope: Vuetify / Images only.
+- Route: `/components/images`.
 - Status: implemented; pending user visual approval.
-- Source audit: Vue Grids sources traced directly from `src/views/Vuetify/Grids.vue`, `src/demo/examples/grids/**`, `src/views/Vuetify/ViewportBreakpoints.vue`, and `src/lang/en/components/Grids.json`.
+- Source audit: Vue Images sources traced directly from `src/views/Vuetify/Images.vue`, `src/demo/usages/images.vue`, `src/demo/examples/images/**`, and `src/lang/en/components/Images.json`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -51,6 +51,7 @@ Current rebuild strategy:
 - Vuetify / Textareas: implemented; pending user visual approval.
 - Vuetify / Textfields: implemented; pending user visual approval.
 - Vuetify / Grids: implemented; pending user visual approval.
+- Vuetify / Images: rebuilt from Vue source after rejection; Usage and Height sizing fixes applied; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

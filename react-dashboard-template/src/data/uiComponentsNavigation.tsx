@@ -183,7 +183,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       },
       { title: "Hover", path: "/components/hover", icon: <ViewHeadline /> },
       { title: "Icons", path: "/components/icons", icon: <PhotoLibrary /> },
-      { title: "Images", disabled: true, pending: true },
+      { title: "Images", path: "/components/images", icon: <PhotoLibrary /> },
       { title: "Lazy", disabled: true, pending: true },
       {
         title: "Lists",

@@ -5405,6 +5405,259 @@ Approval:
 
 - Global Vuetify docs layout spacing remains pending user visual approval.
 
+### Vuetify Images Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Images at `/components/images`.
+- Enabled only the Images sidebar item.
+- Did not touch Icons, Lazy, approved slices, animations, Calendars, or `.claude/`.
+- Calendars remains deferred/paused and not approved.
+
+Vue source traced:
+
+- Main page: `src/views/Vuetify/Images.vue`.
+- Usage playground: `src/demo/usages/images.vue`.
+- Examples in exact Vue order:
+  - `src/demo/examples/images/simple/contain-cover.vue`
+  - `src/demo/examples/images/simple/max-height.vue`
+  - `src/demo/examples/images/simple/ratio.vue`
+  - `src/demo/examples/images/simple/placeholder.vue`
+  - `src/demo/examples/images/intermediate/gradients.vue`
+  - `src/demo/examples/images/intermediate/grid.vue`
+- Documentation: `src/lang/en/components/Images.json`.
+
+Source/assets verified:
+
+- Usage: `https://picsum.photos/id/11/500/300` with lazy source `https://picsum.photos/id/11/10/6`.
+- Contain/Cover: `https://picsum.photos/510/300?random`.
+- Height: `https://picsum.photos/350/165?random`.
+- Fixed ratio: `https://cdn.vuetifyjs.com/images/parallax/material.jpg`.
+- Placeholder: `https://picsum.photos/id/1024/700/60` with lazy source `https://picsum.photos/id/11/100/60`.
+- Gradients: `https://cdn.vuetifyjs.com/images/parallax/material2.jpg`.
+- Grid: `https://picsum.photos/500/300?image=${n * 5 + 10}` with lazy source `https://picsum.photos/10/6?image=${n * 5 + 10}`.
+- No missing or UNKNOWN image assets were found.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/usages/images.vue` | `v-img` preview with `contain`, `max-width`, and `max-height` controls | React `VImg` preview with matching switches/sliders and exact source/lazy source URLs | Pending visual review | |
+| Contain and Cover | `simple/contain-cover.vue` | Two columns comparing cover and contain across matching, too-high, and too-low ratios | Same two-column structure, labels, aspect ratios, source URL, and contain/cover behavior | Pending visual review | |
+| Height | `simple/max-height.vue` | `Load images` button, then four image cards using `height`, `height contain`, `max-height`, and `max-height contain` | Same button reveal and four-card image matrix | Pending visual review | |
+| Fixed ratio | `simple/ratio.vue` | Width slider controls a card with 16:9 material image, overlay identity text, and Material Icon list rows | Same width slider, card/image/list layout, exact Material Icons ligatures loaded locally in React | Pending visual review | |
+| Placeholder | `simple/placeholder.vue` | `v-img` placeholder slot shows loading indicator while source is loading/failed | React placeholder displays spinner over the exact lazy/source pair | Pending visual review | |
+| Gradients | `intermediate/gradients.vue` | Three gradient overlay images with exact gradient strings | Same three gradients and image source | Pending visual review | |
+| Grid | `intermediate/grid.vue` | Centered 3x3 gallery using source/lazy source image formula | Same 3x3 gallery, source/lazy source formulas, aspect ratio, and card shell | Pending visual review | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Images remains pending user visual approval.
+
+### Vuetify Images Height Section Correction
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Vuetify / Images `Height` example behavior through the shared `VImg` sizing primitive.
+- Did not touch Icons, Lazy, approved slices, animations, Calendars, or `.claude/`.
+
+Vue source rechecked:
+
+- Source: `src/demo/examples/images/simple/max-height.vue`.
+- Vue expected:
+  - Initial state shows centered text button `Load images`.
+  - After click, four cards appear in two `cols="6"` columns.
+  - First two images use `height="125"`.
+  - Last two images use `max-height="125"`.
+  - All four image areas render at 125px height; contain variants preserve image without crop inside the dark surface.
+
+Fix:
+
+- Updated React `VImg` so `maxHeight` without a `maxWidth` resolves to an actual rendered image area height.
+- This makes the `max-height` cards in the Height example render at 125px like Vue, instead of retaining a taller aspect-ratio box.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Height cards | Four cards in two-column layout | Layout existed | Layout preserved | PASS | |
+| `height=125` images | 125px image area | 125px image area | 125px image area | PASS | |
+| `max-height=125` images | 125px image area | Aspect-ratio area could remain taller and clip incorrectly | 125px image area | PASS | Pending visual approval |
+| Contain variants | Image contained inside dark 125px surface | Could inherit wrong height for max-height contain | Dark 125px contain surface restored | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Images remains pending user visual approval.
+
+### Vuetify Images Usage Max Width Screenshot Match
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Vuetify / Images Usage image sizing behavior.
+- Did not touch Icons, Lazy, approved slices, animations, Calendars, or `.claude/`.
+
+User-reviewed Vue reference state:
+
+- Usage playground with `max-width` at the highest value.
+- Vue displays the exact source image `https://picsum.photos/id/11/500/300`.
+- The image renders approximately 500px wide and 150px tall when `max-height` is 150.
+- The image remains centered in the left Usage preview area.
+- `max-height` clips/crops the image area without reducing the 500px width.
+
+Fix:
+
+- Updated the React `VImg` sizing calculation so `max-height` becomes the rendered image area height when the aspect-ratio height would exceed it.
+- Preserved `max-width` as the actual rendered image width.
+- Resulting Usage max state now matches Vue's 500px wide by 150px high cropped/covered image behavior.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage max-width max state | Width stays at 500px | Width stayed 500px but inner image area behaved like a tall square clipped incorrectly | Width stays 500px and image area height resolves to max-height | PASS | Pending visual approval |
+| Usage max-height with max-width | 150px tall image area when max-height is 150 | Tall aspect-ratio area was clipped from the wrong box | 150px tall image area with cover cropping | PASS | Pending visual approval |
+| Usage image position | Centered in preview area | Position could appear off because image area height was wrong | Centered with Vue-like 500x150 image box | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Images remains pending user visual approval.
+
+### Vuetify Images Usage Max Width Correction
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Vuetify / Images Usage section and shared `VImg` sizing behavior required by that section.
+- Did not touch Icons, Lazy, approved slices, animations, Calendars, or `.claude/`.
+
+Vue source rechecked:
+
+- Usage source: `src/demo/usages/images.vue`.
+- Usage config: `src/views/Vuetify/Images.vue`.
+- Vue expected:
+  - Source image: `https://picsum.photos/id/11/500/300`.
+  - Lazy source: `https://picsum.photos/id/11/10/6`.
+  - `aspect-ratio="1"`.
+  - `class="grey lighten-2"`.
+  - Options order: `contain`, `max-width` default `250`, `max-height` default `150`.
+  - `max-width` controls the image width directly; `max-height` must not recalculate or shrink the width.
+
+Fix:
+
+- Removed the React width recalculation that derived image width from `max-height`.
+- React now keeps the `max-width` slider value as the image width, while `max-height` only limits/clips image height like Vue `v-img`.
+- Kept the exact Vue usage image and lazy image URLs.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage image source | `https://picsum.photos/id/11/500/300` | Same source configured | Same source retained | PASS | |
+| Usage lazy source | `https://picsum.photos/id/11/10/6` | Same lazy source configured | Same lazy source retained | PASS | |
+| Usage max-width | Slider value controls image width directly | Width was incorrectly reduced when `max-height` was lower than computed height | Width now follows `max-width` directly | PASS | Pending visual approval |
+| Usage max-height | Limits image height without changing max-width slider behavior | Changed effective width through custom constraint math | Limits/clips height independently | PASS | Pending visual approval |
+| Usage image position | Centered in Vue `v-container fill-height` / centered row | Position drifted because image width became too small | Centered with corrected image width | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Images remains pending user visual approval.
+
+### Vuetify Images Source-Driven Rebuild
+
+Status: rebuilt after rejection; pending user visual approval.
+
+Scope:
+
+- Rebuilt only Vuetify / Images at `/components/images`.
+- Did not touch Icons, Lazy, approved slices, animations, Calendars, or `.claude/`.
+- Calendars remains deferred/paused and not approved.
+
+Complete Vue trace:
+
+- Main route/page: `src/views/Vuetify/Images.vue`.
+- Generic docs wrapper: `src/demo/components/DocPage.vue`.
+- Usage wrapper: `src/demo/components/Usage.vue`.
+- Usage playground wrapper: `src/demo/components/UsageExample.vue`.
+- Example wrapper/source-panel behavior: `src/demo/components/Example.vue`.
+- Usage component: `src/demo/usages/images.vue`.
+- Example files in exact Vue order:
+  - `src/demo/examples/images/simple/contain-cover.vue`
+  - `src/demo/examples/images/simple/max-height.vue`
+  - `src/demo/examples/images/simple/ratio.vue`
+  - `src/demo/examples/images/simple/placeholder.vue`
+  - `src/demo/examples/images/intermediate/gradients.vue`
+  - `src/demo/examples/images/intermediate/grid.vue`
+- Documentation text: `src/lang/en/components/Images.json`.
+
+Rebuild notes:
+
+- Replaced the previous custom Images layout with Vue-like `UsageExample` and `Example` structures.
+- Added local Vuetify-like `v-container`, `v-row`, and `v-col` primitives for this page so gutter, offset, and breakpoint behavior follows the source examples.
+- Rebuilt the Images usage playground with the Vue two-column outlined card, 48px header bands, 300px preview scroller, options header, invert playground button, and source option order.
+- Rebuilt the `v-img` primitive for source-driven aspect ratio, max width/height, contain/cover, lazy source, placeholder spinner, gradient overlays, and default/natural image ratios used by the examples.
+- Preserved exact source URLs from Vue; no random replacement images were used.
+
+PASS/FAIL verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page/docs wrapper | `src/views/Vuetify/Images.vue`, `src/demo/components/DocPage.vue` | `vuse-content-wrapper`, section definition, `v-container fluid`, heading text, usage, then examples | React route uses shared docs wrapper and exact Images heading/usage/examples order | PASS | Pending visual approval |
+| Usage playground | `src/demo/components/UsageExample.vue`, `src/demo/usages/images.vue` | Outlined `example-new` card, left `md=9` preview, right `md=3` Options panel, 300px preview height, `contain`, `max-width`, `max-height` controls | Rebuilt to same two-column structure and option order with matching preview image/lazy image | PASS | Pending visual approval |
+| Contain and Cover | `src/demo/examples/images/simple/contain-cover.vue` | `v-container fluid`, `v-row justify="space-around"`, two `cols=5` columns, cover/contain at aspect ratios 1.7, 2, 1.4 | Same source structure, labels, ratios, and contain/cover behavior | PASS | |
+| Height | `src/demo/examples/images/simple/max-height.vue` | Initial text button, fade reveal, four `cols=6` cards, `height=125`, `max-height=125`, and contain variants | Same reveal state, card grid, image props, titles, and dark image background | PASS | |
+| Fixed ratio | `src/demo/examples/images/simple/ratio.vue` | Width slider 200-500 default 300, stateless navigation drawer, 16:9 image, lightbox overlay, Material Icons list rows | Same width state, drawer/card width, image overlay, list order, dividers, and Material Icons ligatures | PASS | |
+| Placeholder | `src/demo/examples/images/simple/placeholder.vue` | Centered 1:1 image with max width 500, max height 300, lazy source, placeholder spinner | Same source/lazy source, constraints, grey surface, and spinner | PASS | |
+| Gradients | `src/demo/examples/images/intermediate/gradients.vue` | Three responsive `cols=6 sm=4` images with exact gradient strings | Same responsive columns, source URL, natural ratio, and gradients | PASS | |
+| Grid | `src/demo/examples/images/intermediate/grid.vue` | `cols=12 sm=6 offset-sm=3`, card, fluid container, 3x3 gallery, source/lazy formulas | Same offset/card/container structure, formulas, lazy placeholder, and 1:1 tiles | PASS | |
+| Source panels | `src/demo/components/Example.vue` | View source expands dark source panel with template tab | React example blocks preserve source expansion and show Vue source snippets for each Images example | PASS | |
+| Invert behavior | `src/demo/components/UsageExample.vue`, `src/demo/components/Example.vue` | Invert affects usage/example surfaces, not global page | React usage/example invert buttons scope dark surface to their own block | PASS | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Images remains pending user visual approval.
+
 ### Global Vuetify Docs Layout Source-Matched Correction
 
 Status: fixed; pending user visual approval.
