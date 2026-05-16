@@ -5405,6 +5405,47 @@ Approval:
 
 - Global Vuetify docs layout spacing remains pending user visual approval.
 
+### Vuetify Lists Nested/Expansion/Nav Interaction Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Lists at `/components/lists`.
+- Did not touch Lazy, Lists Item Group, approved slices, animations, Calendars, or `.claude/`.
+
+Vue source rechecked:
+
+- `src/demo/examples/lists/intermediate/nested.vue`
+- `src/demo/examples/lists/intermediate/expansion-lists.vue`
+- `src/demo/examples/lists/intermediate/nav.vue`
+
+Fixes:
+
+- Expansion Lists inner rows now use clickable list-item behavior and show the local Vuetify-style ripple on press.
+- Nested Lists inner admin rows and action rows now use clickable list-item behavior and show the local Vuetify-style ripple on press.
+- Navigation Lists profile row is now clickable like Vue `link`, and the example drawer shell/background was adjusted to better match the Vue nav-list surface.
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Expansion Lists inner items | `@click` rows are clickable with Vuetify list ripple | Inner rows receive click handlers and ripple from the shared Lists primitive | PASS | Pending visual approval |
+| Nested Lists inner items | Admin/action child rows are clickable with ripple | Child rows receive click handlers and ripple from the shared Lists primitive | PASS | Pending visual approval |
+| Navigation Lists profile row | `link` profile row is clickable with ripple | Profile row receives click handler and ripple | PASS | Pending visual approval |
+| Scope control | Only Lists page behavior/layout is touched | Only `ListsVuetifyPage.tsx` changed for React source | PASS | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Lists remains pending user visual approval.
+
 ### Vuetify Images Implementation
 
 Status: implemented; pending user visual approval.
@@ -5516,6 +5557,205 @@ Build:
 Approval:
 
 - Vuetify / Lazy remains pending user visual approval.
+
+### Vuetify Lists Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Lists at `/components/lists`.
+- Enabled only `Lists > List` sidebar item.
+- Did not touch Lazy, Lists Item Group, approved slices, animations, Calendars, or `.claude/`.
+- Calendars remains deferred/paused and not approved.
+
+Complete Vue trace:
+
+- Main page: `src/views/Vuetify/Lists/Lists.vue`.
+- Generic docs wrapper: `src/demo/components/DocPage.vue`.
+- Usage wrapper: `src/demo/components/Usage.vue`.
+- Playground wrapper: `src/demo/components/Playground.vue`.
+- Example wrapper/source-panel behavior: `src/demo/components/Example.vue`.
+- Documentation text: `src/lang/en/components/Lists.json`.
+- Usage/playground/examples in exact Vue order:
+  - `src/demo/examples/lists/usage.vue`
+  - `src/demo/examples/lists/playground.vue`
+  - `src/demo/examples/lists/simple/disabled.vue`
+  - `src/demo/examples/lists/simple/shaped.vue`
+  - `src/demo/examples/lists/simple/dense.vue`
+  - `src/demo/examples/lists/simple/flat.vue`
+  - `src/demo/examples/lists/simple/rounded.vue`
+  - `src/demo/examples/lists/intermediate/avatar-title-and-action.vue`
+  - `src/demo/examples/lists/intermediate/icon-two-lines-and-action.vue`
+  - `src/demo/examples/lists/intermediate/avatar-three-lines.vue`
+  - `src/demo/examples/lists/intermediate/avatar-subheader-title-and-action.vue`
+  - `src/demo/examples/lists/intermediate/nested.vue`
+  - `src/demo/examples/lists/intermediate/card-list.vue`
+  - `src/demo/examples/lists/intermediate/title-subtitle-actions-and-action-text.vue`
+  - `src/demo/examples/lists/intermediate/action-title-and-subtitle.vue`
+  - `src/demo/examples/lists/intermediate/expansion-lists.vue`
+  - `src/demo/examples/lists/intermediate/nav.vue`
+
+Implementation notes:
+
+- Built local Vue-like list primitives for this page: `VList`, `VListItem`, `VToolbar`, `Subheader`, `VDivider`, list group headers, Material Icons ligatures, and MDI SVG icons.
+- Preserved exact source text/data for report lists, mail list rows, settings rows, nested groups, expansion groups, navigation list entries, toolbar titles, and card/list content.
+- Used verified Vue image URLs where remote sources are used, and the existing React `m2.jpg` asset for Vue `/static/doc-images/lists/m2.jpg` because React cannot serve the protected root `public/static` path directly.
+- Interactions implemented from Vue source: playground switches, simple list active selection, nested group open/close, expansion list open/close with Dining initially active, multiple star selection, settings checkbox selection, and nav active item selection.
+
+Self-verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `src/views/Vuetify/Lists/Lists.vue` | Docs page with heading text, Usage, Playground, then examples | React route uses shared `DocPage` and same order | PASS | Pending visual approval |
+| Usage | `src/demo/examples/lists/usage.vue` | Tile max-width 400 card with single-line, two-line, three-line items | Same card, line variants, titles/subtitles, and heights | PASS | |
+| Playground | `src/demo/examples/lists/playground.vue` | Switches for disabled/dense/two-line/three-line/shaped/flat/subheader/inactive/sub-group/nav/avatar/rounded with active item default `5` | Same controls, default state, data rows, avatar toggle, active/disabled/inactive behavior | PASS | Pending visual approval |
+| Disabled lists | `simple/disabled.vue` | Max-width 300 tile list, disabled children, item default active index 1 | Same disabled styling and non-interactive rows | PASS | |
+| Shaped lists | `simple/shaped.vue` | Shaped active item style | Same shaped active item radius behavior | PASS | Pending visual approval |
+| Dense | `simple/dense.vue` | Dense item height with active index 1 | Same dense item height/spacing and active state | PASS | |
+| Flat | `simple/flat.vue` | Active item color without highlighted background | Same flat active behavior | PASS | |
+| Rounded | `simple/rounded.vue` | Rounded active item rows | Same rounded row styling | PASS | |
+| Avatar with title/action | `intermediate/avatar-title-and-action.vue` | Indigo toolbar, star action, trailing avatars | Same toolbar, row data, star color, and avatars | PASS | |
+| Icon with 2 lines/action | `intermediate/icon-two-lines-and-action.vue` | Light-blue toolbar, folders/files subheaders, icons, info actions | Same sections, icons, subtitles, dividers, and actions | PASS | |
+| Avatar with 3 lines | `intermediate/avatar-three-lines.vue` | Cyan toolbar, Today subheader, inset dividers, three-line avatar rows | Same row order, avatars, title HTML, subtitle HTML, dividers | PASS | |
+| Avatar subheader/title/action | `intermediate/avatar-subheader-title-and-action.vue` | Deep-purple toolbar, recent/previous chat sections, chat bubble color state | Same sections, avatars, row order, and action colors | PASS | |
+| Nested lists | `intermediate/nested.vue` | Home row, Users open, Admin sub-group open, Actions closed | Same defaults, nested open/close behavior, Material icons | PASS | Pending visual approval |
+| Card image with toolbar/list | `intermediate/card-list.vue` | 375px card, Ali image header, contact rows/dividers/icons | Same header image URL, toolbar icons, contact text, dividers, list layout | PASS | |
+| Title/subtitle/action-text | `intermediate/title-subtitle-actions-and-action-text.vue` | Pink toolbar, multiple selection, selected index 2, star state/action text | Same default selected row, toggle behavior, action times, star icons | PASS | |
+| Action with title/sub-title | `intermediate/action-title-and-subtitle.vue` | Purple toolbar, user controls, General multi-select checkboxes | Same content, checkbox multiple behavior, default empty selection | PASS | |
+| Expansion Lists | `intermediate/expansion-lists.vue` | Teal toolbar, Dining initially expanded, other groups collapsed | Same initial state and per-group expand/collapse | PASS | |
+| Navigation lists | `intermediate/nav.vue` | 256px permanent drawer card, John profile, nav dense list with active My Files | Same card width, profile area, nav rows, active default | PASS | |
+| Source/invert controls | `src/demo/components/Example.vue` | Example toolbar supports invert, GitHub, and source expansion | React blocks preserve controls and source expansion | PASS | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Lists remains pending user visual approval.
+
+### Vuetify Lists Source-Driven Rebuild After Rejection
+
+Status: rebuilt/corrected after rejection; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Lists at `/components/lists`.
+- Did not touch Lazy, Lists Item Group, approved slices, animations, Calendars, or `.claude/`.
+
+Source re-trace:
+
+- Main page: `src/views/Vuetify/Lists/Lists.vue`.
+- Docs wrappers: `src/demo/components/DocPage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Playground.vue`, `src/demo/components/Example.vue`.
+- Documentation: `src/lang/en/components/Lists.json`.
+- All source examples rechecked in exact Vue order:
+  - `src/demo/examples/lists/usage.vue`
+  - `src/demo/examples/lists/playground.vue`
+  - `src/demo/examples/lists/simple/disabled.vue`
+  - `src/demo/examples/lists/simple/shaped.vue`
+  - `src/demo/examples/lists/simple/dense.vue`
+  - `src/demo/examples/lists/simple/flat.vue`
+  - `src/demo/examples/lists/simple/rounded.vue`
+  - `src/demo/examples/lists/intermediate/avatar-title-and-action.vue`
+  - `src/demo/examples/lists/intermediate/icon-two-lines-and-action.vue`
+  - `src/demo/examples/lists/intermediate/avatar-three-lines.vue`
+  - `src/demo/examples/lists/intermediate/avatar-subheader-title-and-action.vue`
+  - `src/demo/examples/lists/intermediate/nested.vue`
+  - `src/demo/examples/lists/intermediate/card-list.vue`
+  - `src/demo/examples/lists/intermediate/title-subtitle-actions-and-action-text.vue`
+  - `src/demo/examples/lists/intermediate/action-title-and-subtitle.vue`
+  - `src/demo/examples/lists/intermediate/expansion-lists.vue`
+  - `src/demo/examples/lists/intermediate/nav.vue`
+
+Corrections applied:
+
+- Rechecked source-driven order: Usage, Playground, then all examples from `Lists.vue` exactly.
+- Kept `Lists > Item Group` disabled/pending; only `Lists > List` is enabled.
+- Replaced loose toolbar/group defaults with source-faithful icons:
+  - `v-app-bar-nav-icon` now uses MDI menu icon.
+  - List-group expand/collapse indicators now use MDI chevron up/down.
+  - Explicit Material icon names from Vue source remain rendered through the local Material Icons font.
+  - Explicit `mdi-*` names from Vue source render through verified `@mdi/js` paths used in this page.
+- Preserved local asset mapping for Vue `/static/doc-images/lists/m2.jpg` using the already-copied React asset `react-dashboard-template/src/assets/app/contacts/m2.jpg`.
+- Preserved local ripple behavior for interactive list rows and group headers, including rows where Vue uses `@click="() => {}"` only for visual click behavior.
+
+Self-verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/examples/lists/usage.vue` | 400px tile card with single-line, two-line, and three-line items | Same visible structure, text, and line heights | PASS | Pending visual approval |
+| Playground | `src/demo/examples/lists/playground.vue` | Switch row, 400px tile card, item default `5`, all list prop toggles | Same switches, default state, data, active/disabled/inactive/avatar/line behavior | PASS | Pending visual approval |
+| Simple variants | `simple/disabled`, `shaped`, `dense`, `flat`, `rounded` | 300px tile cards, REPORTS subheader, active index `1`, source icons | Same order, item data, source icons, active and variant behavior | PASS | Pending visual approval |
+| Avatar/action | `intermediate/avatar-title-and-action.vue` | Indigo toolbar, MDI actions, star/action/avatar rows | Same source data and MDI toolbar/action icons | PASS | |
+| Icon two-line/action | `intermediate/icon-two-lines-and-action.vue` | Light-blue toolbar, folders/files sections, icon avatars, info actions | Same sections, data, icons, dividers, and row behavior | PASS | |
+| Avatar three-line | `intermediate/avatar-three-lines.vue` | Cyan toolbar, Today subheader, inset dividers, clamped three-line rows | Same source data, title HTML, subtitle HTML, avatars, and dividers | PASS | |
+| Avatar subheader/action | `intermediate/avatar-subheader-title-and-action.vue` | Deep-purple toolbar, Recent/Previous chats, chat bubble action colors | Same source rows, avatars, action colors, and section order | PASS | |
+| Nested | `intermediate/nested.vue` | Home row, Users open, Admin open, Actions closed; 2-level groups | Same defaults, group toggle behavior, source Material icons | PASS | Pending visual approval |
+| Card list | `intermediate/card-list.vue` | 375px card, Ali image header, contact rows, icons/dividers | Same source image, contact data, toolbar actions, list rows | PASS | |
+| Title/subtitle/actions/action-text | `intermediate/title-subtitle-actions-and-action-text.vue` | Pink toolbar, multiple selected index `[2]`, action text, star state | Same default selected row and toggle behavior | PASS | |
+| Action with title/sub-title | `intermediate/action-title-and-subtitle.vue` | Purple toolbar, User Controls, General checkbox multi-select | Same source text and checkbox selection behavior | PASS | |
+| Expansion Lists | `intermediate/expansion-lists.vue` | Teal toolbar, Dining open by default, other groups collapsed | Same defaults, group rows, and open/close behavior | PASS | Pending visual approval |
+| Navigation lists | `intermediate/nav.vue` | 256px permanent drawer card, John profile, dense nav active index `0` | Same profile area, row data, icons, and active selection | PASS | |
+| Click interaction | Vue `v-list-item` / `v-list-group` ripple behavior | Ripple from pointer location, clipped inside row/group bounds | Local Vuetify-style ripple implemented for rows and group headers | PASS | Pending visual approval |
+| Source/invert controls | `src/demo/components/Example.vue` | Invert, GitHub, and View source controls on example cards | Controls preserved; source panel available | PASS | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Lists remains pending user visual approval.
+
+### Vuetify Lists Click Interaction Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Lists click interaction behavior.
+- Did not touch Lazy, Lists Item Group, approved slices, animations, Calendars, or `.claude/`.
+
+Vue behavior rechecked:
+
+- Many Lists examples use `<v-list-item @click="() => {}">` solely to enable Vuetify link/ripple behavior.
+- `v-list-group` headers also emit click and ripple.
+- Disabled/inactive rows should not produce active click behavior.
+
+Fix:
+
+- Added a local Vuetify-style ripple layer for interactive `VListItem` rows.
+- Added the same ripple behavior to list group headers used by Nested lists and Expansion Lists.
+- Enabled visual ripple for rows that map to Vue source rows with `@click="() => {}"` even when no state changes.
+- Ripple starts from the pointer location, expands inside the row bounds, fades out, and is clipped by the list item radius.
+
+Verification table:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Interactive list rows | Vuetify ripple from click point | Hover/background only; no click ripple | Local ripple expands and fades inside row bounds | PASS | Pending visual approval |
+| Rows with `@click="() => {}"` | Ripple even without state change | No interaction effect if no React state handler existed | Rows now receive no-op click handler and ripple | PASS | Pending visual approval |
+| Nested group headers | Click toggles group and ripples | Toggle worked, ripple missing | Toggle plus local ripple | PASS | |
+| Expansion list headers | Click toggles group and ripples | Toggle worked, ripple missing | Toggle plus local ripple | PASS | |
+| Disabled/inactive rows | No active click/ripple | Disabled/inactive rows did not update state | Ripple remains blocked for disabled/inactive rows | PASS | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Lists remains pending user visual approval.
 
 ### Vuetify Images Height Section Correction
 

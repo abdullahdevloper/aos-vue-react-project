@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Lazy.
+- Active section: Vuetify / Lists.
 
 ## Current Slice
 
-- Scope: Vuetify / Lazy only.
-- Route: `/components/lazy`.
+- Scope: Vuetify / Lists only.
+- Route: `/components/lists`.
 - Status: implemented; pending user visual approval.
-- Source audit: Vue Lazy sources traced directly from `src/views/Vuetify/Lazy.vue`, `src/demo/examples/lazy/usage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Example.vue`, and `src/lang/en/components/Lazy.json`.
+- Source audit: Vue Lists sources traced directly from `src/views/Vuetify/Lists/Lists.vue`, `src/demo/examples/lists/**`, `src/demo/components/Usage.vue`, `src/demo/components/Playground.vue`, `src/demo/components/Example.vue`, and `src/lang/en/components/Lists.json`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -53,6 +53,7 @@ Current rebuild strategy:
 - Vuetify / Grids: implemented; pending user visual approval.
 - Vuetify / Images: rebuilt from Vue source after rejection; Usage and Height sizing fixes applied; pending user visual approval.
 - Vuetify / Lazy: implemented; pending user visual approval.
+- Vuetify / Lists: rebuilt from Vue source after rejection; source icon and click interaction fixes applied; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
@@ -4732,6 +4733,10 @@ Build:
 Approval:
 
 - Global Vuetify docs layout spacing remains pending user visual approval.
+
+### Vuetify / Lists interaction correction
+
+- Vuetify / Lists: fixed rejected inner click behavior for Expansion Lists and Nested Lists, and corrected Navigation Lists clickable profile row/surface; build passed; pending user visual approval.
 
 ### Global Vuetify Docs Layout Source-Matched Correction
 
