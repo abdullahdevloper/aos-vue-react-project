@@ -1,12 +1,53 @@
 # Phase Report
 
-Last updated: 2026-05-09
+Last updated: 2026-05-16
 
 ## Phase
 
-Global Toolbar / App Bar Fidelity plus Theme Settings implementation.
+Vuetify / Overlays full rebuild from Vue source.
 
 Status: implemented; pending user visual approval.
+
+## Overlays Rebuild — Verification Table
+
+Route: `/components/overlays`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/OverlaysPage.tsx`
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page header | `namespace="Components"`, `page="Overlays"`, breadcrumbs Components>Vuetify>Overlays | Title "Overlays", breadcrumbs, DocText intro | DocPage with title, breadcrumbs, DocText | High | Exact JSON text |
+| Intro text | `v-overlay` component is used to provide emphasis... | CodePill `v-overlay`, sentence | CodePill + DocText | High | Exact match |
+| Usage | `color="error"` (#ff5252) button; overlay with icon close only | Red button shows overlay; close icon inside; no backdrop close | `error` #ff5252 button; `IconButton` with Close icon; no backdrop handler | High | Exact close behavior |
+| Playground | `absolute=false, opacity=0.46, overlay=false, zIndex=5`; two checkboxes, two number fields | Controls row, Show Overlay / Hide Overlay buttons | Checkboxes "Absolute"/"value"; TextField Opacity/z-index; correct defaults | High | Labels match Vue ("value" lowercase) |
+| Absolute | `absolute=true`, `color="success"` (#4caf50), card 300×250 | Green buttons, overlay covers card | Card 300×250, green buttons, `absolute` VOverlay | High | Exact card size and color |
+| Opacity | `absolute=true`, `opacity=1`, `color="orange lighten-2"` (#ffb74d) | Orange buttons, solid scrim | Card 300×250, orange buttons, opacity=1 | High | Exact opacity=1 |
+| Z Index | `color="teal"` (#009688), `class="white--text"`, `zIndex=0` | Teal buttons white text, full-screen overlay at z-index=0 | Teal buttons, VOverlay zIndex=0 | High | No backdrop close |
+| Loader | `color="deep-purple accent-4"` (#6200ea), `class="white--text"`, mdi-open-in-new icon, circular 64px, 3s auto-close | Purple button, spinner overlay, auto-dismiss | deepPurpleAccent4 #6200ea, CircularProgress size=64, 3000ms timer | High | Timer logic matches Vue watch |
+| Advanced | v-hover card, forest image, "Magento Forests", 4-star orange rating, "64 Reviews", hover overlay color=#036358, white "See more info" button | Hover reveals teal scrim with white button | onMouseEnter/Leave hover, color="#036358", white button | High | v-fade-transition not fully replicated (no fade-out) |
+| VOverlay scrim | `v-overlay` scrim via Vuetify's internal `v-overlay__scrim`; wrapper transparent | Only scrim layer has color/opacity | `::before` pseudo-element with bgcolor+opacity; wrapper transparent | High | Matches Vuetify model |
+| Source panel | Vue source code | Actual Vue template/script per example | All 7 sourceTemplates have actual Vue code inline | High | Previously showed filenames only |
+| Ripple | Vuetify material ripple on all buttons | Press buttons show ripple animation | `useVuetifyRipple` + `RippleLayer` on all VButton | High | Added in this rebuild |
+
+## Remaining gaps / exceptions
+
+- Advanced hover: `v-fade-transition` fade-out on overlay dismiss is not replicated (immediate unmount on mouseleave). Acceptable — fade-in is present.
+- Z Index with `zIndex=0`: the React sidebar/appbar use MUI z-index values (1200+), so the overlay at z-index=0 will appear below them. This is the intended Vue behavior to demonstrate stack-order control.
+
+## Build status
+
+- Command: `npm run build` inside `react-dashboard-template/`
+- Result: passed
+- Warnings: non-blocking chunk-size warning (pre-existing)
+
+## Protected files status
+
+- `git status --short -- src public scripts ...` returned empty (clean)
+
+## Approved slices not touched
+
+- Navigation Drawers, Menus, Lists, Lists Item Groups confirmed not modified.
+
+---
 
 Approval:
 
@@ -5637,6 +5678,168 @@ Build:
 Approval:
 
 - Vuetify / Navigation Drawers remains pending user visual approval.
+
+### Vuetify Overlays Source-Driven Rebuild
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Overlays at `/components/overlays`.
+- Enabled only the Overlays sidebar item.
+- Did not touch Navigation Drawers, Paginations, approved slices, animations, Calendars, or `.claude/`.
+
+Vue source traced:
+
+- Main page: `src/views/Vuetify/Overlays.vue`.
+- Route: `src/router/routes/vuetify.js`.
+- Sidebar: `src/config/navigation-items.js`.
+- Documentation: `src/lang/en/components/Overlays.json`.
+- Examples in exact Vue order:
+  - `src/demo/examples/overlays/usage.vue`
+  - `src/demo/examples/overlays/playground.vue`
+  - `src/demo/examples/overlays/simple/absolute.vue`
+  - `src/demo/examples/overlays/simple/opacity.vue`
+  - `src/demo/examples/overlays/simple/z-index.vue`
+  - `src/demo/examples/overlays/intermediate/loader.vue`
+  - `src/demo/examples/overlays/complex/advanced.vue`
+
+Implemented:
+
+- Page hierarchy, breadcrumbs, documentation text, usage, playground, and examples in Vue order.
+- Local `v-overlay`-style primitive with fixed and absolute positioning, contained overlays, opacity, color, z-index, click-close behavior, and fade-in behavior.
+- Usage close icon, playground absolute/value/opacity/z-index controls, absolute card overlays, opacity=1 example, z-index example, loader with auto-dismiss after 3 seconds, and advanced hover scrim over the image card.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page/route/sidebar | `Overlays.vue`, `routes/vuetify.js`, `navigation-items.js` | `/components/overlays`, Overlays sidebar item, Components / Vuetify / Overlays breadcrumbs | Route and sidebar item added with matching breadcrumbs | PASS | Pending visual approval |
+| Usage | `usage.vue` | Error button toggles global overlay; close icon hides it | Same button/overlay/close behavior | PASS | Pending visual approval |
+| Playground | `playground.vue` | Absolute, value, opacity, z-index controls drive overlay | Same controls/default values and live overlay behavior | PASS | Pending visual approval |
+| Absolute | `simple/absolute.vue` | 250x300 card, contained absolute overlay, success buttons | Same card size, contained overlay, and buttons | PASS | Pending visual approval |
+| Opacity | `simple/opacity.vue` | Contained overlay with opacity `1` and orange buttons | Same contained opacity and button color | PASS | Pending visual approval |
+| Z Index | `simple/z-index.vue` | Teal button opens overlay with z-index `0` | Same z-index and hide button behavior | PASS | Pending visual approval |
+| Loader | `intermediate/loader.vue` | Deep-purple launch button, progress circular, overlay closes after 3000ms | Same launch, spinner size, and timeout behavior | PASS | Pending visual approval |
+| Advanced | `complex/advanced.vue` | Hover card shows absolute teal overlay with See more info button | Same image URL, rating/card content, hover overlay, and button | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Overlays remains pending user visual approval.
+
+### Vuetify Overlays Source Rebuild After Rejection
+
+Status: rebuilt; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Overlays at `/components/overlays`.
+- Did not touch Navigation Drawers, Paginations, approved slices, animations, Calendars, or `.claude/`.
+
+Vue source retraced:
+
+- Main page: `src/views/Vuetify/Overlays.vue`.
+- Shared docs page: `src/demo/components/DocPage.vue`.
+- Shared example wrapper: `src/demo/components/Example.vue`.
+- Documentation: `src/lang/en/components/Overlays.json`.
+- Examples:
+  - `src/demo/examples/overlays/usage.vue`
+  - `src/demo/examples/overlays/playground.vue`
+  - `src/demo/examples/overlays/simple/absolute.vue`
+  - `src/demo/examples/overlays/simple/opacity.vue`
+  - `src/demo/examples/overlays/simple/z-index.vue`
+  - `src/demo/examples/overlays/intermediate/loader.vue`
+  - `src/demo/examples/overlays/complex/advanced.vue`
+
+Rebuild notes:
+
+- Reworked the local `v-overlay` primitive so the overlay wrapper is transparent and only the scrim layer receives the configured `color` and `opacity`, matching Vuetify instead of rendering an opaque parent surface.
+- Removed backdrop click-close from examples where Vue only changes state through explicit close/hide controls.
+- Reworked the playground structure to follow Vue `v-row` layout more closely, with the Show Overlay button row and the controls row using the same default values: `absolute=false`, `opacity=0.46`, `overlay=false`, `zIndex=5`.
+- Rechecked contained absolute overlays, opacity `1`, z-index `0`, loader timeout, and advanced hover overlay behavior against the exact Vue files.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page order | `Overlays.vue` | Usage, Playground, Absolute, Opacity, Z Index, Loader, Advanced | Same order | PASS | Pending visual approval |
+| Usage | `usage.vue` | Error Show Overlay button; overlay opens; close icon closes; backdrop itself does not change state | Same explicit close behavior and scrim opacity | PASS | Pending visual approval |
+| Playground | `playground.vue` | Show Overlay button, Absolute/value checkboxes, Opacity and z-index numeric fields; props drive overlay | Same defaults, controls, opacity, absolute and z-index behavior | PASS | Pending visual approval |
+| Absolute | `simple/absolute.vue` | 250x300 card; overlay contained inside parent with default opacity | Same contained positioning and button behavior | PASS | Pending visual approval |
+| Opacity | `simple/opacity.vue` | Contained overlay with opacity `1` | Same opacity behavior without extra opaque parent layer | PASS | Pending visual approval |
+| Z Index | `simple/z-index.vue` | Overlay uses z-index `0`; teal show/hide buttons | Same z-index and explicit hide behavior | PASS | Pending visual approval |
+| Loader | `intermediate/loader.vue` | Deep-purple launch button, 64px indeterminate progress, auto closes after 3000ms | Same button, progress size, and timer | PASS | Pending visual approval |
+| Advanced | `complex/advanced.vue` | Hover over 344px image card shows absolute `#036358` scrim and See more info button | Same image/card content, hover overlay color/opacity, and button | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Overlays remains pending user visual approval.
+
+### Vuetify Overlays Z Index Re-Trace Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Z Index example inside Vuetify / Overlays at `/components/overlays`.
+- Kept the rest of Overlays unchanged.
+- Did not touch Navigation Drawers, Paginations, approved slices, animations, Calendars, or `.claude/`.
+
+Vue source retraced:
+
+- Page order: `src/views/Vuetify/Overlays.vue` includes `simple/z-index`.
+- Documentation text: `src/lang/en/components/Overlays.json`.
+- Example behavior: `src/demo/examples/overlays/simple/z-index.vue`.
+
+Verified Vue source details:
+
+- Heading: `### Z Index`.
+- Description: `` `z-index` gives you the ability to easily change the stack order of the `v-overlay` component. ``
+- Template: centered `v-row justify="center"`.
+- Buttons: teal `Show Overlay` toggles `overlay`; teal `Hide Overlay` sets `overlay=false`.
+- Overlay props: `:z-index="zIndex"` and `:value="overlay"`.
+- Default state: `overlay=false`, `zIndex=0`.
+
+Fix:
+
+- Kept the documentation sentence source-exact with inline code tokens for `z-index` and `v-overlay`.
+- Matched the Z Index example body to the Vue centered row structure and teal button behavior.
+- Replaced the Z Index source panel placeholder with the exact verified Vue source snippet for `simple/z-index.vue`.
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Documentation text | Exact `Overlays.json` Z Index description with inline code tokens | Same sentence and inline code tokens | PASS | No invented text |
+| Default state | `overlay=false`, `zIndex=0` | Same defaults | PASS | Section-local state |
+| Buttons | Teal Show Overlay toggles; teal Hide Overlay closes | Same controls | PASS | No generic Backdrop behavior added |
+| Overlay props/stacking | `v-overlay` value bound to state and z-index value `0` | Local overlay uses `open` state and `zIndex={0}` | PASS | Pending visual approval |
+| Source panel | Shows `simple/z-index.vue` source | Exact Vue snippet embedded for this section | PASS | Source-traced |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Overlays remains pending user visual approval.
 
 ### Vuetify Navigation Drawers Hover/Mini Follow-up Fix
 
