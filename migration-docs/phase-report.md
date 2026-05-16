@@ -1,10 +1,48 @@
 # Phase Report
 
-Last updated: 2026-05-16
+Last updated: 2026-05-16 (Time Pickers)
 
 ## Phase
 
-Vuetify / Overlays full rebuild from Vue source.
+Vuetify / Time Pickers full build from Vue source.
+
+Status: implemented; pending user visual approval.
+
+Route: `/components/pickers/time-pickers`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/TimePickersPage.tsx`
+
+## Time Pickers — Verification Table
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page header | `namespace="Components"`, `page="TimePickers"`, breadcrumbs Components>Vuetify>Time Pickers | Title "Time pickers", DocText intro | DocPage with exact title, breadcrumbs, DocText | High | Exact JSON text from TimePickers.json |
+| Usage | `usage.vue` — `v-time-picker v-model="picker"` centered | Single picker, light theme | `ExampleUsage` — VTimePicker centered, value="11:15" | High | Matches Vue layout |
+| Colorable | `simple/colorable.vue` — two pickers `color="green lighten-1"` / `header-color="primary"` | Two pickers side-by-side, green body and separate header color | `ExampleColorable` — two VTimePicker with matching colors | High | `greenLighten1` + primary token |
+| Disabled | `simple/disabled.vue` — plain + landscape disabled | Two pickers; second landscape | `ExampleDisabled` — opacity+pointer-events none; second `landscape` | High | Landscape default=true per breakpoint convention |
+| Readonly | `simple/readonly.vue` — plain + landscape readonly | Two pickers; readonly (visible, no interaction) | `ExampleReadonly` — clicks blocked via readonly guard | High | Same layout as Disabled |
+| 24h format | `simple/24h-format.vue` — `format="24hr"` `lg=4` | Single picker in narrow col, two concentric rings | `Example24hFormat` — `format="24hr"` inner/outer SVG rings | High | Inner ring: 0, 13–23; outer: 1–12 |
+| Allowed times | `simple/allowed-times.vue` — two pickers: `allowedHours v%2`, `allowedMinutes 10–50`, `min="9:30"` `max="22:15"`; second `allowedStep m%10` | Disabled number tiles for non-allowed values | `ExampleAllowedTimes` — fill="#rgba(0,0,0,.26)" for disallowed | High | min/max range enforced via total-minutes |
+| Width | `simple/width.vue` — width=290 + fullWidth landscape | One standard + one fullWidth landscape | `ExampleWidth` — width prop + fullWidth + landscape | High | Spurious `type="month"` in Vue source ignored |
+| AMPM in title | `simple/ampm-in-title.vue` — two pickers with `ampm-in-title` | AM/PM above time digits in header | `ExampleAmpmInTitle` — `ampmInTitle` renders AM/PM above | High | Second is landscape |
+| No title | `simple/no-title.vue` — two pickers with `no-title` | No header; AM/PM below clock | `ExampleNoTitle` — `noTitle` removes header; AM/PM below SVG | High | Second is landscape |
+| Use seconds | `simple/use-seconds.vue` — two pickers with `use-seconds` | HH:MM:SS title, three-stage selection | `ExampleUseSeconds` — `useSeconds` adds seconds tab + third clock view | High | Second is landscape |
+| Scrollable | `simple/scrollable.vue` — `scrollable` centered | Wheel changes time on clock face | `ExampleScrollable` — `wheel` event with `{passive:false}` | High | Single centered picker |
+| Dialog and menu | `intermediate/dialog-and-menu.vue` — MUI Popover + Dialog with Cancel/OK | Picker in popover closes on minute select; dialog has Cancel/OK | `ExampleDialogAndMenu` — Popover + MUI Dialog; `onMinuteClick` closes menu | High | Draft state for dialog |
+| Range | `intermediate/range.vue` — start+end pickers with min/max cross-linking | "Plan your event:" heading; start max=end, end min=start | `ExampleRange` — bidirectional min/max, `format="24hr"` | High | Exact heading text |
+
+## Build status
+
+- Command: `npm run build` inside `react-dashboard-template/`
+- Result: passed (0 TypeScript errors)
+- Warnings: non-blocking chunk-size warning (pre-existing)
+
+## Protected files status
+
+- `git status --short -- src public scripts ...` returned empty (clean)
+
+---
+
+## Previous Phase: Vuetify / Overlays
 
 Status: implemented; pending user visual approval.
 
@@ -6740,6 +6778,130 @@ Protected files:
 Approval:
 
 - Vuetify / Date Pickers remains pending user visual approval.
+
+### Vuetify / Time Pickers Source-Driven Rebuild
+
+Status: rebuilt; pending user visual approval.
+
+Scope:
+
+- Rebuilt only Vuetify / Time Pickers at `/components/pickers/time-pickers`.
+- Did not touch Date Pickers, Progress Circular, approved slices, animations, Calendars, or `.claude/`.
+
+Source re-trace:
+
+- Main page: `src/views/Vuetify/Pickers/TimePickers.vue`.
+- Usage and examples: `src/demo/examples/time-pickers/usage.vue`, `src/demo/examples/time-pickers/playground.vue`, all files under `src/demo/examples/time-pickers/simple/`, and all files under `src/demo/examples/time-pickers/intermediate/`.
+- Documentation text: `src/lang/en/components/TimePickers.json`.
+- Vuetify internals traced for behavior/layout: `node_modules/vuetify/src/components/VTimePicker/VTimePicker.ts`, `VTimePickerClock.ts`, `VTimePickerClock.sass`, `VTimePickerTitle.ts`, `VTimePickerTitle.sass`, and `_variables.scss`.
+
+Implemented:
+
+- Replaced the rejected page with a local source-driven `VTimePicker` primitive, not MUI TimePicker.
+- Preserved Vue main page example order: Usage, Colors, Disabled, Read-only, 24h format, Allowed times, Setting picker width, AM/PM switch in title, No title, With seconds, Scrollable, In dialog and menu, Range.
+- Implemented clock face layout, hour/minute/second selection, 12h/24h modes, AM/PM controls, disabled/readonly states, allowed hours/minutes, min/max, scroll wheel editing, seconds, no-title, width/full-width/landscape, dialog/menu draft-save behavior, and range min/max behavior.
+- Preserved exact documentation text from the Vue language source where verified.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `time-pickers/usage.vue` | `picker: null`, light theme default picker | Null-value picker with light Vuetify-like surface | PASS | Pending visual approval |
+| Colors | `simple/colorable.vue` | Two synchronized green pickers; second uses primary header | Two synchronized pickers with `green lighten-1` and primary header | PASS | |
+| Disabled | `simple/disabled.vue` | Portrait and landscape disabled pickers | Disabled portrait and landscape states | PASS | |
+| Read-only | `simple/readonly.vue` | Readonly behavior with default visual weight | Readonly prevents interaction without disabled opacity | PASS | |
+| 24h format | `simple/24h-format.vue` | 24-hour double-ring clock | 24-hour double-ring hour selection | PASS | |
+| Allowed times | `simple/allowed-times.vue` | Odd hours, minute window, 10-minute step, min/max, scrollable | Allowed rules and scroll wheel behavior implemented | PASS | |
+| Setting picker width | `simple/width.vue` | Fixed 290px picker plus landscape full-width picker | Fixed width plus full-width landscape picker | PASS | |
+| AM/PM switch in title | `simple/ampm-in-title.vue` | AM/PM buttons move into title | Title AM/PM controls implemented | PASS | |
+| No title | `simple/no-title.vue` | Title hidden, body AM/PM controls remain | No-title portrait and landscape pickers | PASS | |
+| With seconds | `simple/use-seconds.vue` | Hour, minute, second selection | Seconds step and title display implemented | PASS | |
+| Scrollable | `simple/scrollable.vue` | Mouse wheel edits active clock unit | Wheel increments/decrements allowed values | PASS | |
+| In dialog and menu | `intermediate/dialog-and-menu.vue` | Menu picker saves on minute click; dialog has Cancel/OK | Menu draft-save and dialog draft-save implemented | PASS | |
+| Range | `intermediate/range.vue` | Start max bound to End, End min bound to Start | Min/max range constraints implemented | PASS | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Time Pickers remains pending user visual approval.
+
+### Vuetify / Time Pickers Full Rebuild After Rejection
+
+Status: rebuilt again from Vue source; pending user visual approval.
+
+Scope:
+
+- Rebuilt only Vuetify / Time Pickers at `/components/pickers/time-pickers`.
+- Did not touch Date Pickers, Progress Circular, approved slices, animations, Calendars, or `.claude/`.
+
+Source re-trace:
+
+- Main page and order: `src/views/Vuetify/Pickers/TimePickers.vue`.
+- Usage/example files in Vue order: `usage.vue`, `simple/colorable.vue`, `simple/disabled.vue`, `simple/readonly.vue`, `simple/24h-format.vue`, `simple/allowed-times.vue`, `simple/width.vue`, `simple/ampm-in-title.vue`, `simple/no-title.vue`, `simple/use-seconds.vue`, `simple/scrollable.vue`, `intermediate/dialog-and-menu.vue`, `intermediate/range.vue`.
+- Traced but not mounted by the main Vue page: `src/demo/examples/time-pickers/playground.vue`.
+- Shared docs wrappers: `src/demo/components/DocPage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Example.vue`.
+- Documentation text: `src/lang/en/components/TimePickers.json`.
+- Vuetify picker internals: `VTimePicker.ts`, `VTimePickerClock.ts`, `VTimePickerTitle.ts`, `VTimePickerClock.sass`, `VTimePickerTitle.sass`, `VTimePicker/_variables.scss`, `VPicker.ts`, `VPicker.sass`, `VPicker/_variables.scss`.
+
+Fix:
+
+- Deleted/replaced the rejected Time Pickers page implementation.
+- Rebuilt the local picker around Vue/Vuetify DOM structure and dimensions instead of the previous distorted clock layout:
+  - `v-picker` / `v-card` shape, 4px radius, default elevation-2 shadow.
+  - `v-picker__title` 16px padding, primary title surface, 170px landscape title width.
+  - `v-picker__body` width and landscape offset behavior from `VPicker`.
+  - `v-time-picker-clock__container` 10px padding.
+  - `v-time-picker-clock` circular clock using Vuetify clock background, 27px inner offset, 40px active indicators, 2px hand, 10px end circle, 8px center circle.
+  - 24h double-ring hour clock with 0/13-23 inner ring and 0.62 inner scale.
+- Rebuilt source-ordered examples and responsive landscape behavior from Vue breakpoints.
+- Preserved exact verified documentation text and inline code styling.
+
+Self-verification:
+
+| Section | Vue source | Vue expected design/behavior | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `TimePickers.vue`, `DocPage.vue` | `vuse-content-wrapper`, section definition, `v-container fluid`, DocPage usage then examples | Existing React DocPage route wrapper with TimePickers heading/breadcrumbs and source-ordered sections | Match | Pending visual approval |
+| Usage | `usage.vue`, JSON usage desc | Centered null-value light picker | Centered null-value picker with Vue-like `v-picker`/clock DOM | Match | |
+| Colors | `simple/colorable.vue` | Two synchronized pickers; green body color and primary header override | Two synchronized pickers with `green lighten-1` and `header-color="primary"` behavior | Match | |
+| Disabled | `simple/disabled.vue` | Portrait plus `smAndUp` landscape disabled picker | Disabled interaction and responsive landscape state | Match | |
+| Read-only | `simple/readonly.vue` | Readonly prevents interaction but preserves default look | Readonly prevents clock/title interaction without disabled styling | Match | |
+| 24h format | `simple/24h-format.vue`, `VTimePickerClock.ts` | 24hr double-ring clock; inner ring for 0/13-23 | Double-ring DOM clock with inner scale and 24hr labels | Match | |
+| Allowed times | `simple/allowed-times.vue`, `VTimePicker.ts` | Odd allowed hours, minute window, step picker, min/max, scrollable | Same rules and scroll wheel update path implemented | Match | |
+| Setting picker width | `simple/width.vue`, `VPicker.ts` | Fixed width 290 plus full-width responsive landscape picker | Fixed 290 picker and responsive full-width landscape picker | Match | |
+| AM/PM title | `simple/ampm-in-title.vue`, `VTimePickerTitle.ts` | AM/PM buttons move into picker title | Title AM/PM buttons implemented and body AM/PM hidden | Match | |
+| No title | `simple/no-title.vue`, `VPicker.ts` | Title hidden; body/clock remains | Title removed with body clock retained | Match | |
+| With seconds | `simple/use-seconds.vue` | Hour -> minute -> second flow and seconds title | Seconds title segment and selection flow implemented | Match | |
+| Scrollable | `simple/scrollable.vue`, `VTimePickerClock.ts` | Mouse wheel changes active hour/minute | Wheel handler follows active unit and allowed values | Match | |
+| In dialog and menu | `intermediate/dialog-and-menu.vue` | Text fields with `access_time`, menu nudge-right 40, scale transition, minute save, persistent dialog with Cancel/OK in picker actions | Menu/dialog field behavior, nudge, scale entrance, full-width picker, and actions implemented | Match | |
+| Range | `intermediate/range.vue` | `h1`, Start/End `h2`, two 290px pickers, `max`/`min` binding | Source-matched headings, widths, and min/max constraints implemented | Match | |
+| Clock dimensions | `VTimePickerClock.sass`, `_variables.scss` | 10px container padding, 27px inner offset, 40px indicators, 16px numbers, 2px hand, 0.62 inner ring | DOM/CSS clock uses same verified values | Match | |
+| Animations/transitions | `VPicker.sass`, `VTimePickerClock.sass` | Primary transition for title buttons, clock hand/items; scale transition for menu | Local primary transition and menu scale entrance implemented | Match | Page-local only |
+| Invert/source controls | `Example.vue` | Toolbar icons, source expand, inverted example surface | React example block preserves controls and source panel behavior | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Time Pickers remains pending user visual approval.
 
 ### Vuetify Date Pickers Event Dot Placement Refinement
 

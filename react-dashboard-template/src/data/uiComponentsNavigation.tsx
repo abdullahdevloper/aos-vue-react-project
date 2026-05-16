@@ -202,7 +202,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         children: [
           { title: "Color Pickers", path: "/components/pickers/color-pickers", icon: <ViewHeadline /> },
           { title: "Date Pickers", path: "/components/pickers/date-pickers", icon: <ViewHeadline /> },
-          { title: "TIme Pickers", disabled: true, pending: true },
+          { title: "TIme Pickers", path: "/components/pickers/time-pickers", icon: <Timer /> },
         ],
       },
       {

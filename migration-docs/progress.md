@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-16
+Last updated: 2026-05-16 (Time Pickers added)
 
 ## Strategy Status
 
@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Lists.
+- Active section: Vuetify / Time Pickers.
 
 ## Current Slice
 
-- Scope: Vuetify / Lists only.
-- Route: `/components/lists`.
-- Status: implemented; pending user visual approval.
-- Source audit: Vue Lists sources traced directly from `src/views/Vuetify/Lists/Lists.vue`, `src/demo/examples/lists/**`, `src/demo/components/Usage.vue`, `src/demo/components/Playground.vue`, `src/demo/components/Example.vue`, and `src/lang/en/components/Lists.json`.
+- Scope: Vuetify / Pickers / Time Pickers only.
+- Route: `/components/pickers/time-pickers`.
+- Status: rebuilt again from Vue source after full rejection; pending user visual approval.
+- Source audit: Vue Time Pickers sources retraced directly from `src/views/Vuetify/Pickers/TimePickers.vue`, all source-ordered files under `src/demo/examples/time-pickers/**`, `src/demo/examples/time-pickers/playground.vue`, shared `DocPage.vue`, `Usage.vue`, `Example.vue`, `src/lang/en/components/TimePickers.json`, and Vuetify internals under `node_modules/vuetify/src/components/VTimePicker/` plus `VPicker/`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -54,6 +54,9 @@ Current rebuild strategy:
 - Vuetify / Images: rebuilt from Vue source after rejection; Usage and Height sizing fixes applied; pending user visual approval.
 - Vuetify / Lazy: implemented; pending user visual approval.
 - Vuetify / Lists: rebuilt from Vue source after rejection; source icon and click interaction fixes applied; pending user visual approval.
+- Vuetify / Pickers / Color Pickers: approved.
+- Vuetify / Pickers / Date Pickers: approved.
+- Vuetify / Pickers / Time Pickers: rebuilt again from Vue source after full rejection; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
