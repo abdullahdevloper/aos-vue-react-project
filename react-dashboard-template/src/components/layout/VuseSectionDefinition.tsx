@@ -1,5 +1,6 @@
 import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
 import type { ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 
 export interface SectionCrumb {
   label: string;
@@ -14,12 +15,15 @@ interface VuseSectionDefinitionProps {
 }
 
 export default function VuseSectionDefinition({ title, namespace, icon, breadcrumbs = [] }: VuseSectionDefinitionProps) {
+  const { pathname } = useLocation();
+  const isVuetifyDocsRoute = pathname.startsWith("/components");
+
   return (
     <Box
       sx={{
-        mx: { xs: 0, md: 1.5 },
+        mx: { xs: 0, md: isVuetifyDocsRoute ? 0 : 1.5 },
         mb: 3,
-        py: 1.75,
+        py: isVuetifyDocsRoute ? 0 : 1.75,
       }}
     >
       <Stack spacing={0.75}>

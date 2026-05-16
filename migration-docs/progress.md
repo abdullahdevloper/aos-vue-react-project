@@ -4631,3 +4631,127 @@ Build:
 Approval:
 
 - Vuetify / Hover remains pending user visual approval.
+
+### Vuetify Icons Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Icons at `/components/icons`.
+- Enabled only the Icons sidebar item.
+- Kept Hover, Images, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Implemented:
+
+- Source-driven visible Vue order: Usage, Material Design, Font Awesome, Color, Buttons, Clickable, MDI SVG.
+- Usage playground with `dense`, `icon`, `size`, and `color` controls.
+- Material Design icon groups with light/dark teal groups and source sizes.
+- Font Awesome example using closest available MUI glyphs because React dependencies do not include Font Awesome.
+- Color, Buttons, Clickable alert behavior, and MDI SVG examples.
+- View source and invert example color controls.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Icons remains pending user visual approval.
+
+### Vuetify Icons Source-Driven Rebuild
+
+Status: rebuilt; pending user visual approval.
+
+Fixed:
+
+- Rebuilt only Vuetify / Icons from Vue source after rejection.
+- Replaced approximate MUI icon substitutions with exact Vue icon sources:
+  - Material Design examples use Material Icons text glyph names from Vue.
+  - MDI examples use exact `@mdi/js` SVG paths used by Vue/Vuetify.
+  - Font Awesome examples use exact `@fortawesome/free-solid-svg-icons` definitions.
+- Preserved exact Vue example order: Usage, Material Design, Font Awesome, Color, Buttons, Clickable, MDI SVG.
+- Rechecked usage controls, icon sizes, color helpers, button/icon placement, clickable alert behavior, source panels, and invert controls.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Icons remains pending user visual approval.
+
+### Vuetify Icons Material Design Rendering Fix
+
+Status: fixed; pending user visual approval.
+
+Fixed:
+
+- Corrected only the Material Design section in Vuetify / Icons.
+- Loaded the existing local `MaterialIcons-Regular.woff2` font inside the React Icons page.
+- Applied Material Icons ligature styling so `home`, `event`, `info`, `folder_open`, `widgets`, and `gavel` render as actual glyphs instead of visible text labels.
+- Preserved Vue row order, icon sizes, teal dark groups, spacing, and alignment.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Icons remains pending user visual approval.
+
+### Global Vuetify Docs Layout Spacing Fix
+
+Status: fixed; pending user visual approval.
+
+Fixed:
+
+- Corrected shared layout/container drift for Vuetify docs routes under `/components`.
+- Matched Vue `vuse-content-wrapper` + `v-container fluid` intent by removing the React centered `maxWidth: 1480` constraint for Vuetify docs pages.
+- Reduced Vuetify docs route horizontal padding and DocPage/section margins so content starts closer to the sidebar and uses the available width.
+- Kept the change route-scoped to `/components` so non-Vuetify approved pages keep their existing shell spacing.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Global Vuetify docs layout spacing remains pending user visual approval.
+
+### Global Vuetify Docs Layout Source-Matched Correction
+
+Status: fixed; pending user visual approval.
+
+Fixed:
+
+- Corrected the previous layout spacing adjustment to use values derived directly from Vue source.
+- Matched Vue horizontal doc offset for `/components` routes:
+  - `.vuse-content-wrapper mx-3` = 12px
+  - `v-container fluid` = 12px horizontal padding
+  - React shared wrapper now uses 24px horizontal padding for Vuetify docs routes.
+- Preserved fluid width by keeping `maxWidth: none` for `/components`.
+- Matched Vue `VuseSectionDefinition` wrapper behavior more closely by removing extra internal padding for `/components`, reflecting Vue `pa-0`.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Global Vuetify docs layout spacing remains pending user visual approval.

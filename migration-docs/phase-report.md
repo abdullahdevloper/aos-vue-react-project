@@ -5194,3 +5194,267 @@ Build:
 Approval:
 
 - Vuetify / Hover remains pending user visual approval.
+
+### Vuetify Icons Slice
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Icons.
+- Route: `/components/icons`.
+- Enabled only the Icons sidebar item.
+- Kept Hover, Images, approved slices, animations, Calendars, and `.claude/` untouched.
+
+Source audit:
+
+- Main page: `src/views/Vuetify/Icons.vue`.
+- Route: `src/router/routes/vuetify.js` path `/components/icons`.
+- Sidebar: `src/config/navigation-items.js` item `Icons`.
+- Documentation text: `src/lang/en/components/Icons.json`.
+- Usage source: `src/demo/usages/icons.vue`; shared mixin `src/demo/usages/usage.js`.
+- Visible Vue examples in exact order: `simple/md`, `simple/font-awesome`, `simple/color`, `intermediate/buttons`, `intermediate/clickable`, `complex/mdi-svg`.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/usages/icons.vue` | `v-icon` receives `attrs`, selected icon defaults to `mdi-plus`, size prop maps to x-small/small/medium/large/x-large, dense is supported | Implemented usage playground with dense, icon, size, and color controls driving the preview icon | Pending visual review | |
+| Material Design | `src/demo/examples/icons/simple/md.vue` | Four rows of Material Icons groups: `home`, `event`, `info`; teal dark groups with `folder_open`, `widgets`, `gavel`; medium/large/x-large rows | Implemented Material Icons text glyphs with matching group layout, teal surface, dark/light icon color, and size rows | Pending visual review | |
+| Font Awesome | `src/demo/examples/icons/simple/font-awesome.vue` | `fas fa-lock`, `fa-search`, `fa-list`, `fa-edit`, `fa-tachometer-alt`, spinning `fa-circle-notch` | Implemented closest available MUI glyphs and spinner animation | Pending visual review | React project has no Font Awesome dependency, so glyphs are closest available documented substitutions |
+| Color | `src/demo/examples/icons/simple/color.vue` | Large colored icons: domain, message-text, dialpad, email, call-split, arrow-up-bold-box-outline | Implemented matching order, large size, and Vuetify darken-2 color values with closest available glyphs | Pending visual review | |
+| Buttons | `src/demo/examples/icons/intermediate/buttons.vue` | Primary/red/default/orange/purple/indigo buttons with left/right/icon-only icon placements plus thumb icon buttons | Implemented button rows, colors, icon placement, uppercase text, icon-only buttons, hover/elevation styling | Pending visual review | |
+| Clickable | `src/demo/examples/icons/intermediate/clickable.vue` | Pink dense flat toolbar, lorem card text, large chevron-right icon with click alert `You clicked next!` | Implemented card, toolbar, lorem text, clickable chevron and alert behavior | Pending visual review | |
+| MDI SVG | `src/demo/examples/icons/complex/mdi-svg.vue` | `@mdi/js` imported account/pencil/share/delete SVG paths and primary depressed Delete button | Implemented same order and Delete button using closest available MUI glyphs | Pending visual review | React project has no `@mdi/js` dependency; closest available glyphs are documented substitutions |
+
+Behavior verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Usage dense | `dense` makes icon smaller | Dense switch sets 20px preview size | PASS | |
+| Usage icon select | Icon select changes preview glyph among four source options | Icon select changes mapped preview glyph | PASS | |
+| Usage size select | Size select changes preview size | Size select maps to Vuetify-like pixel sizes | PASS | |
+| Usage color select | Color select changes icon helper color | Color select maps to source color helper names | PASS | |
+| Clickable icon | Chevron click calls `alert("You clicked next!")` | Chevron button calls the same alert text | PASS | |
+| Source panels | View source expands a code panel for each example | Implemented source panel actions for usage/examples | PASS | |
+| Invert example color | Example body switches dark surface while content remains scoped | Implemented per-example invert control without global styling | PASS | |
+
+Documented icon dependency exception:
+
+- The React project dependencies include `@mui/icons-material` but do not include Font Awesome or `@mdi/js`. Font Awesome and MDI SVG examples therefore use the closest available MUI/material glyphs while preserving source order, size, color, layout, and behavior. User visual approval is required for these substitutions.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Icons remains pending user visual approval.
+
+### Vuetify Icons Source-Driven Rebuild
+
+Status: rebuilt; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Icons at `/components/icons`.
+- Did not touch Hover, Images, approved slices, animations, Calendars, or `.claude/`.
+
+Source re-trace:
+
+- Main page: `src/views/Vuetify/Icons.vue`.
+- Usage: `src/demo/usages/icons.vue`.
+- Examples in exact Vue order:
+  - `src/demo/examples/icons/simple/md.vue`
+  - `src/demo/examples/icons/simple/font-awesome.vue`
+  - `src/demo/examples/icons/simple/color.vue`
+  - `src/demo/examples/icons/intermediate/buttons.vue`
+  - `src/demo/examples/icons/intermediate/clickable.vue`
+  - `src/demo/examples/icons/complex/mdi-svg.vue`
+- Documentation: `src/lang/en/components/Icons.json`.
+- Vue icon sources:
+  - Material Icons font names for `simple/md`.
+  - `@mdi/font` / MDI names for usage, color, buttons, and clickable examples.
+  - Font Awesome classes for `simple/font-awesome`.
+  - `@mdi/js` imports for `complex/mdi-svg`.
+
+Verification table:
+
+| Example | Vue source | Vue icon names | React icons used | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage | `src/demo/usages/icons.vue` | `mdi-plus`, `mdi-minus`, `mdi-access-point`, `mdi-antenna`; sizes `x-small`, `small`, `medium`, `large`, `x-large`; colors `red`, `orange`, `yellow`, `green`, `blue`, `purple`; `dense` | Exact `@mdi/js` paths: `mdiPlus`, `mdiMinus`, `mdiAccessPoint`, `mdiAntenna`; Vuetify-like size/color mapping | PASS | No random replacement icons remain |
+| Material Design | `src/demo/examples/icons/simple/md.vue` | `home`, `event`, `info`, `folder_open`, `widgets`, `gavel` | Exact Material Icons text glyph names rendered through the local Material Icons font | PASS | Preserves light groups and teal dark groups |
+| Font Awesome | `src/demo/examples/icons/simple/font-awesome.vue` | `fas fa-lock`, `fas fa-search`, `fas fa-list`, `fas fa-edit`, `fas fa-tachometer-alt`, `fas fa-circle-notch fa-spin` | Exact Font Awesome definitions: `faLock`, `faSearch`, `faList`, `faEdit`, `faTachometerAlt`, `faCircleNotch` with spin | PASS | Resolved from existing root dependency used by Vue |
+| Color | `src/demo/examples/icons/simple/color.vue` | `mdi-domain`, `mdi-message-text`, `mdi-dialpad`, `mdi-email`, `mdi-call-split`, `mdi-arrow-up-bold-box-outline` | Exact `@mdi/js` paths with Vuetify `darken-2` helper colors | PASS | |
+| Buttons | `src/demo/examples/icons/intermediate/buttons.vue` | `mdi-checkbox-marked-circle`, `mdi-cancel`, `mdi-minus_circle`, `mdi-arrow-left`, `mdi-wrench`, `mdi-cloud-upload`, `mdi-thumb-up`, `mdi-thumb-down` | Exact `@mdi/js` paths, preserving left/right/icon-only placement | PASS | |
+| Clickable | `src/demo/examples/icons/intermediate/clickable.vue` | `mdi-chevron-right`; click calls `alert("You clicked next!")` | Exact `mdiChevronRight` path; same alert text | PASS | |
+| MDI SVG | `src/demo/examples/icons/complex/mdi-svg.vue` | `mdiAccount`, `mdiPencil`, `mdiShareVariant`, `mdiDelete` imported from `@mdi/js` | Exact `@mdi/js` paths with primary depressed Delete button | PASS | |
+
+Behavior verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Usage icon select | Select changes the MDI glyph by source icon name | Exact MDI path changes from the same options | PASS | |
+| Usage dense | Dense makes icon 20px | Dense switch maps preview to 20px | PASS | |
+| Usage size select | Size flags change icon dimensions | Size select maps to Vuetify-like dimensions | PASS | |
+| Usage color select | Color helper changes icon color | Color select applies matching helper color values | PASS | |
+| Button icons | Left/right/icon-only icons align with button text | Exact SVG paths placed left/right/icon-only | PASS | |
+| Clickable icon | Cursor/click behavior triggers alert | Chevron button triggers same alert | PASS | |
+| Source panels | View source expands source panel | Preserved | PASS | |
+| Invert example color | Invert changes only example body | Preserved | PASS | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Icons remains pending user visual approval.
+
+### Vuetify Icons Material Design Rendering Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Vuetify / Icons Material Design rendering issue.
+- Did not touch Hover, Images, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Vue example: `src/demo/examples/icons/simple/md.vue`.
+- Vue renders Material Design icons through `<v-icon>` with ligature text:
+  - `home`
+  - `event`
+  - `info`
+  - `folder_open`
+  - `widgets`
+  - `gavel`
+- Vue icon font source is configured in the original app through Material Icons / iconfont support.
+
+Fix verification:
+
+| Item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Material Design glyph rendering | Ligature text renders as Material Design icon glyphs | Ligature names appeared as visible text labels | React page loads local `MaterialIcons-Regular.woff2` and applies Material Icons ligature CSS to render glyphs | PASS | No root/protected files touched |
+| Material Design section layout | Four rows, light group and teal dark group, source icon order and sizes | Layout existed but glyph rendering failed | Same row/layout retained; glyphs now render as icons | PASS | |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Icons remains pending user visual approval.
+
+### Global Vuetify Docs Layout Spacing Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the shared layout/container spacing used by Vuetify documentation routes.
+- Did not redesign individual Icons examples.
+- Did not touch Hover, Images, approved page content, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Vue Vuetify pages use `src/views/Vuetify/*` structure:
+  - outer `<div class="vuse-content-wrapper">`
+  - `<vuse-section-definition>`
+  - `<v-container fluid>`
+  - `<doc-page>`
+- Vue base spacing: `src/sass/_base.scss` defines `.vuse-content-wrapper` with `.mx-3` and `.py-3`.
+- Vue doc page: `src/demo/components/DocPage.vue` uses `v-row class="mx-0"` and `v-col class="px-0"` so docs content does not add an extra centered max-width.
+- Vue examples: `src/demo/components/Example.vue` uses `v-card class="mb-10 neu-glow-inset"` and `v-card-text` for example body padding.
+- React before fix:
+  - `DashboardLayout` constrained all content with `maxWidth: 1480`.
+  - `DashboardLayout` added `md` horizontal padding of `3`.
+  - React `DocPage` and `VuseSectionDefinition` added extra `mx: 1.5`.
+
+Verification table:
+
+| Layout item | Vue expected | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|
+| Main content width | Vuetify docs use fluid container width | Content was centered/constrained by `maxWidth: 1480`, producing large side gaps on wide viewports | `/components` routes now use `maxWidth: none` | PASS | Route-scoped to Vuetify docs |
+| Sidebar-to-content gutter | `.vuse-content-wrapper mx-3` with fluid container; no additional centered max-width gap | Shell padding plus DocPage/section margins created excessive left offset | `/components` routes use smaller shell padding and zero DocPage/section `md` margins | PASS | Non-`/components` pages keep previous spacing |
+| Page header spacing | Section definition sits inside Vuse wrapper, compact before fluid container | React section added larger margin/padding on top of shell padding | `/components` section definition uses reduced `mb` and `py` | PASS | |
+| Example/card available width | Examples can fill fluid doc content width | Cards were limited by parent max-width and extra margins | Cards can use full available route content width | PASS | Individual examples unchanged |
+
+Reusable visual mismatch rule:
+
+- Vuetify documentation pages must use a fluid content container like Vue `v-container fluid`; do not wrap them in a centered fixed max-width container.
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Global Vuetify docs layout spacing remains pending user visual approval.
+
+### Global Vuetify Docs Layout Source-Matched Correction
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the shared Vuetify docs/page wrapper and section wrapper.
+- Did not modify individual Icons examples/content.
+- Did not touch approved page logic, Calendars, animations, `.claude/`, or protected root files.
+
+Vue layout source matched:
+
+- `src/sass/_base.scss`
+  - `.vuse-content-wrapper` extends `.mx-3` and `.py-3`.
+  - Vuetify spacing helper scale is 4px, so `mx-3` = 12px.
+- `src/views/Vuetify/*.vue`
+  - Vuetify docs pages use `<v-container fluid>` around `<doc-page>`.
+  - Vuetify fluid container contributes 12px left/right padding.
+- `src/demo/components/DocPage.vue`
+  - Uses `v-row class="mx-0"` and `v-col class="px-0"`, so DocPage adds no extra horizontal padding.
+- `src/components/Stock/VuseSectionDefinition.vue`
+  - Uses `v-container fluid my-0 ma-3 pa-0`.
+  - The section wrapper has margin from `ma-3` and no internal padding from `pa-0`.
+
+Derived values:
+
+| Layout value | Vue source derivation | React value |
+|---|---|---|
+| Vuetify docs content horizontal offset | `.vuse-content-wrapper mx-3` 12px + `v-container fluid` 12px | 24px via MUI spacing `3` on `/components` wrapper |
+| Vuetify docs content width | Vue uses `v-container fluid`, no centered fixed max-width | `maxWidth: none` for `/components` routes |
+| DocPage extra horizontal margin | Vue `DocPage.vue` rows/cols use `mx-0`/`px-0` | `DocPage` keeps `mx: 0` for `/components` |
+| Section internal padding | Vue `VuseSectionDefinition.vue` uses `pa-0` | React `VuseSectionDefinition` uses `py: 0` for `/components` |
+
+Verification table:
+
+| Layout item | Vue expected | React before source correction | React after source correction | Match level | Notes |
+|---|---|---|---|---|---|
+| Content left offset from sidebar | 24px inside available main area | Previous correction used 12px | 24px for `/components` | PASS | Derived from wrapper + fluid container |
+| Page content width | Full available fluid width | Previously fixed to fluid width | Fluid width retained | PASS | No centered `maxWidth: 1480` on `/components` |
+| Page horizontal padding | `mx-3` wrapper + fluid container padding | Previous correction under-counted Vue padding | 24px total wrapper padding | PASS | |
+| Section wrapper padding | `pa-0` inside section definition container | React had internal vertical padding on `/components` | Internal vertical padding removed for `/components` | PASS | |
+| Individual example content | Existing examples unchanged | Not touched | Not touched | PASS | Scope preserved |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Global Vuetify docs layout spacing remains pending user visual approval.

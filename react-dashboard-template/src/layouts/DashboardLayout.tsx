@@ -92,6 +92,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   const mainScrollRef = useRef<HTMLElement | null>(null);
   const lastMainScrollTop = useRef(0);
   const previousPathRef = useRef(location.pathname);
+  const isVuetifyDocsRoute = location.pathname.startsWith("/components");
   const effectiveMini = miniVariant && !sidebarHovered;
   const effectiveHeaderVisible = headerVisible && !(headerHideOnScroll && hideHeaderOnScroll);
   const activeDrawerWidth = sidebarOpen ? (miniVariant ? miniDrawerWidth : drawerWidth) : 0;
@@ -314,7 +315,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
           transition: (theme) => theme.transitions.create(["margin-left", "margin-right"], { duration: theme.transitions.duration.shorter }),
         }}
       >
-        <Container maxWidth={false} sx={{ px: { xs: 2, md: 3 }, maxWidth: 1480 }}>
+        <Container maxWidth={false} sx={{ px: { xs: isVuetifyDocsRoute ? 3 : 2, md: 3 }, maxWidth: isVuetifyDocsRoute ? "none" : 1480 }}>
           {children}
         </Container>
         {footerVisible && <Stack sx={{ mt: 4, px: footerPadless ? 0 : 3, py: footerPadless ? 0 : 1.5, ...(footerColor && { bgcolor: footerColor, color: readableTextFor(footerColor) }), ...(footerInset && { width: "auto" }), ...(footerFixed && { position: "sticky", bottom: 0, zIndex: 2 }) }} alignItems="center">
