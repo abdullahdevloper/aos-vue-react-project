@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-16 (Time Pickers added)
+Last updated: 2026-05-16 (Progress Circular added)
 
 ## Strategy Status
 
@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Time Pickers.
+- Active section: Vuetify / Progress Circular.
 
 ## Current Slice
 
-- Scope: Vuetify / Pickers / Time Pickers only.
-- Route: `/components/pickers/time-pickers`.
-- Status: rebuilt again from Vue source after full rejection; pending user visual approval.
-- Source audit: Vue Time Pickers sources retraced directly from `src/views/Vuetify/Pickers/TimePickers.vue`, all source-ordered files under `src/demo/examples/time-pickers/**`, `src/demo/examples/time-pickers/playground.vue`, shared `DocPage.vue`, `Usage.vue`, `Example.vue`, `src/lang/en/components/TimePickers.json`, and Vuetify internals under `node_modules/vuetify/src/components/VTimePicker/` plus `VPicker/`.
+- Scope: Vuetify / Progress Circular only.
+- Route: `/components/progress/progress-circular`.
+- Status: implemented from Vue source; pending user visual approval.
+- Source audit: Vue Progress Circular sources traced directly from `src/views/Vuetify/Progress/Circular.vue`, `src/demo/examples/progress-circular/usage.vue`, `src/demo/examples/progress-circular/playground.vue`, all source-ordered files under `src/demo/examples/progress-circular/simple/`, shared `DocPage.vue`, `Usage.vue`, `Example.vue`, `src/lang/en/components/ProgressCircular.json`, and Vuetify internals under `node_modules/vuetify/src/components/VProgressCircular/`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -57,6 +57,8 @@ Current rebuild strategy:
 - Vuetify / Pickers / Color Pickers: approved.
 - Vuetify / Pickers / Date Pickers: approved.
 - Vuetify / Pickers / Time Pickers: rebuilt again from Vue source after full rejection; pending user visual approval.
+- Vuetify / Progress / Progress Circular: implemented from Vue source; pending user visual approval.
+- Vuetify / Progress / Progress Linear: pending/disabled.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

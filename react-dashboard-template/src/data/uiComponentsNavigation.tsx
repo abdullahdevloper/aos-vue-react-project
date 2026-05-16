@@ -208,7 +208,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       {
         title: "Progress",
         children: [
-          { title: "Circular", disabled: true, pending: true },
+          { title: "Circular", path: "/components/progress/progress-circular", icon: <ViewHeadline /> },
           { title: "Linear", disabled: true, pending: true },
         ],
       },

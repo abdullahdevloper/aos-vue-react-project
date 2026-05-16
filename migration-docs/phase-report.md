@@ -6835,6 +6835,67 @@ Approval:
 
 - Vuetify / Time Pickers remains pending user visual approval.
 
+### Vuetify / Progress Circular Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Progress Circular at `/components/progress/progress-circular`.
+- Enabled only the Progress > Circular sidebar item.
+- Did not touch Time Pickers, Progress Linear, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and route metadata: `src/views/Vuetify/Progress/Circular.vue`.
+- Usage and playground: `src/demo/examples/progress-circular/usage.vue`, `src/demo/examples/progress-circular/playground.vue`.
+- Examples in Vue order: `simple/circular-colored.vue`, `simple/circular-indeterminate.vue`, `simple/circular-size-and-width.vue`, `simple/circular-rotate.vue`.
+- Shared docs wrappers: `src/demo/components/DocPage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Example.vue`.
+- Documentation text: `src/lang/en/components/ProgressCircular.json`.
+- Vuetify internals: `node_modules/vuetify/src/components/VProgressCircular/VProgressCircular.ts`, `VProgressCircular.sass`, `_variables.scss`.
+
+Implemented:
+
+- Added `ProgressCircularPage.tsx` with a local `VProgressCircular` SVG implementation matching Vuetify math:
+  - default `size=32`, `width=4`, `value=0`, `rotate=0`.
+  - radius `20`, dynamic `viewBoxSize`, stroke width, circumference, dasharray, dashoffset, and rotate transform from Vuetify source.
+  - determinate underlay stroke `rgba(0,0,0,.1)` and overlay `currentColor`.
+  - indeterminate rotate and dash keyframes at `1.4s`, matching Vuetify timing.
+- Preserved Vue page order: Usage, Playground, Colored, Indeterminate, Size & Width, Rotate.
+- Implemented the playground controls and default state from Vue: `indeterminate=false`, `rotate=0`, `size=32`, `value=0`, `width=4`, `color="light-blue"`.
+- Implemented the rotating determinate example with the Vue `setInterval` behavior: value increments by 10 every second and resets from 100 to 0.
+- Added the `/components/progress/progress-circular` route and enabled only the Circular sidebar item; Linear remains pending/disabled.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Circular.vue`, `DocPage.vue` | `vuse-content-wrapper`, section definition, `v-container fluid`, usage + playground + examples | React DocPage with same route breadcrumbs and ordered docs sections | Match | Pending visual approval |
+| Usage | `usage.vue`, `ProgressCircular.json` | Five centered determinate circular progress components at 20/40/60/80/100; default secondary color; 1rem margins | Five centered local progress components with same values, default secondary, and 1rem margins | Match | |
+| Playground | `playground.vue` | Centered `light-blue` progress with displayed value; number fields for rotate/size/value/width; indeterminate switch | Same state, controls, responsive columns, labels, and live preview behavior | Match | |
+| Colored | `simple/circular-colored.vue` | Values 100/80/60/40/20 with blue-grey, deep-orange lighten-2, brown, lime, indigo darken-2 | Same values and Vuetify color mappings | Match | |
+| Indeterminate | `simple/circular-indeterminate.vue`, `_variables.scss` | Primary/red/purple/green/amber indeterminate spinners with rotate + dash animation | Same colors and 1.4s rotate/dash keyframes | Match | |
+| Size & Width | `simple/circular-size-and-width.vue`, `VProgressCircular.ts` | Indeterminate examples with explicit size/width props | Same `size`/`width` values using Vuetify stroke/viewBox calculation | Match | |
+| Rotate | `simple/circular-rotate.vue` | Four 100px determinate rings, width 15, rotations 360/-90/90/180, value text, value increments every 1000ms | Same sizes, rotations, colors, value text, and interval behavior | Match | |
+| SVG geometry | `VProgressCircular.ts` | radius 20, dynamic viewBox, dasharray and dashoffset from normalized value | Same formulas implemented locally | Match | |
+| Animations | `VProgressCircular.sass`, `_variables.scss` | `progress-circular-rotate 1.4s linear infinite`, `progress-circular-dash 1.4s ease-in-out infinite`, overlay transition `.6s` | Same keyframes and transition timing | Match | |
+| Source/invert controls | `Example.vue` | Toolbar actions, source expansion, invert surface | Existing React docs block behavior preserved | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Progress Circular remains pending user visual approval.
+
 ### Vuetify / Time Pickers Full Rebuild After Rejection
 
 Status: rebuilt again from Vue source; pending user visual approval.
