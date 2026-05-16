@@ -5446,6 +5446,94 @@ Approval:
 
 - Vuetify / Lists remains pending user visual approval.
 
+### Vuetify Lists Item Group Source-Driven Rebuild
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Lists Item Group at `/components/lists/item-groups`.
+- Enabled only Lists > Item Group in the sidebar.
+- Did not touch Lists, Menus, approved slices, animations, Calendars, or `.claude/`.
+
+Vue source traced:
+
+- Main page: `src/views/Vuetify/Lists/ItemGroupView.vue`.
+- Route: `src/router/routes/vuetify.js`.
+- Sidebar: `src/config/navigation-items.js`.
+- Documentation: `src/lang/en/components/ListItemGroups.json`.
+- Examples in exact Vue order:
+  - `src/demo/examples/list-item-groups/usage.vue`
+  - `src/demo/examples/list-item-groups/playground.vue`
+  - `src/demo/examples/list-item-groups/simple/flat.vue`
+  - `src/demo/examples/list-item-groups/simple/multiple.vue`
+  - `src/demo/examples/list-item-groups/simple/mandatory.vue`
+  - `src/demo/examples/list-item-groups/simple/active-class.vue`
+  - `src/demo/examples/list-item-groups/intermediate/selection-controls.vue`
+
+Implemented:
+
+- Page heading, breadcrumbs, intro documentation, usage block, playground, and examples in Vue order.
+- `v-list-item-group`-style single selection, multiple selection, mandatory selection, flat selection, custom active class, and checkbox slot selection behavior.
+- Vue item data, icons, default selected state, list widths, list item heights, ripple/hover behavior, selected color states, divider placement, and shaped list item styling.
+- Route registration and sidebar enablement for `/components/lists/item-groups`.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page/route/sidebar | `ItemGroupView.vue`, `routes/vuetify.js`, `navigation-items.js` | `/components/lists/item-groups`, Lists > Item Group, breadcrumbs Components / Vuetify / List Item Group | Route and sidebar item added with matching breadcrumb text | PASS | Pending visual approval |
+| Usage | `list-item-groups/usage.vue` | 500px centered card, Inbox/Star/Send/Drafts, model default `1` | Same data, width, default selected Star, clickable/ripple single selection | PASS | Pending visual approval |
+| Playground | `list-item-groups/playground.vue` | Multiple/Mandatory/Flat/Dense switches, Items count slider 0-25, 400px card, repeated Wifi rows | Same controls, defaults, count behavior, single/multiple/mandatory selection behavior | PASS | Pending visual approval |
+| De-emphasized selections | `simple/flat.vue` | Flat list, selected Bluetooth by default, indigo active color without emphasized fill | Same data/default state and flat active style | PASS | Pending visual approval |
+| Select multiple items | `simple/multiple.vue` | Multiple selection, default `[1]`, indigo active state | Same multiple toggle behavior and default selected Bluetooth | PASS | Pending visual approval |
+| Mandatory | `simple/mandatory.vue` | Single mandatory selection, cannot clear last active item | Same mandatory selection rule | PASS | Pending visual approval |
+| Custom active class | `simple/active-class.vue` | Active item gets dashed orange border | Same dashed orange active border on selected item | PASS | Pending visual approval |
+| Selection controls | `intermediate/selection-controls.vue` | Shaped list, multiple values, divider, deep-purple active text, checkbox toggle linked to active state, default Carrots | Same item order, divider, default Carrots selection, row/checkbox toggle behavior | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Lists Item Group remains pending user visual approval.
+
+### Vuetify Lists Item Group Selection Controls Checkbox Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Selection controls checkbox behavior inside `/components/lists/item-groups`.
+- Did not touch Lists, Menus, approved slices, animations, Calendars, or `.claude/`.
+
+Fix:
+
+- Matched Vue `v-checkbox @click="toggle"` behavior by making the checkbox itself call the same row toggle handler.
+- Preserved row click behavior, active text color, checkbox color, and default selected `Carrots` state.
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Selection controls checkbox click | Clicking checkbox toggles the related `v-list-item` active state | Checkbox now calls the same toggle handler as the row | PASS | Pending visual approval |
+| Selection controls row click | Clicking row toggles active state | Row click behavior preserved | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Lists Item Group remains pending user visual approval.
+
 ### Vuetify Images Implementation
 
 Status: implemented; pending user visual approval.

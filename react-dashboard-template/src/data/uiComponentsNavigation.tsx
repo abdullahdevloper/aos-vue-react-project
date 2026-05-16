@@ -189,7 +189,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         title: "Lists",
         children: [
           { title: "List", path: "/components/lists", icon: <ViewHeadline /> },
-          { title: "Item Group", disabled: true, pending: true },
+          { title: "Item Group", path: "/components/lists/item-groups", icon: <ViewHeadline /> },
         ],
       },
       { title: "Menus", disabled: true, pending: true },
