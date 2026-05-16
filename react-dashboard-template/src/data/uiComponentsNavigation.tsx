@@ -192,7 +192,7 @@ export const globalNavigation: SidebarNavEntry[] = [
           { title: "Item Group", path: "/components/lists/item-groups", icon: <ViewHeadline /> },
         ],
       },
-      { title: "Menus", disabled: true, pending: true },
+      { title: "Menus", path: "/components/menus", icon: <ViewHeadline /> },
       { title: "Navigation Drawers", disabled: true, pending: true },
       { title: "Overlays", disabled: true, pending: true },
       { title: "Paginations", disabled: true, pending: true },

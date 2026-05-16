@@ -4739,6 +4739,9 @@ Approval:
 - Vuetify / Lists: fixed rejected inner click behavior for Expansion Lists and Nested Lists, and corrected Navigation Lists clickable profile row/surface; build passed; pending user visual approval.
 - Vuetify / Lists Item Group: implemented `/components/lists/item-groups` from Vue source; enabled sidebar entry; build passed; pending user visual approval.
 - Vuetify / Lists Item Group: fixed Selection controls checkbox toggle behavior; build passed; pending user visual approval.
+- Vuetify / Menus: implemented `/components/menus` from Vue source; enabled sidebar item; build passed; pending user visual approval.
+- Vuetify / Menus: fixed Absolute position image click menu placement; build passed; pending user visual approval.
+- Vuetify / Menus: fixed Menu with activator and tooltip nested hover/click behavior; build passed; pending user visual approval.
 
 ### Global Vuetify Docs Layout Source-Matched Correction
 

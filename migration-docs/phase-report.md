@@ -5502,6 +5502,145 @@ Approval:
 
 - Vuetify / Lists Item Group remains pending user visual approval.
 
+### Vuetify Menus Source-Driven Rebuild
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Menus at `/components/menus`.
+- Enabled only the Menus sidebar item.
+- Did not touch Lists Item Group, Navigation Drawers, approved slices, animations, Calendars, or `.claude/`.
+
+Vue source traced:
+
+- Main page: `src/views/Vuetify/Menus.vue`.
+- Route: `src/router/routes/vuetify.js`.
+- Sidebar: `src/config/navigation-items.js`.
+- Documentation: `src/lang/en/components/Menus.json`.
+- Examples in exact Vue order:
+  - `src/demo/examples/menus/usage.vue`
+  - `src/demo/examples/menus/playground.vue`
+  - `src/demo/examples/menus/simple/absolute.vue`
+  - `src/demo/examples/menus/simple/menu-activator-tooltip.vue`
+  - `src/demo/examples/menus/simple/hover.vue`
+  - `src/demo/examples/menus/simple/custom-transition.vue`
+  - `src/demo/examples/menus/simple/disabled.vue`
+  - `src/demo/examples/menus/simple/offset-x.vue`
+  - `src/demo/examples/menus/simple/offset-y.vue`
+  - `src/demo/examples/menus/simple/rounded.vue`
+  - `src/demo/examples/menus/simple/close-on-click.vue`
+  - `src/demo/examples/menus/simple/close-on-content-click.vue`
+  - `src/demo/examples/menus/intermediate/absolute-without-activator.vue`
+  - `src/demo/examples/menus/intermediate/menus.vue`
+  - `src/demo/examples/menus/intermediate/popover.vue`
+
+Implemented:
+
+- Vue page hierarchy, breadcrumbs, documentation text, usage, playground, and examples in exact source order.
+- Local `v-menu`-style primitive with activator click, hover open, disabled state, absolute mode, offset-x, offset-y, close-on-click, close-on-content-click, rounded menus, basic transitions, outside-click close, and local menu surfaces.
+- Menu list items with Vuetify-like height, text, shadows, hover, and ripple behavior.
+- Absolute image activator and right-click absolute menu behavior using the same Vue image URL.
+- Popover menu with avatar, favorite button, switches, Cancel/Save actions, and non-closing content clicks.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page/route/sidebar | `Menus.vue`, `routes/vuetify.js`, `navigation-items.js` | `/components/menus`, Menus sidebar item, Components / Vuetify / Menus breadcrumbs | Route and sidebar item added with matching breadcrumbs | PASS | Pending visual approval |
+| Usage | `menus/usage.vue` | Offset-y dropdown button opens a four-item list | Same button, list data, offset-y placement, click/ripple behavior | PASS | Pending visual approval |
+| Playground | `menus/playground.vue` | Disabled, Absolute, Open on hover, Close on click, Close on content click, X/Y offset, Value controls drive menu props | Same controls/defaults and menu behavior implemented | PASS | Pending visual approval |
+| Absolute position | `simple/absolute.vue` | Girl image card activator opens absolute offset-y list | Same image URL/card dimensions and menu list | PASS | Pending visual approval |
+| Menu with activator and tooltip | `simple/menu-activator-tooltip.vue` | Tooltip and menu share the button activator | Same tooltip text and dropdown activator behavior | PASS | Pending visual approval |
+| Hover | `simple/hover.vue` | Menu opens on hover with top offset-y placement | Same hover open/close behavior | PASS | Pending visual approval |
+| Custom transitions | `simple/custom-transition.vue` | Three buttons with scale, slide-x, and slide-y transitions | Same labels/colors and transition modes | PASS | Pending visual approval |
+| Disabled | `simple/disabled.vue` | Disabled menu cannot open | Disabled activator does not open menu | PASS | Pending visual approval |
+| X offset | `simple/offset-x.vue` | Switch controls offset-x placement | Switch and offset-x behavior implemented | PASS | Pending visual approval |
+| Y offset | `simple/offset-y.vue` | Switch controls offset-y placement | Switch and offset-y behavior implemented | PASS | Pending visual approval |
+| Rounded | `simple/rounded.vue` | Removed/Large/Custom Radius buttons with different rounded menu surfaces | Same button labels/colors and menu radii | PASS | Pending visual approval |
+| Close on click | `simple/close-on-click.vue` | Switch controls outside-click close behavior | Outside-click close behavior controlled by switch | PASS | Pending visual approval |
+| Close on content click | `simple/close-on-content-click.vue` | Switch controls item/content click close behavior | Content click close behavior controlled by switch | PASS | Pending visual approval |
+| Absolute without activator | `intermediate/absolute-without-activator.vue` | Right-click image opens menu at pointer position | Context menu position behavior implemented | PASS | Pending visual approval |
+| Menus | `intermediate/menus.vue` | Card toolbar dots open menu bottom-left | Card, toolbar, icon activator, and list implemented | PASS | Pending visual approval |
+| Popover menu | `intermediate/popover.vue` | Indeterminate popover with avatar row, favorite, two switches, Cancel/Save, non-closing content | Popover card and stateful controls implemented | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Menus remains pending user visual approval.
+
+### Vuetify Menus Activator Tooltip Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Menus `Menu with activator and tooltip` example at `/components/menus`.
+- Did not touch Lists Item Group, Navigation Drawers, approved slices, animations, Calendars, or `.claude/`.
+
+Fix:
+
+- Matched Vue nested activator behavior from `src/demo/examples/menus/simple/menu-activator-tooltip.vue`.
+- The same button now shows `Im A ToolTip` on hover and opens the menu on click.
+- The menu closes on outside click or list item click while preserving the tooltip hover behavior.
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Tooltip activator | Hovering button shows tooltip text | Button hover shows `Im A ToolTip` | PASS | Pending visual approval |
+| Menu activator | Clicking same button opens menu | Same button click toggles menu | PASS | Pending visual approval |
+| Menu list | Four source items `Click Me1` through `Click Me4` | Same item data and click close behavior | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Menus remains pending user visual approval.
+
+### Vuetify Menus Absolute Position Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the Menus `Absolute position` example at `/components/menus`.
+- Did not touch Lists Item Group, Navigation Drawers, approved slices, animations, Calendars, or `.claude/`.
+
+Fix:
+
+- Matched Vue `v-menu absolute offset-y` behavior for `simple/absolute.vue`: clicking anywhere on the image now opens the menu at the click position over the image area.
+- Preserved the Vue image URL, 600px by 300px card size, menu item data, menu surface, and item click close behavior.
+
+Verification table:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Absolute image activator | Clicking anywhere on image opens menu at that position | Image click now stores local pointer coordinates and renders menu there | PASS | Pending visual approval |
+| Menu content | Four source items, offset-y below click point | Same items and offset-y placement | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Menus remains pending user visual approval.
+
 ### Vuetify Lists Item Group Selection Controls Checkbox Fix
 
 Status: fixed; pending user visual approval.
