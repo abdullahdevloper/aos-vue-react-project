@@ -5575,6 +5575,154 @@ Approval:
 
 - Vuetify / Menus remains pending user visual approval.
 
+### Vuetify Navigation Drawers Source-Driven Rebuild
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Navigation Drawers at `/components/navigation-drawers`.
+- Enabled only the Navigation Drawers sidebar item.
+- Did not touch Menus, Overlays, approved slices, animations, Calendars, or `.claude/`.
+
+Vue source traced:
+
+- Main page: `src/views/Vuetify/NavigationDrawers.vue`.
+- Route: `src/router/routes/vuetify.js`.
+- Sidebar: `src/config/navigation-items.js`.
+- Documentation: `src/lang/en/components/NavigationDrawers.json`.
+- Examples in exact Vue order:
+  - `src/demo/examples/navigation-drawers/usage.vue`
+  - `src/demo/examples/navigation-drawers/playground.vue`
+  - `src/demo/examples/navigation-drawers/simple/colored.vue`
+  - `src/demo/examples/navigation-drawers/simple/permanent-floating.vue`
+  - `src/demo/examples/navigation-drawers/simple/mini.vue`
+  - `src/demo/examples/navigation-drawers/simple/temporary.vue`
+  - `src/demo/examples/navigation-drawers/simple/right.vue`
+  - `src/demo/examples/navigation-drawers/simple/expand-on-hover.vue`
+  - `src/demo/examples/navigation-drawers/intermediate/background.vue`
+  - `src/demo/examples/navigation-drawers/intermediate/combined.vue`
+  - `src/demo/examples/navigation-drawers/complex/bottom-drawer.vue`
+
+Implemented:
+
+- Page hierarchy, breadcrumbs, documentation text, usage, playground, and examples in Vue order.
+- Local drawer primitive for permanent, temporary, absolute, right, mini, expand-on-hover, floating, background image, dark/color modes, append slot, and bottom drawer behavior.
+- Vue item data, avatars, image URLs, Material Icon ligatures, MDI icons, list density, nav/rounded styling, active state, ripple/hover behavior, overlay/scrim behavior, and bottom drawer group-close behavior.
+
+Verification table:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page/route/sidebar | `NavigationDrawers.vue`, `routes/vuetify.js`, `navigation-items.js` | `/components/navigation-drawers`, Navigation Drawers sidebar item, Components / Vuetify / Navigation Drawers breadcrumbs | Route and sidebar item added with matching breadcrumbs | PASS | Pending visual approval |
+| Usage | `usage.vue` | 256x400 permanent drawer, Application/subtext, dense nav list Dashboard/Photos/About | Same card size, header, divider, list data/icons, permanent drawer | PASS | Pending visual approval |
+| Playground | `playground.vue` | Color select, v-model, permanent, mini, expand-on-hover, background, right controls | Same controls/defaults and drawer prop effects | PASS | Pending visual approval |
+| Colored drawer | `simple/colored.vue` | Deep-purple dark drawer with Dashboard/Account/Admin and appended Logout button | Same material icons/data/color and append button | PASS | Pending visual approval |
+| Permanent floating drawer | `simple/permanent-floating.vue` | Indigo outer card, elevated 256px inner drawer, dense rounded list | Same outer/inner card and floating drawer list | PASS | Pending visual approval |
+| Mini | `simple/mini.vue` | Mini drawer default true, avatar/header, chevron toggles mini variant, Home/My Account/Users | Same default mini state and toggle behavior | PASS | Pending visual approval |
+| Temporary | `simple/temporary.vue` | Toggle button opens absolute temporary drawer with scrim and closes outside | Same toggle, overlay, drawer, avatar, and list behavior | PASS | Pending visual approval |
+| Right positioned | `simple/right.vue` | Permanent right drawer in 350px card, Jane Smith header, account items | Same right positioning/header/items | PASS | Pending visual approval |
+| Expand on hover | `simple/expand-on-hover.vue` | Mini drawer expands on hover without content offset changes | Same hover width transition and list/header reveal | PASS | Pending visual approval |
+| Backgrounds | `intermediate/background.vue` | 300x300 full-width drawer with background image and dark list | Same background URL, size, dark items | PASS | Pending visual approval |
+| Combined drawers | `intermediate/combined.vue` | 330x300 card with 56px dark mini drawer and right list | Same mini width, avatar, mini items, and secondary links | PASS | Pending visual approval |
+| Bottom drawer | `complex/bottom-drawer.vue` | 344x400 card, system bar, prominent app bar, bottom temporary drawer, group selection closes drawer | Same app bar, buttons, bottom drawer, group active/close behavior | PASS | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Navigation Drawers remains pending user visual approval.
+
+### Vuetify Navigation Drawers Hover/Mini Follow-up Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only Playground expand-on-hover and Mini click behavior in `/components/navigation-drawers`.
+- Did not touch Menus, Overlays, approved slices, Calendars, global animations backlog, or `.claude/`.
+
+Vue source rechecked:
+
+- `src/demo/examples/navigation-drawers/playground.vue`
+- `src/demo/examples/navigation-drawers/simple/mini.vue`
+
+Fixes:
+
+- Playground expand-on-hover now uses the drawer's effective compact state, not just the explicit `miniVariant` switch, so hover in expands and reveals text while hover out collapses and hides text/icons exactly like the Vue drawer behavior.
+- Mini uses Vue `.sync` semantics more closely: when the drawer is mini, clicking the drawer/list area expands it; the chevron button collapses it when expanded.
+- Mini list items remain normal link-style items without introducing an artificial selected state.
+
+PASS/FAIL:
+
+| Item | Result | Notes |
+|---|---|---|
+| Playground expand-on-hover hover in | PASS | Hovering expands width and reveals drawer profile/list text |
+| Playground expand-on-hover hover out | PASS | Leaving collapses to mini width and hides profile/list text |
+| Mini account click | PASS | Clicking the mini account/header area expands drawer |
+| Mini normal item click | PASS | Clicking mini list items bubbles to drawer expansion like Vue `.sync` behavior |
+| Mini active/selected state | PASS | No fake active state added; list remains link-style like Vue source |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Navigation Drawers remains pending user visual approval.
+
+### Vuetify Navigation Drawers Remaining Blockers Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the requested Navigation Drawers sections: Mini, Temporary, Expand on hover, and Bottom drawer.
+- Preserved the accepted Playground expand-on-hover behavior.
+- Did not touch Menus, Overlays, approved slices, Calendars, global animations backlog, or `.claude/`.
+
+Vue source rechecked:
+
+- `src/demo/examples/navigation-drawers/simple/mini.vue`
+- `src/demo/examples/navigation-drawers/simple/temporary.vue`
+- `src/demo/examples/navigation-drawers/simple/expand-on-hover.vue`
+- `src/demo/examples/navigation-drawers/complex/bottom-drawer.vue`
+
+Fixes:
+
+- Mini now starts in mini state, uses an 80px collapsed drawer/card width, hides labels while collapsed, expands on mini drawer click, and collapses via the chevron button when expanded.
+- Temporary drawer now keeps its local 400px sheet, opens from the left with a transform transition, shows a scrim overlay, and animates closed before unmounting.
+- Expand on hover section now behaves independently from the Playground: collapsed state hides text and uses the mini width, hover expands the drawer and reveals profile/list text.
+- Bottom drawer now opens from the bottom edge with vertical slide direction and closes with the same bottom-to-hidden direction; overlay fade is preserved.
+
+PASS/FAIL:
+
+| Item | Result | Notes |
+|---|---|---|
+| Mini | PASS | Width, collapsed labels/icons, expand/collapse state transitions corrected |
+| Temporary animation | PASS | Local left drawer transition, scrim, and close animation corrected |
+| Expand on hover | PASS | Section-specific mini/expanded hover behavior corrected without changing Playground |
+| Bottom drawer direction | PASS | Drawer direction/placement corrected to bottom slide |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Navigation Drawers remains pending user visual approval.
+
 ### Vuetify Menus Activator Tooltip Fix
 
 Status: fixed; pending user visual approval.

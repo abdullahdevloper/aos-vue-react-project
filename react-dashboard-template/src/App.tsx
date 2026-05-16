@@ -67,6 +67,7 @@ import LazyPage from "./pages/ui-components/vuetify/LazyPage";
 import ListsVuetifyPage from "./pages/ui-components/vuetify/ListsVuetifyPage";
 import ListItemGroupsPage from "./pages/ui-components/vuetify/ListItemGroupsPage";
 import MenusPage from "./pages/ui-components/vuetify/MenusPage";
+import NavigationDrawersPage from "./pages/ui-components/vuetify/NavigationDrawersPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -161,6 +162,7 @@ export default function App() {
           <Route path="/components/lists" element={<DashboardRoute><ListsVuetifyPage /></DashboardRoute>} />
           <Route path="/components/lists/item-groups" element={<DashboardRoute><ListItemGroupsPage /></DashboardRoute>} />
           <Route path="/components/menus" element={<DashboardRoute><MenusPage /></DashboardRoute>} />
+          <Route path="/components/navigation-drawers" element={<DashboardRoute><NavigationDrawersPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />

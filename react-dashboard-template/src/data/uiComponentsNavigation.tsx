@@ -193,7 +193,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         ],
       },
       { title: "Menus", path: "/components/menus", icon: <ViewHeadline /> },
-      { title: "Navigation Drawers", disabled: true, pending: true },
+      { title: "Navigation Drawers", path: "/components/navigation-drawers", icon: <ViewHeadline /> },
       { title: "Overlays", disabled: true, pending: true },
       { title: "Paginations", disabled: true, pending: true },
       { title: "Parallax", disabled: true, pending: true },

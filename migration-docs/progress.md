@@ -4742,6 +4742,9 @@ Approval:
 - Vuetify / Menus: implemented `/components/menus` from Vue source; enabled sidebar item; build passed; pending user visual approval.
 - Vuetify / Menus: fixed Absolute position image click menu placement; build passed; pending user visual approval.
 - Vuetify / Menus: fixed Menu with activator and tooltip nested hover/click behavior; build passed; pending user visual approval.
+- Vuetify / Navigation Drawers: implemented `/components/navigation-drawers` from Vue source; enabled sidebar item; build passed; pending user visual approval.
+- Vuetify / Navigation Drawers: fixed remaining Mini, Temporary animation, Expand on hover, and Bottom drawer direction blockers; build passed; pending user visual approval.
+- Vuetify / Navigation Drawers: fixed Playground expand-on-hover compact text visibility and Mini `.sync` click behavior; build passed; pending user visual approval.
 
 ### Global Vuetify Docs Layout Source-Matched Correction
 
