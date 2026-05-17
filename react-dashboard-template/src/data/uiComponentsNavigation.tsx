@@ -230,7 +230,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       { title: "Timelines", path: "/components/timelines", icon: <ViewHeadline /> },
       { title: "Tooltips", path: "/components/tooltips", icon: <ViewHeadline /> },
       { title: "Treeview", path: "/components/treeview", icon: <ViewHeadline /> },
-      { title: "VirtualScrollers", badge: "new", disabled: true, pending: true },
+      { title: "VirtualScrollers", path: "/components/virtual-scrollers", icon: <ViewHeadline />, badge: "new" },
     ],
   },
   { header: "Directives" },

@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Treeview rejection fix)
+Last updated: 2026-05-17 (VirtualScrollers)
 
 ## Strategy Status
 
@@ -11,20 +11,24 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Treeview (rejection fix applied; pending re-approval).
+- Active section: Vuetify / VirtualScrollers.
 
 ## Current Slice
 
-- Scope: Vuetify / Treeview only.
-- Route: `/components/treeview`.
-- Status: rejection fix applied; pending user visual re-approval.
-- Source audit: Vue Treeview sources traced from `src/views/Vuetify/Treeview.vue`, `src/lang/en/components/Treeview.json`, and all 17 example files (`usage.vue`, `playground.vue`, `simple/dense.vue`, `simple/selected-color.vue`, `simple/color.vue`, `simple/shaped.vue`, `simple/rounded.vue`, `simple/item-disabled.vue`, `simple/selection-type.vue`, `simple/selectable.vue`, `simple/activatable.vue`, `simple/hoverable.vue`, `simple/open-all.vue`, `intermediate/file-explorer.vue`, `complex/human-resources.vue`, `complex/directory.vue`, `complex/hotspots.vue`).
-- Implementation: added `/components/treeview`, enabled the Treeview sidebar item, and rebuilt all 15 examples in Vue order plus Usage and Playground.
-- Behavior: implemented local VTreeview with React Context for prop propagation, recursive TreeNode, MDI SVG icon rendering, leaf/independent selection modes with indeterminate state, activatable (single active), hoverable hover effect, shaped (0 9999px 9999px 0) / rounded (9999px pill) border radius per Vuetify 2 `$rounded-corners.pill`, open-all, open-on-click, search/filter with subtree matching, async load-children with loading spinner, custom expand/on/off/indeterminate icons with rotation applied uniformly, prepend slot, item-key/item-text/item-disabled prop names, file-explorer with folder/file icons, human-resources search + case-sensitive filter, directory with jsonplaceholder async user load and avatar display, hotspots with openbrewerydb async load and chip display (controlled value prop for Reset).
-- Playground defaults: dense=false, selectable=false, activatable=false, hoverable=false, shaped=false, rounded=false, openOnClick=false, color='primary', selectedColor='accent'.
-- Rejection fix: (1) border-radius corrected from "4px"/"0 16px 16px 0" to "9999px"/"0 9999px 9999px 0" per Vuetify 2 SASS pill value; (2) expand icon rotation now always applied regardless of custom vs default icon; (3) doToggleOpen/doActivate/doToggleSel restructured to remove side effects from setState updater functions (React anti-pattern, broke async loading in StrictMode); (4) VTreeview value prop now syncs to internal selectedSet via useEffect; (5) HotspotsExample passes value={tree} for controlled selection so Reset button correctly clears treeview state.
+- Scope: Vuetify / VirtualScrollers only.
+- Route: `/components/virtual-scrollers`.
+- Status: implemented from Vue source; pending user visual approval.
+- Source audit: Vue VirtualScrollers sources traced from `src/views/Vuetify/VirtualScrollers.vue`, `src/lang/en/components/VirtualScrollers.json`, `src/demo/usages/virtual-scrollers.vue`, `src/demo/examples/virtual-scrollers/simple/user-directory.vue`, `src/demo/examples/virtual-scrollers/advanced/benching.vue`, shared docs/example wrappers, and `node_modules/vuetify/src/components/VVirtualScroll/VVirtualScroll.ts` / `.sass`.
+- Implementation: added `/components/virtual-scrollers`, enabled the VirtualScrollers sidebar item, and rebuilt Usage, User directory, and Pre-rendering items in exact Vue order.
+- Behavior: implemented a local source-shaped `VirtualScroll` primitive with fixed `itemHeight`, `height`, `bench`, `first/last/firstToRender/lastToRender` slicing, absolute item positioning, virtual container height equal to `items.length * itemHeight`, and scroll-driven rehydration.
+- Data: Usage renders `count` items from 7000-15000 with height 175-275; User directory generates 10000 rows from the source names/surnames/colors arrays; Benching renders 7000 numeric records with bench control 0-10.
+- Rejection fix: re-traced User directory, `VVirtualScroll`, `VListItem`, `VListItemAvatar`, `VAvatar`, `VBtn`, and `VCard` sources; rebuilt User directory rows around source `v-list-item` / `v-list-item__avatar` / `v-list-item__content` / `v-list-item__action` spacing, the source 40px outer list-item avatar clipping the nested 56px colored avatar, small depressed action button geometry, and confirmed source virtual-scroll uses no row transition/animation classes.
 - Build: passed inside `react-dashboard-template/`.
-- Vuetify / Treeview: rejection fix applied; pending user visual re-approval.
+- Vuetify / VirtualScrollers: implemented; pending user visual approval.
+
+## Previous Slice: Treeview
+
+- Status: rejection fix applied; pending user visual re-approval.
 
 ## Previous Slice: Tooltips
 

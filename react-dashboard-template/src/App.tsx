@@ -89,6 +89,7 @@ import TabsPage from "./pages/ui-components/vuetify/TabsPage";
 import TimelinesPage from "./pages/ui-components/vuetify/TimelinesPage";
 import TooltipsPage from "./pages/ui-components/vuetify/TooltipsPage";
 import TreeviewPage from "./pages/ui-components/vuetify/TreeviewPage";
+import VirtualScrollersPage from "./pages/ui-components/vuetify/VirtualScrollersPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -205,6 +206,7 @@ export default function App() {
           <Route path="/components/timelines" element={<DashboardRoute><TimelinesPage /></DashboardRoute>} />
           <Route path="/components/tooltips" element={<DashboardRoute><TooltipsPage /></DashboardRoute>} />
           <Route path="/components/treeview" element={<DashboardRoute><TreeviewPage /></DashboardRoute>} />
+          <Route path="/components/virtual-scrollers" element={<DashboardRoute><VirtualScrollersPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />

@@ -1,10 +1,78 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Treeview rejection fix)
+Last updated: 2026-05-17 (VirtualScrollers)
 
 ## Phase
 
-Vuetify / Treeview rejection fix.
+Vuetify / VirtualScrollers strict source-driven rebuild.
+
+Status: implemented; pending user visual approval.
+
+Route: `/components/virtual-scrollers`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/VirtualScrollersPage.tsx`
+
+### Vuetify / VirtualScrollers Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / VirtualScrollers at `/components/virtual-scrollers`.
+- Enabled only the VirtualScrollers sidebar item.
+- Did not touch Treeview, Timelines, Tooltips, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and order: `src/views/Vuetify/VirtualScrollers.vue`.
+- Usage playground: `src/demo/usages/virtual-scrollers.vue`.
+- Examples in Vue order: `src/demo/examples/virtual-scrollers/simple/user-directory.vue`, then `src/demo/examples/virtual-scrollers/advanced/benching.vue`.
+- Documentation text: `src/lang/en/components/VirtualScrollers.json`.
+- Shared wrappers: `src/demo/components/DocPage.vue`, `Usage.vue`, `Examples.vue`, and `Example.vue`.
+- Vuetify internals: `node_modules/vuetify/src/components/VVirtualScroll/VVirtualScroll.ts` and `VVirtualScroll.sass`.
+
+Implemented:
+
+- Preserved Vue page order: intro text, usage text/alert, Usage, User directory, and Pre-rendering items.
+- Added local source-shaped `VirtualScroll` primitive matching `v-virtual-scroll` source behavior: `items`, required `itemHeight`, `height`, `bench`, `first`, `last`, `firstToRender`, `lastToRender`, absolute item top positioning, virtual container height, and scroll-driven rendering.
+- Usage playground sliders match Vue config: `Item Count` 7000-15000 and `Height` 175-275 with default height 200.
+- User directory uses source max-width 400 card, orange darken-4 title, white FAB plus icon, source lorem text, divider, 300px virtual scroll, 50px item height, 10000 generated rows, source names/surnames/colors arrays, the nested `v-list-item-avatar` / `v-avatar size="56"` avatar structure, and View User action.
+- Pre-rendering items uses source max-width 400 number field, `Total Benched` 0-10, elevation-16 card, 300px virtual scroll, 64px item height, 7000 rows, primary small FAB row number, record title text, right open-in-new icon, and dividers.
+- Added `/components/virtual-scrollers` route and enabled the VirtualScrollers sidebar item.
+- Rejection fix: re-traced `simple/user-directory.vue`, `VVirtualScroll`, `VListItem`, `VAvatar`, `VBtn`, and `VCard` sources. User directory rows now follow source `v-list-item` structure/classes and verified spacing instead of a generic flex row. No row transition or animation class exists in Vue `VVirtualScroll`; React preserves the source behavior by updating rendered absolute items on scroll without invented animation.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `VirtualScrollers.vue`, `VirtualScrollers.json`, shared doc wrappers | Components/VirtualScrollers route with heading text, usage text, usage alert, and examples array in source order | DocPage route, breadcrumbs, intro, usage block, alert, User directory, and Pre-rendering items order preserved | Match | Pending visual approval |
+| Usage | `src/demo/usages/virtual-scrollers.vue`, `VirtualScrollers.vue` usage slider config | `count` drives `items.length`; `height` drives scroller height; item-height 25; only visible rows render in absolute virtual container | Same controls/defaults/ranges, item count text, outlined card, height binding, item-height 25, and virtual row slicing | Match | |
+| User directory | `simple/user-directory.vue` | 400px card, orange darken-4 title, white small FAB, source text, divider, 300px virtual list, 50px item height, `v-list-item-avatar` containing a nested 56px colored avatar, View User action | Same source structure, generated data algorithm, colors/names/surnames arrays, item height, scroll height, nested avatar/action layout | Match | Randomized rows follow Vue source's `Math.random` generation |
+| Pre-rendering items | `advanced/benching.vue` | Number field `benched`, bench prop controls extra rendered items, 400px elevation-16 card, height 300, item-height 64, 7000 numeric records | Same control, bench behavior, card/elevation, virtual scroll math, row button/icon/title/divider layout | Match | |
+| Shared virtual scroller | `VVirtualScroll.ts`, `VVirtualScroll.sass` | `first=floor(scrollTop/itemHeight)`, `last=first+ceil(height/itemHeight)`, render `first-bench` to `last+bench`, container height `items.length*itemHeight`, items absolute with top `index*itemHeight` | Local `VirtualScroll` implements the same verified formulas and structural classes | Match | |
+
+Rejection-fix verification:
+
+| Area | Vue source/classes | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| User directory item structure | `simple/user-directory.vue:21-44`; `VListItem.sass:26-36`, `75-106`, `120-170` | Each virtual item renders a `v-list-item` containing `v-list-item-avatar`, `v-list-item-content`, and `v-list-item-action` | Directory rows now use source class structure and spacing: 0 16px item padding, 48px min-height, avatar margins, content padding 12px 0, action margin 12px 0 | Match | Pending visual approval |
+| Avatar | `simple/user-directory.vue:24-27`; `VListItemAvatar.ts:5-26`; `VAvatar.ts:48-67`; `VAvatar.sass:3-12`; `VListItem.sass:120-170` | Source renders an outer `v-list-item-avatar` that extends `VAvatar` with default 40px size and clips a nested `v-avatar size="56"` colored initials avatar | React now renders the same 40px circular outer list-item avatar wrapper with the nested 56px colored avatar clipped inside it | Match | This corrects the prior over-broad 56px-only avatar interpretation |
+| View User button | `simple/user-directory.vue:34-41`; `VBtn.sass:40-89`, `183-184`; `_variables.scss:22-24`, `31-36`, `107-125` | Small depressed default button: 28px height, uppercase 12px text, no elevation, default light surface, right icon with orange darken-4 and source right-icon margin | React action button uses 28px height, 12px uppercase text, no elevation, source padding/min-width, orange icon with right-icon margin | Match | |
+| Virtual-scroll animation | `VVirtualScroll.ts:69-119`; `VVirtualScroll.sass:121-135` | No transition component or animation classes; scrolling updates `first/last` and absolute row `top` values immediately | React `VirtualScroll` preserves source behavior: scroll state updates rendered range and absolute item positions without invented animation | Match | User-reported animation mismatch is addressed by matching source no-animation behavior |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / VirtualScrollers remains pending user visual approval.
+
+---
+
+## Previous Phase: Treeview Rejection Fix
 
 Status: rejection fix applied; pending user visual re-approval.
 
