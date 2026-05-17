@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Tabs)
+Last updated: 2026-05-17 (Timelines)
 
 ## Strategy Status
 
@@ -11,17 +11,28 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Tabs.
+- Active section: Vuetify / Timelines.
 
 ## Current Slice
 
-- Scope: Vuetify / Tabs only.
-- Route: `/components/tabs`.
+- Scope: Vuetify / Timelines only.
+- Route: `/components/timelines`.
 - Status: implemented from Vue source; pending user visual approval.
-- Source audit: Vue Tabs sources traced directly from `src/views/Vuetify/Tabs.vue`, `src/lang/en/components/Tabs.json`, `src/demo/examples/tabs/usage.vue`, `src/demo/examples/tabs/playground.vue`, every mounted example under `src/demo/examples/tabs/simple/`, `intermediate/`, and `complex/`, shared docs wrappers, and Vuetify internals under `node_modules/vuetify/src/components/VTabs/`, `VSlideGroup/`, and `VWindow/`.
-- Implementation: added `/components/tabs`, enabled the Tabs sidebar item, and rebuilt the Vue order from Usage and Playground through Fixed tabs, Centered active tab, Tab Items, Grow, Pagination, Custom icons, Vertical Tabs, Icons and text, Right aligned tabs, Content, Align tabs with toolbar title, Dynamic Tabs, With search, Desktop tabs, and With menu.
-- Behavior: implemented tab model switching, slider/indicator movement, fixed/grow/centered/right/vertical/icon tab modes, dynamic add/remove tabs, toolbar extension tabs, menu-swapped overflow tabs, tab item content transitions, local image grid content, source panels, and invert controls.
-- Rejection fix: re-traced the Tabs Vue sources and Vuetify internals; repaired the shared `VTabs` primitive to measure the active tab for the slider, use source-backed active/inactive colors, preserve vertical left-icon order, hide `v-slide-group` scrollbars, make arrow affixes scroll the local tab strip, and shape toolbar-extension examples closer to Vue.
+- Source audit: Vue Timelines sources traced directly from `src/views/Vuetify/Timelines.vue`, `src/lang/en/components/Timelines.json`, `src/demo/examples/timelines/usage.vue`, `playground.vue`, all mounted examples under `simple/`, `intermediate/`, and `complex/`, shared docs wrappers, and Vuetify internals under `node_modules/vuetify/src/components/VTimeline/`.
+- Implementation: added `/components/timelines`, enabled the Timelines sidebar item, and rebuilt the Vue order from Usage and Playground through Small dots, Icon dots, Reverse direction, Timeline card, Dense alert, Opposite slot, Avatar dots, Colored dots, and Advanced.
+- Behavior: implemented local timeline primitives for center/dense/reverse lines, 96px dividers, regular/small/large dots, fill-dot, hide-dot, icons, icon colors, avatar slots, opposite slots, card carets, dense responsive behavior, realtime logging toggle, reverse switch, and advanced comment posting.
+- Rejection fix: re-traced Vue Timelines and Vuetify `VTimeline` internals; rebuilt the shared layout primitive around verified constants: 24px item padding, 96px divider, 2px line, 24/38/52px outer dots, 18/30/42px inner dots, 10px card wedge, dense body width `calc(100% - 96px)`, and centered body/opposite width `calc(50% - 48px)`.
+- Color rejection fix: re-traced Timelines colors from Vue example classes, `src/plugins/vuetify.js`, `src/config/theme.js`, and Vuetify material color/theme settings; replaced mismatched React semantic colors and surface/text/icon tokens with verified Vue/Vuetify values.
+- Rejection follow-up: re-traced all Timelines examples with focus on `complex/color.vue` and `complex/advanced.vue`; restored white example surfaces, rebuilt Colored dots surface/header/avatar/image sizing from Vue, and repaired Advanced comment input/post/reversed-event behavior and source-backed row spacing.
+- Second rejection follow-up: re-traced Vue `Example.vue`, `complex/color.vue`, `complex/advanced.vue`, `VImg`, `VBtn`, `VTextField`, `VCard`, and grid gutter sources; corrected Timelines example card surfaces to Vue white, changed Colored dots to use the source image as a natural image layer instead of a guessed height, applied Vuetify FAB elevation-6, restored `v-row`/`v-col` 12px gutters, and made Advanced posting follow Vue's push/reset/reversed computed flow.
+- Third rejection follow-up: re-traced `Example.vue` and `VCard.sass`; corrected Timelines wrapper/content inheritance so example bodies use Vue `v-card-text` secondary text color while nested cards keep their own white card surface and primary/secondary card text rules.
+- Rejected sections follow-up: re-traced `complex/color.vue`, `complex/advanced.vue`, Vuetify grid/container, `VImg`, `VTimeline`, and `VTextField`; adjusted only Colored dots and Advanced for source `v-container` padding, source fill-height row padding, source Advanced regex/state behavior, and source row/column spacing.
+- Dot-position rejection follow-up: re-traced `complex/color.vue`, `complex/advanced.vue`, `VTimelineItem.ts`, `VTimeline.sass`, and `_mixins.sass`; corrected the shared Timelines item geometry to Vue render order (`body`, `divider`, optional `opposite`), dense `row-reverse` flex direction, no synthetic opposite placeholder, fixed 96px divider lane, and `align-top` dot-only alignment.
+- Dot-line alignment follow-up: fixed the remaining dense-axis drift by making the local timeline container/items full width, locking the Vuetify divider lane to 96px, and allowing the body column to shrink with `min-width: 0` so Advanced posted rows and Colored dots rows cannot push dots away from the line.
+- Dense-axis correction: re-traced the rejected Colored dots and Advanced sections against `VTimeline.sass`; dense timeline rows now anchor the 96px divider lane absolutely at the same side as the line (`left: 47px` line / `48px` dot center), with the body offset by the source divider width so posted Advanced rows and Colored dots rows cannot move the dot axis.
+- Structural rejection correction: replaced the previous absolute dense divider model with the verified Vue/Vuetify in-flow model from `VTimelineItem.ts` and `VTimeline.sass`: body -> divider -> optional opposite render order, dense `display:flex` + `row-reverse`, relative 96px divider flex child, dense body width `calc(100% - 96px)`, and hidden opposite. Advanced posted rows now use the same in-flow timeline item structure with source `slide-x-transition` enter behavior and source-equivalent synchronous nonce increment.
+- Rejected section correction: rechecked Colored dots and Advanced against Vue source and moved the local timeline primitive closer to Vuetify classes: shared `.timeline-item`, `.timeline-body`, `.timeline-divider`, and `.timeline-opposite` rules now live on the timeline root, dense body uses the source `calc(100% - 96px)` flex basis/max width, and the 96px divider remains in-flow. Build was attempted but is currently blocked by an unrelated existing syntax error in `ProgressLinearPage.tsx`.
+- Animation correction: re-traced Timelines transition usage; Advanced uses `v-slide-x-transition group` and Vuetify defines `slide-x-transition` as primary `0.3s cubic-bezier(0.25, 0.8, 0.5, 1)` with enter opacity/`translateX(-15px)` plus group move `transform .6s`. Added page-local FLIP movement for posted Advanced rows while keeping them direct dense `VTimelineItem`s; build passed.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -72,6 +83,7 @@ Current rebuild strategy:
 - Vuetify / Simple Tables: implemented from Vue source; pending user visual approval.
 - Vuetify / Data Tables: implemented from Vue source; pending user visual approval.
 - Vuetify / Tabs: implemented from Vue source; pending user visual approval.
+- Vuetify / Timelines: implemented from Vue source; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

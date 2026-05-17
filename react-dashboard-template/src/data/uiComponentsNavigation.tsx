@@ -227,7 +227,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         ],
       },
       { title: "Tabs", path: "/components/tabs", icon: <ViewHeadline /> },
-      { title: "Timelines", disabled: true, pending: true },
+      { title: "Timelines", path: "/components/timelines", icon: <ViewHeadline /> },
       { title: "Tooltips", disabled: true, pending: true },
       { title: "Treeview", disabled: true, pending: true },
       { title: "VirtualScrollers", badge: "new", disabled: true, pending: true },

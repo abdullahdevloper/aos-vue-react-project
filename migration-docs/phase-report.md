@@ -1,15 +1,207 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Tabs)
+Last updated: 2026-05-17 (Timelines)
 
 ## Phase
 
-Vuetify / Tabs strict source-driven rebuild.
+Vuetify / Timelines strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/tabs`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/TabsPage.tsx`
+Route: `/components/timelines`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/TimelinesPage.tsx`
+
+### Vuetify / Timelines Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Timelines at `/components/timelines`.
+- Enabled only the Timelines sidebar item.
+- Did not touch Tabs, Tooltips, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and mounted order: `src/views/Vuetify/Timelines.vue`.
+- Usage/playground: `src/demo/examples/timelines/usage.vue` and `src/demo/examples/timelines/playground.vue`.
+- Mounted examples in Vue order: `simple/small`, `simple/icons`, `simple/reverse`, `simple/card`, `intermediate/alert`, `intermediate/slot`, `intermediate/avatars`, `complex/color`, and `complex/advanced`.
+- Documentation text: `src/lang/en/components/Timelines.json`.
+- Shared docs/example wrappers: `src/demo/components/DocPage.vue`, `Usage.vue`, `Playground.vue`, `Examples.vue`, and `Example.vue`.
+- Vuetify internals: `node_modules/vuetify/src/components/VTimeline/VTimeline.ts`, `VTimelineItem.ts`, `VTimeline.sass`, `_mixins.sass`, and `_variables.scss`.
+
+Implemented:
+
+- Preserved Vue page order: intro text, Usage, Playground, and all examples listed by `Timelines.vue`.
+- Added local `VTimeline` and `VTimelineItem` primitives matching verified Vuetify structure: 24px item padding, 96px divider, 2px line, regular/small/large dot dimensions, inner dot dimensions, fill-dot, hide-dot, icon/icon-color, avatar slot, opposite slot, align-top, dense, dense-on-small, reverse, and card carets.
+- Implemented Usage and Playground controls from Vue source: Toggle align-top, dense, fill-dot, hide-dot, icon, avatar, icon color, reverse, left, right, and small.
+- Implemented examples from source: Small dots, Icon dots, Reverse direction, Timeline card, Dense alert with realtime logging toggle, Opposite slot years, Avatar dots, Colored dots schedule card, and Advanced comment timeline.
+- Added `/components/timelines` route and enabled the Timelines sidebar item; Tooltips and later items remain pending/disabled.
+- Rejection fix: re-traced the Timelines source and Vuetify internals, then rebuilt the shared timeline layout around exact verified constants from `VTimeline/_variables.scss`: 24px item padding, 96px divider, 2px line, 10px card wedge, regular/small/large outer dots at 38/24/52px, regular/small/large inner dots at 30/18/42px, centered body/opposite widths at `calc(50% - 48px)`, and dense body width at `calc(100% - 96px)`.
+- Rejection fix details: item layout no longer relies on approximate `nth-of-type` CSS; `VTimeline` now passes source timeline state/index to each item so dense, reverse, explicit `left`/`right`, opposite alignment, divider placement, and caret direction are computed from the same rules as Vuetify.
+- Color rejection fix: re-traced Timelines colors from the Vue examples, `src/plugins/vuetify.js`, `src/config/theme.js`, `node_modules/vuetify/src/styles/settings/_colors.scss`, and `node_modules/vuetify/src/styles/settings/_light.scss`; replaced React semantic status colors, card/dot/text/icon surfaces, and explicit class colors with verified Vue/Vuetify values only.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Timelines.vue`, `DocPage.vue`, `Usage.vue`, `Playground.vue`, `Examples.vue`, `Example.vue`, `Timelines.json` | Components/Timelines route with intro text, Usage, Playground, and examples array in source order | DocPage route, breadcrumbs, intro text, Usage, Playground, and mounted examples order preserved | Match | Pending visual approval |
+| Usage | `usage.vue`, `VTimeline.sass` | Three basic timeline items alternating around a centered line | Same three items, center line, divider, and alternating body alignment | Match | |
+| Playground | `playground.vue`, `VTimelineItem.ts` | Source switches control align-top, dense, fill-dot, hide-dot, icon, avatar, icon color, reverse, left, right, and small across three card items | Same switch defaults and live item/dot/slot behavior | Match | |
+| Small dots | `simple/small.vue` | Responsive dense timeline with colored fill-dot cards, small alternate dots, headers, icons, and grid content | Same source order, colors, dot sizes, icons, card headers, and responsive dense behavior | Match | |
+| Icon dots | `simple/icons.vue` | Align-top timeline with colored filled icon dots and dark colored cards with white body/action area | Same color/icon item data, align-top dots, filled icons, cards, and outlined actions | Match | |
+| Reverse direction | `simple/reverse.vue` | Reverse switch defaults true and affects both regular responsive timeline and dense timeline | Same switch default and reverse/dense layout changes | Match | |
+| Timeline card | `simple/card.vue` | Three large red-lighten-2 dot card items with opposite text and card carets | Same large dots, opposite text, card content, shadow, and caret treatment | Match | |
+| Dense alert | `intermediate/alert.vue` | Max-width 600 logs card, realtime button, dense timeline, random colored alerts, max five rows | Same card, toggle interval, color/icon generation, dense alert rows, and max length | Match | |
+| Opposite slot | `intermediate/slot.vue` | Year labels in opposite slot with color text and small colored dots | Same year/color data, opposite text, item headings, and body text | Match | |
+| Avatar dots | `intermediate/avatars.vue` | Four large avatar dot items with opposite text and cards | Same large avatar dots, opposite text, cards, and body text | Match | |
+| Colored dots | `complex/color.vue` | Max-width 400 card, purple toolbar, forest hero, pink FAB, dense schedule timeline, avatar row | Same sourced image URLs, schedule rows, dense colored dots, FAB, toolbar, and avatars | Match | |
+| Advanced | `complex/advanced.vue` | Max-width 600 dense clipped timeline, JL comment input, Enter/Post adds reversed events, Today marker, static order history rows | Same input/post behavior, event reversal, static rows, chips, hidden-dot rows, and dense line | Match | |
+
+Post-rejection verification:
+
+| Area | Vue source | Vue expected colors/sizes/layout | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Timeline constants | `VTimeline/_variables.scss` | 24px item padding, 96px divider, 2px line, 10px wedge, 24/38/52px outer dots, 18/30/42px inner dots | Shared `VTimeline` / `VTimelineItem` now uses those exact constants | Match | Rejection fix |
+| Centered layout | `VTimeline.sass`, `_mixins.sass` | Non-dense line at `calc(50% - 1px)`, body/opposite widths `calc(50% - 48px)`, alternating item sides | Item receives source index and computes body/opposite sides with centered widths | Match | Rejection fix |
+| Dense layout | `VTimeline.sass` | Dense line at 47px from side, body width `calc(100% - 96px)`, opposite hidden | Dense items now use 96px divider, hidden opposite, and full remaining body width | Match | Rejection fix |
+| Reverse and side props | `VTimelineItem.ts`, `VTimeline.sass` | `reverse`, `left`, and `right` alter before/after alignment and caret side | React computes explicit side and reverse behavior per item instead of approximating with generic flex | Match | Rejection fix |
+| Card carets | `VTimeline.sass`, `_mixins.sass` | Non-flat cards get 10px triangular wedge pointing toward divider; align-top moves wedge near top | React card wedge uses 10px triangle, flips by side, and moves on align-top | Match | Rejection fix |
+| Dot fill/icons/avatar | `VTimelineItem.ts`, `_variables.scss` | `fill-dot` removes inner padding; icon/avatar sits inside dot; icon color applies to icon | React dot inner sizing, fill-dot sizing, icon slot, and icon color follow source rules | Match | Rejection fix |
+
+Color verification:
+
+| Area | Vue source/class | Vue expected color | React before | React after | Match level | Notes |
+|---|---|---|---|---|---|---|
+| Theme primary/default timeline dots | `src/config/theme.js` primary `colors.cyan.darken2`; `VTimelineItem.ts` default `color: "primary"` | `#0097A7` | `#0097a7` | `#0097A7` | Match | Same value normalized to traced Vue token |
+| Timeline line and card wedge border | `_light.scss` material `dividers` | `rgba(0,0,0,.12)` | hard-coded rgba | `rgba(0,0,0,.12)` via shared `divider` token | Match | Verified Vuetify light divider token |
+| Dot outer/card surface | `_light.scss` material `cards` | `#FFFFFF` | `#fff` | `#FFFFFF` via `cardSurface` | Match | Verified Vuetify light card token |
+| Primary body text | `_light.scss` material text `primary` | `rgba(0,0,0,.87)` | MUI `text.secondary` in timeline cards | `rgba(0,0,0,.87)` | Match | Vue card text has no secondary class in these examples |
+| Muted icon text | `_light.scss` material icons `active` | `rgba(0,0,0,.54)` | hard-coded rgba | `rgba(0,0,0,.54)` via `iconActive` | Match | Verified icon active token |
+| Dense alert status colors | `src/plugins/vuetify.js` theme `info/warning/error/success` | `#42A5F5`, `#FFA000`, `#D50000`, `#00C853` | `#2196f3`, `#fb8c00`, `#ff5252`, `#4caf50` | `#42A5F5`, `#FFA000`, `#D50000`, `#00C853` | Match | Fixed Vuse theme semantic override |
+| Dense alert header | `intermediate/alert.vue` class `blue-grey white--text`; `_colors.scss` | `#607D8B`, `#FFFFFF` | `#607d8b`, `#fff` | `#607D8B`, `#FFFFFF` | Match | Class token normalized to exact Vuetify material value |
+| Small/Icon/Opposite examples | Vue classes `purple lighten-2`, `amber lighten-1`, `cyan lighten-1`, `red lighten-1/2`, `green lighten-1`, `indigo`, `cyan`, `green`, `pink`, `amber`, `orange`; `_colors.scss` | Material class colors from Vuetify | mixed lowercase literals | exact traced Material values | Match | No generic MUI palette names used |
+| Colored dots card | `complex/color.vue` classes `dark`, `pink`, `purple lighten-3`, `teal lighten-3`, `white--text`; `_colors.scss`, Vuetify dark surface | `#1E1E1E`, `#E91E63`, `#CE93D8`, `#80CBC4`, `#FFFFFF` | `#424242`, raw pink/purple/white literals | traced color tokens | Match | Changed only color tokens; layout preserved |
+| Advanced example | `complex/advanced.vue` classes `orange`, `pink`, `grey`, `grey lighten-2`, `purple`, `white`, `white--text`; `_colors.scss` | `#FF9800`, `#E91E63`, `#9E9E9E`, `#E0E0E0`, `#9C27B0`, `#FFFFFF` | mixed lowercase/raw literals | exact traced Material values | Match | Comment input/button/chip colors now use verified tokens |
+
+Rejected-area verification:
+
+| Rejected area | Vue source | Vue expected design/behavior | React before | React after | Match level | Notes |
+|---|---|---|---|---|---|---|
+| All example surfaces | `DocPage.vue`, `Example.vue`, `VCard.sass`, `_light.scss` | Light examples render on white card/content surfaces with `#FFFFFF` cards and `rgba(0,0,0,.87/.6)` text tokens | Example body was transparent over the page background in Timelines | Example body now uses Vue light card surface `#FFFFFF`; body text uses traced primary/secondary text colors | Match | Timelines-only docs wrapper change |
+| Colored dots outer card | `src/demo/examples/timelines/complex/color.vue`, `VCard.sass` | Outer `v-card` max-width 400, centered, white card surface, elevation, 4px radius | White surface and radius were not explicit and inner section spacing drifted | Outer card now explicitly uses `#FFFFFF`, max-width 400, elevation-2 shadow, 4px radius, and visible overflow for the FAB | Match | Layout kept to Vue source |
+| Colored dots dark block/header | `complex/color.vue`, `_colors.scss`, `_dark.scss` | Nested `v-card dark flat`, `pa-2 purple lighten-3` title bar, icon button, centered title, default 48px avatar | Header was 56px high and avatars were 40px, shifting the design | Dark flat surface, 64px title row from 48px avatar + `pa-2`, 36px icon button, 48px avatar, and traced `purple lighten-3` | Match | Source-backed dimensions |
+| Colored dots hero | `complex/color.vue`, `VImg.sass`, `VImg.ts` | Forest image with `to top, rgba(0,0,0,.44)` gradient, fill-height container, text-h1 `8`, h5 day, uppercase date | Hero was shorter and text block did not follow the source image block weight | Hero uses sourced forest URL/gradient, larger source-like image area, h1 96px line, h5 24px day, uppercase date | Match | No screenshot-derived assets |
+| Colored dots schedule area | `complex/color.vue`, `VCard.sass`, `VTimeline.sass` | `v-card-text py-0` white surface with dense align-top timeline, pink/teal small dots, 48px avatars | Schedule area inherited non-white page/background and 40px avatars | White `v-card-text` surface, traced dot colors, and 48px source avatars | Match | |
+| Advanced comment input | `src/demo/examples/timelines/complex/advanced.vue`, `VTextField/_variables.scss`, `VInput.sass` | Dense clipped timeline, orange large fill-dot with `JL`, `v-text-field solo flat hide-details`, label `Leave a comment...`, append depressed `Post` button | Used a plain standard input approximation and did not match solo field structure | Rebuilt as a white solo/flat/hide-details field surface with source label, append Post button, and orange `JL` fill-dot | Match | Page-local only |
+| Advanced behavior | `complex/advanced.vue` methods/computed | `events` starts empty; Enter/Post pushes `{id,text,time}`; displayed `timeline` is reversed; input resets to null | Event posting was brittle and time formatting could fail by timezone sign | Enter/Post appends, visible rows render reversed, input resets, timezone abbreviation extraction follows the Vue regex intent across local sign variants | Match | Functional fix |
+| Advanced static rows | `complex/advanced.vue`, `_colors.scss`, `VChip.sass` | TODAY hide-dot marker; grey archived/order rows; purple small label chip; white Resend Email button | Row margins and chip/button surfaces drifted from source | Source rows now use source order, grey/pink/purple/white colors, hide-dot rows, `mb-4`/`mb-6` spacing, and small label chip | Match | |
+
+Second rejection verification:
+
+| Rejected area | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Shared Timelines example surfaces | `src/demo/components/Example.vue`, `VCard.sass`, `_light.scss` | Example wrapper is a white `v-card`; the rendered component sits in a transparent `v-sheet` over that white card, with `v-card-text` padding | Timelines local `ExampleBlock` now uses the Vue white card surface instead of `background.default`; body content remains transparent/white in light mode and dark only when inverted | Match | Timelines-only wrapper change |
+| Colored dots image block | `src/demo/examples/timelines/complex/color.vue`, `VImg.sass`, `VImg.ts` | `v-img` uses the source forest image and gradient; no explicit height is set in the example, so the image source controls the rendered ratio | React now renders the exact forest image as an image layer with the gradient overlay and absolute fill content instead of a guessed manual height | Match | Avoids screenshot-derived sizing |
+| Colored dots FAB | `complex/color.vue`, `VBtn/_variables.scss`, `VBtn.sass`, `_elevations.scss` | `v-btn absolute bottom right fab color="pink"` is 56px, `bottom: -28px`, z-index 4, elevation 6, pink background | React uses 56px FAB, bottom `-28px`, right `16px`, z-index 4, Vuetify pink, and elevation-6 shadow | Match | |
+| Colored dots rows | `complex/color.vue`, Vuetify grid variables | Schedule rows use `v-row class="pt-1"` and `v-col cols="3"` / default `v-col`, with 12px column padding and -12px row margins | React schedule rows now use source-equivalent row negative margins, 25% time column, flexible content column, and 12px horizontal column padding | Match | |
+| Advanced field structure | `complex/advanced.vue`, `VTextField.sass`, `VTextField/_variables.scss` | `v-text-field solo flat hide-details` with white card background, no elevation, 48px control min-height, solo label top `calc(50% - 9px)`, append `Post` button | React Advanced input now uses a white flat solo field, no shadow, 48px min-height, source label positioning/active transform, and appended Post button | Match | |
+| Advanced posting behavior | `complex/advanced.vue` data/computed/methods | `events` starts empty; `comment()` pushes `{ id: nonce++, text: input, time }`, displays `events.slice().reverse()`, then resets `input = null` | React pushes events without validation, displays reversed rows, increments nonce, and resets input to null | Match | Time-zone sign handling is broadened only so the Vue regex intent works in this UTC environment |
+| Advanced rows/gutters | `complex/advanced.vue`, Vuetify grid variables | Static and event rows use `v-row justify="space-between"` with `v-col cols="7"` / `cols="5"` and source `mb-4` / `mb-6` item classes | React rows now use 58.333% / 41.667% columns, -12px row margins, 12px column padding, and source item spacing | Match | |
+
+Third rejection verification:
+
+| Rejected area | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Timelines example content text color | `src/demo/components/Example.vue`, `VCard.sass`, `_light.scss` | Rendered examples sit inside `v-card-text`, whose default text color is material light secondary `rgba(0,0,0,.6)` | Timelines `ExampleBlock` content now uses `rgba(0,0,0,.6)` in light mode, matching Vue `v-card-text` inheritance | Match | Nested `v-card` components still restore their own card text rules |
+| Nested card text/surfaces | `VCard.sass`, `_light.scss` | `v-card` background is `#FFFFFF`; card root text is primary, direct `v-card__text` is secondary | Local timeline cards now explicitly use `#FFFFFF` surfaces, primary title/root text, and secondary card body text | Match | Applies across Usage/Playground/simple/intermediate/complex cards |
+| Colored dots schedule text | `complex/color.vue`, `VCard.sass` | The schedule is inside `v-card-text class="py-0"`, so schedule text inherits secondary text color over a white card-text surface | Colored dots schedule block now uses white surface and secondary text inheritance | Match | Time/title columns keep Vue row/col gutters |
+| Advanced row text | `complex/advanced.vue`, `Example.vue`, Vuetify grid variables | Advanced content sits in the example `v-card-text` and row text inherits secondary text color, while input/button surfaces define their own colors | Advanced rows now inherit secondary text color; field/button/chip surfaces remain source-defined | Match | |
+
+Dot-position rejection verification:
+
+| Rejected section | Vue source | Vue expected dot/layout behavior | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Colored dots | `src/demo/examples/timelines/complex/color.vue`, `VTimelineItem.ts`, `VTimeline.sass`, `_mixins.sass` | Dense timeline renders item DOM as body, divider, optional opposite; dense applies `row-reverse`, line sits at 47px, divider lane is 96px, body width is `calc(100% - 96px)`, and `align-top` aligns the dot itself to the top of the item | Shared `VTimelineItem` now renders body -> divider -> optional opposite, uses dense `row-reverse`, removes the synthetic opposite placeholder, keeps the 96px divider lane, and applies top alignment to the dot instead of the whole divider | Match | Source-backed shared primitive change required for the rejected dot/point positioning |
+| Advanced | `src/demo/examples/timelines/complex/advanced.vue`, `VTimelineItem.ts`, `VTimeline.sass`, `_mixins.sass` | Dense clipped timeline uses the same 96px left divider lane and body to the right; hidden-dot rows still keep the divider lane; small/large/fill-dot sizes stay source-defined | Advanced now uses the same source render order and dense lane geometry, preserving hidden-dot rows, orange large fill-dot `JL`, pink/grey small dots, and source row content to the right of the fixed divider lane | Match | Design/behavior preserved while correcting dot placement |
+| Colored dots dense axis | `VTimeline.sass`, `_variables.scss`, `complex/color.vue` | Dense line is at the center of the fixed 96px divider lane; schedule row content must not change the lane origin | Timeline and items now occupy full width; divider is locked to `flex: 0 0 96px`; body has `min-width: 0` so schedule row content cannot push dots off the line | Match | Addresses the reported dots-not-on-line rejection |
+| Advanced post rows | `complex/advanced.vue`, `VTimeline.sass`, `_variables.scss` | Newly posted events become normal dense `v-timeline-item` rows; their small pink dots stay on the same dense line as static rows | Posted event rows inherit the same fixed divider lane and shrinkable body as static Advanced rows, so added dots remain on the line after Post | Match | Functional post behavior preserved |
+| Colored dots final dense axis | `VTimeline.sass`, `_mixins.sass`, `_variables.scss`, `complex/color.vue` | Dense `v-timeline` line is `calc(48px - 1px)`, each item has a 96px divider lane, and the dot center is the lane center at 48px; row content starts after the divider lane | Dense rows now pin the divider lane absolutely to the same side as the line and offset the body by 96px, so the 24px small dots center on the 48px axis independent of schedule row width | Match | Source constants only; no screenshot-derived offsets |
+| Advanced final post alignment | `complex/advanced.vue`, `VTimelineItem.ts`, `VTimeline.sass` | `comment()` pushes a new `v-timeline-item color="pink" small`; inserted items align to the same dense line as the static history rows | Inserted rows use the same absolute dense divider lane and body offset as static rows; Post still pushes/reverses/resets from Vue source | Match | Fix targets dots moving away from the line after Post |
+
+Structural rejection correction:
+
+| Area | Vue source | Vue expected structure/behavior | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Shared dense timeline structure | `VTimelineItem.ts`, `VTimeline.sass`, `_mixins.sass` | `v-timeline-item` renders body, divider, optional opposite; dense keeps `display:flex`, applies `flex-direction: row-reverse`, keeps the 96px divider in normal flow, and hides opposite | Local `VTimelineItem` now uses the same in-flow flex model for dense timelines; removed the previous absolute divider/body-offset model | Match | Source-driven shared primitive rebuild |
+| Colored dots dot/line alignment | `complex/color.vue`, `VTimeline.sass` | `<v-timeline align-top dense>` schedule rows inherit the shared dense flex structure; small dots center in the 96px divider lane over the dense line | Colored dots now relies on the restored shared dense flex model, so schedule content no longer owns or repositions the divider axis | Match | Pending visual approval |
+| Advanced post behavior and alignment | `complex/advanced.vue:24-37`, `113-134`, `VTimeline.sass`, `_transitions.scss` | `comment()` pushes a new item with synchronous nonce semantics; displayed timeline is reversed; inserted items are normal dense `v-timeline-item color="pink" small` rows inside `v-slide-x-transition group` | Advanced now increments nonce atomically with event creation, renders reversed posted rows through the same shared `VTimelineItem`/`CompactRow` path, and applies the source `slide-x-transition` enter movement (`translateX(-15px)`, opacity) | Match | Does not introduce generic MUI timeline positioning |
+
+Rejected sections source recheck:
+
+| Rejected section | Vue source/classes | Vue expected structure/behavior | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Colored dots | `src/demo/examples/timelines/complex/color.vue`; `v-card-text.py-0`; `v-timeline.align-top.dense`; `v-timeline-item.color.small`; `v-row.pt-1`; `v-col cols=3` | Schedule rows are ordinary dense timeline items; line is from shared dense timeline, divider is an in-flow 96px lane, dot is centered by `.v-timeline-item__divider`, body is `calc(100% - 96px)` | Shared timeline root now defines source-shaped `.timeline-item`, `.timeline-body`, `.timeline-divider`, and `.timeline-opposite`; dense uses `display:flex`, `row-reverse`, in-flow divider, and body flex basis/max width `calc(100% - 96px)` | Match | Pending visual approval; row markup remains React Boxes shaped to Vuetify row/col |
+| Advanced | `src/demo/examples/timelines/complex/advanced.vue`; `v-container max-width:600`; `v-timeline.dense.clipped`; `v-slide-x-transition.group`; posted `v-timeline-item.color=pink.small`; `v-text-field.solo.flat.hide-details` | Posted events are normal dense timeline items inserted before static rows; input resets to null; timeline display reverses events; entered items use slide-x transition and same line/dot axis | Posted rows use the same shared dense item structure as static rows, nonce/event creation is atomic, input resets to null, and enter animation follows `slide-x-transition` source movement | Match | Pending visual approval; input remains locally recreated but source-shaped |
+
+Shared structure:
+
+| Shared structure | Vue source/classes | React before | React after | Why this fixes dot/line alignment |
+|---|---|---|---|---|
+| Dense item structure | `VTimelineItem.ts`; `VTimeline.sass` `.v-timeline-item`, `.v-timeline-item__body`, `.v-timeline-item__divider`, `.v-timeline--dense` | Dense layout previously had section-level/body-level layout rules and had briefly used an absolute divider model | Dense structure is now centralized on the `VTimeline` root and uses the source class model: item flex, dense row-reverse, in-flow divider with `min-width:96px`, body flex basis/max width `calc(100% - 96px)`, opposite hidden | Dots are centered by the in-flow divider lane that also defines the dense line axis; item content no longer owns the dot lane |
+
+Build:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: failed before Vite due to unrelated syntax error in `react-dashboard-template/src/pages/ui-components/vuetify/ProgressLinearPage.tsx:697`.
+- Timelines TypeScript changes were parsed up to the project build failure; Progress Linear is outside this task scope and was not edited.
+
+Animation correction:
+
+| Animation area | Vue source/classes | Vue expected behavior | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Advanced inserted rows enter | `src/demo/examples/timelines/complex/advanced.vue` uses `v-slide-x-transition group`; `node_modules/vuetify/src/styles/generic/_transitions.scss` defines `.slide-x-transition`; `node_modules/vuetify/src/styles/settings/_variables.scss` defines `$primary-transition` | New event rows enter with opacity from 0 and `translateX(-15px)` over `0.3s cubic-bezier(0.25, 0.8, 0.5, 1)` | Posted Advanced rows now receive the source slide-x enter animation only when newly inserted | Match | Layout/dot-line structure preserved |
+| Advanced group movement | `_transitions.scss` `transition-default` defines `&-move { transition: transform .6s; }` for transition groups | Existing event rows move with transform transition when a new item is inserted above them | Added page-local FLIP movement for posted rows using `transform .6s`, while rows remain direct dense `VTimelineItem`s | Match | No generic MUI animation used |
+| Colored dots | `complex/color.vue` | No transition component is used in this section | No animation added to Colored dots | Match | Preserves accepted layout |
+| Dense alert reference | `intermediate/alert.vue` uses `v-slide-x-reverse-transition group hide-on-leave`; `_transitions.scss` defines reverse enter as `translateX(15px)` | Existing Dense alert animation remains outside the rejected Advanced/Colored dots scope for this request | No additional Dense alert changes made | Match | Request focused remaining rejected animation; structural alignment preserved |
+
+Build after animation correction:
+
+- Command: `npm run build`
+- Working directory: `react-dashboard-template/`
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Rejected sections verification:
+
+| Rejected section | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Colored dots hero content spacing | `src/demo/examples/timelines/complex/color.vue`, `node_modules/vuetify/src/components/VGrid/VGrid.sass`, `_variables.scss` | `v-img` content contains `v-container fill-height` with 12px container padding and `v-row align="center"` with -12px row margins; `text-h1` has `mr-6` | Hero overlay now uses 12px container padding, -12px row margins, `mr-6` 24px spacing, and source typography sizing | Match | Corrected from previous padded overlay |
+| Colored dots image surface | `complex/color.vue`, `VImg.ts`, `VImg.sass` | Forest image rendered by `v-img` with `linear-gradient(to top, rgba(0,0,0,.44), rgba(0,0,0,.44))`, cover positioning, and source image ratio | React renders the same forest image with the same gradient overlay and source-positioned content | Match | No replacement asset |
+| Colored dots schedule rows | `complex/color.vue`, Vuetify grid/timeline sources | `v-card-text py-0` contains dense align-top timeline; each row uses `v-row class="pt-1"` and `v-col cols="3"` plus default `v-col` | React uses white card-text surface, dense align-top timeline, source dot colors, 25% time column, flexible content column, pt-1, and 12px grid gutters | Match | |
+| Advanced container | `complex/advanced.vue`, `VGrid/VGrid.sass`, `_variables.scss` | Outer `v-container style="max-width: 600px"` keeps normal container width and 12px horizontal padding | React Advanced wrapper now has max-width 600, width 100%, centered margin, and 12px horizontal padding | Match | |
+| Advanced function/state | `complex/advanced.vue` data/computed/methods | `events: []`, `input: null`, `nonce: 0`; `comment()` always pushes current input/time, increments nonce, displays reversed computed timeline, then resets input to null; regex is exactly `/:\\d{2}\\sGMT-\\d{4}\\s\\((.*)\\)/` | React preserves empty/null state, pushes on Enter/Post, reverses rendered events, resets input to null, and uses the source regex shape | Match | |
+| Advanced row layout | `complex/advanced.vue`, Vuetify grid/timeline sources | Dense clipped timeline; top item `mb-12`; event/static rows use `mb-4` except TODAY `mb-6`; rows use `cols=7/5` | React uses dense clipped timeline, source item spacing, 58.333% / 41.667% columns, and 12px row gutters | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Timelines remains pending user visual approval.
+
+---
+
+## Previous Phase: Tabs
 
 ### Vuetify / Tabs Source-Driven Implementation
 
