@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Snackbars added)
+Last updated: 2026-05-17 (Steppers animation fix)
 
 ## Strategy Status
 
@@ -11,14 +11,16 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Snackbars.
+- Active section: Vuetify / Steppers.
 
 ## Current Slice
 
-- Scope: Vuetify / Snackbars only.
-- Route: `/components/snackbars`.
-- Status: implemented from Vue source; pending user visual approval.
-- Source audit: Vue Snackbars sources traced directly from `src/views/Vuetify/Snackbars.vue`, `src/demo/examples/snackbars/usage.vue`, `src/demo/examples/snackbars/simple/multi-line.vue`, `src/demo/examples/snackbars/simple/timeout.vue`, `src/demo/examples/snackbars/simple/vertical.vue`, `src/demo/examples/snackbars/simple/variants.vue`, `src/demo/examples/snackbars/playground.vue`, `src/demo/examples/snackbars/simple/auto-height.vue`, `src/lang/en/components/Snackbars.json`, and Vuetify internals under `node_modules/vuetify/src/components/VSnackbar/`.
+- Scope: Vuetify / Steppers only.
+- Route: `/components/steppers`.
+- Status: animation fix applied from Vue source; pending user visual approval.
+- Source audit: Vue Steppers sources traced directly from `src/views/Vuetify/Steppers.vue`, `src/demo/examples/steppers/usage.vue`, `src/demo/examples/steppers/playground.vue`, all 12 mounted example files under `src/demo/examples/steppers/simple/` and `src/demo/examples/steppers/intermediate/dynamic.vue`, `src/lang/en/components/Steppers.json`, and Vuetify internals under `node_modules/vuetify/src/components/VStepper/`.
+- Rejection fix: editable/non-linear examples now maintain internal step state like uncontrolled Vue steppers; horizontal content stays mounted with `display:none` instead of unmounting; vertical content keeps children mounted and collapses the wrapper height like `VStepperContent`; header steps/dividers are direct flex children like Vue.
+- Animation fix: page-local Steppers transitions now mirror Vuetify `VTabTransition` / `VTabReverseTransition` using 0.3s swing timing for forward/reverse horizontal content changes, and vertical wrapper height uses the same 0.3s swing timing from `VStepper.sass`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -63,6 +65,7 @@ Current rebuild strategy:
 - Vuetify / Sheets: implemented from Vue source; pending user visual approval.
 - Vuetify / Skeleton Loaders: rejection fix applied from Vue source; pending user visual approval.
 - Vuetify / Snackbars: implemented from Vue source; pending user visual approval.
+- Vuetify / Steppers: animation fix applied from Vue source; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

@@ -216,7 +216,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       { title: "Sheets", path: "/components/sheets", icon: <ViewHeadline /> },
       { title: "Skeleton Loaders", path: "/components/skeleton-loaders", icon: <ViewHeadline /> },
       { title: "Snackbars", path: "/components/snackbars", icon: <ViewHeadline /> },
-      { title: "Steppers", disabled: true, pending: true },
+      { title: "Steppers", path: "/components/steppers", icon: <ViewHeadline /> },
       { title: "Subheaders", disabled: true, pending: true },
       {
         title: "Tables",

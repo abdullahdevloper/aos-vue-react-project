@@ -1,15 +1,97 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Snackbars)
+Last updated: 2026-05-17 (Steppers)
 
 ## Phase
 
-Vuetify / Snackbars strict source-driven rebuild.
+Vuetify / Steppers strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/snackbars`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/SnackbarsPage.tsx`
+Route: `/components/steppers`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/SteppersPage.tsx`
+
+### Vuetify / Steppers Animation Fix
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Steppers at `/components/steppers`.
+- Enabled only the Steppers sidebar item.
+- Did not touch Snackbars, Subheaders, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and mounted order: `src/views/Vuetify/Steppers.vue`.
+- Usage/playground: `src/demo/examples/steppers/usage.vue`, `src/demo/examples/steppers/playground.vue`.
+- Mounted examples in Vue order: `simple/editable.vue`, `simple/non-editable.vue`, `simple/optional.vue`, `simple/horizontal.vue`, `simple/vertical.vue`, `simple/linear.vue`, `simple/non-linear.vue`, `simple/alternate-labels.vue`, `simple/error.vue`, `simple/alternate-error.vue`, `simple/vertical-error.vue`, `intermediate/dynamic.vue`.
+- Documentation text: `src/lang/en/components/Steppers.json`.
+- Vuetify internals: `node_modules/vuetify/src/components/VStepper/VStepper.ts`, `VStepperStep.ts`, `VStepperContent.ts`, `VStepper.sass`, and `_variables.scss`.
+
+Implemented:
+
+- Added local `VStepper`, `StepperHeader`, `StepperStep`, and `StepperContent` primitives matching verified Vuetify dimensions and states: 72px horizontal header, 24px step circle, elevation-2 surfaces, active/complete/error/editable labels, alternate labels, non-linear label color, and vertical content borders/margins.
+- Preserved Vue page order: Usage, Playground, then the 12 examples from `Steppers.vue`.
+- Implemented source model behavior for Usage, Vertical, Vertical Error, Playground, and Dynamic examples, including Continue cycling and step-count clamping.
+- Fixed rejected editable/non-linear behavior: examples without an external `v-model` now maintain internal active state like Vue's `Proxyable` stepper value, so editable step clicks visibly select the clicked step.
+- Fixed source structure mismatch in horizontal headers: stepper steps and dividers are now direct flex children, matching Vue's rendered `v-stepper-header` structure.
+- Fixed source content behavior: inactive horizontal step contents remain mounted with `display:none` like Vue `v-show`, and vertical contents keep children mounted while collapsing the inner wrapper height like `VStepperContent`.
+- Added page-local horizontal content animations from Vuetify `VTabTransition` / `VTabReverseTransition`: forward enter from `translateX(100%)`, forward leave to `translateX(-100%)`, reverse enter from `translateX(-100%)`, and reverse leave to `translateX(100%)`.
+- Applied the verified Vuetify transition timing: `0.3s cubic-bezier(0.25, 0.8, 0.5, 1)` from `$primary-transition` / `swing`.
+- Added page-local vertical wrapper height transition using the same `.3s swing` timing from `VStepper.sass`; no global animation files were touched.
+- Implemented Playground controls from source: Steps slider 2-20, Vertical switch, altLabels switch, Editable switch, vertical reset workaround, and generated steps.
+- Implemented complete, editable, optional, error, alternate-label, vertical, linear, non-linear, and dynamic states from the mounted Vue examples.
+- Added `/components/steppers` route and enabled the Steppers sidebar item; Subheaders remains pending/disabled.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Steppers.vue`, `Steppers.json` | Components/Steppers route with Usage, Playground, and examples array | DocPage route, breadcrumbs, intro text, Usage/Playground/examples order preserved | Match | Pending visual approval |
+| Usage | `usage.vue` | Three-step horizontal model starts at 1; Continue advances 1→2→3→1 | Same model, content cards, Continue/Cancel buttons | Match | |
+| Playground | `playground.vue` | Steps slider, Vertical/altLabels/Editable switches, generated stepper, nextStep cycling | Same controls/defaults and generated horizontal/vertical steppers | Match | |
+| Editable | `simple/editable.vue`, `VStepper.ts`, `VStepperStep.ts` | Uncontrolled stepper starts at 1; editable steps update internal active step on click | Same internal state and editable click selection | Match | |
+| Non-editable | `simple/non-editable.vue` | Value 2; first complete, second active, third inactive | Same states | Match | |
+| Optional | `simple/optional.vue` | Two steppers, step 2 has Optional subtext | Same two steppers and subtext | Match | |
+| Horizontal | `simple/horizontal.vue` | Value 1 horizontal header | Same header layout | Match | |
+| Vertical | `simple/vertical.vue` | Vertical model starts 1, Continue advances through four steps | Same vertical content/cards/buttons and active model | Match | |
+| Linear | `simple/linear.vue` | Three stacked horizontal steppers showing values 1, 2, 3 | Same stacked states | Match | |
+| Non-linear | `simple/non-linear.vue`, `VStepper.ts`, `VStepperStep.ts` | Three non-linear editable stepper variants with independent internal active state | Same independent active state and editable click behavior | Match | |
+| Alternate labels | `simple/alternate-labels.vue` | Two alt-label steppers, second with Optional subtext | Same alt-label layout | Match | |
+| Error states | `simple/error.vue`, `simple/alternate-error.vue`, `simple/vertical-error.vue` | Error icon/text and alert message in horizontal, alt-label, and vertical layouts | Same error state, labels, and vertical model default 2 | Match | |
+| Dynamic | `intermediate/dynamic.vue` | Select 2-6 steps; editable generated steps; Continue cycles; active clamps on removal | Same select, generated steps, editable headers, and clamping | Match | |
+| Stepper primitive | `VStepper*.ts`, `VStepper.sass`, `_variables.scss` | Elevation, direct header children, header/content dimensions, active/complete/error/editable/vertical/alt-label states, `v-show` horizontal content, collapsed vertical wrapper | Local primitive implements verified values and corrected source structure/behavior | Match | |
+| Source/invert | `Example.vue` | Per-example invert/source controls | Existing docs block behavior preserved | Match | |
+
+Animation verification:
+
+| Interaction | Vue source | Vue expected animation | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Horizontal forward step change | `VStepperContent.ts`, `transitions/index.ts`, `_transitions.scss` | `VTabTransition`: enter from `translate(100%, 0)`, leave to `translate(-100%, 0)`, `.3s swing` | Page-local `stepTabEnter` / `stepTabLeave` keyframes with `.3s cubic-bezier(0.25,0.8,0.5,1)` | Match | Applies to Continue and editable forward click |
+| Horizontal reverse step change | `VStepperContent.ts`, `_transitions.scss` | `VTabReverseTransition`: enter from `translate(-100%, 0)`, leave to `translate(100%, 0)`, `.3s swing` | Page-local reverse keyframes selected when new step is numerically lower | Match | Applies to wrap/backward editable clicks |
+| Horizontal old content leave | `_transitions.scss` | Leaving tab content is `position:absolute; top:0` while it exits | Previous content is retained for 300ms as absolute top/left full-width layer | Match | |
+| Vertical step change | `VStepperContent.ts`, `VStepper.sass` | Wrapper height collapses/expands; `.v-stepper__wrapper` and content transition `.3s swing` after boot | Vertical wrapper max-height transitions with `.3s swing`, children remain mounted | Match | Page-local; no global animation changes |
+| Step visual state change | `VStepperStep.ts`, `VStepper.sass` | Step circle transitions `.3s fast-in-fast-out`; active label transition `.3s ease-in-out` | Existing local circle/label transitions preserved | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Steppers remains pending user visual approval.
+
+---
+
+## Previous Phase: Snackbars
 
 ### Vuetify / Snackbars Source-Driven Implementation
 
@@ -31,34 +113,15 @@ Source trace:
 
 Implemented:
 
-- Added a local `VSnackbar` primitive matching verified Vue props for `value`/open state, timeout, top/bottom/left/right/centered placement, absolute positioning, multi-line, vertical, color, text, outlined, shaped, rounded pill, action slot, and transition behavior.
+- Added a local `VSnackbar` primitive matching verified Vue props for open state, timeout, position, absolute positioning, multi-line, vertical, colors, variants, and action slot.
 - Preserved Vue visible order: Usage, Examples heading, Multi Line, Timeout, Vertical, Variants.
-- Implemented Usage, Multi Line, Timeout, and Vertical buttons with the exact source text, colors, action close buttons, and open/close model behavior.
-- Implemented Timeout auto-close at 2000ms and default snackbars with the verified 5000ms timeout.
-- Implemented Variants as a 300px flat card with five always-open absolute snackbars matching source positions, colors, text/outlined/shaped/rounded props, elevation 24, and timeout -1.
-- Added `/components/snackbars` route and enabled the Snackbars sidebar item; Steppers remains pending/disabled.
-
-Self-verification:
-
-| Example | Vue source | Vue expected | React implemented | Match level | Notes |
-|---|---|---|---|---|---|
-| Page wrapper | `Snackbars.vue`, `Snackbars.json` | Components/Snackbars route with Usage and examples array | DocPage route, breadcrumbs, intro text, Usage and examples order preserved | Match | Pending visual approval |
-| Usage | `usage.vue` | Centered button, snackbar text `Hello, I'm a snackbar`, pink text Close action | Same button, model open/close, default timeout, action text/color | Match | |
-| Multi Line | `simple/multi-line.vue` | Red darken-2 button, multi-line snackbar text and red Close action | Same source text, color, min-height, open/close behavior | Match | |
-| Timeout | `simple/timeout.vue` | Orange darken-2 button, timeout 2000ms, blue Close action | Same timeout, source text, color, and close behavior | Match | |
-| Vertical | `simple/vertical.vue` | Indigo button, vertical snackbar layout, action stacked under content | Same vertical flex direction, source text, color, and close behavior | Match | |
-| Variants | `simple/variants.vue` | 300px flat card with five absolute always-open snackbars and source props | Same five snackbars, positions, colors, text/outlined/shaped/rounded/elevation props | Match | |
-| Playground file | `playground.vue` | Traced file exists, but `Snackbars.vue` does not pass `playground` | Not rendered, matching main Vue page wiring | Match | Source traced only |
-| Auto height file | `simple/auto-height.vue` | Traced file exists, but `Snackbars.vue` does not include it in examples | Not rendered, matching main Vue page wiring | Match | Source traced only |
-| Snackbar primitive | `VSnackbar.ts`, `VSnackbar.sass` | Dark default background, fixed/absolute container, timeout watcher, action slot, scale/opacity transition | Local primitive implements verified props, timing, layout, action slot, elevation, and transition | Match | |
-| Source/invert | `Example.vue` | Per-example invert/source controls | Existing docs block behavior preserved | Match | |
+- Added `/components/snackbars` route and enabled the Snackbars sidebar item.
 
 Build:
 
 - Command: `npm run build`.
 - Working directory: `react-dashboard-template/`.
 - Result: passed.
-- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
 
 Protected files:
 
