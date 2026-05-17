@@ -213,7 +213,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         ],
       },
       { title: "Ratings", path: "/components/ratings", icon: <ViewHeadline /> },
-      { title: "Sheets", disabled: true, pending: true },
+      { title: "Sheets", path: "/components/sheets", icon: <ViewHeadline /> },
       { title: "Skeleton Loaders", disabled: true, pending: true },
       { title: "Snackbars", disabled: true, pending: true },
       { title: "Steppers", disabled: true, pending: true },

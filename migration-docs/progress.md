@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Ratings rebuild after rejection)
+Last updated: 2026-05-17 (Sheets added)
 
 ## Strategy Status
 
@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Ratings.
+- Active section: Vuetify / Sheets.
 
 ## Current Slice
 
-- Scope: Vuetify / Ratings only.
-- Route: `/components/ratings`.
-- Status: rebuilt after full rejection from Vue source; pending user visual approval.
-- Source audit: Vue Ratings sources traced directly from `src/views/Vuetify/Ratings.vue`, `src/demo/examples/ratings/usage.vue`, `src/demo/examples/ratings/playground.vue`, all source-ordered files under `src/demo/examples/ratings/simple/`, `src/demo/examples/ratings/intermediate/`, `src/demo/examples/ratings/complex/`, `src/lang/en/components/Ratings.json`, and Vuetify internals under `node_modules/vuetify/src/components/VRating/`.
+- Scope: Vuetify / Sheets only.
+- Route: `/components/sheets`.
+- Status: implemented from Vue source; pending user visual approval.
+- Source audit: Vue Sheets sources traced directly from `src/views/Vuetify/Sheets.vue`, `src/demo/examples/sheets/usage.vue`, `src/demo/examples/sheets/playground.vue`, `src/demo/examples/sheets/simple/elevation.vue`, `src/demo/examples/sheets/simple/tile.vue`, `src/demo/examples/sheets/intermediate/colors-sizes.vue`, `src/lang/en/components/Sheets.json`, and Vuetify internals under `node_modules/vuetify/src/components/VSheet/`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -60,6 +60,7 @@ Current rebuild strategy:
 - Vuetify / Progress / Progress Circular: implemented from Vue source; pending user visual approval.
 - Vuetify / Progress / Progress Linear: Buffer immediate-reset behavior and Query indeterminate/determinate timer sequencing fixed after rejection; pending user visual approval.
 - Vuetify / Ratings: rebuilt after full rejection; rating icons now render via source-matched MDI SVG paths instead of hidden font pseudo-elements; pending user visual approval.
+- Vuetify / Sheets: implemented from Vue source; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

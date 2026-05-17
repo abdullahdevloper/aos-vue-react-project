@@ -1,15 +1,79 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Ratings rebuild after rejection)
+Last updated: 2026-05-17 (Sheets)
 
 ## Phase
 
-Vuetify / Ratings strict source-driven rebuild.
+Vuetify / Sheets strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/ratings`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/RatingsPage.tsx`
+Route: `/components/sheets`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/SheetsPage.tsx`
+
+### Vuetify / Sheets Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Sheets at `/components/sheets`.
+- Enabled only the Sheets sidebar item.
+- Did not touch Ratings, Skeleton Loaders, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and order: `src/views/Vuetify/Sheets.vue`.
+- Usage/playground: `src/demo/examples/sheets/usage.vue`, `src/demo/examples/sheets/playground.vue`.
+- Examples in Vue order: `simple/elevation.vue`, `simple/tile.vue`, `intermediate/colors-sizes.vue`.
+- Documentation text: `src/lang/en/components/Sheets.json`.
+- Vuetify internals: `node_modules/vuetify/src/components/VSheet/VSheet.ts`, `VSheet.sass`, `_variables.scss`, `styles/tools/_sheet.sass`, `styles/tools/_elevation.sass`, and `styles/settings/_elevations.scss`.
+
+Implemented:
+
+- Added a local `VSheet` primitive matching Vue `v-sheet` behavior needed by this page:
+  - measurable `width` / `height`;
+  - `color`;
+  - `tile`;
+  - default square border radius from `$sheet-border-radius: 0`;
+  - source-matched Vuetify elevation shadows from 0 through 24.
+- Preserved Vue page order: Usage, Playground, Using elevation, Tile, Colors & sizes.
+- Rebuilt the Playground defaults from Vue source: `width=100`, `height=100`, `elevation=4`, `color='white'`, `tile=false`, colors list `white`, `gray darken-2`, `warning`, `error`, `success`, `teal`.
+- Rebuilt the responsive `v-container` / `v-row` / `v-col` structure used by elevation, tile, and colors/sizes examples.
+- Implemented the source `SheetFooter` behavior from `colors-sizes.vue`: nested dark `v-sheet` with `rgba(0, 0, 0, .36)`, height 50, `mt-auto`, centered content.
+- Added `/components/sheets` route and enabled the Sheets sidebar item; Skeleton Loaders remains pending/disabled.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Sheets.vue`, `Sheets.json` | Components/Sheets route with Usage, Playground, then three examples | DocPage route, breadcrumbs, intro text, Usage/Playground/example order preserved | Match | Pending visual approval |
+| Usage | `usage.vue` | Centered orange lighten-2 sheet containing `Hello, world! I'm a simple v-sheet` | Same text, color, and centered wrapper | Match | |
+| Playground | `playground.vue` | Container with Width/Height/Elevation sliders, Color select, Tile switch, then source-controlled sheet | Same defaults, controls, color list, live width/height/elevation/tile behavior | Match | |
+| Using elevation | `simple/elevation.vue` | Three md=4 columns; grey lighten-3 padded outer sheet; inner 100x100 sheet elevations 6/12/18 | Same responsive columns, 48px padding, dimensions, and source elevation shadows | Match | |
+| Tile | `simple/tile.vue` | Two md=4 columns; grey lighten-3 padded outer sheet; inner 100x100 tile false/true | Same layout and tile-driven rectangular behavior | Match | Sheet default radius is 0 per Vuetify variable |
+| Colors & sizes | `intermediate/colors-sizes.vue` | Responsive sheet mosaic with exact colors, heights 424/150/250/300, footer labels and dark footer sheets | Same row/column proportions, colors, heights, footer text, and footer styling | Match | |
+| VSheet primitive | `VSheet.ts`, `VSheet.sass`, `_elevations.scss` | Root `v-sheet`, color, measurable styles, elevation classes, tile/rounded classes | Local primitive implements the verified props and source elevation tables | Match | |
+| Source/invert | `Example.vue` | Per-example invert/source controls | Existing docs block behavior preserved | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Sheets remains pending user visual approval.
+
+---
+
+## Previous Phase: Ratings
 
 ### Vuetify / Ratings Source-Driven Implementation
 
