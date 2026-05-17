@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Directives / Ripples)
+Last updated: 2026-05-17 (Directives / Scrolling)
 
 ## Strategy Status
 
@@ -11,19 +11,23 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Directives / Ripples.
+- Active section: Directives / Scrolling.
 
 ## Current Slice
 
-- Scope: Directives / Ripples only.
-- Route: `/directives/ripples` (verified from `src/router/routes/vuetify.js`).
+- Scope: Directives / Scrolling only.
+- Route: `/directives/scrolling` (verified from `src/router/routes/vuetify.js`).
 - Status: rejection fix applied; pending user visual approval.
-- Source audit: Vue Ripples sources traced from `src/router/routes/vuetify.js`, `src/views/Vuetify/Directives/Ripples.vue`, `src/lang/en/directives/Ripples.json`, every example under `src/demo/examples/ripples/`, shared docs/example wrappers, theme color config, `VListItem`/`VBtn` Sass, and `node_modules/vuetify/src/directives/ripple/`.
-- Implementation: added `RipplesPage.tsx`, enabled only the Ripples sidebar item, and added `/directives/ripples`.
-- Behavior: implemented source-shaped ripple span injection on the actual target element, event-positioned ripple radius/origin, centered ripple option, custom ripple color class behavior, disabled ripple prop, button/list/plain block examples, source panel, uninverted examples, and options docs.
-- Rejection fix: re-traced Vuetify `Ripple` internals and `VRipple.sass`; applied the missing source `v-ripple__container` and `v-ripple__animation` structural styles plus verified `fast-out-slow-in` in/out transition timings directly to the injected ripple nodes so the ripple is visible and animated.
+- Source audit: Vue Scrolling sources traced from `src/router/routes/vuetify.js`, `src/views/Vuetify/Directives/Scrolling.vue`, `src/lang/en/directives/Scrolling.json`, `src/demo/examples/scrolling/usage.vue`, `src/demo/examples/scrolling/options.vue`, `src/demo/examples/scrolling/simple/self.vue`, shared docs/example wrappers, `node_modules/vuetify/src/directives/scroll/index.ts`, and Vuetify `goTo` service/easing sources.
+- Implementation: added `ScrollingPage.tsx`, enabled only the Scrolling sidebar item, and added `/directives/scrolling`.
+- Behavior: implemented source-shaped `v-scroll` binding for window/selector/self targets, passive listener defaults, Usage `$vuetify.goTo` target/easing/duration/offset behavior, Scroll with options scrollTop counter, Watching bound element self counter, source panel, uninverted examples, and options docs.
+- Rejection fix: re-traced shared `Examples.vue` id generation and Vuetify `goTo` util; added the source-generated `scroll-with-options` and `watching-bound-element` ids to the React example cards and changed `goTo` offset calculation to Vuetify's cumulative `offsetTop` walk instead of viewport rect math.
 - Build: passed inside `react-dashboard-template/`.
-- Directives / Ripples: implemented; pending user visual approval.
+- Directives / Scrolling: implemented; pending user visual approval.
+
+## Previous Slice: Ripples
+
+- Status: rejection fix applied; pending user visual approval.
 
 ## Previous Slice: Resizing
 

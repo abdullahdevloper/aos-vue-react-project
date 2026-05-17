@@ -1,15 +1,77 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Directives / Ripples)
+Last updated: 2026-05-17 (Directives / Scrolling)
 
 ## Phase
 
-Directives / Ripples strict source-driven rebuild.
+Directives / Scrolling strict source-driven rebuild.
 
 Status: rejection fix applied; pending user visual approval.
 
-Route: `/directives/ripples`
-File: `react-dashboard-template/src/pages/directives/RipplesPage.tsx`
+Route: `/directives/scrolling`
+File: `react-dashboard-template/src/pages/directives/ScrollingPage.tsx`
+
+### Directives / Scrolling Source-Driven Implementation
+
+Status: rejection fix applied; pending user visual approval.
+
+Scope:
+
+- Implemented only Directives / Scrolling at `/directives/scrolling`.
+- Verified the exact Vue route from `src/router/routes/vuetify.js` before enabling the React route.
+- Enabled only the Scrolling sidebar item in the Directives group.
+- Did not touch Calendars, approved Vuetify slices, Intersect, Mutate, Resizing, Ripples, or `.claude/`.
+
+Source trace:
+
+- Vue route: `src/router/routes/vuetify.js` (`/directives/scrolling`).
+- Main page/order: `src/views/Vuetify/Directives/Scrolling.vue`.
+- Documentation text: `src/lang/en/directives/Scrolling.json`.
+- Usage example: `src/demo/examples/scrolling/usage.vue`.
+- Scroll with options example: `src/demo/examples/scrolling/options.vue`.
+- Watching bound element example: `src/demo/examples/scrolling/simple/self.vue`.
+- Shared wrappers: `src/demo/components/DocPage.vue`, `Usage.vue`, `Examples.vue`, and `Example.vue`.
+- Directive internals/tests: `node_modules/vuetify/src/directives/scroll/index.ts` and `__tests__/scroll.spec.ts`.
+- GoTo service: `node_modules/vuetify/src/services/goto/index.ts`, `util.ts`, and `easing-patterns.ts`.
+
+Implemented:
+
+- Preserved Vue page hierarchy: namespace `Directives`, page `Scrolling`, breadcrumbs `Directives > Scrolling`, heading text, Usage, Examples, Scroll with options, Watching bound element, and options docs.
+- Implemented Usage as the Vue `$vuetify.goTo` playground with target radio group, conditional number/selector/DOMElement fields, easing select, duration slider, offset slider, and block primary `scroll` button.
+- Implemented Vuetify `goTo` source behavior for numeric, selector, and DOM element targets with `duration`, `offset`, and source easing functions.
+- Rejection fix: re-traced `src/demo/components/Examples.vue` and `node_modules/vuetify/src/services/goto/util.ts`; React now renders source-equivalent example ids (`scroll-with-options`, `watching-bound-element`) and computes target offsets by walking cumulative `offsetTop`, matching Vuetify `getOffset`.
+- Implemented a page-local source-shaped `useScroll` hook: binds to `window` by default, `document.querySelector(binding.arg)` for selector targets, and the bound element for `.self`, using passive listener defaults and cleanup on unmount.
+- Implemented Scroll with options using `v-scroll:#scroll-target` behavior; scrolling the 400px target container updates `Offset Top` from `e.target.scrollTop`.
+- Implemented Watching bound element with a 400px scrollable card, sticky banner, source lorem content repeated 12 times, and `scrollInvoked++` on each bound-card scroll event.
+- Preserved source panel, template/script tabs, visual Github/source buttons, source `uninverted` behavior where defined, and `New in v2.3` marker for the self example.
+- Added `/directives/scrolling` route and enabled only Scrolling.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Route | `src/router/routes/vuetify.js` | Directives / Scrolling route is `/directives/scrolling` | React route uses `/directives/scrolling` | Match | Verified before editing |
+| Page wrapper | `Scrolling.vue`, `Scrolling.json` | Directives/Scrolling page with breadcrumbs, heading text, Usage, Examples, and options | Same hierarchy, example order, and docs text implemented | Match | Pending visual approval |
+| Usage | `src/demo/examples/scrolling/usage.vue`, `services/goto/index.ts`, `util.ts`, `easing-patterns.ts`, `Examples.vue` | `$vuetify.goTo(target, options)` with target type number/selector/DOMElement; selector default `#scroll-with-options`; `getOffset` walks cumulative `offsetTop` | Local Usage implements the same controls/defaults, source-generated target ids, cumulative offset math, and goTo animation with easing/duration/offset | Match | Rejection fix applied |
+| Scroll with options | `src/demo/examples/scrolling/options.vue`, `directives/scroll/index.ts` | `v-scroll:#scroll-target` binds listener to `#scroll-target`; scrolling container updates `offsetTop = e.target.scrollTop` | Local hook binds to selector target and updates Offset Top from event target scrollTop | Match | |
+| Watching bound element | `src/demo/examples/scrolling/simple/self.vue`, `directives/scroll/index.ts` | `v-scroll.self` binds to the card itself; each card scroll increments `scrollInvoked`; card max-height 400 with sticky banner | Local hook binds to the card element and increments counter on card scroll | Match | |
+| Directive lifecycle | `node_modules/vuetify/src/directives/scroll/index.ts` | Handler can be function/object; target is window, selector arg, or self; options default `{ passive: true }`; cleanup removes listener | Local hook implements the verified target choice, passive default, and cleanup | Match | |
+| Source/invert | `Example.vue`, `Scrolling.json` | View source/Github/invert controls, template/script tabs, Usage and Options uninverted, Self newIn v2.3 | Same controls and source snippets preserved | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Directives / Scrolling remains pending user visual approval.
+
+---
+
+## Previous Phase: Ripples
 
 ### Directives / Ripples Source-Driven Implementation
 
