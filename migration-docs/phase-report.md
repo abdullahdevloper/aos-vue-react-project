@@ -1,15 +1,85 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Steppers)
+Last updated: 2026-05-17 (Subheaders)
 
 ## Phase
 
-Vuetify / Steppers strict source-driven rebuild.
+Vuetify / Subheaders strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/steppers`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/SteppersPage.tsx`
+Route: `/components/subheaders`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/SubheadersPage.tsx`
+
+### Vuetify / Subheaders Source-Driven Implementation
+
+Status: rejection fix applied; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Subheaders at `/components/subheaders`.
+- Enabled only the Subheaders sidebar item.
+- Did not touch Steppers, Data Iterators, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and mounted order: `src/views/Vuetify/Subheaders.vue`.
+- Usage/playground: `src/demo/examples/subheaders/usage.vue`, `src/demo/examples/subheaders/playground.vue`.
+- Mounted examples in Vue order: `src/demo/examples/subheaders/simple/inset.vue`, `src/demo/examples/subheaders/simple/grid.vue`, `src/demo/examples/subheaders/simple/menu.vue`, `src/demo/examples/subheaders/intermediate/social.vue`.
+- Documentation text: `src/lang/en/components/Subheaders.json`.
+- Vuetify internals: `node_modules/vuetify/src/components/VSubheader/VSubheader.ts`, `VSubheader.sass`, and `_variables.scss`.
+- Shared docs/example wrappers re-traced after rejection: `src/demo/components/DocPage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Playground.vue`, `src/demo/components/Example.vue`, and `src/demo/components/UsageExample.vue`.
+
+Implemented:
+
+- Added a local `VSubheader` primitive from Vuetify source: `inset` prop only, 48px height, 16px horizontal padding, 56px inset margin, body-2 typography, and secondary text color.
+- Preserved Vue page order: Usage, Playground, Inset subheaders, Grid subheaders, Menu subheaders, and Subheaders with social media.
+- Implemented the Playground `Inset` checkbox and source list rows/dividers with the verified `:inset` subheader behavior.
+- Implemented the Inset example with inset subheader, inset dividers, Material Icons list actions, and the exact list item text/order.
+- Implemented the Grid example with source toolbar, May/June subheaders, 3-column image grids, randomuser image URLs, and footer spacing.
+- Implemented the Menu example with teal toolbar, action rows, divider, Labels subheader, and exact menu item text/order.
+- Implemented the Social example with cyan toolbar, source type/card arrays, Picsum image URLs, social icon action row, flat tile outer card, and grey container backgrounds.
+- Rejection fix: removed the non-source Usage example description from inside the example card; Vue `Usage.vue` passes a string usage file and does not pass a usage `desc` into `Example.vue`.
+- Rejection fix: split Playground into its own `base-heading` section and removed the non-source Playground title from the example toolbar; Vue `Playground.vue` passes only the example file.
+- Rejection fix: removed duplicate external example headings because Vue `Examples.vue` passes headings directly into the `Example.vue` toolbar.
+- Rejection fix: restored `v-container fluid` padding to 12px in Grid and Social example bodies.
+- Rejection fix: fixed Social card title rendering to match Vue source: `cards` is an array of strings and Vue renders `card.title`, so no visible card title is produced.
+- Menu/Social correction: re-traced `simple/menu.vue`, `intermediate/social.vue`, `VToolbar.sass`, `VToolbar/_variables.scss`, `VBtn.sass`, `VBtn/_variables.scss`, and `VCard/_variables.scss`; applied source non-flat toolbar elevation-4, 16px toolbar content padding, first/last icon offsets, 20px title offset, and Social small FAB contained button sizing/elevation.
+- Icon correction: replaced the Menu/Social `mdi-*` webfont pseudo-element rendering with verified `@mdi/js` SVG paths for `mdi-menu`, `mdi-dots-vertical`, `mdi-magnify`, `mdi-facebook`, `mdi-linkedin`, `mdi-instagram`, and `mdi-arrow-left`, preventing blank icon buttons.
+- Added `/components/subheaders` route and enabled the Subheaders sidebar item; Data Iterators and later table items remain pending/disabled.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Subheaders.vue`, `DocPage.vue`, `Usage.vue`, `Playground.vue`, `Examples.vue`, `Example.vue`, `Subheaders.json` | Components/Subheaders route with intro doc text, Usage section, separate Playground section, Examples section, and headings inside example toolbars only | DocPage route, breadcrumbs, intro text, separate Usage/Playground/examples order, and no duplicate external example headings | Match | Pending visual approval |
+| Usage | `usage.vue`, `Usage.vue`, `Example.vue` | `Usage` base heading, example card with no toolbar title/desc, single `v-subheader` with text `Subheader` | Same section structure, no extra desc/title, same subheader primitive and text | Match | |
+| Playground | `playground.vue`, `Playground.vue`, `Example.vue` | `Playground` base heading, example card with no toolbar title/desc, grey lighten-5 `pa-4`, centered card, inset checkbox, rows `inbox`, `send`, `trash` with dividers | Same heading/card structure, checkbox behavior, row order, dividers, and inset subheader | Match | |
+| Inset | `simple/inset.vue` | `cols=12 sm=6 offset-sm=3`, inset subheader/dividers, three label list rows | Same responsive column, inset spacing, divider margin, icons, and text | Match | |
+| Grid | `simple/grid.vue` | White flat toolbar, May/June subheaders, `v-container fluid` 12px padding, 3-column image grids, footer `mt-12` | Same toolbar, subheaders, images, source container padding, grid columns, and footer spacing | Match | |
+| Menu | `simple/menu.vue`, `VToolbar.sass` | Teal dark non-flat toolbar with elevation-4, source icon/title offsets, visible nav/dots icons, action list rows, divider, Labels subheader, Family/Friends/Work rows | Same elevated toolbar spacing with SVG-rendered MDI toolbar icons, icon rows, divider, subheader, text/order | Match | Pending visual approval |
+| Social | `intermediate/social.vue`, `VToolbar.sass`, `VBtn.sass`, `VCard.sass` | Flat tile outer card, cyan dark elevated toolbar, visible nav/search icons, grey `v-container fluid` sections, type subheaders, three image cards per type, `card.title` from string data renders no visible title, social small FAB contained icon buttons with visible MDI icons and card-action spacing | Same source data, elevated toolbar with SVG-rendered MDI icons, source container padding, images, blank title behavior, small FAB action buttons, colors, and layout | Match | Pending visual approval |
+| Subheader primitive | `VSubheader.ts`, `VSubheader.sass`, `_variables.scss` | `inset` prop, 48px height, 16px padding, 56px inset margin, body-2 text | Local primitive implements verified values | Match | |
+| Source/invert | shared `doc-page` examples | Per-example invert/source controls | Local docs block with invert and source actions | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Subheaders remains pending user visual approval.
+
+---
+
+## Previous Phase: Steppers
 
 ### Vuetify / Steppers Animation Fix
 
@@ -31,59 +101,10 @@ Source trace:
 
 Implemented:
 
-- Added local `VStepper`, `StepperHeader`, `StepperStep`, and `StepperContent` primitives matching verified Vuetify dimensions and states: 72px horizontal header, 24px step circle, elevation-2 surfaces, active/complete/error/editable labels, alternate labels, non-linear label color, and vertical content borders/margins.
-- Preserved Vue page order: Usage, Playground, then the 12 examples from `Steppers.vue`.
-- Implemented source model behavior for Usage, Vertical, Vertical Error, Playground, and Dynamic examples, including Continue cycling and step-count clamping.
-- Fixed rejected editable/non-linear behavior: examples without an external `v-model` now maintain internal active state like Vue's `Proxyable` stepper value, so editable step clicks visibly select the clicked step.
-- Fixed source structure mismatch in horizontal headers: stepper steps and dividers are now direct flex children, matching Vue's rendered `v-stepper-header` structure.
-- Fixed source content behavior: inactive horizontal step contents remain mounted with `display:none` like Vue `v-show`, and vertical contents keep children mounted while collapsing the inner wrapper height like `VStepperContent`.
-- Added page-local horizontal content animations from Vuetify `VTabTransition` / `VTabReverseTransition`: forward enter from `translateX(100%)`, forward leave to `translateX(-100%)`, reverse enter from `translateX(-100%)`, and reverse leave to `translateX(100%)`.
-- Applied the verified Vuetify transition timing: `0.3s cubic-bezier(0.25, 0.8, 0.5, 1)` from `$primary-transition` / `swing`.
-- Added page-local vertical wrapper height transition using the same `.3s swing` timing from `VStepper.sass`; no global animation files were touched.
-- Implemented Playground controls from source: Steps slider 2-20, Vertical switch, altLabels switch, Editable switch, vertical reset workaround, and generated steps.
-- Implemented complete, editable, optional, error, alternate-label, vertical, linear, non-linear, and dynamic states from the mounted Vue examples.
-- Added `/components/steppers` route and enabled the Steppers sidebar item; Subheaders remains pending/disabled.
-
-Self-verification:
-
-| Example | Vue source | Vue expected | React implemented | Match level | Notes |
-|---|---|---|---|---|---|
-| Page wrapper | `Steppers.vue`, `Steppers.json` | Components/Steppers route with Usage, Playground, and examples array | DocPage route, breadcrumbs, intro text, Usage/Playground/examples order preserved | Match | Pending visual approval |
-| Usage | `usage.vue` | Three-step horizontal model starts at 1; Continue advances 1→2→3→1 | Same model, content cards, Continue/Cancel buttons | Match | |
-| Playground | `playground.vue` | Steps slider, Vertical/altLabels/Editable switches, generated stepper, nextStep cycling | Same controls/defaults and generated horizontal/vertical steppers | Match | |
-| Editable | `simple/editable.vue`, `VStepper.ts`, `VStepperStep.ts` | Uncontrolled stepper starts at 1; editable steps update internal active step on click | Same internal state and editable click selection | Match | |
-| Non-editable | `simple/non-editable.vue` | Value 2; first complete, second active, third inactive | Same states | Match | |
-| Optional | `simple/optional.vue` | Two steppers, step 2 has Optional subtext | Same two steppers and subtext | Match | |
-| Horizontal | `simple/horizontal.vue` | Value 1 horizontal header | Same header layout | Match | |
-| Vertical | `simple/vertical.vue` | Vertical model starts 1, Continue advances through four steps | Same vertical content/cards/buttons and active model | Match | |
-| Linear | `simple/linear.vue` | Three stacked horizontal steppers showing values 1, 2, 3 | Same stacked states | Match | |
-| Non-linear | `simple/non-linear.vue`, `VStepper.ts`, `VStepperStep.ts` | Three non-linear editable stepper variants with independent internal active state | Same independent active state and editable click behavior | Match | |
-| Alternate labels | `simple/alternate-labels.vue` | Two alt-label steppers, second with Optional subtext | Same alt-label layout | Match | |
-| Error states | `simple/error.vue`, `simple/alternate-error.vue`, `simple/vertical-error.vue` | Error icon/text and alert message in horizontal, alt-label, and vertical layouts | Same error state, labels, and vertical model default 2 | Match | |
-| Dynamic | `intermediate/dynamic.vue` | Select 2-6 steps; editable generated steps; Continue cycles; active clamps on removal | Same select, generated steps, editable headers, and clamping | Match | |
-| Stepper primitive | `VStepper*.ts`, `VStepper.sass`, `_variables.scss` | Elevation, direct header children, header/content dimensions, active/complete/error/editable/vertical/alt-label states, `v-show` horizontal content, collapsed vertical wrapper | Local primitive implements verified values and corrected source structure/behavior | Match | |
-| Source/invert | `Example.vue` | Per-example invert/source controls | Existing docs block behavior preserved | Match | |
-
-Animation verification:
-
-| Interaction | Vue source | Vue expected animation | React implemented | Match level | Notes |
-|---|---|---|---|---|---|
-| Horizontal forward step change | `VStepperContent.ts`, `transitions/index.ts`, `_transitions.scss` | `VTabTransition`: enter from `translate(100%, 0)`, leave to `translate(-100%, 0)`, `.3s swing` | Page-local `stepTabEnter` / `stepTabLeave` keyframes with `.3s cubic-bezier(0.25,0.8,0.5,1)` | Match | Applies to Continue and editable forward click |
-| Horizontal reverse step change | `VStepperContent.ts`, `_transitions.scss` | `VTabReverseTransition`: enter from `translate(-100%, 0)`, leave to `translate(100%, 0)`, `.3s swing` | Page-local reverse keyframes selected when new step is numerically lower | Match | Applies to wrap/backward editable clicks |
-| Horizontal old content leave | `_transitions.scss` | Leaving tab content is `position:absolute; top:0` while it exits | Previous content is retained for 300ms as absolute top/left full-width layer | Match | |
-| Vertical step change | `VStepperContent.ts`, `VStepper.sass` | Wrapper height collapses/expands; `.v-stepper__wrapper` and content transition `.3s swing` after boot | Vertical wrapper max-height transitions with `.3s swing`, children remain mounted | Match | Page-local; no global animation changes |
-| Step visual state change | `VStepperStep.ts`, `VStepper.sass` | Step circle transitions `.3s fast-in-fast-out`; active label transition `.3s ease-in-out` | Existing local circle/label transitions preserved | Match | |
-
-Build:
-
-- Command: `npm run build`.
-- Working directory: `react-dashboard-template/`.
-- Result: passed.
-- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
-
-Protected files:
-
-- Protected-path check clean.
+- Added local `VStepper`, `StepperHeader`, `StepperStep`, and `StepperContent` primitives matching verified Vuetify dimensions and states.
+- Fixed editable/non-linear internal active state, direct header children, horizontal content `v-show` behavior, vertical wrapper collapse, and page-local stepper transitions.
+- Build passed inside `react-dashboard-template/`.
+- Protected-path check was clean.
 
 Approval:
 

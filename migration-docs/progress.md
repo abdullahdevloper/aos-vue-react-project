@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Steppers animation fix)
+Last updated: 2026-05-17 (Subheaders)
 
 ## Strategy Status
 
@@ -11,16 +11,18 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Steppers.
+- Active section: Vuetify / Subheaders.
 
 ## Current Slice
 
-- Scope: Vuetify / Steppers only.
-- Route: `/components/steppers`.
-- Status: animation fix applied from Vue source; pending user visual approval.
-- Source audit: Vue Steppers sources traced directly from `src/views/Vuetify/Steppers.vue`, `src/demo/examples/steppers/usage.vue`, `src/demo/examples/steppers/playground.vue`, all 12 mounted example files under `src/demo/examples/steppers/simple/` and `src/demo/examples/steppers/intermediate/dynamic.vue`, `src/lang/en/components/Steppers.json`, and Vuetify internals under `node_modules/vuetify/src/components/VStepper/`.
-- Rejection fix: editable/non-linear examples now maintain internal step state like uncontrolled Vue steppers; horizontal content stays mounted with `display:none` instead of unmounting; vertical content keeps children mounted and collapses the wrapper height like `VStepperContent`; header steps/dividers are direct flex children like Vue.
-- Animation fix: page-local Steppers transitions now mirror Vuetify `VTabTransition` / `VTabReverseTransition` using 0.3s swing timing for forward/reverse horizontal content changes, and vertical wrapper height uses the same 0.3s swing timing from `VStepper.sass`.
+- Scope: Vuetify / Subheaders only.
+- Route: `/components/subheaders`.
+- Status: rejection fix applied from Vue source; pending user visual approval.
+- Source audit: Vue Subheaders sources traced directly from `src/views/Vuetify/Subheaders.vue`, `src/demo/examples/subheaders/usage.vue`, `src/demo/examples/subheaders/playground.vue`, `src/demo/examples/subheaders/simple/inset.vue`, `src/demo/examples/subheaders/simple/grid.vue`, `src/demo/examples/subheaders/simple/menu.vue`, `src/demo/examples/subheaders/intermediate/social.vue`, `src/lang/en/components/Subheaders.json`, and Vuetify internals under `node_modules/vuetify/src/components/VSubheader/`.
+- Implementation: added `/components/subheaders`, enabled only the Subheaders sidebar item, and rebuilt Usage, Playground, Inset, Grid, Menu, and Social examples with source-matched subheader height, inset margin, list/grid/card structure, typography, dividers, icons, and source/invert controls.
+- Rejection fix: re-traced `doc-page`, `usage`, `playground`, and `example` wrappers; removed non-source Usage/Playground card headings/descriptions, removed duplicate external example headings, restored source `v-container fluid` 12px padding in Grid/Social examples, and fixed Social card title rendering to match Vue `card.title` from string data.
+- Menu/Social correction: matched source non-flat `v-toolbar` elevation-4 and toolbar icon/title offsets; rebuilt Social action buttons as Vuetify small FAB contained buttons with elevation-6, white icons, 40px size, and 8px card-action spacing.
+- Icon correction: replaced Menu/Social MDI webfont rendering with verified `@mdi/js` SVG paths for toolbar and social action icons so the buttons/icons render reliably.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -66,6 +68,7 @@ Current rebuild strategy:
 - Vuetify / Skeleton Loaders: rejection fix applied from Vue source; pending user visual approval.
 - Vuetify / Snackbars: implemented from Vue source; pending user visual approval.
 - Vuetify / Steppers: animation fix applied from Vue source; pending user visual approval.
+- Vuetify / Subheaders: rejection fix applied from Vue source; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
