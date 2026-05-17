@@ -1,10 +1,43 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Tooltips)
+Last updated: 2026-05-17 (Treeview rejection fix)
 
 ## Phase
 
-Vuetify / Tooltips strict source-driven rebuild.
+Vuetify / Treeview rejection fix.
+
+Status: rejection fix applied; pending user visual re-approval.
+
+Route: `/components/treeview`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/TreeviewPage.tsx`
+
+### Treeview Rejection Fix — Self-Verification Table
+
+| Rejected area | Vue source | Vue expected behavior | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Playground Rounded | `playground.vue` → `:rounded="rounded"` → Vuetify VTreeview `rounded` prop → SASS `$rounded-corners.pill = 9999px` | Row border-radius: `9999px` (full pill) | `br = "9999px"` (was `"4px"`) | Exact | Fixed: changed from `"4px"` to `"9999px"` |
+| Rounded section | `simple/rounded.vue` → same `rounded` prop → same Vuetify pill radius | Row border-radius: `9999px` on all items | Same fix — VTreeview `rounded` prop writes `"9999px"` to TreeNode | Exact | Same fix as Playground; separate example confirms same prop |
+| Shaped section | `simple/shaped.vue` → `shaped` prop → Vuetify SASS `border-radius: 0 map-get($rounded-corners, "pill") map-get($rounded-corners, "pill") 0` | Right half-pill: `0 9999px 9999px 0` | `br = "0 9999px 9999px 0"` (was `"0 16px 16px 0"`) | Exact | Fixed: changed from `"0 16px 16px 0"` to `"0 9999px 9999px 0"` |
+| Async items (directory) | `complex/directory.vue` → `loadChildren` prop → Vuetify emits `update:open`, calls `loadChildren(item)` on first expand | On click expand: spinner appears, children load from API and display | `doToggleOpen` restructured — `loadChildren` and `setLoadingSet` now called outside `setOpenSet` updater; React StrictMode-safe | Exact | Root cause: side effects inside setState updater ran twice in StrictMode, preventing reliable async load |
+| Custom selectable icons (hotspots) | `complex/hotspots.vue` → `onIcon`, `offIcon`, `indeterminateIcon`, `expandIcon` props; `v-model` bound to selected array; Reset button clears v-model → syncs treeview | Custom bookmark icons shown; expand icon (chevron-down) rotates 90° when open; Reset clears both chips and treeview selection | (1) Expand icon rotation now always applied; (2) `value` prop syncs to `selectedSet` via `useEffect`; (3) `value={tree}` passed to VTreeview (controlled); Reset sets `tree=[]` which propagates via useEffect | Exact | Three sub-fixes: rotation, value sync useEffect, controlled prop |
+
+### Changed files (this session)
+
+- `react-dashboard-template/src/pages/ui-components/vuetify/TreeviewPage.tsx` — rejection fixes only
+
+### Protected-path check
+
+- No changes in `src/`, `public/`, `scripts/`, `package.json`, `package-lock.json`, `babel.config.js`, `vue.config.js`, `webpack.config.js`, `README.md`, `AGENTS.md`, `.claude/`
+- `CalendarsPage.tsx` untouched
+- Tooltips, Timelines, and all approved slices untouched
+
+### Build
+
+- `npm run build` inside `react-dashboard-template/`: passed (0 TypeScript errors, 0 lint errors)
+
+---
+
+## Previous Phase: Vuetify / Tooltips strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 

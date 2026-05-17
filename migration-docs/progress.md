@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Tooltips)
+Last updated: 2026-05-17 (Treeview rejection fix)
 
 ## Strategy Status
 
@@ -11,22 +11,26 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Tooltips.
+- Active section: Vuetify / Treeview (rejection fix applied; pending re-approval).
 
 ## Current Slice
 
-- Scope: Vuetify / Tooltips only.
-- Route: `/components/tooltips`.
-- Status: implemented from Vue source; pending user visual approval.
+- Scope: Vuetify / Treeview only.
+- Route: `/components/treeview`.
+- Status: rejection fix applied; pending user visual re-approval.
+- Source audit: Vue Treeview sources traced from `src/views/Vuetify/Treeview.vue`, `src/lang/en/components/Treeview.json`, and all 17 example files (`usage.vue`, `playground.vue`, `simple/dense.vue`, `simple/selected-color.vue`, `simple/color.vue`, `simple/shaped.vue`, `simple/rounded.vue`, `simple/item-disabled.vue`, `simple/selection-type.vue`, `simple/selectable.vue`, `simple/activatable.vue`, `simple/hoverable.vue`, `simple/open-all.vue`, `intermediate/file-explorer.vue`, `complex/human-resources.vue`, `complex/directory.vue`, `complex/hotspots.vue`).
+- Implementation: added `/components/treeview`, enabled the Treeview sidebar item, and rebuilt all 15 examples in Vue order plus Usage and Playground.
+- Behavior: implemented local VTreeview with React Context for prop propagation, recursive TreeNode, MDI SVG icon rendering, leaf/independent selection modes with indeterminate state, activatable (single active), hoverable hover effect, shaped (0 9999px 9999px 0) / rounded (9999px pill) border radius per Vuetify 2 `$rounded-corners.pill`, open-all, open-on-click, search/filter with subtree matching, async load-children with loading spinner, custom expand/on/off/indeterminate icons with rotation applied uniformly, prepend slot, item-key/item-text/item-disabled prop names, file-explorer with folder/file icons, human-resources search + case-sensitive filter, directory with jsonplaceholder async user load and avatar display, hotspots with openbrewerydb async load and chip display (controlled value prop for Reset).
+- Playground defaults: dense=false, selectable=false, activatable=false, hoverable=false, shaped=false, rounded=false, openOnClick=false, color='primary', selectedColor='accent'.
+- Rejection fix: (1) border-radius corrected from "4px"/"0 16px 16px 0" to "9999px"/"0 9999px 9999px 0" per Vuetify 2 SASS pill value; (2) expand icon rotation now always applied regardless of custom vs default icon; (3) doToggleOpen/doActivate/doToggleSel restructured to remove side effects from setState updater functions (React anti-pattern, broke async loading in StrictMode); (4) VTreeview value prop now syncs to internal selectedSet via useEffect; (5) HotspotsExample passes value={tree} for controlled selection so Reset button correctly clears treeview state.
+- Build: passed inside `react-dashboard-template/`.
+- Vuetify / Treeview: rejection fix applied; pending user visual re-approval.
+
+## Previous Slice: Tooltips
+
 - Source audit: Vue Tooltips sources traced directly from `src/views/Vuetify/Tooltips.vue`, `src/lang/en/components/Tooltips.json`, `src/demo/examples/tooltips/usage.vue`, `alignment.vue`, `visibility.vue`, shared docs wrappers, and Vuetify `VTooltip` internals.
 - Implementation: added `/components/tooltips`, enabled the Tooltips sidebar item, and rebuilt Usage, Alignment, and Visibility in Vue order.
-- Behavior: implemented local source-shaped tooltip behavior for hover/focus/Escape activation, programmatic `v-model` visibility, top/bottom/left/right positioning, 10px offset from activator, fixed/body portal positioning, scale/fade transition timing, source text/color/radius/padding, and source panel/invert controls.
-- Rejection fix: rebuilt the Tooltips activator model from Vue `v-slot:activator="{ on }"` and Vuetify `Activatable`/`VTooltip` internals. The local tooltip now binds hover/focus/Escape listeners and measurement to the rendered activator wrapper itself instead of relying on refs forwarded into local React function components, restoring working tooltip positioning and visibility for button, icon, text, alignment, and `v-model` examples.
-- Position/transition rejection fix: re-traced `VTooltip`, `Menuable`, `Delayable`, `VTooltip.sass`, and Vuetify transition classes; corrected Tooltips to use absolute page coordinates, 12px viewport overflow clamping, source 10px side offset, zero-delay delayed open/close, external `v-model` lazy booting, center-origin scale enter, fade-only leave, source opacity, and z-index 8.
-- Visibility rejection fix: rebuilt the shared tooltip activator binding from Vue scoped-slot behavior. `VTooltip` now clones the actual activator element, attaches hover/focus/Escape listeners to it, and measures that same element for positioning; local button/icon primitives forward refs so Visibility uses the real icon button activator instead of an extra wrapper target.
-- Tooltips regression fix: re-traced Usage and Alignment after the Visibility fix; restored their activators by forwarding injected tooltip listeners/ARIA/ref through local `VButton` and `VIcon` primitives to the actual rendered button/svg elements, preserving the working Visibility `IconButton` activator.
 - Build: passed inside `react-dashboard-template/`.
-- Vuetify / Tooltips: implemented; pending user visual approval.
 
 ## Previous Slice: Timelines
 
@@ -96,6 +100,8 @@ Current rebuild strategy:
 - Vuetify / Data Tables: implemented from Vue source; pending user visual approval.
 - Vuetify / Tabs: implemented from Vue source; pending user visual approval.
 - Vuetify / Timelines: implemented from Vue source; pending user visual approval.
+- Vuetify / Tooltips: implemented from Vue source; pending user visual approval.
+- Vuetify / Treeview: implemented from Vue source; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
