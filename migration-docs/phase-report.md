@@ -1,15 +1,69 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Directives / Mutate)
+Last updated: 2026-05-17 (Directives / Resizing)
 
 ## Phase
 
-Directives / Mutate strict source-driven rebuild.
+Directives / Resizing strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/directives/mutate`
-File: `react-dashboard-template/src/pages/directives/MutatePage.tsx`
+Route: `/directives/resizing`
+File: `react-dashboard-template/src/pages/directives/ResizingPage.tsx`
+
+### Directives / Resizing Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Directives / Resizing at `/directives/resizing`.
+- Verified the exact Vue route from `src/router/routes/vuetify.js` before enabling the React route.
+- Enabled only the Resizing sidebar item in the Directives group.
+- Did not touch Calendars, approved Vuetify slices, Intersect, Mutate, Ripples, Scrolling, or `.claude/`.
+
+Source trace:
+
+- Vue route: `src/router/routes/vuetify.js` (`/directives/resizing`).
+- Main page/order: `src/views/Vuetify/Directives/Resizing.vue`.
+- Documentation text: `src/lang/en/directives/Resizing.json`.
+- Usage example: `src/demo/examples/resizing/usage.vue`.
+- Shared wrappers: `src/demo/components/DocPage.vue`, `Usage.vue`, `Example.vue`, and `UsageExample.vue`.
+- Directive internals: `node_modules/vuetify/src/directives/resize/index.ts`.
+
+Implemented:
+
+- Preserved Vue page hierarchy: namespace `Directives`, page `Resizing`, breadcrumbs `Directives > Resizing`, heading text, Usage, and options docs.
+- Implemented Usage with centered `v-row` equivalent, `v-subheader` text `Window Size`, and live Vue-style object display for `{ x, y }`.
+- Implemented page-local source-shaped `useResize` hook using Vuetify behavior: bind to `window.resize`, passive listener options, invoke the callback immediately unless `quiet`, and remove the listener on cleanup.
+- Preserved the source example's mounted initialization behavior by also calling `onResize()` on mount.
+- Preserved source panel, template/script tabs, visual Github/source buttons, and usage `uninverted` behavior.
+- Added `/directives/resizing` route and enabled only Resizing; Ripples and Scrolling remain disabled/pending.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Route | `src/router/routes/vuetify.js` | Directives / Resizing route is `/directives/resizing` | React route uses `/directives/resizing` | Match | Verified before editing |
+| Page wrapper | `Resizing.vue`, `Resizing.json` | Directives/Resizing page with breadcrumbs, heading text, Usage, and options | Same hierarchy and text implemented | Match | Pending visual approval |
+| Usage | `src/demo/examples/resizing/usage.vue` | `v-row v-resize="onResize" align="center" justify="center"`, `v-subheader` `Window Size`, and live `windowSize` object | React uses centered row/subheader structure and updates `{ x, y }` from `window.innerWidth/innerHeight` | Match | |
+| Directive lifecycle | `node_modules/vuetify/src/directives/resize/index.ts` | Add passive window resize listener, store callback/options, invoke callback on bind unless `.quiet`, remove listener on unbind | Local hook binds passive resize listener, invokes immediately unless quiet, and cleans up on unmount | Match | |
+| Source/invert | `Example.vue`, `Resizing.json` | Invert colors, View on Github, View source, template/script tabs; usage marked `uninverted` | Same controls and source snippets preserved; usage body remains uninverted | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Directives / Resizing remains pending user visual approval.
+
+---
+
+## Previous Phase: Mutate
 
 ### Directives / Mutate Source-Driven Implementation
 

@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Directives / Mutate)
+Last updated: 2026-05-17 (Directives / Resizing)
 
 ## Strategy Status
 
@@ -11,18 +11,22 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Directives / Mutate.
+- Active section: Directives / Resizing.
 
 ## Current Slice
 
-- Scope: Directives / Mutate only.
-- Route: `/directives/mutate` (verified from `src/router/routes/vuetify.js`).
+- Scope: Directives / Resizing only.
+- Route: `/directives/resizing` (verified from `src/router/routes/vuetify.js`).
 - Status: strict source-driven implementation applied; pending user visual approval.
-- Source audit: Vue Mutate sources traced from `src/router/routes/vuetify.js`, `src/views/Vuetify/Directives/Mutate.vue`, `src/lang/en/directives/Mutate.json`, `src/demo/examples/mutate/usage.vue`, `src/demo/examples/mutate/simple/once.vue`, mutation directive snippets, shared docs/example wrappers, and `node_modules/vuetify/src/directives/mutate/index.ts`.
-- Implementation: added `MutatePage.tsx`, enabled only the Mutate sidebar item, and added `/directives/mutate`.
-- Behavior: implemented source-shaped `MutationObserver` binding on the actual target element, default all-options observer behavior, `.once` unbind behavior, Usage content field mutation counter, Modifiers two-card mutation counters, source panel, invert action, and options docs.
+- Source audit: Vue Resizing sources traced from `src/router/routes/vuetify.js`, `src/views/Vuetify/Directives/Resizing.vue`, `src/lang/en/directives/Resizing.json`, `src/demo/examples/resizing/usage.vue`, shared docs/example wrappers, and `node_modules/vuetify/src/directives/resize/index.ts`.
+- Implementation: added `ResizingPage.tsx`, enabled only the Resizing sidebar item, and added `/directives/resizing`.
+- Behavior: implemented source-shaped `window.resize` listener binding with passive listener options, immediate callback unless quiet, cleanup on unbind, mounted initialization, centered `v-row`/`v-subheader` usage display, source panel, uninverted usage behavior, and options docs.
 - Build: passed inside `react-dashboard-template/`.
-- Directives / Mutate: implemented; pending user visual approval.
+- Directives / Resizing: implemented; pending user visual approval.
+
+## Previous Slice: Mutate
+
+- Status: implemented from Vue source; pending user visual approval.
 
 ## Previous Slice: Intersect
 
