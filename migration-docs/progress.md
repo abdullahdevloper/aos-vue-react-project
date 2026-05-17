@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Skeleton Loaders rejection fix)
+Last updated: 2026-05-17 (Snackbars added)
 
 ## Strategy Status
 
@@ -11,15 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Skeleton Loaders.
+- Active section: Vuetify / Snackbars.
 
 ## Current Slice
 
-- Scope: Vuetify / Skeleton Loaders only.
-- Route: `/components/skeleton-loaders`.
-- Status: rejection fix applied from Vue source; pending user visual approval.
-- Source audit: Vue Skeleton Loaders sources traced directly from `src/views/Vuetify/SkeletonLoaders.vue`, `src/demo/examples/skeleton-loaders/usage.vue`, `src/demo/examples/skeleton-loaders/playground.vue`, `src/demo/examples/skeleton-loaders/intermediate/implementation.vue`, `src/demo/examples/skeleton-loaders/complex/boilerplate.vue`, `src/lang/en/components/SkeletonLoaders.json`, and Vuetify internals under `node_modules/vuetify/src/components/VSkeletonLoader/`.
-- Rejection fix: restored exact main Vue page order by rendering only Usage and Playground, left traced but unmounted Boilerplate/Implementation files out of the visible page, and corrected skeleton bone DOM generation/layout selectors to match Vuetify internals.
+- Scope: Vuetify / Snackbars only.
+- Route: `/components/snackbars`.
+- Status: implemented from Vue source; pending user visual approval.
+- Source audit: Vue Snackbars sources traced directly from `src/views/Vuetify/Snackbars.vue`, `src/demo/examples/snackbars/usage.vue`, `src/demo/examples/snackbars/simple/multi-line.vue`, `src/demo/examples/snackbars/simple/timeout.vue`, `src/demo/examples/snackbars/simple/vertical.vue`, `src/demo/examples/snackbars/simple/variants.vue`, `src/demo/examples/snackbars/playground.vue`, `src/demo/examples/snackbars/simple/auto-height.vue`, `src/lang/en/components/Snackbars.json`, and Vuetify internals under `node_modules/vuetify/src/components/VSnackbar/`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -63,6 +62,7 @@ Current rebuild strategy:
 - Vuetify / Ratings: rebuilt after full rejection; rating icons now render via source-matched MDI SVG paths instead of hidden font pseudo-elements; pending user visual approval.
 - Vuetify / Sheets: implemented from Vue source; pending user visual approval.
 - Vuetify / Skeleton Loaders: rejection fix applied from Vue source; pending user visual approval.
+- Vuetify / Snackbars: implemented from Vue source; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

@@ -1,15 +1,76 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Skeleton Loaders)
+Last updated: 2026-05-17 (Snackbars)
 
 ## Phase
 
-Vuetify / Skeleton Loaders strict source-driven rebuild.
+Vuetify / Snackbars strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/skeleton-loaders`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/SkeletonLoadersPage.tsx`
+Route: `/components/snackbars`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/SnackbarsPage.tsx`
+
+### Vuetify / Snackbars Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Snackbars at `/components/snackbars`.
+- Enabled only the Snackbars sidebar item.
+- Did not touch Skeleton Loaders, Steppers, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and visible order: `src/views/Vuetify/Snackbars.vue`.
+- Visible examples in Vue order: `src/demo/examples/snackbars/usage.vue`, `src/demo/examples/snackbars/simple/multi-line.vue`, `src/demo/examples/snackbars/simple/timeout.vue`, `src/demo/examples/snackbars/simple/vertical.vue`, `src/demo/examples/snackbars/simple/variants.vue`.
+- Traced but not mounted by the main page: `src/demo/examples/snackbars/playground.vue`, `src/demo/examples/snackbars/simple/auto-height.vue`.
+- Documentation text: `src/lang/en/components/Snackbars.json`.
+- Vuetify internals: `node_modules/vuetify/src/components/VSnackbar/VSnackbar.ts`, `VSnackbar.sass`, and `_variables.scss`.
+
+Implemented:
+
+- Added a local `VSnackbar` primitive matching verified Vue props for `value`/open state, timeout, top/bottom/left/right/centered placement, absolute positioning, multi-line, vertical, color, text, outlined, shaped, rounded pill, action slot, and transition behavior.
+- Preserved Vue visible order: Usage, Examples heading, Multi Line, Timeout, Vertical, Variants.
+- Implemented Usage, Multi Line, Timeout, and Vertical buttons with the exact source text, colors, action close buttons, and open/close model behavior.
+- Implemented Timeout auto-close at 2000ms and default snackbars with the verified 5000ms timeout.
+- Implemented Variants as a 300px flat card with five always-open absolute snackbars matching source positions, colors, text/outlined/shaped/rounded props, elevation 24, and timeout -1.
+- Added `/components/snackbars` route and enabled the Snackbars sidebar item; Steppers remains pending/disabled.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Snackbars.vue`, `Snackbars.json` | Components/Snackbars route with Usage and examples array | DocPage route, breadcrumbs, intro text, Usage and examples order preserved | Match | Pending visual approval |
+| Usage | `usage.vue` | Centered button, snackbar text `Hello, I'm a snackbar`, pink text Close action | Same button, model open/close, default timeout, action text/color | Match | |
+| Multi Line | `simple/multi-line.vue` | Red darken-2 button, multi-line snackbar text and red Close action | Same source text, color, min-height, open/close behavior | Match | |
+| Timeout | `simple/timeout.vue` | Orange darken-2 button, timeout 2000ms, blue Close action | Same timeout, source text, color, and close behavior | Match | |
+| Vertical | `simple/vertical.vue` | Indigo button, vertical snackbar layout, action stacked under content | Same vertical flex direction, source text, color, and close behavior | Match | |
+| Variants | `simple/variants.vue` | 300px flat card with five absolute always-open snackbars and source props | Same five snackbars, positions, colors, text/outlined/shaped/rounded/elevation props | Match | |
+| Playground file | `playground.vue` | Traced file exists, but `Snackbars.vue` does not pass `playground` | Not rendered, matching main Vue page wiring | Match | Source traced only |
+| Auto height file | `simple/auto-height.vue` | Traced file exists, but `Snackbars.vue` does not include it in examples | Not rendered, matching main Vue page wiring | Match | Source traced only |
+| Snackbar primitive | `VSnackbar.ts`, `VSnackbar.sass` | Dark default background, fixed/absolute container, timeout watcher, action slot, scale/opacity transition | Local primitive implements verified props, timing, layout, action slot, elevation, and transition | Match | |
+| Source/invert | `Example.vue` | Per-example invert/source controls | Existing docs block behavior preserved | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Snackbars remains pending user visual approval.
+
+---
+
+## Previous Phase: Skeleton Loaders
 
 ### Vuetify / Skeleton Loaders Rejection Fix
 
@@ -32,33 +93,15 @@ Source trace:
 Implemented:
 
 - Added a local `VSkeletonLoader` primitive with the verified Vuetify root types, recursive type expansion, `loading`, `boilerplate`, `tile`, `transition`, `maxWidth`, and `height` behavior.
-- Matched Vuetify skeleton loader bone shapes and source classes for avatar, button, chip, image, heading, text, list items, date picker, table, actions, and cards.
-- Implemented shimmer animation from Vuetify internals, with boilerplate disabling shimmer and tile removing border radius.
 - Corrected the rejected page order to match `SkeletonLoaders.vue`: only Usage and Playground are rendered because the Vue page does not pass an `examples` array to `doc-page`.
-- Traced `boilerplate.vue` and `implementation.vue` completely, but left them unrendered because they are not mounted by the main Vue Skeleton Loaders page.
-- Repaired skeleton bone generation so comma and repeat expansion uses direct child DOM like Vue, without wrapper elements that break Vuetify `nth-child` selectors.
-- Corrected list-item-avatar-three-line layout so only `list-item-three-line` forces children to full width, matching `VSkeletonLoader.sass`.
-- Rebuilt the Playground defaults from Vue source: `type='list-item-avatar-three-line'`, `boilerplate=false`, `tile=false`, and type options from Vuetify `rootTypes`.
-- Added `/components/skeleton-loaders` route and enabled the Skeleton Loaders sidebar item; Snackbars remains pending/disabled.
-
-Self-verification:
-
-| Example | Vue source | Vue expected | React implemented | Match level | Notes |
-|---|---|---|---|---|---|
-| Page wrapper | `SkeletonLoaders.vue`, `SkeletonLoaders.json` | Components/SkeletonLoaders route with Usage and Playground wired by the page | DocPage route, breadcrumbs, intro text, Usage/Playground order preserved | Match | Pending visual approval |
-| Usage | `usage.vue` | Grey sheet with centered `v-skeleton-loader` max-width 300 and `type="card"` | Same sheet padding, max width, card image and heading bones | Match | |
-| Playground | `playground.vue` | Grey sheet, responsive max width, type select, Boilerplate switch, Tile switch, live skeleton | Same defaults, controls, type list from root types, and live boilerplate/tile/type behavior | Match | |
-| Implementation file | `intermediate/implementation.vue` | Traced file contains toggle/transition examples, but `SkeletonLoaders.vue` does not mount it | Not rendered, matching main Vue page wiring | Match | Source traced only |
-| Boilerplate file | `complex/boilerplate.vue` | Traced file contains boilerplate columns, but `SkeletonLoaders.vue` does not mount it | Not rendered, matching main Vue page wiring | Match | Source traced only |
-| Skeleton primitive | `VSkeletonLoader.ts`, `VSkeletonLoader.sass` | Vuetify root type expansion, shimmer, shapes, boilerplate/tile/loading behavior | Local primitive implements verified root types, recursive bones, source classes, animation, tile, and boilerplate states | Match | |
-| Source/invert | `Example.vue` | Per-example invert/source controls | Existing docs block behavior preserved | Match | |
+- Repaired skeleton bone generation so comma and repeat expansion uses direct child DOM like Vue.
+- Added `/components/skeleton-loaders` route and enabled the Skeleton Loaders sidebar item.
 
 Build:
 
 - Command: `npm run build`.
 - Working directory: `react-dashboard-template/`.
 - Result: passed.
-- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
 
 Protected files:
 
