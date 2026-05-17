@@ -1,66 +1,59 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Subheaders)
+Last updated: 2026-05-17 (Data Iterators)
 
 ## Phase
 
-Vuetify / Subheaders strict source-driven rebuild.
+Vuetify / Data Iterators strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/subheaders`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/SubheadersPage.tsx`
+Route: `/components/tables/data-iterators`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/DataIteratorsPage.tsx`
 
-### Vuetify / Subheaders Source-Driven Implementation
+### Vuetify / Data Iterators Source-Driven Implementation
 
-Status: rejection fix applied; pending user visual approval.
+Status: implemented; pending user visual approval.
 
 Scope:
 
-- Implemented only Vuetify / Subheaders at `/components/subheaders`.
-- Enabled only the Subheaders sidebar item.
-- Did not touch Steppers, Data Iterators, approved slices, animations, Calendars, or `.claude/`.
+- Implemented only Vuetify / Data Iterators at `/components/tables/data-iterators`.
+- Enabled only the Tables > Data Iterators sidebar item.
+- Did not touch Subheaders, Simple Tables, Data Tables, approved slices, animations, Calendars, or `.claude/`.
 
 Source trace:
 
-- Main page and mounted order: `src/views/Vuetify/Subheaders.vue`.
-- Usage/playground: `src/demo/examples/subheaders/usage.vue`, `src/demo/examples/subheaders/playground.vue`.
-- Mounted examples in Vue order: `src/demo/examples/subheaders/simple/inset.vue`, `src/demo/examples/subheaders/simple/grid.vue`, `src/demo/examples/subheaders/simple/menu.vue`, `src/demo/examples/subheaders/intermediate/social.vue`.
-- Documentation text: `src/lang/en/components/Subheaders.json`.
-- Vuetify internals: `node_modules/vuetify/src/components/VSubheader/VSubheader.ts`, `VSubheader.sass`, and `_variables.scss`.
-- Shared docs/example wrappers re-traced after rejection: `src/demo/components/DocPage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Playground.vue`, `src/demo/components/Example.vue`, and `src/demo/components/UsageExample.vue`.
+- Main page and mounted order: `src/views/Vuetify/Tables/DataIterators.vue`.
+- Usage playground: `src/demo/usages/data-iterators.vue`.
+- Mounted examples in Vue order: `src/demo/examples/data-iterators/slots.vue`, `src/demo/examples/data-iterators/expand.vue`, `src/demo/examples/data-iterators/filter.vue`.
+- Documentation text: `src/lang/en/components/DataIterators.json`.
+- Shared docs/example wrappers: `src/demo/components/DocPage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/UsageExample.vue`, `src/demo/components/Examples.vue`, and `src/demo/components/Example.vue`.
+- Vuetify internals: `node_modules/vuetify/src/components/VDataIterator/VDataIterator.ts`, `VDataFooter.ts`, `VDataFooter.sass`, and `_variables.scss`.
 
 Implemented:
 
-- Added a local `VSubheader` primitive from Vuetify source: `inset` prop only, 48px height, 16px horizontal padding, 56px inset margin, body-2 typography, and secondary text color.
-- Preserved Vue page order: Usage, Playground, Inset subheaders, Grid subheaders, Menu subheaders, and Subheaders with social media.
-- Implemented the Playground `Inset` checkbox and source list rows/dividers with the verified `:inset` subheader behavior.
-- Implemented the Inset example with inset subheader, inset dividers, Material Icons list actions, and the exact list item text/order.
-- Implemented the Grid example with source toolbar, May/June subheaders, 3-column image grids, randomuser image URLs, and footer spacing.
-- Implemented the Menu example with teal toolbar, action rows, divider, Labels subheader, and exact menu item text/order.
-- Implemented the Social example with cyan toolbar, source type/card arrays, Picsum image URLs, social icon action row, flat tile outer card, and grey container backgrounds.
-- Rejection fix: removed the non-source Usage example description from inside the example card; Vue `Usage.vue` passes a string usage file and does not pass a usage `desc` into `Example.vue`.
-- Rejection fix: split Playground into its own `base-heading` section and removed the non-source Playground title from the example toolbar; Vue `Playground.vue` passes only the example file.
-- Rejection fix: removed duplicate external example headings because Vue `Examples.vue` passes headings directly into the `Example.vue` toolbar.
-- Rejection fix: restored `v-container fluid` padding to 12px in Grid and Social example bodies.
-- Rejection fix: fixed Social card title rendering to match Vue source: `cards` is an array of strings and Vue renders `card.title`, so no visible card title is produced.
-- Menu/Social correction: re-traced `simple/menu.vue`, `intermediate/social.vue`, `VToolbar.sass`, `VToolbar/_variables.scss`, `VBtn.sass`, `VBtn/_variables.scss`, and `VCard/_variables.scss`; applied source non-flat toolbar elevation-4, 16px toolbar content padding, first/last icon offsets, 20px title offset, and Social small FAB contained button sizing/elevation.
-- Icon correction: replaced the Menu/Social `mdi-*` webfont pseudo-element rendering with verified `@mdi/js` SVG paths for `mdi-menu`, `mdi-dots-vertical`, `mdi-magnify`, `mdi-facebook`, `mdi-linkedin`, `mdi-instagram`, and `mdi-arrow-left`, preventing blank icon buttons.
-- Added `/components/subheaders` route and enabled the Subheaders sidebar item; Data Iterators and later table items remain pending/disabled.
+- Preserved Vue page order: Usage, Slots, Expand, and Filter.
+- Implemented exact dessert item data from Vue source, including names, numeric values, percentages, and row order.
+- Rebuilt the Usage playground with the source booleans: `disable-filtering`, `disable-pagination`, `disable-sort`, and `hide-default-footer`.
+- Implemented source Usage behavior: search, sort key, sort direction toggle, pagination, rows-per-page footer options `[4, 8, 12]`, and responsive two-column card grid.
+- Fixed the rejected Usage section by re-tracing `UsageExample.vue` and `VData.ts`: the React Usage body now uses the Vue 300px local scroll surface with `pa-6`-equivalent container spacing, and `disable-pagination` now matches Vue by disabling item slicing while leaving the default footer controls visible/enabled.
+- Fixed the remaining Usage clipping mismatch by matching the Vue `v-container class="fill-height"` wrapper from `src/demo/usages/data-iterators.vue`; the top toolbar/content is no longer vertically clipped inside the fixed-height Usage surface.
+- Implemented Slots with header/footer toolbar slots, hidden default footer, four visible items, and `cols=12 sm=6 md=4 lg=3` card layout.
+- Implemented Expand with `Expand Single Item`, per-card Expanded/Closed switches, single-expand behavior, and conditional dense details list.
+- Implemented Filter with external search/sort/page/items-per-page controls, highlighted sorted rows, menu-based page-size control, and page navigation FAB buttons.
+- Added `/components/tables/data-iterators` route and enabled only the Data Iterators sidebar item; Simple Tables and Data Tables remain pending/disabled.
 
 Self-verification:
 
 | Example | Vue source | Vue expected | React implemented | Match level | Notes |
 |---|---|---|---|---|---|
-| Page wrapper | `Subheaders.vue`, `DocPage.vue`, `Usage.vue`, `Playground.vue`, `Examples.vue`, `Example.vue`, `Subheaders.json` | Components/Subheaders route with intro doc text, Usage section, separate Playground section, Examples section, and headings inside example toolbars only | DocPage route, breadcrumbs, intro text, separate Usage/Playground/examples order, and no duplicate external example headings | Match | Pending visual approval |
-| Usage | `usage.vue`, `Usage.vue`, `Example.vue` | `Usage` base heading, example card with no toolbar title/desc, single `v-subheader` with text `Subheader` | Same section structure, no extra desc/title, same subheader primitive and text | Match | |
-| Playground | `playground.vue`, `Playground.vue`, `Example.vue` | `Playground` base heading, example card with no toolbar title/desc, grey lighten-5 `pa-4`, centered card, inset checkbox, rows `inbox`, `send`, `trash` with dividers | Same heading/card structure, checkbox behavior, row order, dividers, and inset subheader | Match | |
-| Inset | `simple/inset.vue` | `cols=12 sm=6 offset-sm=3`, inset subheader/dividers, three label list rows | Same responsive column, inset spacing, divider margin, icons, and text | Match | |
-| Grid | `simple/grid.vue` | White flat toolbar, May/June subheaders, `v-container fluid` 12px padding, 3-column image grids, footer `mt-12` | Same toolbar, subheaders, images, source container padding, grid columns, and footer spacing | Match | |
-| Menu | `simple/menu.vue`, `VToolbar.sass` | Teal dark non-flat toolbar with elevation-4, source icon/title offsets, visible nav/dots icons, action list rows, divider, Labels subheader, Family/Friends/Work rows | Same elevated toolbar spacing with SVG-rendered MDI toolbar icons, icon rows, divider, subheader, text/order | Match | Pending visual approval |
-| Social | `intermediate/social.vue`, `VToolbar.sass`, `VBtn.sass`, `VCard.sass` | Flat tile outer card, cyan dark elevated toolbar, visible nav/search icons, grey `v-container fluid` sections, type subheaders, three image cards per type, `card.title` from string data renders no visible title, social small FAB contained icon buttons with visible MDI icons and card-action spacing | Same source data, elevated toolbar with SVG-rendered MDI icons, source container padding, images, blank title behavior, small FAB action buttons, colors, and layout | Match | Pending visual approval |
-| Subheader primitive | `VSubheader.ts`, `VSubheader.sass`, `_variables.scss` | `inset` prop, 48px height, 16px padding, 56px inset margin, body-2 text | Local primitive implements verified values | Match | |
-| Source/invert | shared `doc-page` examples | Per-example invert/source controls | Local docs block with invert and source actions | Match | |
+| Page wrapper | `DataIterators.vue`, `DocPage.vue`, `Usage.vue`, `UsageExample.vue`, `Examples.vue`, `Example.vue`, `DataIterators.json` | Components/DataIterators route with intro doc text, Usage playground, and examples array `slots`, `expand`, `filter` | DocPage route, breadcrumbs, intro text, usage text, Usage playground, and examples order preserved | Match | Pending visual approval |
+| Usage | `src/demo/usages/data-iterators.vue`, `UsageExample.vue`, `VData.ts` | Header search/sort/sortDesc controls, exact dessert data, 4-per-page default, footer options `[4,8,12]`, booleans from usage config, 300px usage scroll surface, source `fill-height` container, and `disable-pagination` disables item slicing without disabling footer controls | Same data, controls, booleans, pagination, sorting, search, footer behavior, usage shell height/padding, `fill-height` wrapper, and corrected `disable-pagination` behavior | Match | Clipping fix applied; pending visual re-check |
+| Slots | `slots.vue` | `v-container fluid`, flat indigo-dark header slot, four cards, hidden default footer, flat indigo footer slot | Same header/footer slots, card data, hidden default footer, and responsive columns | Match | |
+| Expand | `expand.vue`, `VDataIterator.ts` | `Expand Single Item` switch, item-key `name`, 4 items, per-card Expanded/Closed switch, single-expand behavior | Same switches, expansion state, single-expand clearing, and conditional dense lists | Match | |
+| Filter | `filter.vue` | Blue toolbar search/sort controls, sorted field highlighted blue, custom footer with Items per page menu and page FABs | Same external controls, highlighted rows, menu, page text, and navigation buttons | Match | |
+| Data/footer behavior | `VDataIterator.ts`, `VDataFooter.ts`, `VDataFooter.sass` | Search/filter/sort/page slicing, default footer page text and icon disable behavior | Local iterator helpers implement visible behavior for mounted examples | Match | |
+| Source/invert | shared `Example.vue` | Per-example invert/source controls | Local docs block with invert/source actions | Match | |
 
 Build:
 

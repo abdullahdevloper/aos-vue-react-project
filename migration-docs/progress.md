@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Subheaders)
+Last updated: 2026-05-17 (Data Iterators)
 
 ## Strategy Status
 
@@ -11,18 +11,17 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Subheaders.
+- Active section: Vuetify / Data Iterators.
 
 ## Current Slice
 
-- Scope: Vuetify / Subheaders only.
-- Route: `/components/subheaders`.
-- Status: rejection fix applied from Vue source; pending user visual approval.
-- Source audit: Vue Subheaders sources traced directly from `src/views/Vuetify/Subheaders.vue`, `src/demo/examples/subheaders/usage.vue`, `src/demo/examples/subheaders/playground.vue`, `src/demo/examples/subheaders/simple/inset.vue`, `src/demo/examples/subheaders/simple/grid.vue`, `src/demo/examples/subheaders/simple/menu.vue`, `src/demo/examples/subheaders/intermediate/social.vue`, `src/lang/en/components/Subheaders.json`, and Vuetify internals under `node_modules/vuetify/src/components/VSubheader/`.
-- Implementation: added `/components/subheaders`, enabled only the Subheaders sidebar item, and rebuilt Usage, Playground, Inset, Grid, Menu, and Social examples with source-matched subheader height, inset margin, list/grid/card structure, typography, dividers, icons, and source/invert controls.
-- Rejection fix: re-traced `doc-page`, `usage`, `playground`, and `example` wrappers; removed non-source Usage/Playground card headings/descriptions, removed duplicate external example headings, restored source `v-container fluid` 12px padding in Grid/Social examples, and fixed Social card title rendering to match Vue `card.title` from string data.
-- Menu/Social correction: matched source non-flat `v-toolbar` elevation-4 and toolbar icon/title offsets; rebuilt Social action buttons as Vuetify small FAB contained buttons with elevation-6, white icons, 40px size, and 8px card-action spacing.
-- Icon correction: replaced Menu/Social MDI webfont rendering with verified `@mdi/js` SVG paths for toolbar and social action icons so the buttons/icons render reliably.
+- Scope: Vuetify / Data Iterators only.
+- Route: `/components/tables/data-iterators`.
+- Status: implemented from Vue source; pending user visual approval.
+- Source audit: Vue Data Iterators sources traced directly from `src/views/Vuetify/Tables/DataIterators.vue`, `src/demo/usages/data-iterators.vue`, `src/demo/examples/data-iterators/slots.vue`, `src/demo/examples/data-iterators/expand.vue`, `src/demo/examples/data-iterators/filter.vue`, `src/lang/en/components/DataIterators.json`, shared docs wrappers, and Vuetify internals under `node_modules/vuetify/src/components/VDataIterator/`.
+- Implementation: added `/components/tables/data-iterators`, enabled only the Data Iterators sidebar item, and rebuilt Usage, Slots, Expand, and Filter examples with exact dessert data, search/sort/pagination behavior, expansion state, header/footer slots, source/invert controls, and responsive card grids.
+- Usage rejection fix: re-traced `src/demo/usages/data-iterators.vue`, `src/demo/components/UsageExample.vue`, and `node_modules/vuetify/src/components/VData/VData.ts`; corrected the Usage shell to the Vue 300px scroll surface/container padding and restored `disable-pagination` behavior so it disables item slicing without disabling the default footer controls.
+- Usage clipping fix: matched the source `v-container class="fill-height"` inside `src/demo/usages/data-iterators.vue` so the iterator content starts at the top of the 300px Usage surface instead of being vertically clipped.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -69,6 +68,7 @@ Current rebuild strategy:
 - Vuetify / Snackbars: implemented from Vue source; pending user visual approval.
 - Vuetify / Steppers: animation fix applied from Vue source; pending user visual approval.
 - Vuetify / Subheaders: rejection fix applied from Vue source; pending user visual approval.
+- Vuetify / Data Iterators: implemented from Vue source; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.
