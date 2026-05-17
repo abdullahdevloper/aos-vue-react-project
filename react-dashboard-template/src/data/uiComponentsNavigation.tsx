@@ -226,7 +226,7 @@ export const globalNavigation: SidebarNavEntry[] = [
           { title: "Data Tables", path: "/components/tables/data-tables", icon: <ViewHeadline /> },
         ],
       },
-      { title: "Tabs", disabled: true, pending: true },
+      { title: "Tabs", path: "/components/tabs", icon: <ViewHeadline /> },
       { title: "Timelines", disabled: true, pending: true },
       { title: "Tooltips", disabled: true, pending: true },
       { title: "Treeview", disabled: true, pending: true },

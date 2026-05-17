@@ -1,15 +1,80 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Data Tables)
+Last updated: 2026-05-17 (Tabs)
 
 ## Phase
 
-Vuetify / Data Tables strict source-driven rebuild.
+Vuetify / Tabs strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/tables/data-tables`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/DataTablesPage.tsx`
+Route: `/components/tabs`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/TabsPage.tsx`
+
+### Vuetify / Tabs Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Tabs at `/components/tabs`.
+- Enabled only the Tabs sidebar item.
+- Did not touch Data Tables, Timelines, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and mounted order: `src/views/Vuetify/Tabs.vue`.
+- Usage/playground: `src/demo/examples/tabs/usage.vue` and `src/demo/examples/tabs/playground.vue`.
+- Mounted examples in Vue order: `simple/fixed-tabs`, `simple/center-active`, `simple/tab-items`, `simple/grow`, `simple/pagination`, `simple/icons`, `simple/vertical`, `intermediate/icons-and-text`, `intermediate/right`, `intermediate/content`, `intermediate/align-with-title`, `intermediate/dynamic`, `complex/dynamic-height`, `complex/desktop`, and `complex/overflow-to-menu`.
+- Documentation text: `src/lang/en/components/Tabs.json`.
+- Shared docs/example wrappers: `src/demo/components/DocPage.vue`, `Usage.vue`, `Playground.vue`, `Examples.vue`, and `Example.vue`.
+- Vuetify internals: `node_modules/vuetify/src/components/VTabs/VTabs.ts`, `VTabs.sass`, `_variables.scss`, `VSlideGroup`, and `VWindow`.
+
+Implemented:
+
+- Preserved Vue page order: intro text, Usage, Playground, and all examples listed by `Tabs.vue`.
+- Added a local `VTabs` primitive with source-backed tab heights, uppercase text, active slider, fixed/grow/centered/right/vertical modes, icons-and-text height, show-arrows controls, and tab item/window content switching.
+- Implemented the Usage playground controls from Vue source: Text + icons, Centered, Grow, Vertical, Right, and Tabs number.
+- Implemented dynamic add/remove tabs, toolbar extension tabs, align-with-title offset, image-grid tab content, dynamic-height tab content transition, desktop icon tabs, and overflow-to-menu tab swapping.
+- Added `/components/tabs` route and enabled the Tabs sidebar item; Timelines and later items remain pending/disabled.
+- Rejection fix: re-traced the mounted Tabs examples and Vuetify `VTabs`, `VSlideGroup`, and `VWindow` internals, then repaired the shared React `VTabs` primitive:
+  - slider/indicator now measures the active tab element and follows its exact `offsetLeft`, `offsetTop`, `scrollWidth`, and `scrollHeight` like Vue `callSlider`.
+  - active/inactive tab colors now follow Vuetify theme behavior instead of a generic opacity-only treatment.
+  - vertical tabs now render left icons before text, matching `v-icon left`.
+  - icons-and-text tabs now keep Vue's text/icon ordering with `column-reverse`.
+  - show-arrows affixes now scroll the local tab strip and the strip hides scrollbars like `v-slide-group__wrapper`.
+  - toolbar extension examples now keep the tab bar inside the toolbar-colored extension region instead of a detached generic strip.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Tabs.vue`, `DocPage.vue`, `Usage.vue`, `Playground.vue`, `Examples.vue`, `Example.vue`, `Tabs.json` | Components/Tabs route with intro text, Usage, Playground, and examples array in source order | DocPage route, breadcrumbs, intro text, Usage, Playground, and mounted examples order preserved | Match | Pending visual approval |
+| Usage | `usage.vue`, `VTabs.ts`, `VTabs.sass` | Three tabs with mandatory first selection, active primary color, inactive themed color, and slider measured from active tab element | Same tabs with measured active-tab slider and source-backed active/inactive colors | Match | Rejection fix applied |
+| Playground | `playground.vue` | Deep-purple dark tabs with Text + icons, Centered, Grow, Vertical, Right, and Tabs number controls | Same controls/defaults; icons use Vue text/icon structure and vertical mode preserves local content switching | Match | Rejection fix applied |
+| Fixed/center/grow/pagination/icons | `simple/fixed-tabs.vue`, `center-active.vue`, `grow.vue`, `pagination.vue`, `icons.vue`, `VSlideGroup.sass` | Source colors, tab modes, local overflow with affix arrows, custom arrow icons, and measured slider | Same source colors/modes; arrows now scroll the local strip and slider follows active tab dimensions | Match | Rejection fix applied |
+| Tab items/vertical/icons text | `simple/tab-items.vue`, `vertical.vue`, `intermediate/icons-and-text.vue`, `VWindow.sass` | Shared model with tab item content, vertical tabs with left icons, and 72px icons-and-text tabs | Same model switching, vertical left-icon order, icons-and-text order, and window transition | Match | Rejection fix applied |
+| Toolbar/right/content examples | `intermediate/right.vue`, `content.vue`, `align-with-title.vue` | Right-aligned tabs, toolbar extension tabs, title offset alignment, image content | Same right/toolbar/align-with-title behavior; toolbar tabs remain inside the toolbar-colored extension region | Match | Rejection fix applied |
+| Dynamic/complex examples | `intermediate/dynamic.vue`, `complex/dynamic-height.vue`, `complex/desktop.vue`, `complex/overflow-to-menu.vue` | Dynamic add/remove, dynamic content height, desktop icon tabs, and menu-swapped overflow tabs | Same source-backed state changes, measured active slider, and menu-swapped tab behavior | Match | Rejection fix applied |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Tabs remains pending user visual approval.
+
+---
+
+## Previous Phase: Data Tables
 
 ### Vuetify / Data Tables Source-Driven Implementation
 
