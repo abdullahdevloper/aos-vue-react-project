@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-16 (Progress Circular added)
+Last updated: 2026-05-17 (Progress Linear Buffer/Query fix)
 
 ## Strategy Status
 
@@ -11,14 +11,14 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Progress Circular.
+- Active section: Vuetify / Progress Linear.
 
 ## Current Slice
 
-- Scope: Vuetify / Progress Circular only.
-- Route: `/components/progress/progress-circular`.
-- Status: implemented from Vue source; pending user visual approval.
-- Source audit: Vue Progress Circular sources traced directly from `src/views/Vuetify/Progress/Circular.vue`, `src/demo/examples/progress-circular/usage.vue`, `src/demo/examples/progress-circular/playground.vue`, all source-ordered files under `src/demo/examples/progress-circular/simple/`, shared `DocPage.vue`, `Usage.vue`, `Example.vue`, `src/lang/en/components/ProgressCircular.json`, and Vuetify internals under `node_modules/vuetify/src/components/VProgressCircular/`.
+- Scope: Vuetify / Progress Linear only.
+- Route: `/components/progress/progress-linear`.
+- Status: Buffer and Query behavior rejection fix applied from Vue source; pending user visual approval.
+- Source audit: Vue Progress Linear sources traced directly from `src/views/Vuetify/Progress/Linear.vue`, `src/demo/examples/progress-linear/usage.vue`, `src/demo/examples/progress-linear/playground.vue`, all source-ordered files under `src/demo/examples/progress-linear/simple/` and `src/demo/examples/progress-linear/intermediate/`, shared `DocPage.vue`, `Usage.vue`, `Example.vue`, `src/lang/en/components/ProgressLinear.json`, and Vuetify internals under `node_modules/vuetify/src/components/VProgressLinear/`.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -58,7 +58,7 @@ Current rebuild strategy:
 - Vuetify / Pickers / Date Pickers: approved.
 - Vuetify / Pickers / Time Pickers: rebuilt again from Vue source after full rejection; pending user visual approval.
 - Vuetify / Progress / Progress Circular: implemented from Vue source; pending user visual approval.
-- Vuetify / Progress / Progress Linear: pending/disabled.
+- Vuetify / Progress / Progress Linear: Buffer immediate-reset behavior and Query indeterminate/determinate timer sequencing fixed after rejection; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

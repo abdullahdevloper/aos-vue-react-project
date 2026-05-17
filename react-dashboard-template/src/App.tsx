@@ -75,6 +75,7 @@ import ColorPickersPage from "./pages/ui-components/vuetify/ColorPickersPage";
 import DatePickersPage from "./pages/ui-components/vuetify/DatePickersPage";
 import TimePickersPage from "./pages/ui-components/vuetify/TimePickersPage";
 import ProgressCircularPage from "./pages/ui-components/vuetify/ProgressCircularPage";
+import ProgressLinearPage from "./pages/ui-components/vuetify/ProgressLinearPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -177,6 +178,7 @@ export default function App() {
           <Route path="/components/pickers/date-pickers" element={<DashboardRoute><DatePickersPage /></DashboardRoute>} />
           <Route path="/components/pickers/time-pickers" element={<DashboardRoute><TimePickersPage /></DashboardRoute>} />
           <Route path="/components/progress/progress-circular" element={<DashboardRoute><ProgressCircularPage /></DashboardRoute>} />
+          <Route path="/components/progress/progress-linear" element={<DashboardRoute><ProgressLinearPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />

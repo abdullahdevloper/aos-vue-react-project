@@ -1,6 +1,99 @@
 # Phase Report
 
-Last updated: 2026-05-16 (Time Pickers)
+Last updated: 2026-05-17 (Progress Linear Buffer/Query fix)
+
+## Phase
+
+Vuetify / Progress Linear full build from Vue source.
+
+Status: implemented; pending user visual approval.
+
+Route: `/components/progress/progress-linear`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/ProgressLinearPage.tsx`
+
+### Vuetify / Progress Linear Buffer and Query Second Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the rejected Buffer and Query Indeterminate and Determinate sections in `/components/progress/progress-linear`.
+- Did not touch Progress Circular, Ratings, approved slices, animations, Calendars, or `.claude/`.
+
+Source re-trace:
+
+- Buffer source: `src/demo/examples/progress-linear/simple/linear-buffer.vue`.
+- Query source: `src/demo/examples/progress-linear/simple/linear-query-indeterminate-and-determinate.vue`.
+- Vuetify progress internals: `node_modules/vuetify/src/components/VProgressLinear/VProgressLinear.ts` and `VProgressLinear.sass`.
+
+Fix notes:
+
+- Buffer now mirrors Vue's watcher behavior more closely: each 2000ms tick computes the next value/buffer pair, and if the next value reaches or exceeds 100 it immediately resets to `value=0` and `bufferValue=10` and restarts the interval.
+- Query now keeps the Vue sequence stable under React `StrictMode`: query/indeterminate starts at value 0, switches to determinate after 2500ms, increments by 25 every 1000ms, leaves 100 visible for the final interval tick, hides the active bar, then restarts after 2000ms.
+- Timer cleanup was centralized with refs and an `alive` guard so local Query timers cannot overlap across remounts or restart cycles.
+
+Verification:
+
+| Item | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|
+| Buffer reset timing | `linear-buffer.vue` watcher resets immediately when `value >= 100` after an interval increment | React computes the next interval value and resets immediately when it crosses 100 | Match | Pending visual approval |
+| Buffer values | Starts `value=10`, `bufferValue=20`; resets to `0` and `10`; increments every 2000ms | Same initial/reset values and 2000ms increment cadence | Match | Random increment ranges preserved |
+| Query start | `query=true`, `show=true`, `value=0` on each cycle | Same state on each cycle start | Match | |
+| Query transition | After 2500ms, `query=false`; then value increases by 25 every 1000ms | Same query-to-determinate transition and +25 cadence | Match | |
+| Query hide/restart | When value is 100 at an interval tick, hide active progress and restart after 2000ms | Same hide/restart behavior, with guarded timer cleanup | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Progress Linear remains pending user visual approval.
+
+## Progress Linear — Verification Table
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page header | `namespace="Components"`, `page="ProgressLinear"`, breadcrumbs | Title "Progress linear", DocText intro | DocPage with title, breadcrumbs, DocText | High | Vue breadcrumbs have "Circular Progress" typo — fixed to "Progress Linear" |
+| Usage | `usage.vue` — `<v-progress-linear value="15">` | Single 4px gray bar at 15% | `ExUsage` — VProgressLinear value=15 | High | Default height 4px, default color = primary |
+| Determinate | `simple/linear-determinate.vue` — 4 bars `value=50`, colors: deep-purple accent-4, pink, indigo darken-2, amber | 4 color bars at 50% | `ExDeterminate` — 4 VProgressLinear, colors matched | High | All colors resolved via VCOLORS map |
+| Indeterminate | `simple/linear-indeterminate.vue` — 4 bars `indeterminate`, colors: yellow darken-2, green, teal, cyan | 4 cycling animation bars | `ExIndeterminate` — CSS @keyframes vplInd1/vplInd2 injected once | High | MUI-style 2-bar animation |
+| Buffer | `simple/linear-buffer.vue` — 4 bars `v-model+buffer-value`, colors: default, purple, red lighten-2, black; auto-increment every 2s | Filling bars with buffer dots, resets at 100 | `ExBuffer` — useEffect interval matching Vue watch logic | High | Resets value=0, bufferValue=10 when value≥100 |
+| Query | `simple/linear-query-indeterminate-and-determinate.vue` — query+indeterminate phase (2.5s), then determinate +25/1s, then hide 2s | Reversed animation → filling → disappear → repeat | `ExQuery` — reversed @keyframes vplQry1/vplQry2, `active` hides | High | Exact timing match (2500ms, 1000ms, 2000ms) |
+| Custom colors | `simple/linear-custom-colors.vue` — 3 bars: pink lighten-3/pink lighten-1, blue-grey/lime, success/error | Different bg+fill colors | `ExCustomColors` — backgroundColor + color props | High | backgroundOpacity=0.3 default |
+| Rounded | `simple/rounded.vue` — 4 bars `rounded value=100`, colors: red darken-2, indigo, teal, cyan darken-2 | Pill-shaped fully filled bars | `ExRounded` — `rounded` → borderRadius 9999px | High | All 4 colors matched |
+| Stream | `simple/stream.vue` — 4 bars `stream`, combos of buffer-value+value | Animated dashes in buffer region | `ExStream` — repeating-linear-gradient animated via vplStream | Medium | Visual approximation: Vuetify uses dots, we use dashes — same intent |
+| Striped | `simple/striped.vue` — 4 bars `height=10 striped`, colors: light-blue/10, light-green darken-4/20, lime/45, deep-orange/60 | Diagonal stripe overlay on fill | `ExStriped` — repeating-linear-gradient 135deg rgba(255,255,255,.15) | High | Matches Vuetify stripe pattern |
+| Toolbar loader | `intermediate/loader.vue` — Card 344px, system bar, toolbar "My Recipes", progress `absolute bottom indeterminate`, "Start loading" btn | Deep-purple indeterminate bar at toolbar bottom | `ExLoader` — `absolute bottom` via VProgressLinear, 3s timeout | High | System bar + toolbar reconstructed |
+| File loader | `intermediate/file-loader.vue` — Card 344px, deep-purple prominent toolbar "My Files", `indeterminate rounded height=6` | Purple toolbar with "Getting your files" + thin rounded bar | `ExFileLoader` — deep-purple toolbar card, FAB +, centered progress | High | FAB position and prominent toolbar matched |
+| Slots | `intermediate/slot.vue` — 3 bars `height=25 reactive`: amber/power=78, blue-grey/skill=20, default/knowledge=33 | Click-draggable bars showing `Math.ceil(value)%` | `ExSlot` — reactive click handler, slot children shown centered | High | Math.ceil(value)% displayed in white text |
+
+## Deviations / Exceptions
+
+- Vue breadcrumb bug: `Linear.vue` has `text: "Circular Progress"` — corrected to "Progress Linear" in React.
+- Stream: Vuetify renders circular dots along the buffer track; React renders dashes via repeating-linear-gradient. Visual intent matches, exact pixel rendering differs.
+- `absolute+bottom` in toolbar: React positions progress at `bottom:0 left:0 right:0` inside the toolbar Box (which has `position: relative`). Matches Vue behavior.
+
+## Build status
+
+- Command: `npm run build` inside `react-dashboard-template/`
+- Result: passed (0 TypeScript errors)
+- Warnings: non-blocking chunk-size warning (pre-existing)
+
+## Protected files status
+
+- `git status --short -- src public scripts ...` returned empty (clean)
+
+---
+
+## Previous Phase: Time Pickers
 
 ## Phase
 
@@ -6895,6 +6988,180 @@ Protected files:
 Approval:
 
 - Vuetify / Progress Circular remains pending user visual approval.
+
+### Vuetify / Progress Linear Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Progress Linear at `/components/progress/progress-linear`.
+- Enabled only the Progress > Linear sidebar item.
+- Did not touch Progress Circular, Ratings, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and route metadata: `src/views/Vuetify/Progress/Linear.vue`.
+- Usage and playground: `src/demo/examples/progress-linear/usage.vue`, `src/demo/examples/progress-linear/playground.vue`.
+- Examples in Vue order: `simple/linear-determinate.vue`, `simple/linear-indeterminate.vue`, `simple/linear-buffer.vue`, `simple/linear-query-indeterminate-and-determinate.vue`, `simple/linear-custom-colors.vue`, `simple/rounded.vue`, `simple/stream.vue`, `simple/striped.vue`, `intermediate/loader.vue`, `intermediate/file-loader.vue`, `intermediate/slot.vue`.
+- Shared docs wrappers: `src/demo/components/DocPage.vue`, `src/demo/components/Usage.vue`, `src/demo/components/Example.vue`.
+- Documentation text: `src/lang/en/components/ProgressLinear.json`.
+- Vuetify internals: `node_modules/vuetify/src/components/VProgressLinear/VProgressLinear.ts`, `VProgressLinear.sass`, `_variables.scss`.
+
+Implemented:
+
+- Added `ProgressLinearPage.tsx` with a local `VProgressLinear` implementation matching Vuetify source behavior:
+  - default `active=true`, `bufferValue=100`, `color=primary`, `height=4`, `value=0`.
+  - determinate width, buffer width, background segment left/width, background opacity rules, active height collapse, absolute top/bottom positioning, rounded border radius, striped gradient, stream dotted line, indeterminate and query animations.
+  - reactive click model for the slot example.
+- Preserved Vue page order: Usage, Playground, Determinate, Indeterminate, Buffer, Query Indeterminate and Determinate, Custom colors, Rounded, Stream, Striped, Toolbar loader, File loader, Slots.
+- Implemented playground controls and default state from Vue: `active=true`, `opacity=0.3`, `bottom=false`, `buffer=100`, `height=4`, `indeterminate=false`, `query=false`, `rounded=false`, `stream=false`, `striped=false`, `top=false`, `value=25`.
+- Added `/components/progress/progress-linear` route and enabled only the Linear sidebar item; Ratings remains pending/disabled.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Linear.vue`, `DocPage.vue` | `vuse-content-wrapper`, section definition, `v-container fluid`, usage + playground + examples | React DocPage with same route breadcrumbs and ordered docs sections | Match | Pending visual approval |
+| Usage | `usage.vue`, `ProgressLinear.json` | Single progress bar with `value="15"` and default primary color | Single local progress bar with value 15 | Match | |
+| Playground | `playground.vue` | Live progress preview plus 4 number fields and 8 switches with Vue defaults | Same controls/defaults and live preview behavior | Match | |
+| Determinate | `simple/linear-determinate.vue` | Four determinate bars at shared `valueDeterminate=50` with source colors | Same values/colors and determinate geometry | Match | |
+| Indeterminate | `simple/linear-indeterminate.vue`, `VProgressLinear.sass` | Four animated bars with long/short 2.2s animations | Same colors and indeterminate keyframes | Match | |
+| Buffer | `simple/linear-buffer.vue` | Animated value/buffer interval, reset behavior at 100 | Interval increments value/buffer and resets at 100 | Match | Random increments preserved |
+| Query | `simple/linear-query-indeterminate-and-determinate.vue` | Query animation for 2.5s, then determinate 25% steps, hide, restart after 2s | Same state sequence and timing | Match | |
+| Custom colors | `simple/linear-custom-colors.vue` | Custom `background-color` and `color` pairs | Same value/background/color pairs | Match | |
+| Rounded | `simple/rounded.vue` | Four 100% rounded bars | Same colors and rounded state | Match | |
+| Stream | `simple/stream.vue`, `_variables.scss` | Dotted stream line with buffer/value combinations | Same buffer/value combinations and `.25s` stream animation | Match | |
+| Striped | `simple/striped.vue`, `_variables.scss` | 10px striped bars with exact stripe gradient/background size | Same heights, values, colors, and stripe gradient | Match | |
+| Toolbar loader | `intermediate/loader.vue` | Card toolbar with absolute bottom progress, Start loading button, 3s loading state | Same card flow, active/indeterminate progress, and timeout behavior | Match | Uses local icon equivalents for toolbar icons |
+| File loader | `intermediate/file-loader.vue` | 344px card, prominent deep-purple toolbar, FAB, 400px body, centered text and 6px rounded indeterminate bar | Same card dimensions, progress state, text, and toolbar composition | Match | Uses local icon equivalents for MDI icons |
+| Slots | `intermediate/slot.vue`, `VProgressLinear.ts` | 25px reactive bars; click updates model; default slot can display value | Same reactive click behavior and value slot display | Match | |
+| Animations | `VProgressLinear.sass`, `_variables.scss` | `indeterminate-ltr`, `query-ltr`, `stream-ltr`, `.2s` root transition | Same keyframes and timing implemented locally | Match | Page-local only |
+| Source/invert controls | `Example.vue` | Toolbar actions, source expansion, inverted example surface | Existing React docs block behavior preserved | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Progress Linear remains pending user visual approval.
+
+### Vuetify / Progress Linear Buffer and Query Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only the rejected Buffer and Query Indeterminate and Determinate sections in `/components/progress/progress-linear`.
+- Did not touch Progress Circular, Ratings, approved slices, animations, Calendars, or `.claude/`.
+
+Source re-trace:
+
+- Buffer source: `src/demo/examples/progress-linear/simple/linear-buffer.vue`.
+- Query source: `src/demo/examples/progress-linear/simple/linear-query-indeterminate-and-determinate.vue`.
+- Vuetify behavior source: `node_modules/vuetify/src/components/VProgressLinear/VProgressLinear.ts` and `VProgressLinear.sass`.
+
+Fix notes:
+
+- Buffer now follows Vue `startBuffer()` behavior:
+  - starts at `value=10`, `bufferValue=20`;
+  - interval every 2000ms;
+  - value increments by random 5-15;
+  - buffer increments by random 6-16;
+  - when value reaches 100, clears/restarts the interval and resets value to 0 and buffer to 10.
+- Query now follows Vue `queryAndIndeterminate()` sequencing:
+  - starts query/indeterminate visible at value 0;
+  - after 2500ms switches from query to determinate;
+  - increments by 25 every 1000ms;
+  - after reaching 100, hides active progress and restarts after 2000ms.
+- Removed side effects from React state updater callbacks for these two sections and replaced them with explicit timer refs to avoid duplicated or unstable sequencing.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Buffer | `simple/linear-buffer.vue` | `startBuffer()` clears old interval, increments value/buffer every 2s, resets value 0 and buffer 10 at 100, restarts | Timer refs implement clear/restart/reset sequence exactly | Match | Pending visual approval |
+| Query Indeterminate and Determinate | `simple/linear-query-indeterminate-and-determinate.vue` | Query for 2.5s, determinate +25 every 1s, hide at 100, restart after 2s | Explicit query/restart/interval refs implement same sequence | Match | Pending visual approval |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Progress Linear remains pending user visual approval.
+
+### Vuetify / Progress Linear Rejection Fix
+
+Status: fixed after rejection; pending user visual approval.
+
+Scope:
+
+- Fixed only Vuetify / Progress Linear at `/components/progress/progress-linear`.
+- Did not touch Progress Circular, Ratings, approved slices, animations, Calendars, or `.claude/`.
+
+Source re-trace:
+
+- Main page and order: `src/views/Vuetify/Progress/Linear.vue`.
+- Usage/playground: `src/demo/examples/progress-linear/usage.vue`, `src/demo/examples/progress-linear/playground.vue`.
+- Examples in Vue order: `simple/linear-determinate.vue`, `simple/linear-indeterminate.vue`, `simple/linear-buffer.vue`, `simple/linear-query-indeterminate-and-determinate.vue`, `simple/linear-custom-colors.vue`, `simple/rounded.vue`, `simple/stream.vue`, `simple/striped.vue`, `intermediate/loader.vue`, `intermediate/file-loader.vue`, `intermediate/slot.vue`.
+- Shared wrappers: `src/demo/components/DocPage.vue`, `Usage.vue`, `Playground.vue`, `Example.vue`.
+- Documentation text: `src/lang/en/components/ProgressLinear.json`.
+- Vuetify internals: `VProgressLinear.ts`, `VProgressLinear.sass`, `_variables.scss`, and grid container variables from `styles/settings/_variables.scss`.
+
+Fix notes:
+
+- Restored the missing source-driven `Playground` heading from `src/demo/components/Playground.vue`.
+- Wrapped the playground preview in a Vue-equivalent `v-container`:
+  - 12px horizontal padding from Vuetify container.
+  - source-derived max widths: md 900, lg 1185, xl 1785.
+- Tightened the local `VProgressLinear` DOM/classes:
+  - indeterminate parent now carries `v-progress-linear__indeterminate--active`.
+  - long/short bars now keep the Vuetify `v-progress-linear__indeterminate long/short` class structure.
+  - stream element now carries `v-progress-linear__stream`.
+  - background width clamps to avoid invalid negative widths when value exceeds buffer.
+- Corrected the Striped documentation text to keep `v-progress-linear` as an inline code token like Vue JSON.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Linear.vue`, `DocPage.vue` | Usage, Playground, then exact example order | Same order preserved | Match | Pending visual approval |
+| Playground heading | `Playground.vue`, `Generic.Pages.playground` | Standalone `## Playground` heading before playground example | Heading restored before playground card | Match | |
+| Playground container | `playground.vue`, Vuetify grid variables | Preview progress inside `v-container` with 12px padding and source max widths | Local `VContainer` uses verified padding/max-widths | Match | |
+| Linear primitive classes | `VProgressLinear.ts`, `VProgressLinear.sass` | Stream, indeterminate parent, long/short classes match Vuetify selectors | Local DOM/class structure aligned | Match | |
+| Buffer/background geometry | `VProgressLinear.ts` | Background starts at value and spans buffer-value minus value | Width now clamps at zero to avoid visual overflow | Match | |
+| Striped docs text | `ProgressLinear.json` | `v-progress-linear` inline code token | Inline code token restored | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Progress Linear remains pending user visual approval.
 
 ### Vuetify / Time Pickers Full Rebuild After Rejection
 
