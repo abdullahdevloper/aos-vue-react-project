@@ -242,7 +242,7 @@ export const globalNavigation: SidebarNavEntry[] = [
       { title: "Intersect", badge: "new", path: "/directives/Intersect" },
       { title: "Mutate", badge: "new", path: "/directives/mutate" },
       { title: "Resizing", badge: "new", path: "/directives/resizing" },
-      { title: "Ripples", disabled: true, pending: true },
+      { title: "Ripples", badge: "new", path: "/directives/ripples" },
       { title: "Scrolling", disabled: true, pending: true },
     ],
   },

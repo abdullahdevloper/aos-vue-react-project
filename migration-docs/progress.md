@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Directives / Resizing)
+Last updated: 2026-05-17 (Directives / Ripples)
 
 ## Strategy Status
 
@@ -11,18 +11,23 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Directives / Resizing.
+- Active section: Directives / Ripples.
 
 ## Current Slice
 
-- Scope: Directives / Resizing only.
-- Route: `/directives/resizing` (verified from `src/router/routes/vuetify.js`).
-- Status: strict source-driven implementation applied; pending user visual approval.
-- Source audit: Vue Resizing sources traced from `src/router/routes/vuetify.js`, `src/views/Vuetify/Directives/Resizing.vue`, `src/lang/en/directives/Resizing.json`, `src/demo/examples/resizing/usage.vue`, shared docs/example wrappers, and `node_modules/vuetify/src/directives/resize/index.ts`.
-- Implementation: added `ResizingPage.tsx`, enabled only the Resizing sidebar item, and added `/directives/resizing`.
-- Behavior: implemented source-shaped `window.resize` listener binding with passive listener options, immediate callback unless quiet, cleanup on unbind, mounted initialization, centered `v-row`/`v-subheader` usage display, source panel, uninverted usage behavior, and options docs.
+- Scope: Directives / Ripples only.
+- Route: `/directives/ripples` (verified from `src/router/routes/vuetify.js`).
+- Status: rejection fix applied; pending user visual approval.
+- Source audit: Vue Ripples sources traced from `src/router/routes/vuetify.js`, `src/views/Vuetify/Directives/Ripples.vue`, `src/lang/en/directives/Ripples.json`, every example under `src/demo/examples/ripples/`, shared docs/example wrappers, theme color config, `VListItem`/`VBtn` Sass, and `node_modules/vuetify/src/directives/ripple/`.
+- Implementation: added `RipplesPage.tsx`, enabled only the Ripples sidebar item, and added `/directives/ripples`.
+- Behavior: implemented source-shaped ripple span injection on the actual target element, event-positioned ripple radius/origin, centered ripple option, custom ripple color class behavior, disabled ripple prop, button/list/plain block examples, source panel, uninverted examples, and options docs.
+- Rejection fix: re-traced Vuetify `Ripple` internals and `VRipple.sass`; applied the missing source `v-ripple__container` and `v-ripple__animation` structural styles plus verified `fast-out-slow-in` in/out transition timings directly to the injected ripple nodes so the ripple is visible and animated.
 - Build: passed inside `react-dashboard-template/`.
-- Directives / Resizing: implemented; pending user visual approval.
+- Directives / Ripples: implemented; pending user visual approval.
+
+## Previous Slice: Resizing
+
+- Status: implemented from Vue source; pending user visual approval.
 
 ## Previous Slice: Mutate
 

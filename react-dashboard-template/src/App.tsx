@@ -105,6 +105,7 @@ import ClickOutsidePage from "./pages/directives/ClickOutsidePage";
 import IntersectPage from "./pages/directives/IntersectPage";
 import MutatePage from "./pages/directives/MutatePage";
 import ResizingPage from "./pages/directives/ResizingPage";
+import RipplesPage from "./pages/directives/RipplesPage";
 
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
@@ -214,6 +215,7 @@ export default function App() {
           <Route path="/directives/Intersect" element={<DashboardRoute><IntersectPage /></DashboardRoute>} />
           <Route path="/directives/mutate" element={<DashboardRoute><MutatePage /></DashboardRoute>} />
           <Route path="/directives/resizing" element={<DashboardRoute><ResizingPage /></DashboardRoute>} />
+          <Route path="/directives/ripples" element={<DashboardRoute><RipplesPage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
           <Route path="/lists" element={<DashboardRoute><ListsPage /></DashboardRoute>} />

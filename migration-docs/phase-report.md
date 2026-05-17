@@ -1,15 +1,79 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Directives / Resizing)
+Last updated: 2026-05-17 (Directives / Ripples)
 
 ## Phase
 
-Directives / Resizing strict source-driven rebuild.
+Directives / Ripples strict source-driven rebuild.
 
-Status: implemented; pending user visual approval.
+Status: rejection fix applied; pending user visual approval.
 
-Route: `/directives/resizing`
-File: `react-dashboard-template/src/pages/directives/ResizingPage.tsx`
+Route: `/directives/ripples`
+File: `react-dashboard-template/src/pages/directives/RipplesPage.tsx`
+
+### Directives / Ripples Source-Driven Implementation
+
+Status: rejection fix applied; pending user visual approval.
+
+Scope:
+
+- Implemented only Directives / Ripples at `/directives/ripples`.
+- Verified the exact Vue route from `src/router/routes/vuetify.js` before enabling the React route.
+- Enabled only the Ripples sidebar item in the Directives group.
+- Did not touch Calendars, approved Vuetify slices, Intersect, Mutate, Resizing, Scrolling, or `.claude/`.
+
+Source trace:
+
+- Vue route: `src/router/routes/vuetify.js` (`/directives/ripples`).
+- Main page/order: `src/views/Vuetify/Directives/Ripples.vue`.
+- Documentation text: `src/lang/en/directives/Ripples.json`.
+- Usage example: `src/demo/examples/ripples/usage.vue`.
+- Custom color example: `src/demo/examples/ripples/custom-color.vue`.
+- Centered ripple example: `src/demo/examples/ripples/center.vue`.
+- Ripple in components example: `src/demo/examples/ripples/ripple-in-components.vue`.
+- Shared wrappers: `src/demo/components/DocPage.vue`, `Usage.vue`, `Examples.vue`, and `Example.vue`.
+- Directive internals/styles: `node_modules/vuetify/src/directives/ripple/index.ts`, `VRipple.sass`, and `_variables.scss`.
+- Related style sources: `node_modules/vuetify/src/components/VList/VListItem.sass`, `node_modules/vuetify/src/components/VBtn/VBtn.sass`, `src/config/theme.js`, and `src/plugins/vuetify.js`.
+
+Implemented:
+
+- Preserved Vue page hierarchy: namespace `Directives`, page `Ripples`, breadcrumbs `Directives > Ripples`, heading text, Usage, Examples, Custom color, Centered ripple, Ripple in components, and options docs.
+- Implemented a page-local source-shaped ripple hook that appends `v-ripple__container` and `v-ripple__animation` spans to the actual target element, calculates local event position/radius/center from element bounds, applies Vuetify enter/in/out classes, enforces the 250ms minimum visible duration, and removes ripple nodes after the 300ms out transition.
+- Rejection fix: re-traced `node_modules/vuetify/src/directives/ripple/VRipple.sass` and `_variables.scss`; the React hook now applies the verified container styles (`position:absolute`, full-size, inherit color/radius, overflow hidden, pointer-events none, contain strict) and animation styles (`background: currentColor`, absolute circle, will-change transform/opacity) directly to injected spans, plus source `fast-out-slow-in` transition timings.
+- Implemented Usage block-level ripple surface with `text-center elevation-2 pa-12 text-h5` dimensions/typography.
+- Implemented Custom color list with source color order `primary`, `secondary`, `info`, `success`, `warning`, `error`; each row applies the source custom class behavior.
+- Implemented Centered ripple with `{ center: true }`, forcing the origin to the target center.
+- Implemented Ripple in components with four source buttons: default ripple, disabled ripple, centered ripple, and red text ripple.
+- Preserved source panel, template tabs, visual Github/source buttons, and source `uninverted` example behavior.
+- Added `/directives/ripples` route and enabled only Ripples; Scrolling remains disabled/pending.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Route | `src/router/routes/vuetify.js` | Directives / Ripples route is `/directives/ripples` | React route uses `/directives/ripples` | Match | Verified before editing |
+| Page wrapper | `Ripples.vue`, `Ripples.json` | Directives/Ripples page with breadcrumbs, heading text, Usage, Examples, three examples, and options | Same hierarchy, example order, and docs text implemented | Match | Pending visual approval |
+| Usage | `src/demo/examples/ripples/usage.vue` | Block-level `div v-ripple` with `text-center elevation-2 pa-12 text-h5`; standard click ripple | React renders same surface sizing/typography/elevation and attaches ripple to the surface itself | Match | |
+| Custom color | `src/demo/examples/ripples/custom-color.vue` | Six `v-list-item` rows with `v-ripple="{ class: \`${color}--text\` }"` and exact row text | React renders six source-order rows and applies source-mapped ripple color classes | Match | |
+| Centered ripple | `src/demo/examples/ripples/center.vue` | Same block surface; ripple always originates at the center | React passes `{ center: true }` into the shared ripple hook | Match | |
+| Ripple in components | `src/demo/examples/ripples/ripple-in-components.vue` | Four `v-btn`s: default ripple, no ripple, centered ripple, text button red ripple | React renders four source buttons and maps `ripple=false`, `{ center: true }`, and red custom class behavior | Match | |
+| Directive lifecycle | `node_modules/vuetify/src/directives/ripple/index.ts`, `VRipple.sass`, `_variables.scss` | Mouse/touch/keyboard listeners on actual element; append styled ripple spans; calculate event/center origin; `.25s` transform and `.1s` opacity in, `.3s` opacity out; cleanup | Local hook binds the actual element and implements the same span structure, source styles, calculation, timing, and cleanup | Match | Rejection fix applied after missing runtime ripple styles were identified |
+| Source/invert | `Example.vue`, `Ripples.json` | Invert colors, View on Github, View source; all examples marked `uninverted` | Same controls and full source snippets preserved; example bodies remain uninverted | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Directives / Ripples remains pending user visual approval.
+
+---
+
+## Previous Phase: Resizing
 
 ### Directives / Resizing Source-Driven Implementation
 
