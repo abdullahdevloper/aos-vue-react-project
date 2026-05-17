@@ -1,15 +1,76 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Sheets)
+Last updated: 2026-05-17 (Skeleton Loaders)
 
 ## Phase
 
-Vuetify / Sheets strict source-driven rebuild.
+Vuetify / Skeleton Loaders strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/sheets`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/SheetsPage.tsx`
+Route: `/components/skeleton-loaders`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/SkeletonLoadersPage.tsx`
+
+### Vuetify / Skeleton Loaders Rejection Fix
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Skeleton Loaders at `/components/skeleton-loaders`.
+- Enabled only the Skeleton Loaders sidebar item.
+- Did not touch Sheets, Snackbars, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and docs wiring: `src/views/Vuetify/SkeletonLoaders.vue`.
+- Usage/playground: `src/demo/examples/skeleton-loaders/usage.vue`, `src/demo/examples/skeleton-loaders/playground.vue`.
+- Additional traced example files: `src/demo/examples/skeleton-loaders/intermediate/implementation.vue`, `src/demo/examples/skeleton-loaders/complex/boilerplate.vue`.
+- Documentation text: `src/lang/en/components/SkeletonLoaders.json`.
+- Vuetify internals: `node_modules/vuetify/src/components/VSkeletonLoader/VSkeletonLoader.ts`, `VSkeletonLoader.sass`, `_variables.scss`, and material theme variables used by the loader bones.
+
+Implemented:
+
+- Added a local `VSkeletonLoader` primitive with the verified Vuetify root types, recursive type expansion, `loading`, `boilerplate`, `tile`, `transition`, `maxWidth`, and `height` behavior.
+- Matched Vuetify skeleton loader bone shapes and source classes for avatar, button, chip, image, heading, text, list items, date picker, table, actions, and cards.
+- Implemented shimmer animation from Vuetify internals, with boilerplate disabling shimmer and tile removing border radius.
+- Corrected the rejected page order to match `SkeletonLoaders.vue`: only Usage and Playground are rendered because the Vue page does not pass an `examples` array to `doc-page`.
+- Traced `boilerplate.vue` and `implementation.vue` completely, but left them unrendered because they are not mounted by the main Vue Skeleton Loaders page.
+- Repaired skeleton bone generation so comma and repeat expansion uses direct child DOM like Vue, without wrapper elements that break Vuetify `nth-child` selectors.
+- Corrected list-item-avatar-three-line layout so only `list-item-three-line` forces children to full width, matching `VSkeletonLoader.sass`.
+- Rebuilt the Playground defaults from Vue source: `type='list-item-avatar-three-line'`, `boilerplate=false`, `tile=false`, and type options from Vuetify `rootTypes`.
+- Added `/components/skeleton-loaders` route and enabled the Skeleton Loaders sidebar item; Snackbars remains pending/disabled.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `SkeletonLoaders.vue`, `SkeletonLoaders.json` | Components/SkeletonLoaders route with Usage and Playground wired by the page | DocPage route, breadcrumbs, intro text, Usage/Playground order preserved | Match | Pending visual approval |
+| Usage | `usage.vue` | Grey sheet with centered `v-skeleton-loader` max-width 300 and `type="card"` | Same sheet padding, max width, card image and heading bones | Match | |
+| Playground | `playground.vue` | Grey sheet, responsive max width, type select, Boilerplate switch, Tile switch, live skeleton | Same defaults, controls, type list from root types, and live boilerplate/tile/type behavior | Match | |
+| Implementation file | `intermediate/implementation.vue` | Traced file contains toggle/transition examples, but `SkeletonLoaders.vue` does not mount it | Not rendered, matching main Vue page wiring | Match | Source traced only |
+| Boilerplate file | `complex/boilerplate.vue` | Traced file contains boilerplate columns, but `SkeletonLoaders.vue` does not mount it | Not rendered, matching main Vue page wiring | Match | Source traced only |
+| Skeleton primitive | `VSkeletonLoader.ts`, `VSkeletonLoader.sass` | Vuetify root type expansion, shimmer, shapes, boilerplate/tile/loading behavior | Local primitive implements verified root types, recursive bones, source classes, animation, tile, and boilerplate states | Match | |
+| Source/invert | `Example.vue` | Per-example invert/source controls | Existing docs block behavior preserved | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Skeleton Loaders remains pending user visual approval.
+
+---
+
+## Previous Phase: Sheets
 
 ### Vuetify / Sheets Source-Driven Implementation
 
@@ -31,37 +92,18 @@ Source trace:
 
 Implemented:
 
-- Added a local `VSheet` primitive matching Vue `v-sheet` behavior needed by this page:
-  - measurable `width` / `height`;
-  - `color`;
-  - `tile`;
-  - default square border radius from `$sheet-border-radius: 0`;
-  - source-matched Vuetify elevation shadows from 0 through 24.
+- Added a local `VSheet` primitive matching Vue `v-sheet` behavior needed by this page.
 - Preserved Vue page order: Usage, Playground, Using elevation, Tile, Colors & sizes.
-- Rebuilt the Playground defaults from Vue source: `width=100`, `height=100`, `elevation=4`, `color='white'`, `tile=false`, colors list `white`, `gray darken-2`, `warning`, `error`, `success`, `teal`.
+- Rebuilt the Playground defaults from Vue source.
 - Rebuilt the responsive `v-container` / `v-row` / `v-col` structure used by elevation, tile, and colors/sizes examples.
-- Implemented the source `SheetFooter` behavior from `colors-sizes.vue`: nested dark `v-sheet` with `rgba(0, 0, 0, .36)`, height 50, `mt-auto`, centered content.
-- Added `/components/sheets` route and enabled the Sheets sidebar item; Skeleton Loaders remains pending/disabled.
-
-Self-verification:
-
-| Example | Vue source | Vue expected | React implemented | Match level | Notes |
-|---|---|---|---|---|---|
-| Page wrapper | `Sheets.vue`, `Sheets.json` | Components/Sheets route with Usage, Playground, then three examples | DocPage route, breadcrumbs, intro text, Usage/Playground/example order preserved | Match | Pending visual approval |
-| Usage | `usage.vue` | Centered orange lighten-2 sheet containing `Hello, world! I'm a simple v-sheet` | Same text, color, and centered wrapper | Match | |
-| Playground | `playground.vue` | Container with Width/Height/Elevation sliders, Color select, Tile switch, then source-controlled sheet | Same defaults, controls, color list, live width/height/elevation/tile behavior | Match | |
-| Using elevation | `simple/elevation.vue` | Three md=4 columns; grey lighten-3 padded outer sheet; inner 100x100 sheet elevations 6/12/18 | Same responsive columns, 48px padding, dimensions, and source elevation shadows | Match | |
-| Tile | `simple/tile.vue` | Two md=4 columns; grey lighten-3 padded outer sheet; inner 100x100 tile false/true | Same layout and tile-driven rectangular behavior | Match | Sheet default radius is 0 per Vuetify variable |
-| Colors & sizes | `intermediate/colors-sizes.vue` | Responsive sheet mosaic with exact colors, heights 424/150/250/300, footer labels and dark footer sheets | Same row/column proportions, colors, heights, footer text, and footer styling | Match | |
-| VSheet primitive | `VSheet.ts`, `VSheet.sass`, `_elevations.scss` | Root `v-sheet`, color, measurable styles, elevation classes, tile/rounded classes | Local primitive implements the verified props and source elevation tables | Match | |
-| Source/invert | `Example.vue` | Per-example invert/source controls | Existing docs block behavior preserved | Match | |
+- Implemented the source `SheetFooter` behavior from `colors-sizes.vue`.
+- Added `/components/sheets` route and enabled the Sheets sidebar item.
 
 Build:
 
 - Command: `npm run build`.
 - Working directory: `react-dashboard-template/`.
 - Result: passed.
-- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
 
 Protected files:
 
