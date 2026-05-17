@@ -222,7 +222,7 @@ export const globalNavigation: SidebarNavEntry[] = [
         title: "Tables",
         children: [
           { title: "Data Iterators", path: "/components/tables/data-iterators", icon: <ViewHeadline /> },
-          { title: "Simple Tables", disabled: true, pending: true },
+          { title: "Simple Tables", path: "/components/tables/simple-tables", icon: <ViewHeadline /> },
           { title: "Data Tables", disabled: true, pending: true },
         ],
       },

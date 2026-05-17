@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Data Iterators)
+Last updated: 2026-05-17 (Simple Tables)
 
 ## Strategy Status
 
@@ -11,17 +11,15 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Data Iterators.
+- Active section: Vuetify / Simple Tables.
 
 ## Current Slice
 
-- Scope: Vuetify / Data Iterators only.
-- Route: `/components/tables/data-iterators`.
+- Scope: Vuetify / Simple Tables only.
+- Route: `/components/tables/simple-tables`.
 - Status: implemented from Vue source; pending user visual approval.
-- Source audit: Vue Data Iterators sources traced directly from `src/views/Vuetify/Tables/DataIterators.vue`, `src/demo/usages/data-iterators.vue`, `src/demo/examples/data-iterators/slots.vue`, `src/demo/examples/data-iterators/expand.vue`, `src/demo/examples/data-iterators/filter.vue`, `src/lang/en/components/DataIterators.json`, shared docs wrappers, and Vuetify internals under `node_modules/vuetify/src/components/VDataIterator/`.
-- Implementation: added `/components/tables/data-iterators`, enabled only the Data Iterators sidebar item, and rebuilt Usage, Slots, Expand, and Filter examples with exact dessert data, search/sort/pagination behavior, expansion state, header/footer slots, source/invert controls, and responsive card grids.
-- Usage rejection fix: re-traced `src/demo/usages/data-iterators.vue`, `src/demo/components/UsageExample.vue`, and `node_modules/vuetify/src/components/VData/VData.ts`; corrected the Usage shell to the Vue 300px scroll surface/container padding and restored `disable-pagination` behavior so it disables item slicing without disabling the default footer controls.
-- Usage clipping fix: matched the source `v-container class="fill-height"` inside `src/demo/usages/data-iterators.vue` so the iterator content starts at the top of the 300px Usage surface instead of being vertically clipped.
+- Source audit: Vue Simple Tables sources traced directly from `src/views/Vuetify/Tables/SimpleTables.vue`, `src/demo/examples/simple-tables/usage.vue`, `src/demo/examples/simple-tables/playground.vue`, `src/demo/examples/simple-tables/simple/height.vue`, `src/demo/examples/simple-tables/simple/fixed-header.vue`, `src/demo/examples/simple-tables/simple/dense.vue`, `src/demo/examples/simple-tables/simple/dark.vue`, `src/lang/en/components/SimpleTables.json`, shared docs wrappers, and Vuetify internals under `node_modules/vuetify/src/components/VDataTable/`.
+- Implementation: added `/components/tables/simple-tables`, enabled only the Simple Tables sidebar item, kept Data Tables pending/disabled, and rebuilt Usage, Playground, Fixed height, Fixed header, Dense table, and Dark theme with exact dessert rows, table header/body layout, dense/fixed-height/fixed-header/dark behavior, source controls, and responsive playground controls.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -69,6 +67,7 @@ Current rebuild strategy:
 - Vuetify / Steppers: animation fix applied from Vue source; pending user visual approval.
 - Vuetify / Subheaders: rejection fix applied from Vue source; pending user visual approval.
 - Vuetify / Data Iterators: implemented from Vue source; pending user visual approval.
+- Vuetify / Simple Tables: implemented from Vue source; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

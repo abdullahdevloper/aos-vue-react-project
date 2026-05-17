@@ -1,15 +1,77 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Data Iterators)
+Last updated: 2026-05-17 (Simple Tables)
 
 ## Phase
 
-Vuetify / Data Iterators strict source-driven rebuild.
+Vuetify / Simple Tables strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/tables/data-iterators`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/DataIteratorsPage.tsx`
+Route: `/components/tables/simple-tables`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/SimpleTablesPage.tsx`
+
+### Vuetify / Simple Tables Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Simple Tables at `/components/tables/simple-tables`.
+- Enabled only the Tables > Simple Tables sidebar item.
+- Kept Data Tables pending/disabled.
+- Did not touch Data Iterators, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and mounted order: `src/views/Vuetify/Tables/SimpleTables.vue`.
+- Usage example: `src/demo/examples/simple-tables/usage.vue`.
+- Playground example: `src/demo/examples/simple-tables/playground.vue`.
+- Mounted examples in Vue order: `src/demo/examples/simple-tables/simple/height.vue`, `simple/fixed-header.vue`, `simple/dense.vue`, `simple/dark.vue`.
+- Documentation text: `src/lang/en/components/SimpleTables.json`.
+- Shared docs/example wrappers: `src/demo/components/DocPage.vue`, `Usage.vue`, `Playground.vue`, `Examples.vue`, and `Example.vue`.
+- Vuetify internals: `node_modules/vuetify/src/components/VDataTable/VSimpleTable.ts`, `VSimpleTable.sass`, and `_variables.scss`.
+
+Implemented:
+
+- Preserved Vue page order: heading text, Usage, Playground, Examples, Fixed height, Fixed header, Dense table, and Dark theme.
+- Implemented exact dessert item data from Vue source, including names, calories, and row order.
+- Added a local `VSimpleTable` primitive matching verified Vuetify simple table behavior: 48px regular rows/header, 32px dense rows/header, 16px cell padding, wrapper overflow, fixed-height scrolling, sticky fixed-header cells, row hover state, light dividers, and dark theme colors.
+- Rebuilt the Playground controls from Vue source: `Height - px` number field with `1..500` clamp, `Toggle dense`, and `Toggle fixed-header`.
+- Added source expansion and invert example color controls using the existing docs-page pattern.
+- Added `/components/tables/simple-tables` route and enabled only the Simple Tables sidebar item; Data Tables remains pending/disabled.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `SimpleTables.vue`, `DocPage.vue`, `Usage.vue`, `Playground.vue`, `Examples.vue`, `Example.vue`, `SimpleTables.json` | Components/SimpleTables route with intro doc text, Usage, Playground, and examples array `height`, `fixed-header`, `dense`, `dark` | DocPage route, breadcrumbs, intro text, Usage, Playground, and examples order preserved | Match | Pending visual approval |
+| Usage | `src/demo/examples/simple-tables/usage.vue` | Plain `v-simple-table` with headers `Name`, `Calories` and ten dessert rows | Same headers, data, row order, regular 48px row/header table styling | Match | |
+| Playground | `src/demo/examples/simple-tables/playground.vue` | `dense`, `fixedHeader`, `height=300` controls below table; height field `1..500`; switches in `cols=6 md=3` columns | Same controls, defaults, responsive row, and live table updates | Match | |
+| Fixed height | `simple/height.vue`, `VSimpleTable.ts` | `height="300px"` wrapper with vertical scroll and non-sticky header | Same 300px fixed-height wrapper and scrolling behavior | Match | |
+| Fixed header | `simple/fixed-header.vue`, `VSimpleTable.sass` | `fixed-header height="300px"` with sticky header and header divider shadow | Same 300px scroll wrapper and sticky header cells | Match | |
+| Dense table | `simple/dense.vue`, `_variables.scss` | Dense header and row height `32px` | Same dense height and cell padding behavior | Match | |
+| Dark theme | `simple/dark.vue`, `VSimpleTable.sass` | Dark card/table surface, dark dividers, secondary header text, white primary body text | Same dark table surface, row hover, dividers, and text colors | Match | |
+| Source/invert | shared `Example.vue` | Per-example invert/source controls | Local docs block with invert/source actions | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Simple Tables remains pending user visual approval.
+
+---
+
+## Previous Phase: Data Iterators
 
 ### Vuetify / Data Iterators Source-Driven Implementation
 
