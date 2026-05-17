@@ -1,15 +1,72 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Directives / Intersect)
+Last updated: 2026-05-17 (Directives / Mutate)
 
 ## Phase
 
-Directives / Intersect strict source-driven rebuild.
+Directives / Mutate strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/directives/Intersect`
-File: `react-dashboard-template/src/pages/directives/IntersectPage.tsx`
+Route: `/directives/mutate`
+File: `react-dashboard-template/src/pages/directives/MutatePage.tsx`
+
+### Directives / Mutate Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Directives / Mutate at `/directives/mutate`.
+- Verified the exact Vue route from `src/router/routes/vuetify.js` before enabling the React route.
+- Enabled only the Mutate sidebar item in the Directives group.
+- Did not touch Calendars, approved Vuetify slices, Intersect, Resizing, Ripples, Scrolling, or `.claude/`.
+
+Source trace:
+
+- Vue route: `src/router/routes/vuetify.js` (`/directives/mutate`).
+- Main page/order: `src/views/Vuetify/Directives/Mutate.vue`.
+- Documentation text: `src/lang/en/directives/Mutate.json`.
+- Usage example: `src/demo/examples/mutate/usage.vue`.
+- Modifiers example: `src/demo/examples/mutate/simple/once.vue`.
+- Snippets: `src/demo/snippets/html/directive_mutate*.txt`.
+- Shared wrappers: `src/demo/components/DocPage.vue`, `Examples.vue`, and `Example.vue`.
+- Directive internals: `node_modules/vuetify/src/directives/mutate/index.ts`.
+
+Implemented:
+
+- Preserved Vue page hierarchy: namespace `Directives`, page `Mutate`, breadcrumbs `Directives > Mutate`, heading text, Usage, Examples, Modifiers, and options docs.
+- Implemented Usage with `Content` text field default `Hello, world!`, observed sheet content, and `Total mutations` counter that increments from `MutationObserver` callbacks.
+- Implemented Modifiers with centered `Change Content` button, two responsive cards, exact titles, mutation count rows, source paragraph text, `+content + 2` paragraph count behavior, default observer counter, and `.once` counter that disconnects after the first mutation.
+- Implemented page-local source-shaped `useMutate` hook using Vuetify defaults: all observer options enabled when no modifiers/options are supplied; modifier keys override defaults; `.once` disconnects after callback.
+- Preserved example source panel, template/script tabs, invert example color action, and visual Github/source buttons.
+- Added `/directives/mutate` route and enabled only Mutate; Resizing, Ripples, and Scrolling remain disabled/pending.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Route | `src/router/routes/vuetify.js:612-615` | Directives / Mutate route is `/directives/mutate` | React route uses `/directives/mutate` | Match | Verified before editing |
+| Page wrapper | `Mutate.vue`, `Mutate.json` | Directives/Mutate page with breadcrumbs, heading text, Usage, Modifiers, and options | Same hierarchy and text implemented | Match | Pending visual approval |
+| Usage | `src/demo/examples/mutate/usage.vue` | Text field default `Hello, world!`; sheet observed by `v-mutate`; mutation counter increments on DOM update | React observes the sheet element and increments from MutationObserver callbacks | Match | |
+| Modifiers | `src/demo/examples/mutate/simple/once.vue` | Button toggles content; Card 1 increments every mutation; Card 2 with `v-mutate.once` increments once then disconnects | Same two-card layout, paragraph count behavior, default observer, and once disconnect behavior | Match | |
+| Directive lifecycle | `node_modules/vuetify/src/directives/mutate/index.ts` | Handler receives `(mutationsList, observer)`; default observes attributes/childList/subtree/characterData; modifiers override; once unbinds | Local hook implements the same default options, modifier options, callback signature, and once disconnect | Match | |
+| Source/invert | `Example.vue`, `once.vue`, `usage.vue` | Invert colors, View on Github, View source, template/script tabs with source text | Same controls and full Vue source snippets preserved | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Directives / Mutate remains pending user visual approval.
+
+---
+
+## Previous Phase: Intersect
 
 ### Directives / Intersect Source-Driven Implementation
 

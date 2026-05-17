@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Directives / Intersect)
+Last updated: 2026-05-17 (Directives / Mutate)
 
 ## Strategy Status
 
@@ -11,18 +11,22 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Directives / Intersect.
+- Active section: Directives / Mutate.
 
 ## Current Slice
 
-- Scope: Directives / Intersect only.
-- Route: `/directives/Intersect`.
+- Scope: Directives / Mutate only.
+- Route: `/directives/mutate` (verified from `src/router/routes/vuetify.js`).
 - Status: strict source-driven implementation applied; pending user visual approval.
-- Source audit: Vue Intersect sources traced from `src/views/Vuetify/Directives/Intersect.vue`, `src/lang/en/directives/Intersect.json`, `src/demo/examples/intersect/usage.vue`, `src/demo/examples/intersect/simple/options.vue`, shared docs/example wrappers, and `node_modules/vuetify/src/directives/intersect/index.ts`.
-- Implementation: added `IntersectPage.tsx`, enabled only the Intersect sidebar item, and added the uppercase `/directives/Intersect` route.
-- Behavior: implemented source-shaped `IntersectionObserver` binding on the actual target card, Usage state via `entries[0].isIntersecting`, With options state via `entries[0].intersectionRatio >= 0.5`, threshold `[0, 0.5, 1.0]`, 400px scroll region, 200vh inner area, 32px status avatar, source cards/text, source panel, invert action, options docs, and polyfill docs.
+- Source audit: Vue Mutate sources traced from `src/router/routes/vuetify.js`, `src/views/Vuetify/Directives/Mutate.vue`, `src/lang/en/directives/Mutate.json`, `src/demo/examples/mutate/usage.vue`, `src/demo/examples/mutate/simple/once.vue`, mutation directive snippets, shared docs/example wrappers, and `node_modules/vuetify/src/directives/mutate/index.ts`.
+- Implementation: added `MutatePage.tsx`, enabled only the Mutate sidebar item, and added `/directives/mutate`.
+- Behavior: implemented source-shaped `MutationObserver` binding on the actual target element, default all-options observer behavior, `.once` unbind behavior, Usage content field mutation counter, Modifiers two-card mutation counters, source panel, invert action, and options docs.
 - Build: passed inside `react-dashboard-template/`.
-- Directives / Intersect: implemented; pending user visual approval.
+- Directives / Mutate: implemented; pending user visual approval.
+
+## Previous Slice: Intersect
+
+- Status: implemented from Vue source; pending user visual approval.
 
 ## Previous Slice: Calendars
 
