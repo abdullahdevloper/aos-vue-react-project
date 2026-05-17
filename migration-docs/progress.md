@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Simple Tables)
+Last updated: 2026-05-17 (Data Tables)
 
 ## Strategy Status
 
@@ -11,15 +11,17 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Simple Tables.
+- Active section: Vuetify / Data Tables.
 
 ## Current Slice
 
-- Scope: Vuetify / Simple Tables only.
-- Route: `/components/tables/simple-tables`.
+- Scope: Vuetify / Data Tables only.
+- Route: `/components/tables/data-tables`.
 - Status: implemented from Vue source; pending user visual approval.
-- Source audit: Vue Simple Tables sources traced directly from `src/views/Vuetify/Tables/SimpleTables.vue`, `src/demo/examples/simple-tables/usage.vue`, `src/demo/examples/simple-tables/playground.vue`, `src/demo/examples/simple-tables/simple/height.vue`, `src/demo/examples/simple-tables/simple/fixed-header.vue`, `src/demo/examples/simple-tables/simple/dense.vue`, `src/demo/examples/simple-tables/simple/dark.vue`, `src/lang/en/components/SimpleTables.json`, shared docs wrappers, and Vuetify internals under `node_modules/vuetify/src/components/VDataTable/`.
-- Implementation: added `/components/tables/simple-tables`, enabled only the Simple Tables sidebar item, kept Data Tables pending/disabled, and rebuilt Usage, Playground, Fixed height, Fixed header, Dense table, and Dark theme with exact dessert rows, table header/body layout, dense/fixed-height/fixed-header/dark behavior, source controls, and responsive playground controls.
+- Source audit: Vue Data Tables sources traced directly from `src/views/Vuetify/Tables/DataTables.vue`, all mounted examples under `src/demo/examples/data-tables/`, unmounted `playground.vue`, `src/lang/en/components/DataTables.json`, shared docs wrappers, and Vuetify internals under `node_modules/vuetify/src/components/VDataTable/`.
+- Implementation: added `/components/tables/data-tables`, enabled the Data Tables sidebar item, and rebuilt the mounted Vue order from Usage through CRUD with exact dessert/category data, headers, sorting, search/filtering, pagination/footer props, selection, expansion, grouping, loading, slot demonstrations, custom cells, server-style loading, edit-dialog snackbar behavior, and CRUD dialog actions.
+- Rejection fix: re-traced `VDataTable.ts`, `VDataTableHeaderDesktop.ts`, `VDataTableHeader.sass`, `VDataFooter.sass`, and `VSimpleTable.sass`; tightened the shared DataTable primitive with Vuetify-like sort icons/badges, grouped row toggle/remove controls, footer rows-per-page select, corrected `All` pagination behavior, and closer grouped/footer/header styling.
+- Server-side behavior fix: re-traced `src/demo/examples/data-tables/intermediate/server.vue`; the React example now mirrors Vue `options.sync` with local async fetch state, `loading`, `totalDesserts`, server-side sort, page slicing, and rows-per-page changes instead of passing all rows to the table.
 - Build: passed inside `react-dashboard-template/`.
 - UI Components / Charts: approved.
 - UI Components / Widgets: approved.
@@ -68,6 +70,7 @@ Current rebuild strategy:
 - Vuetify / Subheaders: rejection fix applied from Vue source; pending user visual approval.
 - Vuetify / Data Iterators: implemented from Vue source; pending user visual approval.
 - Vuetify / Simple Tables: implemented from Vue source; pending user visual approval.
+- Vuetify / Data Tables: implemented from Vue source; pending user visual approval.
 - Vuetify Batch B and later: not started.
 - Style & User Interface / Color: route preserved.
 - Style & User Interface / Icons: route preserved.

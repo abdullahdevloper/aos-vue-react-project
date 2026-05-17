@@ -1,15 +1,84 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Simple Tables)
+Last updated: 2026-05-17 (Data Tables)
 
 ## Phase
 
-Vuetify / Simple Tables strict source-driven rebuild.
+Vuetify / Data Tables strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/tables/simple-tables`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/SimpleTablesPage.tsx`
+Route: `/components/tables/data-tables`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/DataTablesPage.tsx`
+
+### Vuetify / Data Tables Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Data Tables at `/components/tables/data-tables`.
+- Enabled only the Tables > Data Tables sidebar item.
+- Did not touch Simple Tables, Tabs, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and mounted order: `src/views/Vuetify/Tables/DataTables.vue`.
+- Usage example: `src/demo/examples/data-tables/usage.vue`.
+- Mounted examples in Vue order: `simple/select`, `simple/group`, `simple/multi-sort`, `simple/search`, `simple/headerless`, `simple/loading`, `simple/dense`, `simple/footer-props`, `simple/filterable-columns`, `intermediate/slots`, `intermediate/simple-checkbox`, `intermediate/expand`, `intermediate/custom-filter`, `intermediate/customize-header`, `intermediate/customize-rows`, `intermediate/paginate`, `intermediate/sort`, `intermediate/server`, `complex/edit-dialog`, and `complex/crud`.
+- Traced but not mounted by `DataTables.vue`: `src/demo/examples/data-tables/playground.vue` and `simple/virtualized.vue`.
+- Documentation text: `src/lang/en/components/DataTables.json`.
+- Shared docs/example wrappers: `src/demo/components/DocPage.vue`, `Usage.vue`, `Examples.vue`, and `Example.vue`.
+- Vuetify internals: `node_modules/vuetify/src/components/VDataTable/VDataTable.ts`, `VDataTable.sass`, `VDataTableHeader.sass`, `VDataFooter.sass`, `VSimpleTable.sass`, and `_variables.scss`.
+
+Implemented:
+
+- Preserved Vue rendered order from `DataTables.vue`: Usage followed by the 20 mounted examples through CRUD.
+- Implemented exact dessert/category/gluten-free data and headers used by the mounted examples.
+- Added a local `DataTable` primitive with Vuetify-like header/body/footer layout, 48px regular rows, 32px dense rows, borders, hover/selected states, elevation, loading progress, default footer, footer prop icons, search/filter, sorting, pagination, grouping, row selection, expansion, and slot-style custom rendering.
+- Implemented source-specific examples: selectable rows, grouped rows, multi-sort, search, headerless, loading, dense, footer props, filterable columns, slots, simple checkbox, expandable rows, custom filtering, custom header, custom calorie chips, external pagination, external sorting, server-style loading, content editing snackbar behavior, and CRUD dialog actions.
+- Added `/components/tables/data-tables` route and enabled the Data Tables sidebar item.
+- Rejection fix: re-traced the Vue Data Tables source and Vuetify internals, then corrected the shared React primitive to better match `v-data-table` behavior:
+  - header sort affordances now match `VDataTableHeaderDesktop.ts` / `VDataTableHeader.sass` with hover/active sort icons and multi-sort badges.
+  - grouped rows now match the default `genDefaultGroupedRow` shape with plus/minus toggle, `category: value` text, and remove icon position.
+  - footer now follows `VDataFooter.sass` more closely with a rows-per-page select instead of static text and correct `All` pagination behavior.
+  - regular/dense row heights, hover/selected state, footer spacing, and table wrapper behavior remain sourced from `VSimpleTable.sass` / `_variables.scss`.
+- Server-side behavior fix: re-traced `src/demo/examples/data-tables/intermediate/server.vue`; React now keeps Vue-equivalent `options`, `desserts`, `totalDesserts`, and `loading` state, performs the delayed local fetch on every option change, sorts server-side only when one sort field/direction is present, slices by page/items-per-page before passing rows to the table, and updates rows-per-page through the footer.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `DataTables.vue`, `DocPage.vue`, `Usage.vue`, `Examples.vue`, `Example.vue`, `DataTables.json` | Components/DataTables route with intro text, Usage, and examples array in source order | DocPage route, breadcrumbs, intro text, Usage, and mounted examples order preserved | Match | Pending visual approval |
+| Usage | `usage.vue` | Standard table, 5 items per page, exact nutrition data and headers | Same data, headers, 5-per-page footer, and table styling | Match | |
+| Selectable rows | `simple/select.vue` | `show-select`, `single-select` switch, selected row state | Same switch, header/row checkboxes, single/multiple selection state | Match | |
+| Grouped rows | `simple/group.vue`, `VDataTable.ts` | Group rows by category with default group header, plus/minus toggle, `category: value` text, and remove icon | Same category grouping, open/close toggle, default header text, and remove icon placement | Match | Rejection fix tightened default group row |
+| Multi-sort | `simple/multi-sort.vue` | Sort by calories asc then fat desc | Same source data and multi-column sort order | Match | |
+| Search/filterable/custom filter | `simple/search.vue`, `simple/filterable-columns.vue`, `intermediate/custom-filter.vue` | Search fields, filterable false name column, uppercase custom filter, calories less-than append row | Same search fields and source filter behavior | Match | |
+| Header/footer/loading/dense | `simple/headerless.vue`, `simple/loading.vue`, `simple/dense.vue`, `simple/footer-props.vue`, `VDataTableHeaderDesktop.ts`, `VDataFooter.sass` | Header/footer toggles, loading text/progress, dense rows, custom footer icons, rows-per-page select, sort affordances | Same visible behavior, row/footer states, footer select, and sort icon/badge behavior | Match | Rejection fix tightened shared primitive |
+| Slots | `intermediate/slots.vue` | Slot selector controls top/header/progress/item/body/no-data/no-results/footer variants | Same slot selector and visible slot variants | Match | |
+| Checkbox/expand/custom cells | `simple-checkbox.vue`, `expand.vue`, `customize-header.vue`, `customize-rows.vue` | Disabled gluten-free checkboxes, expandable info rows, uppercase name header, colored calorie chips | Same source-backed renderers and state | Match | |
+| External paginate/sort/server | `paginate.vue`, `sort.vue`, `server.vue` | Controlled page/items-per-page, controlled sort buttons, server `options.sync` loading sequence, server-side sorting, server-side page slicing, and `server-items-length` total | Same controlled state, delayed local server fetch, footer rows-per-page updates, server-side sort/page slicing, and total count behavior | Match | Server-side behavior fix applied |
+| Edit dialog and CRUD | `edit-dialog.vue`, `crud.vue` | Inline edit dialogs with snackbar events; CRUD New/Edit/Delete/Reset dialogs | Same dialog/snackbar/actions and source form fields | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Data Tables remains pending user visual approval.
+
+---
+
+## Previous Phase: Simple Tables
 
 ### Vuetify / Simple Tables Source-Driven Implementation
 

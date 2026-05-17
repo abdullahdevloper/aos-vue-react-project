@@ -84,6 +84,7 @@ import SteppersPage from "./pages/ui-components/vuetify/SteppersPage";
 import SubheadersPage from "./pages/ui-components/vuetify/SubheadersPage";
 import DataIteratorsPage from "./pages/ui-components/vuetify/DataIteratorsPage";
 import SimpleTablesPage from "./pages/ui-components/vuetify/SimpleTablesPage";
+import DataTablesPage from "./pages/ui-components/vuetify/DataTablesPage";
 import Error404Page from "./pages/pages/Error404Page";
 import Error500Page from "./pages/pages/Error500Page";
 import ProfilePage from "./pages/pages/ProfilePage";
@@ -195,6 +196,7 @@ export default function App() {
           <Route path="/components/subheaders" element={<DashboardRoute><SubheadersPage /></DashboardRoute>} />
           <Route path="/components/tables/data-iterators" element={<DashboardRoute><DataIteratorsPage /></DashboardRoute>} />
           <Route path="/components/tables/simple-tables" element={<DashboardRoute><SimpleTablesPage /></DashboardRoute>} />
+          <Route path="/components/tables/data-tables" element={<DashboardRoute><DataTablesPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
