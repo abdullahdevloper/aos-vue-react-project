@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Timelines)
+Last updated: 2026-05-17 (Tooltips)
 
 ## Strategy Status
 
@@ -11,13 +11,25 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / Timelines.
+- Active section: Vuetify / Tooltips.
 
 ## Current Slice
 
-- Scope: Vuetify / Timelines only.
-- Route: `/components/timelines`.
+- Scope: Vuetify / Tooltips only.
+- Route: `/components/tooltips`.
 - Status: implemented from Vue source; pending user visual approval.
+- Source audit: Vue Tooltips sources traced directly from `src/views/Vuetify/Tooltips.vue`, `src/lang/en/components/Tooltips.json`, `src/demo/examples/tooltips/usage.vue`, `alignment.vue`, `visibility.vue`, shared docs wrappers, and Vuetify `VTooltip` internals.
+- Implementation: added `/components/tooltips`, enabled the Tooltips sidebar item, and rebuilt Usage, Alignment, and Visibility in Vue order.
+- Behavior: implemented local source-shaped tooltip behavior for hover/focus/Escape activation, programmatic `v-model` visibility, top/bottom/left/right positioning, 10px offset from activator, fixed/body portal positioning, scale/fade transition timing, source text/color/radius/padding, and source panel/invert controls.
+- Rejection fix: rebuilt the Tooltips activator model from Vue `v-slot:activator="{ on }"` and Vuetify `Activatable`/`VTooltip` internals. The local tooltip now binds hover/focus/Escape listeners and measurement to the rendered activator wrapper itself instead of relying on refs forwarded into local React function components, restoring working tooltip positioning and visibility for button, icon, text, alignment, and `v-model` examples.
+- Position/transition rejection fix: re-traced `VTooltip`, `Menuable`, `Delayable`, `VTooltip.sass`, and Vuetify transition classes; corrected Tooltips to use absolute page coordinates, 12px viewport overflow clamping, source 10px side offset, zero-delay delayed open/close, external `v-model` lazy booting, center-origin scale enter, fade-only leave, source opacity, and z-index 8.
+- Visibility rejection fix: rebuilt the shared tooltip activator binding from Vue scoped-slot behavior. `VTooltip` now clones the actual activator element, attaches hover/focus/Escape listeners to it, and measures that same element for positioning; local button/icon primitives forward refs so Visibility uses the real icon button activator instead of an extra wrapper target.
+- Tooltips regression fix: re-traced Usage and Alignment after the Visibility fix; restored their activators by forwarding injected tooltip listeners/ARIA/ref through local `VButton` and `VIcon` primitives to the actual rendered button/svg elements, preserving the working Visibility `IconButton` activator.
+- Build: passed inside `react-dashboard-template/`.
+- Vuetify / Tooltips: implemented; pending user visual approval.
+
+## Previous Slice: Timelines
+
 - Source audit: Vue Timelines sources traced directly from `src/views/Vuetify/Timelines.vue`, `src/lang/en/components/Timelines.json`, `src/demo/examples/timelines/usage.vue`, `playground.vue`, all mounted examples under `simple/`, `intermediate/`, and `complex/`, shared docs wrappers, and Vuetify internals under `node_modules/vuetify/src/components/VTimeline/`.
 - Implementation: added `/components/timelines`, enabled the Timelines sidebar item, and rebuilt the Vue order from Usage and Playground through Small dots, Icon dots, Reverse direction, Timeline card, Dense alert, Opposite slot, Avatar dots, Colored dots, and Advanced.
 - Behavior: implemented local timeline primitives for center/dense/reverse lines, 96px dividers, regular/small/large dots, fill-dot, hide-dot, icons, icon colors, avatar slots, opposite slots, card carets, dense responsive behavior, realtime logging toggle, reverse switch, and advanced comment posting.

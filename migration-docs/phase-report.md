@@ -1,12 +1,118 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Timelines)
+Last updated: 2026-05-17 (Tooltips)
 
 ## Phase
 
-Vuetify / Timelines strict source-driven rebuild.
+Vuetify / Tooltips strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
+
+Route: `/components/tooltips`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/TooltipsPage.tsx`
+
+### Vuetify / Tooltips Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Tooltips at `/components/tooltips`.
+- Enabled only the Tooltips sidebar item.
+- Did not touch Timelines, Treeview, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and mounted order: `src/views/Vuetify/Tooltips.vue`.
+- Usage/example files in Vue order: `src/demo/examples/tooltips/usage.vue`, `alignment.vue`, and `visibility.vue`.
+- Documentation text: `src/lang/en/components/Tooltips.json`.
+- Shared docs/example wrappers: `src/demo/components/DocPage.vue`, `Usage.vue`, `Examples.vue`, and `Example.vue`.
+- Vuetify internals: `node_modules/vuetify/src/components/VTooltip/VTooltip.ts`, `VTooltip.sass`, transition variables, and tooltip style variables.
+
+Implemented:
+
+- Preserved Vue page hierarchy: intro text, Usage, Examples, Alignment, and Visibility.
+- Added a local `VTooltip` primitive that uses the verified Vuetify activator model: hover/focus activation, Escape close, programmatic `value`/`onValueChange`, body portal rendering, and source side positioning.
+- Matched source tooltip visuals: `rgba(97,97,97,.9)` background, white text, 14px font, 22px line-height, 5px 16px padding, 4px radius, 0.9 active opacity, 10px activator offset, and scale/fade timing from Vuetify.
+- Recreated Usage with button, MDI home icon, and text activators.
+- Recreated Alignment with left/top/bottom/right primary button activators.
+- Recreated Visibility with toggle button, programmatic top tooltip, grey cart icon button, and initial `show: false`.
+- Added `/components/tooltips` route and enabled the Tooltips sidebar item; Treeview and later items remain pending/disabled.
+- Rejection fix: re-traced Vue `VTooltip` and `Activatable`; rebuilt the local activator behavior so hover/focus/Escape listeners and tooltip measurements are attached to the actual rendered activator wrapper. This replaces the rejected ref-cloning implementation, which could not measure local React function-component activators reliably.
+- Position/transition rejection fix: re-traced `VTooltip.calculatedLeft`, `VTooltip.calculatedTop`, `Menuable.calcXOverflow`, `Menuable.calcYOverflow`, `Delayable.runDelay`, `VTooltip.sass`, `_variables.scss`, `scale-transition`, and `fade-transition`; corrected the local primitive to use source absolute page coordinates, 12px viewport clamp, 10px side offset, delayed zero-time open/close, external `v-model` lazy booting, center-origin scale enter, and fade-only leave.
+- Visibility rejection fix: re-traced `visibility.vue`, `Activatable.genActivator`, `genActivatorListeners`, `Menuable.updateDimensions`, and `Toggleable`; rebuilt the local `VTooltip` so the actual scoped-slot-equivalent child activator receives listeners/attrs/ref and is the measurement target. Local `VButton` and `VIcon` now forward refs so the tooltip no longer measures an extra wrapper element.
+- Regression fix: re-traced Usage and Alignment source after the Visibility fix. The shared tooltip behavior was correct, but the local `VButton` and `VIcon` activator primitives dropped injected `v-on`-equivalent props. They now forward the cloned tooltip listeners/ARIA/ref to their actual rendered button/svg elements while preserving the working Visibility `IconButton` path.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Tooltips.vue`, `DocPage.vue`, `Example.vue`, `Tooltips.json` | Components/Tooltips route with intro text, Usage, and examples array in source order | DocPage route, breadcrumbs, intro text, Usage, Alignment, and Visibility order preserved | Match | Pending visual approval |
+| Usage | `src/demo/examples/tooltips/usage.vue` | Bottom tooltip wraps a primary button, primary `mdi-home` icon, and plain text activator | Same three activators with bottom tooltips and source text `Tooltip` | Match | |
+| Alignment | `src/demo/examples/tooltips/alignment.vue` | Four primary dark buttons with left/top/bottom/right tooltips and matching tooltip text | Same four buttons, sides, labels, and tooltip text | Match | |
+| Visibility | `src/demo/examples/tooltips/visibility.vue` | `show: false`; toggle button controls `v-model`; grey cart icon activator shows `Programmatic tooltip` on top | Same initial state, toggle behavior, icon activator, top placement, and tooltip text | Match | |
+| Tooltip primitive | `VTooltip.ts`, `VTooltip.sass`, `_variables.scss`, `mixins/activatable/index.ts` | Hover/focus activation, Escape close, listeners from activator slot, 10px offset, fixed/body overlay, scale/fade transition, source background/padding/radius/font | Local primitive binds listeners and measurement to the rendered activator wrapper, then renders the fixed tooltip portal with verified Vuetify styles/timing | Match | Rebuilt after rejection |
+
+Rejected functionality verification:
+
+| Example | Vue source | Vue expected functionality/design | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Usage activators | `usage.vue`, `Activatable.genActivatorListeners`, `VTooltip.genActivatorListeners` | Hovering the button, icon, or text activator opens a bottom tooltip; leaving closes it | Wrapper receives mouseenter/mouseleave/focus/blur/Escape and measures the same rendered activator wrapper | Match | Fixes previous non-working ref target |
+| Alignment positions | `alignment.vue`, `VTooltip.calculatedLeft`, `VTooltip.calculatedTop` | Left/top/bottom/right tooltips position 10px from the activator using activator/content dimensions | Local position calculation uses the verified side formulas and 10px offset against real DOM rects | Match | |
+| Programmatic visibility | `visibility.vue` | Toggle changes `show`; top tooltip opens/closes from `v-model` and also uses activator listeners | Controlled `value`/`onValueChange` mirrors `show`; toggle and icon hover/focus update the same state | Match | |
+
+Position and motion verification:
+
+| Example | Vue source/classes | Vue expected position/behavior | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Top/bottom placement | `VTooltip.ts:58-105`, `Menuable.calcXOverflow`, `Menuable.calcYOverflow` | Tooltip centers horizontally on activator; top is activator top minus content height minus 10; bottom is activator bottom plus 10; page coordinates are clamped to 12px viewport padding | Local primitive uses the same center formula, 10px offset, absolute page coordinates, and 12px overflow clamp | Match | |
+| Left/right placement | `VTooltip.ts:70-99` | Left sits content width plus 10px left of activator; right sits activator width plus 10px right; vertical center aligns with activator center | Local primitive uses the same left/right formulas and vertical center calculation | Match | |
+| Open/close triggers | `Activatable.genActivatorListeners`, `VTooltip.genActivatorListeners`, `Delayable.runDelay` | Hover opens/closes with `openDelay:0` / `closeDelay:0`; focus opens; blur closes; Escape closes | Local primitive clears pending timers and applies zero-delay open/close for mouseenter, mouseleave, focus, blur, and Escape | Match | |
+| Enter transition | `VTooltip.computedTransition`, `scale-transition`, `VTooltip.sass` | Active tooltip uses `scale-transition`; enter starts at opacity 0 and `scale(0)`, duration 150ms, timing `cubic-bezier(0,0,0.2,1)`, active opacity 0.9 | Local primitive enters from opacity 0/scale 0 to opacity 0.9/scale 1 with the verified duration/timing | Match | |
+| Leave transition | `VTooltip.computedTransition`, `fade-transition`, `VTooltip.sass` | Inactive tooltip uses `fade-transition`; leave fades opacity to 0 over 75ms without directional scaling | Local primitive keeps scale at 1 on leave and fades opacity to 0 over 75ms | Match | |
+| Surface/z-index | `VTooltip.sass`, `_variables.scss`, `Stackable.activeZIndex` | `rgba(97,97,97,.9)` surface, white text, 14px font, 22px line-height, 5px 16px padding, 4px radius, pointer-events none, z-index 8 in this page context | Local primitive uses the same traced style tokens and z-index 8 | Match | |
+
+Visibility root-mismatch verification:
+
+| Area | Vue source/classes | Vue expected behavior | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Visibility layout | `src/demo/examples/tooltips/visibility.vue:2-21` | Fluid container, source row/col structure, full-width toggle row, full-width `mt-12` icon activator row | React keeps source-equivalent 12px container/row/col gutters, full-width columns, and 48px top margin for the icon activator row | Match | Pending visual approval |
+| Actual activator binding | `visibility.vue:12-17`, `Activatable.genActivator` `node_modules/vuetify/src/mixins/activatable/index.ts:80-88` | Scoped-slot `on` listeners are bound to the actual `v-btn icon` activator | `VTooltip` clones the actual child activator, injects hover/focus/blur/Escape listeners, ARIA attrs, and ref into that element | Match | Replaces wrapper-target model |
+| Measurement target | `Menuable.updateDimensions` `node_modules/vuetify/src/mixins/menuable/index.ts:341-376` | Tooltip position is calculated from `getActivator()` measuring the slot activator element | Tooltip measures the cloned child activator ref; Visibility measures the actual `IconButton` DOM node | Match | |
+| `v-model` lifecycle | `visibility.vue:12`, `Toggleable` `node_modules/vuetify/src/mixins/toggleable/index.ts:17-29` | `show` controls tooltip value; tooltip emits input changes when activator listeners alter active state | Controlled `value={show}` and `onValueChange={setShow}` share the same state between toggle click and activator listeners | Match | |
+
+| Root mismatch | React before | React after | Why this matches Vue source |
+|---|---|---|---|
+| Visibility activator/listener/measurement target | Tooltip events and measurement were attached to an extra wrapper span around the icon button | Tooltip events, ARIA attrs, and measurement ref are injected into the actual child activator; `VButton`/`VIcon` forward refs for source-equivalent targets | Vue `v-tooltip` passes `on` through the scoped activator slot and `Menuable` measures `getActivator()`, which is the slot activator element, not a wrapper |
+
+Post-Visibility regression verification:
+
+| Section | Vue source/classes | Vue expected behavior | React before fix | React after fix | Match level | Notes |
+|---|---|---|---|---|---|---|
+| Usage button activator | `src/demo/examples/tooltips/usage.vue`, `Activatable.genActivator` | `v-btn color="primary" dark v-on="on"` receives tooltip listeners directly and is measured as activator | `VTooltip` cloned `VButton`, but `VButton` dropped injected listeners/ref before rendering MUI Button | `VButton` forwards injected listeners, ARIA attrs, role, and ref to the rendered button | Match | Preserves source actual-element target |
+| Usage icon activator | `usage.vue` | `v-icon color="primary" dark v-on="on"` receives listeners directly and is measured as activator | `VIcon` dropped injected listeners/ref before rendering SVG | `VIcon` forwards injected listeners, ARIA attrs, role, and ref to rendered SVG | Match | |
+| Usage text activator | `usage.vue` | Plain `span v-on="on"` receives listeners directly and is measured as activator | MUI `Box component="span"` already received cloned listeners directly | Unchanged; still direct child activator | Match | |
+| Alignment buttons | `src/demo/examples/tooltips/alignment.vue` | Each source `v-btn` receives listeners directly and positions left/top/bottom/right from that button | Buttons dropped injected listeners/ref | `VButton` forwards injected listeners/ref, restoring all four alignment tooltips | Match | |
+| Visibility | `src/demo/examples/tooltips/visibility.vue` | Actual `v-btn icon` is the activator and `v-model` controls visibility | Visibility already worked through MUI `IconButton` forwarding | Unchanged shared behavior; `IconButton` still receives listeners/ref directly | Match | Preserved |
+
+| Regression cause | Affected sections | Source-driven fix | Why Visibility remains preserved |
+|---|---|---|---|
+| The shared tooltip began cloning actual child activators, matching Vue, but custom local activators did not forward cloned `v-on`-equivalent props to their rendered DOM/MUI elements | Usage button, Usage icon, Alignment buttons | Forward cloned listeners, ARIA attrs, role, and ref through `VButton` and `VIcon` to the actual rendered activator elements | Visibility uses MUI `IconButton`, which already accepted the cloned props/ref; that path was not changed except by the shared forwarding-compatible model |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Tooltips remains pending user visual approval.
+
+---
+
+## Previous Phase: Timelines
 
 Route: `/components/timelines`
 File: `react-dashboard-template/src/pages/ui-components/vuetify/TimelinesPage.tsx`
