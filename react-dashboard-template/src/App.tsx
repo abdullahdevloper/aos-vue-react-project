@@ -102,6 +102,7 @@ import LockScreenPage from "./pages/pages/auth/LockScreenPage";
 import ContactsPage from "./pages/app/ContactsPage";
 import ChatPage from "./pages/app/ChatPage";
 import ClickOutsidePage from "./pages/directives/ClickOutsidePage";
+import IntersectPage from "./pages/directives/IntersectPage";
 
 export default function App() {
   const darkMode = useDashboardStore((state) => state.darkMode);
@@ -208,6 +209,7 @@ export default function App() {
           <Route path="/components/treeview" element={<DashboardRoute><TreeviewPage /></DashboardRoute>} />
           <Route path="/components/virtual-scrollers" element={<DashboardRoute><VirtualScrollersPage /></DashboardRoute>} />
           <Route path="/directives/click-outside" element={<DashboardRoute><ClickOutsidePage /></DashboardRoute>} />
+          <Route path="/directives/Intersect" element={<DashboardRoute><IntersectPage /></DashboardRoute>} />
           <Route path="/prototype-dashboard" element={<DashboardRoute><DashboardPage /></DashboardRoute>} />
           <Route path="/widgets" element={<DashboardRoute><WidgetsPage /></DashboardRoute>} />
           <Route path="/lists" element={<DashboardRoute><ListsPage /></DashboardRoute>} />

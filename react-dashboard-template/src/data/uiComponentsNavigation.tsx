@@ -239,7 +239,7 @@ export const globalNavigation: SidebarNavEntry[] = [
     icon: <Functions />,
     children: [
       { title: "Click Outside", badge: "new", path: "/directives/click-outside" },
-      { title: "Intersect", disabled: true, pending: true },
+      { title: "Intersect", badge: "new", path: "/directives/Intersect" },
       { title: "Mutate", disabled: true, pending: true },
       { title: "Resizing", disabled: true, pending: true },
       { title: "Ripples", disabled: true, pending: true },

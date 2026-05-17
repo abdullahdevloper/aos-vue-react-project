@@ -1,15 +1,132 @@
 # Phase Report
 
-Last updated: 2026-05-17 (VirtualScrollers)
+Last updated: 2026-05-17 (Directives / Intersect)
 
 ## Phase
 
-Vuetify / VirtualScrollers strict source-driven rebuild.
+Directives / Intersect strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/virtual-scrollers`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/VirtualScrollersPage.tsx`
+Route: `/directives/Intersect`
+File: `react-dashboard-template/src/pages/directives/IntersectPage.tsx`
+
+### Directives / Intersect Source-Driven Implementation
+
+Status: implemented; pending user visual approval.
+
+Scope:
+
+- Implemented only Directives / Intersect at `/directives/Intersect`.
+- Enabled only the Intersect sidebar item in the Directives group.
+- Did not touch Calendars, approved Vuetify slices, Mutate, Resizing, Ripples, Scrolling, or `.claude/`.
+
+Source trace:
+
+- Main page and order: `src/views/Vuetify/Directives/Intersect.vue`.
+- Documentation text: `src/lang/en/directives/Intersect.json`.
+- Usage example: `src/demo/examples/intersect/usage.vue`.
+- With options example: `src/demo/examples/intersect/simple/options.vue`.
+- Shared wrappers: `src/demo/components/DocPage.vue`, `Examples.vue`, and `Example.vue`.
+- Directive internals: `node_modules/vuetify/src/directives/intersect/index.ts`.
+
+Implemented:
+
+- Preserved Vue page hierarchy: namespace `Directives`, page `Intersect`, breadcrumbs `Directives > Intersect`, heading text, Usage, Examples, options docs, and Polyfill docs.
+- Implemented Usage with 32px `v-avatar` status dot, 400px max-height scroll region, 200vh inner flex area, centered max-width 336 card, source title/text, and `entries[0].isIntersecting` behavior.
+- Implemented With options with the same layout and source lorem text plus `threshold: [0, 0.5, 1.0]`, using `entries[0].intersectionRatio >= 0.5`.
+- Implemented page-local source-shaped `useIntersect` hook that observes the actual target card element and passes `(entries, observer, isIntersecting)` like Vuetify's directive.
+- Preserved example source panel, template/script tabs, invert example color action, and visual Github/source buttons.
+- Added the uppercase `/directives/Intersect` route and enabled only the Intersect sidebar item; Mutate, Resizing, Ripples, and Scrolling remain disabled/pending.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Intersect.vue`, `Intersect.json` | Directives/Intersect page with breadcrumbs, heading text, Usage, examples, options, and Polyfill | Same hierarchy and text implemented | Match | Pending visual approval |
+| Usage | `src/demo/examples/intersect/usage.vue` | Dot starts red; card observed by `v-intersect="onIntersect"`; dot turns green when the card intersects | React observes the actual card element and sets state from `entries[0].isIntersecting` | Match | Uses native `IntersectionObserver` like Vue source |
+| With options | `src/demo/examples/intersect/simple/options.vue` | Dot turns green only when `intersectionRatio >= 0.5`; observer options threshold `[0, 0.5, 1.0]` | Same threshold and ratio behavior implemented | Match | |
+| Layout | Example sources; `VResponsive.sass`; `VAvatar.sass` | 32px avatar, centered dot, max-height 400 scroll viewport, 200vh inner area, centered max-width 336 card | Same visible structure, dimensions, card title/body, and scroll behavior implemented | Match | |
+| Directive lifecycle | `node_modules/vuetify/src/directives/intersect/index.ts` | Observe bound element, invoke handler with entries/observer/isIntersecting, unobserve on cleanup | Local hook observes target ref and unobserves on cleanup | Match | `once`/`quiet` documented in options; no Intersect example uses them |
+| Source/invert | `Example.vue` | Invert colors, View on Github, View source, template/script tabs | Same controls preserved in the Directives example block | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Directives / Intersect remains pending user visual approval.
+
+---
+
+## Previous Phase: Calendars
+
+### Vuetify / Calendars Source-Driven Rebuild
+
+Status: rebuilt; pending user visual approval.
+
+Scope:
+
+- Rebuilt only Vuetify / Calendars at `/components/calendars`.
+- Replaced the existing deferred/unapproved Calendars page artifact instead of preserving it blindly.
+- Route and sidebar were already present; no sidebar brand/logo changes were made.
+- Did not touch approved Vuetify slices, global animations outside this page, Calendars-adjacent slices, or `.claude/`.
+
+Source trace:
+
+- Main page/order: `src/views/Vuetify/Calendars.vue`.
+- Documentation text: `src/lang/en/components/Calendars.json`.
+- Usage: `src/demo/examples/calendars/usage.vue`.
+- Playground: `src/demo/examples/calendars/playground.vue`.
+- Examples in Vue order: `simple/weekly.vue`, `simple/daily.vue`, `intermediate/slots.vue`, `complex/events.vue`, `complex/category.vue`, `intermediate/nowline.vue`, `complex/dragndrop.vue`.
+- Vuetify internals traced: `VCalendar.ts`, `VCalendarMonthly.ts`, `VCalendarWeekly.sass`, `VCalendarDaily.sass`, `VCalendarCategory.sass`, `calendar-with-intervals.ts`, `calendar-with-events.sass`, and `_variables.scss`.
+
+Implemented:
+
+- Preserved Vue order: Usage, Playground, Weekly, Daily, Slots, Events, Category, Now Line, Drag and Drop.
+- Rebuilt a page-local `VCalendarLike` renderer for month, week, day, 4-day, custom weekly/daily, and category views using Vuetify source class names and verified layout constants where available.
+- Preserved Usage toolbar height, grey sheet surface, prev/next navigation, type/mode/weekdays controls, range event generation, and calendar height.
+- Rebuilt Playground controls, conditional end/min-week/interval/max-days/styling controls, date popover OK/Cancel flow, dark mode, short labels, weekday options, interval styling, and generated string events.
+- Preserved Weekly, Daily, and Slots fixed data and slot behavior.
+- Rebuilt Events toolbar/type menu behavior, date/more clicks into day view, generated event range updates, and event detail popover.
+- Rebuilt Category view with two source categories and category-assigned generated events.
+- Rebuilt Now Line with source red line/dot behavior, initial scroll-to-current-time logic, and 60s update interval.
+- Rebuilt Drag and Drop with source event generation, drag timed event, create event, resize bottom handle, cancel-on-leave, and active translucent event color behavior.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Calendars.vue`, `Calendars.json` | Components/Calendars route, breadcrumbs, intro docs, usage, playground, examples in source order | Same route/docs/order preserved in `CalendarsPage.tsx` | Match | Pending visual approval |
+| Usage | `usage.vue` | 54px grey toolbar, prev/next, type/mode/weekdays selects, `v-calendar` height 600, random events on change | Toolbar, controls, navigation, generated events, and 600px calendar implemented | Match | Random events follow Vue-style `Math.random` generation |
+| Playground | `playground.vue` | Controls column `lg=3`, calendar `lg=9`, absolute small primary FABs, conditional controls, date menus, interval styling | Same source controls/defaults and conditional rendering implemented with page-local date popovers | Match | Pending visual approval |
+| Weekly | `simple/weekly.vue` | Week view, fixed `2019-01-08`, fixed all-day/timed events, scroll to `08:00` | Same fixed events and initial scroll behavior | Match | |
+| Daily | `simple/daily.vue` | Day view with `Today` header slot and interval labels as `{hour} o'clock` | Same slot outputs implemented | Match | |
+| Slots | `intermediate/slots.vue` | Month day slot renders tracked percent sheets for past tracked dates | Same tracked data/colors/categories rendered inside month cells | Match | |
+| Events | `complex/events.vue` | Toolbar navigation, type menu, date/more click switches to day, event click opens anchored card | Same state handlers and anchored event popover implemented | Match | Pending visual approval |
+| Category | `complex/category.vue` | Category calendar with `John Smith` and `Tori Walker`, show all categories, generated category events | Same categories and generated event assignment | Match | |
+| Now Line | `intermediate/nowline.vue` | Red current-time line and first-day dot, scroll to nearest previous 30-minute block, update every 60s | Same page-local line/dot, scroll, and timer behavior | Match | |
+| Drag and Drop | `complex/dragndrop.vue` | Drag timed events, create events by dragging time grid, resize bottom handle, cancel on mouseleave, active alpha color | Same handlers and source state model implemented | Match | Pending visual approval |
+| Calendar internals | `VCalendar*.sass`, `calendar-with-intervals.ts`, `calendar-with-events.sass` | 1px calendar borders, 11px weekday labels, 60px interval gutter, 48px default intervals, 12px event text, 4px event radius | Local renderer uses the verified class names and constants | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Approval:
+
+- Vuetify / Calendars remains pending user visual approval.
+
+---
+
+## Previous Phase: VirtualScrollers
 
 ### Vuetify / VirtualScrollers Source-Driven Implementation
 

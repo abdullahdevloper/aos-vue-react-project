@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (VirtualScrollers)
+Last updated: 2026-05-17 (Directives / Intersect)
 
 ## Strategy Status
 
@@ -11,20 +11,26 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Vuetify / VirtualScrollers.
+- Active section: Directives / Intersect.
 
 ## Current Slice
 
-- Scope: Vuetify / VirtualScrollers only.
-- Route: `/components/virtual-scrollers`.
-- Status: implemented from Vue source; pending user visual approval.
-- Source audit: Vue VirtualScrollers sources traced from `src/views/Vuetify/VirtualScrollers.vue`, `src/lang/en/components/VirtualScrollers.json`, `src/demo/usages/virtual-scrollers.vue`, `src/demo/examples/virtual-scrollers/simple/user-directory.vue`, `src/demo/examples/virtual-scrollers/advanced/benching.vue`, shared docs/example wrappers, and `node_modules/vuetify/src/components/VVirtualScroll/VVirtualScroll.ts` / `.sass`.
-- Implementation: added `/components/virtual-scrollers`, enabled the VirtualScrollers sidebar item, and rebuilt Usage, User directory, and Pre-rendering items in exact Vue order.
-- Behavior: implemented a local source-shaped `VirtualScroll` primitive with fixed `itemHeight`, `height`, `bench`, `first/last/firstToRender/lastToRender` slicing, absolute item positioning, virtual container height equal to `items.length * itemHeight`, and scroll-driven rehydration.
-- Data: Usage renders `count` items from 7000-15000 with height 175-275; User directory generates 10000 rows from the source names/surnames/colors arrays; Benching renders 7000 numeric records with bench control 0-10.
-- Rejection fix: re-traced User directory, `VVirtualScroll`, `VListItem`, `VListItemAvatar`, `VAvatar`, `VBtn`, and `VCard` sources; rebuilt User directory rows around source `v-list-item` / `v-list-item__avatar` / `v-list-item__content` / `v-list-item__action` spacing, the source 40px outer list-item avatar clipping the nested 56px colored avatar, small depressed action button geometry, and confirmed source virtual-scroll uses no row transition/animation classes.
+- Scope: Directives / Intersect only.
+- Route: `/directives/Intersect`.
+- Status: strict source-driven implementation applied; pending user visual approval.
+- Source audit: Vue Intersect sources traced from `src/views/Vuetify/Directives/Intersect.vue`, `src/lang/en/directives/Intersect.json`, `src/demo/examples/intersect/usage.vue`, `src/demo/examples/intersect/simple/options.vue`, shared docs/example wrappers, and `node_modules/vuetify/src/directives/intersect/index.ts`.
+- Implementation: added `IntersectPage.tsx`, enabled only the Intersect sidebar item, and added the uppercase `/directives/Intersect` route.
+- Behavior: implemented source-shaped `IntersectionObserver` binding on the actual target card, Usage state via `entries[0].isIntersecting`, With options state via `entries[0].intersectionRatio >= 0.5`, threshold `[0, 0.5, 1.0]`, 400px scroll region, 200vh inner area, 32px status avatar, source cards/text, source panel, invert action, options docs, and polyfill docs.
 - Build: passed inside `react-dashboard-template/`.
-- Vuetify / VirtualScrollers: implemented; pending user visual approval.
+- Directives / Intersect: implemented; pending user visual approval.
+
+## Previous Slice: Calendars
+
+- Status: rebuilt from Vue source; pending user visual approval.
+
+## Previous Slice: VirtualScrollers
+
+- Status: implemented from Vue source; pending user visual approval.
 
 ## Previous Slice: Treeview
 
