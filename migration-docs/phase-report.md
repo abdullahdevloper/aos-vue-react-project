@@ -1,15 +1,88 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Progress Linear Buffer/Query fix)
+Last updated: 2026-05-17 (Ratings rebuild after rejection)
 
 ## Phase
 
-Vuetify / Progress Linear full build from Vue source.
+Vuetify / Ratings strict source-driven rebuild.
 
 Status: implemented; pending user visual approval.
 
-Route: `/components/progress/progress-linear`
-File: `react-dashboard-template/src/pages/ui-components/vuetify/ProgressLinearPage.tsx`
+Route: `/components/ratings`
+File: `react-dashboard-template/src/pages/ui-components/vuetify/RatingsPage.tsx`
+
+### Vuetify / Ratings Source-Driven Implementation
+
+Status: rebuilt after full rejection; pending user visual approval.
+
+Scope:
+
+- Implemented only Vuetify / Ratings at `/components/ratings`.
+- Enabled only the Ratings sidebar item.
+- Did not touch Progress Linear, Sheets, approved slices, animations, Calendars, or `.claude/`.
+
+Source trace:
+
+- Main page and order: `src/views/Vuetify/Ratings.vue`.
+- Usage/playground: `src/demo/examples/ratings/usage.vue`, `src/demo/examples/ratings/playground.vue`.
+- Examples in Vue order: `simple/sizes.vue`, `simple/colors.vue`, `simple/length.vue`, `intermediate/increments.vue`, `intermediate/slots.vue`, `intermediate/card.vue`, `complex/advanced.vue`.
+- Documentation text: `src/lang/en/components/Ratings.json`.
+- Vuetify internals: `node_modules/vuetify/src/components/VRating/VRating.ts`, `VRating.sass`, `_variables.scss`, and MDI icon preset defaults.
+
+Implemented:
+
+- Added a local `VRating` primitive matching Vue `v-rating` state mechanics:
+  - `internalValue` equivalent via controlled React value.
+  - `hoverIndex`, half-hit detection, hover feedback, readonly pointer blocking, dense padding, length, size variants, custom icons, half increments, and clearable behavior.
+  - Default icon aliases `$ratingFull`, `$ratingEmpty`, `$ratingHalf` mapped to MDI star glyphs.
+- Rebuilt the local rating icon primitive after rejection to match Vuetify internals:
+  - icon DOM now uses `v-icon notranslate mdi ...` like `VIcon.ts`.
+  - rating padding is applied to `.v-rating .v-icon` (`0.5rem`) and dense padding to `.v-rating--dense .v-icon` (`0.1rem`) like `VRating.sass`.
+  - default font icon sizing follows Vuetify font-icon behavior; explicit size changes font-size only.
+  - `$ratingHalf` now maps to Vuetify's MDI preset `mdi-star-half`.
+- Fixed the user-reported missing/hidden rating elements by rendering source-matched MDI SVG paths for all rating glyphs (`$ratingFull`, `$ratingEmpty`, `$ratingHalf`, heart variants, slot icons, numeric box icons) while preserving Vue icon names as the source contract. Font-class fallback remains only for legacy share-dialog icons that are present in `@mdi/font`.
+- Imported Material Design Icons font inside the React Ratings page only so Vue icon names such as `mdi-heart`, `mdi-star-circle`, `mdi-numeric-0-box`, `mdi-facebook-box`, and `mdi-twitter-box` render as glyphs instead of text or random substitutes.
+- Preserved Vue page/example order: Usage, Playground, Size variants, Colors, Custom length, Incremented, Slots, Card ratings, Advanced usage.
+- Preserved source docs text and inline code styling for `v-rating` and `v-icon`.
+- Implemented the Advanced share dialog, copy field label behavior, Fortnite image layout, numeric rating icon slot, and social list actions from Vue source.
+- Added `/components/ratings` route and enabled the Ratings sidebar item; Sheets remains pending/disabled.
+
+Self-verification:
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Page wrapper | `Ratings.vue`, `Ratings.json` | Components/Ratings route with Usage, Playground, and source-ordered examples | DocPage route, breadcrumbs, intro text, Usage/Playground/example order preserved | Match | Pending visual approval |
+| Usage | `usage.vue` | Centered 5-star `v-rating`, model defaults to 3 | Centered local VRating, value 3, clickable model updates | Match | |
+| Playground | `playground.vue` | Full/half/empty icon fields, 4 switches, length/value/size sliders, color/background autocompletes, live heart rating, model text | Same controls/defaults/order and live preview behavior | Match | MDI font used for typed icon names |
+| VRating primitive | `VRating.ts`, `VRating.sass`, `VIcon.ts` | Root `.v-rating`; child `.v-icon notranslate`; icon padding/radius on icon; dense padding; readonly pointer blocking; MDI preset aliases | Local primitive now uses matching classes, padding, dense/readonly behavior, hover/half-click mechanics, and source-matched SVG paths for visible rating glyphs | Match | Pending visual approval |
+| Size variants | `simple/sizes.vue`, `VRating.sass`, `VIcon.ts` | small/default/medium attr/default/large/x-large/size=64 rating rows with source colors | Same rows/colors; `medium` follows Vuetify internals as default-sized rating | Match | |
+| Colors | `simple/colors.vue` | Six rating rows with selected/background color pairs | Same rows/colors and shared model | Match | |
+| Custom length | `simple/length.vue` | Slider length 1-15, red/grey rating, model display | Same slider/rating/model behavior | Match | |
+| Incremented | `intermediate/increments.vue` | 300px elevated card, text, half increments, hover, empty icon uses full star, actions | Same card layout, half increments, hover, actions | Match | |
+| Slots | `intermediate/slots.vue` | Item slot uses colored `mdi-star-circle` when filled and `mdi-circle-outline` when empty; click delegates to slot props | Same slot rendering and click behavior | Match | |
+| Card ratings | `intermediate/card.vue` | Purple album card, Halcyon image, dense half-increment rating size 18 | Same surface, image, divider, rating value display and behavior | Match | |
+| Advanced usage | `complex/advanced.vue` | Fortnite image grid, share dialog, copy label, readonly numeric icon rating length 10, legal text | Same image URLs/layout, dialog/list/copy state, numeric MDI icon slot, readonly behavior | Match | |
+| Icon fidelity | MDI icon names in Vue source and Vuetify icon preset | MDI font glyphs render exact class names | `@mdi/font/css/materialdesignicons.css` imported in Ratings page | Match | React-only import |
+| Responsive behavior | Vuetify rows/cols in examples | 50/50 advanced image grid, card max widths, wrapping controls | Same max widths and flex/grid proportions | Match | |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains; MDI font assets are emitted by Vite because Ratings imports `@mdi/font` locally.
+
+Protected files:
+
+- Protected-path check clean.
+
+Approval:
+
+- Vuetify / Ratings remains pending user visual approval.
+
+---
+
+## Previous Phase: Progress Linear
 
 ### Vuetify / Progress Linear Buffer and Query Second Fix
 
