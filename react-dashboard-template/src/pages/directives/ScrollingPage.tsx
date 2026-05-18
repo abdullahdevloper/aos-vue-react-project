@@ -96,26 +96,28 @@ function ExamplesSection() {
       <Typography color="text.secondary" sx={{ ...docsParagraphSx, mb: 4.2, maxWidth: 980 }}>
         Below is a collection of simple to complex examples.
       </Typography>
-      <DirectiveExampleBlock
-        id="scroll-with-options"
-        title="Scroll with options"
-        description="For a more fine tuned approach, you can designate the target to bind the scroll event listener."
-        source={optionsSource}
-        minHeight={520}
-        uninverted
-      >
-        <ScrollWithOptionsExample />
-      </DirectiveExampleBlock>
-      <DirectiveExampleBlock
-        id="watching-bound-element"
-        title="Watching bound element"
-        description="`v-scroll` targets the `window` by default but can also watch the element it's being bound to. In the following example we use the **self** modifier, `v-scroll.self`, to watch the [`v-card`](/components/cards) element specifically. This causes the method `onScroll` to invoke as you scroll the card contents; incrementing the counter."
-        source={selfSource}
-        minHeight={500}
-        newIn="v2.3"
-      >
-        <SelfScrollExample />
-      </DirectiveExampleBlock>
+      <Box component="section" id="scroll-with-options">
+        <DirectiveExampleBlock
+          title="Scroll with options"
+          description="For a more fine tuned approach, you can designate the target to bind the scroll event listener."
+          source={optionsSource}
+          minHeight={520}
+          uninverted
+        >
+          <ScrollWithOptionsExample />
+        </DirectiveExampleBlock>
+      </Box>
+      <Box component="section" id="watching-bound-element">
+        <DirectiveExampleBlock
+          title="Watching bound element"
+          description="`v-scroll` targets the `window` by default but can also watch the element it's being bound to. In the following example we use the **self** modifier, `v-scroll.self`, to watch the [`v-card`](/components/cards) element specifically. This causes the method `onScroll` to invoke as you scroll the card contents; incrementing the counter."
+          source={selfSource}
+          minHeight={500}
+          newIn="v2.3"
+        >
+          <SelfScrollExample />
+        </DirectiveExampleBlock>
+      </Box>
     </Box>
   );
 }
@@ -280,9 +282,7 @@ function DirectiveExampleBlock({
   minHeight,
   uninverted = false,
   newIn,
-  id,
 }: {
-  id?: string;
   title: string;
   description: string;
   source: string;
@@ -300,7 +300,7 @@ function DirectiveExampleBlock({
   const darkBody = inverted && !uninverted;
 
   return (
-    <Card id={id} sx={{ bgcolor: "background.default", boxShadow: neuInset, borderRadius: 1, overflow: "hidden", mb: 5.25 }}>
+    <Card sx={{ bgcolor: "background.default", boxShadow: neuInset, borderRadius: 1, overflow: "hidden", mb: 5.25 }}>
       <Toolbar variant="dense" sx={{ minHeight: 48, alignItems: "center", py: 0.5, px: { xs: 2.25, md: 3 }, bgcolor: "transparent" }}>
         <Box sx={{ minWidth: 0, pr: 2, display: "flex", alignItems: "center", gap: 1 }}>
           {title ? (
@@ -431,7 +431,10 @@ function goTo(target: number | string | HTMLElement | null, settings: { duration
 function getOffset(target: number | string | HTMLElement | null) {
   if (typeof target === "number") return target;
   let element = typeof target === "string" ? document.querySelector(target) : target;
-  if (!element) return 0;
+  if (!element) {
+    if (typeof target === "string") throw new Error(`Target element "${target}" not found.`);
+    throw new TypeError(`Target must be a Number/Selector/HTMLElement, received ${target == null ? target : target.constructor.name} instead.`);
+  }
   let totalOffset = 0;
   while (element instanceof HTMLElement) {
     totalOffset += element.offsetTop;

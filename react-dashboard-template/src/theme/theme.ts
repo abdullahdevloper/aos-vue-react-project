@@ -1,12 +1,12 @@
 import { createTheme } from "@mui/material/styles";
 
-export const buildTheme = (darkMode = false, rtl = false, primaryColor = "#00838f", secondaryColor = "#ffb74d") =>
+export const buildTheme = (darkMode = false, rtl = false, primaryColor = "#0097a7", secondaryColor = "#ffa726") =>
   createTheme({
     direction: rtl ? "rtl" : "ltr",
     palette: {
       mode: darkMode ? "dark" : "light",
-      primary: { main: primaryColor, light: "#80deea", dark: "#006064", contrastText: "#fff" },
-      secondary: { main: secondaryColor, light: "#ffe0b2", dark: "#ef6c00", contrastText: "#fff" },
+      primary: { main: primaryColor, light: "#80deea", dark: "#00838f", contrastText: "#fff" },
+      secondary: { main: secondaryColor, light: "#ffcc80", dark: "#ef6c00", contrastText: "#fff" },
       background: {
         default: darkMode ? "#292d32" : "#f2f3f7",
         paper: darkMode ? "#292d32" : "#f2f3f7",

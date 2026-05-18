@@ -318,7 +318,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
         <Container maxWidth={false} sx={{ px: { xs: isVuetifyDocsRoute ? 3 : 2, md: 3 }, maxWidth: isVuetifyDocsRoute ? "none" : 1480 }}>
           {children}
         </Container>
-        {footerVisible && <Stack sx={{ mt: 4, px: footerPadless ? 0 : 3, py: footerPadless ? 0 : 1.5, ...(footerColor && { bgcolor: footerColor, color: readableTextFor(footerColor) }), ...(footerInset && { width: "auto" }), ...(footerFixed && { position: "sticky", bottom: 0, zIndex: 2 }) }} alignItems="center">
+        {footerVisible && <Stack sx={{ mt: 4, px: footerPadless ? 0 : 3, py: footerPadless ? 0 : 1.5, ...(footerColor && { bgcolor: footerColor, color: readableTextFor(footerColor) }), ...(footerInset && { width: "auto" }), ...(footerFixed && { position: "sticky", bottom: 0, zIndex: 9 }) }} alignItems="center">
           <Typography variant="caption" color={footerColor ? "inherit" : "text.secondary"}>
             React UI Components slice: Vuetify / Badges pending visual approval
           </Typography>
@@ -418,6 +418,8 @@ function ThemeSettingsDrawer({ open, onClose, direction, currentLocale, onLocale
   const setSidebarRight = useDashboardStore((state) => state.setSidebarRight);
   const footerFixed = useDashboardStore((state) => state.footerFixed);
   const setFooterFixed = useDashboardStore((state) => state.setFooterFixed);
+  const footerAbsolute = useDashboardStore((state) => state.footerAbsolute);
+  const setFooterAbsolute = useDashboardStore((state) => state.setFooterAbsolute);
   const footerInset = useDashboardStore((state) => state.footerInset);
   const setFooterInset = useDashboardStore((state) => state.setFooterInset);
   const footerPadless = useDashboardStore((state) => state.footerPadless);
@@ -502,7 +504,7 @@ function ThemeSettingsDrawer({ open, onClose, direction, currentLocale, onLocale
         </SettingsSection>
 
         <SettingsSection title="Footer Setting">
-          <RadioSetting label="Position" value={footerFixed ? "fixed" : "absolute"} onChange={(value) => setFooterFixed(value === "fixed")} options={[{ label: "Standard", value: "absolute" }, { label: "Fixed", value: "fixed" }]} />
+          <RadioSetting label="Position" value={footerFixed ? "fixed" : footerAbsolute ? "absolute" : "static"} onChange={(value) => { setFooterFixed(value === "fixed"); setFooterAbsolute(value === "absolute"); }} options={[{ label: "Standard", value: "absolute" }, { label: "Fixed", value: "fixed" }]} />
           <RadioSetting label="Alignment" value={footerInset ? "below" : "above"} onChange={(value) => setFooterInset(value === "below")} options={[{ label: "Below", value: "below" }, { label: "Above", value: "above" }]} />
           <SettingsSwitch compact checked={footerPadless} onChange={setFooterPadless} title="Padless Footer" subtitle="Padless Footer" />
         </SettingsSection>

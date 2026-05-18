@@ -25,6 +25,8 @@ interface DashboardState {
   footerVisible: boolean;
   primaryColor: string;
   secondaryColor: string;
+  primaryBgText: string;
+  secondaryBgText: string;
   headerColor: string;
   footerColor: string;
   headerDense: boolean;
@@ -32,6 +34,7 @@ interface DashboardState {
   headerHideOnScroll: boolean;
   headerFloating: boolean;
   footerFixed: boolean;
+  footerAbsolute: boolean;
   footerInset: boolean;
   footerPadless: boolean;
   activeMenuStyle: ActiveMenuStyle;
@@ -55,6 +58,7 @@ interface DashboardState {
   setHeaderHideOnScroll: (value: boolean) => void;
   setHeaderFloating: (value: boolean) => void;
   setFooterFixed: (value: boolean) => void;
+  setFooterAbsolute: (value: boolean) => void;
   setFooterInset: (value: boolean) => void;
   setFooterPadless: (value: boolean) => void;
   setActiveMenuStyle: (style: Partial<ActiveMenuStyle>) => void;
@@ -71,8 +75,10 @@ export const useDashboardStore = create<DashboardState>((set) => ({
   locale: "en",
   headerVisible: true,
   footerVisible: true,
-  primaryColor: "#00838f",
-  secondaryColor: "#ffb74d",
+  primaryColor: "#0097a7",
+  secondaryColor: "#ffa726",
+  primaryBgText: "#ffffff",
+  secondaryBgText: "#ffffff",
   headerColor: "",
   footerColor: "",
   headerDense: false,
@@ -80,6 +86,7 @@ export const useDashboardStore = create<DashboardState>((set) => ({
   headerHideOnScroll: false,
   headerFloating: true,
   footerFixed: false,
+  footerAbsolute: true,
   footerInset: true,
   footerPadless: true,
   activeMenuStyle: { shaped: true, rounded: false, flat: false },
@@ -103,6 +110,7 @@ export const useDashboardStore = create<DashboardState>((set) => ({
   setHeaderHideOnScroll: (headerHideOnScroll) => set({ headerHideOnScroll }),
   setHeaderFloating: (headerFloating) => set({ headerFloating }),
   setFooterFixed: (footerFixed) => set({ footerFixed }),
+  setFooterAbsolute: (footerAbsolute) => set({ footerAbsolute }),
   setFooterInset: (footerInset) => set({ footerInset }),
   setFooterPadless: (footerPadless) => set({ footerPadless }),
   setActiveMenuStyle: (style) => set({ activeMenuStyle: { ...defaultActiveMenuStyle, ...style } }),

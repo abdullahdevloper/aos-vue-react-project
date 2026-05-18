@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-17 (Directives / Scrolling)
+Last updated: 2026-05-18 (Charts / ChartJS strict source-driven rebuild)
 
 ## Strategy Status
 
@@ -11,19 +11,34 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Directives / Scrolling.
+- Active section: Charts / ChartJS (rebuilt; pending visual approval).
 
 ## Current Slice
 
-- Scope: Directives / Scrolling only.
-- Route: `/directives/scrolling` (verified from `src/router/routes/vuetify.js`).
+- Scope: UI Components / Charts / ChartJS only.
+- Route: `/charts/chartjs` (verified from `src/router/routes/vuse.js`).
+- Status: rebuilt from Vue/Vuse source; pending user visual approval.
+- Source audit: traced `src/views/Charts/ChartJs.vue`, all ten Vue ChartJS examples in exact order, `src/lang/en/vuse/Chartjs.json`, shared docs/example wrappers, `vue-chartjs` defaults, and local `src/components/ChartJS/*` gradient/shadow wrappers.
+- Implementation: replaced the rejected React ChartJS page with a source-shaped page, exact example order, exact docs text, source-backed chart data/options/labels/heights, Vue/Vuetify color tokens, canvas gradients, local dataset shadow plugin, raw Vue source-backed source panel, and invert action.
+- Rejection rebuild follow-up: added local React-held raw Vue ChartJS source strings for all ten examples, restored source panel parsing behavior, preserved Bar and Horizontal Bar 50% canvas width behavior from Vue wrappers, and corrected Bubble exact label/color mismatches from Vue source.
+- Visible rejection fix: rebuilt the rendered ChartJS path, not just source panel content. The page now uses a local source-equivalent chart wrapper lifecycle that applies direct canvas style width for Bar/Horizontal Bar and mutates Vue-style `gradientFill` / `gradientStroke` datasets from the real canvas after mount.
+- Second visible rejection fix: removed the old visible MUI `Card`/`Toolbar`/`CardContent` example mechanics from ChartJS and replaced them with source-shaped `v-card`/dense-toolbar/`v-sheet`/`v-card-text` boxes; Bar and Horizontal Bar now receive direct canvas `style.width = 50%` at render and after chart mount.
+- Phase 1-only wrapper fix: adjusted only the `/charts/chartjs` page/doc wrapper to match Vue `v-container fluid` plus `DocPage` `v-row mx-0` / `v-col cols=12 px-0` structure, including source 12px container padding and retained 12px vertical column gutters. Chart examples and chart rendering were not touched in this phase.
+- Not touched: Spark Line, Calendars, Theme Settings, approved Vuetify slices, Directives, Widgets, `.claude/`, routes/sidebar.
+- Build: passed inside `react-dashboard-template/` (`npm run build`; Vite chunk-size warning only).
+- Charts / ChartJS: rebuilt; pending user visual approval.
+
+## Previous Slice: Charts / Sparkline
+
+- Status: rebuilt; pending user visual approval.
+
+## Previous Slice: Theme Settings Phase 1
+
+- Status: not approved; primary color propagation diagnosis completed.
+
+## Previous Slice: Directives / Scrolling
+
 - Status: rejection fix applied; pending user visual approval.
-- Source audit: Vue Scrolling sources traced from `src/router/routes/vuetify.js`, `src/views/Vuetify/Directives/Scrolling.vue`, `src/lang/en/directives/Scrolling.json`, `src/demo/examples/scrolling/usage.vue`, `src/demo/examples/scrolling/options.vue`, `src/demo/examples/scrolling/simple/self.vue`, shared docs/example wrappers, `node_modules/vuetify/src/directives/scroll/index.ts`, and Vuetify `goTo` service/easing sources.
-- Implementation: added `ScrollingPage.tsx`, enabled only the Scrolling sidebar item, and added `/directives/scrolling`.
-- Behavior: implemented source-shaped `v-scroll` binding for window/selector/self targets, passive listener defaults, Usage `$vuetify.goTo` target/easing/duration/offset behavior, Scroll with options scrollTop counter, Watching bound element self counter, source panel, uninverted examples, and options docs.
-- Rejection fix: re-traced shared `Examples.vue` id generation and Vuetify `goTo` util; added the source-generated `scroll-with-options` and `watching-bound-element` ids to the React example cards and changed `goTo` offset calculation to Vuetify's cumulative `offsetTop` walk instead of viewport rect math.
-- Build: passed inside `react-dashboard-template/`.
-- Directives / Scrolling: implemented; pending user visual approval.
 
 ## Previous Slice: Ripples
 
@@ -4859,3 +4874,6 @@ Build:
 Approval:
 
 - Global Vuetify docs layout spacing remains pending user visual approval.
+
+- Charts / ChartJS: fixed rejected source-driven canvas/body sizing by removing the non-Vue fixed chart body wrapper and deriving React aspect ratio from Vue `vue-chartjs` canvas width/height when source options omit `maintainAspectRatio`; Radar and Polar sizing updated; build passed; pending user visual approval.
+- Charts / ChartJS: targeted Radar/Polar sizing fix removed React-only `responsive: true` and `maintainAspectRatio: false` options that are absent from Vue source; preserved source canvas width/height, data, labels, titles, legends, and colors; build passed; pending user visual approval.

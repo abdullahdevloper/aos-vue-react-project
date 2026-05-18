@@ -1,10 +1,186 @@
 # Phase Report
 
-Last updated: 2026-05-17 (Directives / Scrolling)
+Last updated: 2026-05-18 (Charts / ChartJS strict source-driven rebuild)
 
 ## Phase
 
-Directives / Scrolling strict source-driven rebuild.
+Charts / ChartJS strict source-driven rebuild.
+
+Status: rebuilt; pending user visual approval.
+
+Files changed:
+- `react-dashboard-template/src/pages/ui-components/charts/ChartJsPage.tsx`
+- `react-dashboard-template/src/pages/ui-components/charts/chartJsVueSources.ts`
+- `migration-docs/phase-report.md`
+- `migration-docs/progress.md`
+
+### Charts / ChartJS Source Trace
+
+- Vue route: `src/router/routes/vuse.js:96-99` -> `/charts/chartjs`, `Charts/ChartJs`.
+- Main Vue page: `src/views/Charts/ChartJs.vue`, page `Chartjs`, namespace `Vuse`, `hideGitCodepan`, examples only.
+- Exact Vue example order: `bar/SimpleBar`, `bar/HorizontalBar`, `line/SimpleLine`, `line/FilledLine`, `PieChart`, `DoughnutChart`, `RadarChart`, `PolarareaChart`, `BubbleChart`, `ScatterChart`.
+- Documentation: `src/lang/en/vuse/Chartjs.json` and generic examples text from `src/lang/en/generic/Pages.json`.
+- Shared wrappers: `src/demo/components/DocPage.vue`, `Examples.vue`, `Example.vue`, `DocText.vue`, `BaseMarkdown.vue`, and `vue-chartjs` default canvas width/height props.
+- Chart wrappers: `src/components/ChartJS/BarChart.vue`, `HorizontalBarChart.vue`, `LineChart.vue`, `PieChart.vue`, `DoughnutChart.vue`, `RadarChart.vue`, `PolarareaChart.vue`, `BubbleChart.vue`, `ScatterChart.vue`.
+
+### Charts / ChartJS Verification Table
+
+| Example / Area | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Route/page shell | `src/router/routes/vuse.js`; `src/views/Charts/ChartJs.vue` | `/charts/chartjs`, title `Chartjs`, namespace `Vuse`, breadcrumbs Components/Vuetify/SparkLine, examples only, GitHub action hidden | Existing route preserved; page rebuilt with source title, breadcrumbs, docs heading text, Examples heading/text, source panel and invert action | Match | No route/sidebar edits required |
+| Shared example/source wrapper | `src/demo/components/DocPage.vue`, `Examples.vue`, `Example.vue` | Fluid doc page, examples in source order, source action expands raw parsed Vue sections in `template`, `style`, `script` order, invert action toggles local example surface | ChartJS page now renders the exact examples order, local source panel parses the real raw Vue source copied into React, and invert remains local to each example body | Match | Raw source stored in `chartJsVueSources.ts` to avoid importing protected Vue files at runtime |
+| Bar | `src/demo/examples/chartjs/bar/SimpleBar.vue`; `BarChart.vue` | Height 260, Vue wrapper sets canvas style width to `50%`, Jan-Dec labels, Expense/Earning data, purple/blue vertical gradients, hidden legend, x grid hidden, y begin zero/offset grid, dataset shadows | Implemented exact labels/data/options/height/colors/gradients, source canvas 50% width, and local dataset shadow plugin | Match | |
+| Horizontal Bar | `src/demo/examples/chartjs/bar/HorizontalBar.vue`; `HorizontalBarChart.vue` | Height 260, Vue wrapper sets canvas style width to `50%`, January-June labels, source 12-value datasets, orange/green gradients, `horizontalBar` layout, x grid visible, y grid hidden | Implemented as Chart.js v4 `bar` with `indexAxis: y`, preserving source labels/data/options/height/gradients and 50% canvas width | Match | |
+| Line Chart | `src/demo/examples/chartjs/line/SimpleLine.vue`; `LineChart.vue` | Default vue-chartjs canvas 400x400, Jan-Dec labels, two unfilled line datasets, gradient stroke colors, point radius/hover radius, plugin-style point glow/bevel props, hidden legend | Implemented default 400 height, exact labels/data/options, gradient stroke/point colors, and source plugin-style dataset props where Chart.js v4 accepts them | Match | `chartjs-plugin-style` itself is not available in React stack; verified props are preserved on datasets |
+| Filled Line Chart | `src/demo/examples/chartjs/line/FilledLine.vue`; `LineChart.vue` | Default 400x400 canvas, filled datasets, point radius 0, border width 0, index tooltip/hover mode, grids hidden where defined, `scaleOverride: true` source option | Implemented exact data/options/height, source fill gradients/order, hidden grids, and source plugin-style dataset props | Match | Chart.js v4 ignores removed Chart.js 2-only `scaleOverride`; source behavior otherwise mapped |
+| Pie Chart | `src/demo/examples/chartjs/PieChart.vue`; `PieChart.vue` | Default 400x400 canvas, framework labels, `[40,40,15,10]`, four per-arc gradients | Implemented exact labels/data/default canvas height and source gradient sets | Match | |
+| Doughnut Chart | `src/demo/examples/chartjs/DoughnutChart.vue`; `DoughnutChart.vue` | Default 400x400 canvas, same framework labels/data, four per-arc gradients | Implemented exact labels/data/default canvas height and source gradient sets | Match | |
+| Radar Chart | `src/demo/examples/chartjs/RadarChart.vue`; `RadarChart.vue` | Height 200, multiline labels, two random 7-value datasets, top legend, title `Chart.js Radar Chart`, radial begin zero | Implemented source labels/options/height and mount-time random values matching Vue `Math.random()` behavior | Match | Random values are intentionally generated per mount like Vue |
+| Polar Chart | `src/demo/examples/chartjs/PolarareaChart.vue`; `PolarareaChart.vue` | Height 200, population labels, random 5-value dataset, top legend, title `Chart.js PolarareaChart Chart`, five gradients | Implemented source labels/options/height, mount-time random values, and gradient sets | Match | |
+| Bubble Chart | `src/demo/examples/chartjs/BubbleChart.vue`; `BubbleChart.vue` | Height 200, `labels: "Js Frameworks"`, dataset labels as arrays, Angular uses `purple.accent3`, Ionic border uses `amber.accent4`, random x/y values, radii 10/15/15/15, Users/Joined scale labels | Implemented exact source labels, dataset label arrays, corrected color tokens, random points, radii, and axis titles | Match | |
+| Scatter Chart | `src/demo/examples/chartjs/ScatterChart.vue`; `ScatterChart.vue` | Default 400x400 canvas, two random 7-point datasets, point colors/borders/radius, `responsiveAnimationDuration: 800` | Implemented source datasets/default height and mapped animation duration to Chart.js v4 | Match | Chart.js v4 option equivalent used |
+
+### Charts / ChartJS Visible Rebuild Follow-Up
+
+#### Phase 1: Page/doc wrapper rebuild
+
+| Area | Vue source/classes | React before | React after | Match level | Notes |
+|---|---|---|---|---|---|
+| Main page wrapper | `src/views/Charts/ChartJs.vue:1-16` | Body was a local Box with horizontal padding only | Body now mirrors `v-container fluid`: width/max-width 100%, auto side margins, and full 12px container padding | Match | Vuetify source: `.container` padding comes from `$container-padding-x = $grid-gutter / 2 = 12px`; `.container--fluid` max-width 100% |
+| Heading/docs row | `src/demo/components/DocPage.vue:1-9`; `VGrid.sass` `.row`; `VGrid/_mixins.sass` row/col rules | Row/col wrapper existed but column did not keep source vertical gutter | Heading docs are inside source-shaped `v-row mx-0` and `v-col cols=12 px-0`, preserving row flex and 12px vertical column padding | Match | `px-0` removes horizontal padding only; vertical col padding remains 12px |
+| Examples row | `src/demo/components/DocPage.vue:31-40`; `VGrid.sass` `.row`; `VGrid/_mixins.sass` col rules | Examples wrapper had no source-equivalent vertical column padding | Examples section is inside source-shaped `v-row mx-0` and `v-col cols=12 px-0`, preserving row flex and 12px vertical column padding | Match | Chart examples/cards intentionally unchanged in Phase 1 |
+
+| Phase | Visible output changed | Evidence | Notes |
+|---|---|---|---|
+| Phase 1 page/doc wrapper | Yes | `ChartJsPage.tsx` page body changed from horizontal-only padding to source `v-container fluid` full 12px padding, and both doc/examples columns now retain source 12px vertical gutter | No chart examples, chart data/options, wrappers, canvas behavior, gradients, plugin-style, or source panel behavior were changed in this phase |
+
+| Visible area | Vue source | React before | React after | Match level | Notes |
+|---|---|---|---|---|---|
+| Page container | `src/views/Charts/ChartJs.vue:9-16`; `DocPage.vue:1-41` | Rendered body used a zero-padding local Box, so source `v-container fluid` padding was not reflected | Rendered body now uses source-equivalent fluid container padding around the doc-page content | Match | Scoped to ChartJS page only |
+| Example shell | `Example.vue:1-131` | Old local MUI wrapper stayed visually dominant; previous work mostly changed hidden source panel data | Example shell now follows source visible structure more closely: `v-card mb-10 neu-glow-inset`, dense 48px toolbar, local dark `v-sheet` body, `v-card-text` padding, and source/invert actions | Match | Still implemented in React/MUI primitives but source-shaped |
+| Chart wrapper lifecycle | `BarChart.vue:22-69`; `HorizontalBarChart.vue:25-58`; `LineChart.vue:25-101`; other wrappers mounted blocks | Direct `react-chartjs-2` render callbacks used pre-mapped scriptable gradients | Added local `VueChartCanvas` wrapper in the rendered page. It mounts chart, reads the real canvas, mutates datasets from `gradientFill` / `gradientStroke`, and updates chart data after canvas availability like Vue wrappers | Match | This is the actual rendered chart path |
+| Bar canvas width | `BarChart.vue:22-25` | CSS selector attempted `width: 50%` from parent; not source-equivalent to Vue canvas ref mutation | `VueChartCanvas` applies `chart.canvas.style.width = "50%"` directly for Bar | Match | Direct canvas style behavior restored |
+| Horizontal Bar canvas width | `HorizontalBarChart.vue:25-58` | Same parent selector issue as Bar | `VueChartCanvas` applies `chart.canvas.style.width = "50%"` directly for Horizontal Bar before gradient data update | Match | Direct canvas style behavior restored |
+| Gradient lifecycle | ChartJS Vue wrappers listed above | Gradients were assigned as scriptable colors before render | Datasets keep Vue-like `gradientFill` / `gradientStroke` fields, then the rendered wrapper converts them from the real canvas context after mount | Match | Better matches Vue mounted/computed wrapper flow |
+| Bubble correction | `BubbleChart.vue:15-88` | Previous correction existed but was surrounded by old render mechanics | Bubble label arrays and `purple.accent3` / `amber.accent4` corrections preserved through the new wrapper lifecycle | Match | |
+| Source-shaped example root | `Example.vue:1-7`, `115-129` | Vue visible root is a `v-card` with dense toolbar and `v-sheet`/`v-card-text` body | Previous visible shell still used MUI `Card`, `Toolbar`, and `CardContent` components | Replaced the rendered example root with source-shaped `section`/toolbar/body boxes using source dimensions: `mb-10` 40px spacing, 48px dense toolbar, transparent sheet, and 16px card text padding | Match | Removes the old page-local MUI example wrapper mechanics from the rendered path |
+| Bar/Horizontal canvas render style | `BarChart.vue:24`; `HorizontalBarChart.vue:27` | Canvas gets direct `style.width = "50%"` in wrapper lifecycle | Previous attempt only set width after mount; Chart.js responsive sizing could keep first paint/full-size appearance | Chart component now receives `style={{ width: "50%" }}` at render and still applies `chart.canvas.style.width = "50%"` after mount | Match | Visible canvas sizing now changes at first render and after chart ref exists |
+
+### Previous Non-Effective Change Resolution
+
+| Previous non-effective change | Why it did not affect visible output | Actual rendered fix now |
+|---|---|---|
+| Raw source strings added | Source panel is hidden by default, so default visual output looked unchanged | Kept raw source strings, but rebuilt the visible example shell and chart render lifecycle |
+| Parent CSS canvas width | Chart.js writes canvas sizing and Vue uses direct canvas ref mutation | `VueChartCanvas` now mutates `chart.canvas.style.width` directly for Bar and Horizontal Bar |
+| Scriptable gradient mapping | It produced similar visuals while skipping Vue wrapper lifecycle | Datasets now preserve source `gradientFill` / `gradientStroke` props and are converted after canvas mount |
+| Direct chart render callbacks | They bypassed Vue wrapper behavior and made the rendered page mechanically similar to the old implementation | Replaced render callbacks with local source-equivalent `VueChartCanvas` wrapper inside the rendered page |
+| MUI Card/Toolbar/CardContent wrapper | It preserved the old visible mechanics even after data/source changes | Replaced with source-shaped visible `v-card`/`v-toolbar`/`v-sheet`/`v-card-text` equivalent boxes in `ChartJsPage.tsx` |
+
+### Charts / ChartJS Diagnostic Mismatch Resolution
+
+| Known diagnostic mismatch | React before | React after | Source used | Match level |
+|---|---|---|---|---|
+| Source panel content | Fabricated template/script summaries | Source panel parses exact raw Vue example files into source sections | `Example.vue`; all `src/demo/examples/chartjs/*` files | Match |
+| Bar canvas width | Full-width canvas | Canvas width locked to Vue wrapper's `50%` style | `BarChart.vue` | Match |
+| Horizontal Bar canvas width | Full-width canvas | Canvas width locked to Vue wrapper's `50%` style | `HorizontalBarChart.vue` | Match |
+| Bubble labels/colors | Dataset labels were plain strings; Angular/Ionic colors used wrong tokens | Dataset labels are source arrays; Angular uses `purple.accent3`; Ionic border uses `amber.accent4` | `BubbleChart.vue`; `vuetify/lib/util/colors` values | Match |
+| Shared wrapper drift | Custom page/source wrapper not tied to Vue raw source behavior | Page/example wrapper keeps Vuse docs structure and source-equivalent raw source parsing | `DocPage.vue`; `Examples.vue`; `Example.vue` | Match |
+| Chart.js 2 -> 4 mapping | Generic Chart.js v4 behavior filled gaps | Data/options/gradients/heights are source-shaped; only API translations are used where Chart.js 2 options changed names | Vue chart wrappers and example options | Match with documented API mapping |
+
+### Build
+
+- `npm run build` inside `react-dashboard-template/`: passed (0 TypeScript errors; Vite chunk-size warning only).
+
+### Protected-path check
+
+- No code edits were made outside `react-dashboard-template/` and `migration-docs/`.
+- Spark Line, Calendars, Theme Settings, approved Vuetify slices, Directives, Widgets, root protected Vue files, and `.claude/` were not edited for this slice.
+
+---
+
+## Previous Phase: Charts / Sparkline strict source-driven rebuild.
+
+Charts / Sparkline strict source-driven rebuild.
+
+Status: rebuilt; pending user visual approval.
+
+Files changed:
+- `react-dashboard-template/src/pages/ui-components/charts/SparkLinePage.tsx`
+- `migration-docs/phase-report.md`
+- `migration-docs/progress.md`
+
+### Charts / Sparkline Source Trace
+
+- Vue route: `src/router/routes/vuse.js:104-107` -> `/charts/spark-line`, `Charts/SparkLine`.
+- Main Vue page: `src/views/Charts/SparkLine.vue`, page `Sparklines`, namespace `Components`, examples only.
+- Exact Vue example order: `playground`, `simple/fill`, `intermediate/heart-rate`, `intermediate/dashboard-card`, `intermediate/sales-card`.
+- Documentation: `src/lang/en/components/Sparklines.json` and generic examples text from `src/lang/en/generic/Pages.json`.
+- Shared wrappers: `src/demo/components/DocPage.vue`, `Examples.vue`, `Example.vue`.
+- Sparkline behavior source: `node_modules/vuetify/src/components/VSparkline/VSparkline.ts`, `helpers/core.ts`, `helpers/path.ts`, and `helpers/math.ts`.
+
+### Charts / Sparkline Verification Table
+
+| Example | Vue source | Vue expected | React implemented | Match level | Notes |
+|---|---|---|---|---|---|
+| Route/page shell | `src/router/routes/vuse.js:104-107`; `src/views/Charts/SparkLine.vue:1-55` | `/charts/spark-line`, title `Sparklines`, breadcrumbs Components/Vuetify/SparkLine, no rendered Usage block, examples only | Preserved existing route and rebuilt `SparkLinePage.tsx` with exact title/breadcrumbs and examples-only body | Match | No route/sidebar changes required |
+| Documentation text | `src/lang/en/components/Sparklines.json:2-27`; `src/lang/en/generic/Pages.json:8` | Heading text, Examples heading/text, and each example description in Vue order | Added exact heading text, generic examples text, and exact example descriptions with inline code styling | Match | Links preserved for SVG docs |
+| Playground | `src/demo/examples/sparklines/playground.vue`; `VSparkline.ts` | Trend/bar switch, gradient swatches, gradient direction, line width, radius, padding, linecap, labels, fill, auto-line-width controls; value `[0,2,5,9,5,10,3,5,-4,-10,1,8,2,9,0]` | Rebuilt with source controls/defaults/data and local `VSparkline` clone using Vuetify points/bars/path/labels/gradient/auto-draw behavior | Match | Bar auto-line-width and gradient direction implemented |
+| Fill | `src/demo/examples/sparklines/simple/fill.vue` | Filled trend sparkline, gradient swatches, width/radius/padding sliders, Filled switch; gradient index 4, fill true | Rebuilt with exact defaults, data, controls, source fill path behavior, and auto-draw | Match | |
+| Take a break | `src/demo/examples/sparklines/intermediate/heart-rate.vue` | Grey-lighten-4 card, heart pulse icon, 1000ms click delay, random 20-value heartbeat array, avg BPM, auto-draw gradient sparkline | Rebuilt card, icon states, delayed pulse behavior, random heartbeat generation, avg BPM, and source sparkline auto-draw | Match | Random values follow Vue behavior |
+| Dashboard card | `src/demo/examples/sparklines/intermediate/dashboard-card.vue` | Offset cyan sheet, labels/value arrays, white sparkline, card text/divider/clock row | Rebuilt card/sheet offset, labels/data, white sparkline, text and clock row | Match | |
+| Sales card | `src/demo/examples/sparklines/intermediate/sales-card.vue` | Green dark card, translucent sheet, `height=100`, `padding=24`, smooth line, custom `$` label slot, action button | Rebuilt card, sheet, source label slot behavior, sparkline props, divider/action | Match | |
+| Source/invert behavior | `src/demo/components/Example.vue:23-130` | Invert button toggles dark example sheet, source panel expands, GitHub/source actions visible | Rebuilt local example block with invert toggle, source panel collapse, and action icons | Match | Source snippets are scoped to Sparkline examples |
+| Sparkline primitive | `VSparkline.ts:59-419`; helpers `core.ts`, `path.ts`, `math.ts` | Vuetify defaults, reversed gradient stops, direction x/y attrs, labels under chart, bar clipPath, smooth radius, path auto-draw / fill transform / bar animate | Local `VSparkline` mirrors these calculations and animation rules | Match | Uses MUI theme primary for default `primary` color |
+
+### Build
+
+- `npm run build` inside `react-dashboard-template/`: passed (0 TypeScript errors; Vite chunk-size warning only)
+
+### Protected-path check
+
+- Non-git filesystem check: no modified files detected in `src/`, `public/`, `scripts/`, root protected files, or `.claude/`.
+- Calendars, Theme Settings, approved Vuetify slices, completed Directives pages, and non-Sparkline animation code were not edited for this slice.
+
+---
+
+## Previous Phase: Theme Settings Phase 1 — store defaults and missing state.
+
+Status: not approved; diagnosis completed for primary color propagation.
+
+### Theme Settings Phase 1 — Self-Verification Table
+
+| Setting | Vue source | Vue expected | React before | React after | Match level | Notes |
+|---|---|---|---|---|---|---|
+| Primary color default | `src/config/theme.js:5` `colors.cyan.darken2 = #0097a7` | App starts with cyan darken2 (#0097a7) as primary | `primaryColor: "#00838f"` (cyan darken3 — one shade too dark) | `primaryColor: "#0097a7"` | Exact | Fixed |
+| Primary derived defaults | `src/config/theme.js:5-7` primary base/darken1/lighten1 | Base `#0097a7`, darken1 `#00838f`, lighten1 `#80deea` | `buildTheme` fallback used base `#00838f` and dark `#006064` | `buildTheme` fallback uses base `#0097a7`, dark `#00838f`, light `#80deea` | Exact | Source default only; dynamic derived colors remain deferred |
+| Secondary color default | `src/config/theme.js:9-13` `colors.orange.lighten1 = #ffa726` | App starts with orange lighten1 (#ffa726) as secondary | `secondaryColor: "#ffb74d"` and fallback light/dark scale one shade off | `secondaryColor: "#ffa726"` with fallback light `#ffcc80`, dark `#ef6c00` | Exact | Fixed source default |
+| Primary/secondary text defaults | `src/config/theme.js:20-21`; `src/store/modules/theme.js:10-11` | Store exposes `primaryBgText` and `secondaryBgText`, both white by default | Missing in React store | Added `primaryBgText: "#ffffff"` and `secondaryBgText: "#ffffff"` | Exact | Missing state only; later color-picker text behavior deferred |
+| footerAbsolute state | `src/config/navigations/footer.js:7` `absolute: true`; `src/store/modules/footer.js:11` `isAbsoluteFooter: state.absolute`; `setAbsoluteFooter` action | Both `fixed` and `absolute` are separate boolean flags in state; default absolute=true, fixed=false | State had no `footerAbsolute` — only `footerFixed` existed | Added `footerAbsolute: boolean` (default `true`) and `setFooterAbsolute` | Exact | Added |
+| Footer position getter | `FooterSettings.vue:78-84` getter: `isFixedFooter?"fixed":isAbsoluteFooter?"absolute":"static"` | Radio reflects fixed/absolute/static from two independent flags | `value={footerFixed?"fixed":footerAbsolute?"absolute":"absolute"}` forced absolute even if both flags false | `value={footerFixed?"fixed":footerAbsolute?"absolute":"static"}` | Exact | Static fallback is source-equivalent even though Vue only renders Standard/Fixed options |
+| Footer position setter | `FooterSettings.vue:85-96` setter dispatches BOTH `setAbsoluteFooter(value==="absolute")` AND `setFixedFooter(value==="fixed")` (two independent actions) | Selecting "Standard": absolute=true, fixed=false. Selecting "Fixed": absolute=false, fixed=true | `onChange={(value) => setFooterFixed(value==="fixed")}` — only updated fixed flag, never touched absolute | `onChange={(value) => { setFooterFixed(value==="fixed"); setFooterAbsolute(value==="absolute"); }}` — dispatches both | Exact | Fixed |
+| Footer fixed z-index | `src/layouts/App/Footer.vue:78-80` adds `z-index: 9` only when fixed | Fixed footer stacks at z-index 9; absolute footer does not add that override | React fixed footer used z-index 2 | React fixed footer uses z-index 9 | Exact | Source-verified footer state behavior |
+
+### Protected-path check
+
+- No changes in `src/`, `public/`, `scripts/`, `package.json`, `package-lock.json`, `babel.config.js`, `vue.config.js`, `webpack.config.js`, `README.md`, `AGENTS.md`, `.claude/`
+- `CalendarsPage.tsx` untouched
+- All approved Vuetify slices untouched
+- Treeview fix from previous session untouched
+
+### Build
+
+- `npm run build` inside `react-dashboard-template/`: passed (0 TypeScript errors; Vite chunk-size warning only)
+
+### Not implemented in Phase 1 (deferred)
+
+- Phase 2: mini drawer width 80→56; dense header 50→48
+- Phase 3: footer inset applies sidebar-width margin
+- Phase 4: primary.light/primary.dark derived from chosen hex; buildTheme memoized
+- Phase 5: i18n language selection (UNKNOWN scope)
+
+---
+
+## Previous Phase: Directives / Scrolling strict source-driven rebuild.
 
 Status: rejection fix applied; pending user visual approval.
 
@@ -8119,6 +8295,104 @@ Protected files:
 Approval:
 
 - Vuetify / Date Pickers remains pending user visual approval.
+
+### Charts / ChartJS Canvas Sizing Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only `/charts/chartjs`.
+- Focused on source-driven chart canvas/body sizing and rendered chart wrapper behavior.
+- Did not touch Spark Line, Calendars, Theme Settings, Vuetify pages, Directives, Widgets, or `.claude/`.
+
+Source re-trace:
+
+- Main page: `src/views/Charts/ChartJs.vue`.
+- Shared example body: `src/demo/components/Example.vue`.
+- Vue chart wrapper: `node_modules/vue-chartjs/src/BaseCharts.js`.
+- Source examples: `src/demo/examples/chartjs/bar/SimpleBar.vue`, `bar/HorizontalBar.vue`, `line/SimpleLine.vue`, `line/FilledLine.vue`, `PieChart.vue`, `DoughnutChart.vue`, `RadarChart.vue`, `PolarareaChart.vue`, `BubbleChart.vue`, `ScatterChart.vue`.
+- Vue chart components: `src/components/ChartJS/*.vue`.
+
+Root cause:
+
+| Root cause | Vue source | React mismatch | Source-driven fix |
+|---|---|---|---|
+| Extra fixed chart body wrapper | `Example.vue` renders `v-card-text > div[data-app] > component` with no per-chart fixed wrapper; `BaseCharts.js` renders `div > canvas width height` | `ChartJsPage.tsx` wrapped every chart in a fixed-height Box, constraining responsive canvas behavior | Removed the extra fixed-height body wrapper and let the chart component render as the body component |
+| Canvas sizing lifecycle | `BaseCharts.js` defines default `width: 400`, `height: 400`; examples pass `:height="260"` or `:height="200"` when source specifies it | React passed width/height but also forced Radar/Polar to `maintainAspectRatio: false`, so radial charts stayed small in a wide card | Added source-equivalent sizing adaptation: when Vue source does not define `maintainAspectRatio`, React preserves the canvas width/height ratio as the Chart.js aspect ratio |
+| Bar canvas width | `BarChart.vue` and `HorizontalBarChart.vue` set `this.$refs.canvas.style.width = "50%"` | React already had `canvasStyleWidth="50%"`; kept it intact | Preserved existing source-matched canvas width behavior |
+
+Self-verification:
+
+| Chart | Vue source sizing/wrapper | Vue expected behavior | React before | React after | Match level | Notes |
+|---|---|---|---|---|---|---|
+| Bar | `SimpleBar.vue` passes `:height="260"`; `BarChart.vue` sets canvas style width `50%`; `BaseCharts.js` canvas width default `400` | Chart body follows Vue canvas attributes and 50% canvas style width | Extra fixed-height wrapper plus chart canvas | No extra fixed wrapper; canvas still uses width `400`, height `260`, style width `50%` | PASS | Data/options unchanged |
+| Horizontal Bar | `HorizontalBar.vue` passes `:height="260"`; `HorizontalBarChart.vue` sets canvas style width `50%` | Same as Vue wrapper/canvas lifecycle | Extra fixed-height wrapper plus chart canvas | No extra fixed wrapper; 50% canvas width preserved | PASS | Data/options unchanged |
+| Line | Source examples do not pass height, so `BaseCharts.js` default height `400`; options set `maintainAspectRatio: false` | Canvas/body uses default 400 height with source options | Fixed wrapper height `400` | Canvas attributes/default height drive body sizing | PASS | `maintainAspectRatio: false` remains source-defined |
+| Filled Line | Same as Line | Canvas/body uses default 400 height with source options | Fixed wrapper height `400` | Canvas attributes/default height drive body sizing | PASS | |
+| Pie | Source options set `responsive: true, maintainAspectRatio: false`; default canvas height `400` | Canvas/body uses default 400 height with source options | Fixed wrapper height `400` | Canvas attributes/default height drive body sizing | PASS | |
+| Doughnut | Same as Pie | Canvas/body uses default 400 height with source options | Fixed wrapper height `400` | Canvas attributes/default height drive body sizing | PASS | |
+| Radar | `RadarChart.vue` passes `:height="200"` and does not define `maintainAspectRatio: false`; `BaseCharts.js` canvas width/height are `400/200` | Responsive radial chart preserves Vue canvas ratio instead of being locked into a short fixed body | Fixed wrapper height `200`; React forced `maintainAspectRatio: false` | No fixed wrapper; wrapper derives aspect ratio `400 / 200` when the source option omits `maintainAspectRatio` | PASS | Targeted rejected issue |
+| Polar | `PolarareaChart.vue` passes `:height="200"` and does not define `maintainAspectRatio: false` | Same source canvas ratio behavior as Vue | Fixed wrapper height `200`; React forced `maintainAspectRatio: false` | No fixed wrapper; source-derived aspect ratio is applied | PASS | Targeted rejected issue |
+| Bubble | `BubbleChart.vue` passes `:height="200"` and does not define `maintainAspectRatio: false` | Preserves source canvas ratio behavior | Fixed wrapper height `200` | No fixed wrapper; source-derived aspect ratio applies | PASS | Data/options unchanged |
+| Scatter | Source options set `responsive: true, maintainAspectRatio: false`; default canvas height `400` | Canvas/body uses source options and default height | Fixed wrapper height `400` | Canvas attributes/default height drive body sizing | PASS | Animation option unchanged |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Git-based protected-path check was not run because this task explicitly prohibited git commands.
+- Scoped edits were limited to `react-dashboard-template/` and `migration-docs/`.
+
+Approval:
+
+- Charts / ChartJS remains pending user visual approval.
+
+### Charts / ChartJS Radar and Polar Targeted Sizing Fix
+
+Status: fixed; pending user visual approval.
+
+Scope:
+
+- Fixed only `/charts/chartjs`.
+- Touched only the verified Radar and Polar sizing mismatch.
+- Did not touch Spark Line, Calendars, Theme Settings, Vuetify pages, Directives, Widgets, or `.claude/`.
+- Did not modify unrelated ChartJS examples.
+
+Source re-check:
+
+- Radar source: `src/demo/examples/chartjs/RadarChart.vue`.
+- Polar source: `src/demo/examples/chartjs/PolarareaChart.vue`.
+- Vue canvas wrapper: `node_modules/vue-chartjs/src/BaseCharts.js`.
+- React rendered page: `react-dashboard-template/src/pages/ui-components/charts/ChartJsPage.tsx`.
+
+Self-verification:
+
+| Chart | Vue source options | React before | React after | Match level | Notes |
+|---|---|---|---|---|---|
+| Radar | `:height="200"`; options contain `legend.position = "top"`, title text, and scale ticks begin at zero; no `responsive`; no `maintainAspectRatio` | React added `responsive: true` and `maintainAspectRatio: false` to Radar options | Removed the React-only sizing options; preserved title, legend, scale begin-at-zero, data, labels, colors, and canvas `width={400}` / `height={200}` | PASS | Source-derived canvas sizing path can now apply because the explicit mismatching options are gone |
+| Polar | `:height="200"`; options contain `legend.position = "top"` and title text; no `responsive`; no `maintainAspectRatio` | React added `responsive: true` and `maintainAspectRatio: false` to Polar options | Removed the React-only sizing options; preserved title, legend, data, labels, colors, and canvas `width={400}` / `height={200}` | PASS | Source-derived canvas sizing path can now apply because the explicit mismatching options are gone |
+
+Build:
+
+- Command: `npm run build`.
+- Working directory: `react-dashboard-template/`.
+- Result: passed.
+- Notes: existing non-blocking Vite generated JS chunk-size warning remains.
+
+Protected files:
+
+- Git-based protected-path check was not run because this task explicitly prohibited git commands.
+- Scoped edits were limited to `react-dashboard-template/` and `migration-docs/`.
+
+Approval:
+
+- Charts / ChartJS remains pending user visual approval.
 
 ### Vuetify / Time Pickers Source-Driven Rebuild
 
