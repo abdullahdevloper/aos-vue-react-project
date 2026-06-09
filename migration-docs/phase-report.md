@@ -1,18 +1,50 @@
 # Phase Report
 
-Last updated: 2026-05-18 (Charts / ChartJS strict source-driven rebuild)
+Last updated: 2026-05-18 (Global typography and sidebar-content spacing correction)
 
 ## Phase
 
-Charts / ChartJS strict source-driven rebuild.
+Global typography and sidebar-content spacing correction.
 
-Status: rebuilt; pending user visual approval.
+Status: implemented; pending user visual approval.
 
 Files changed:
-- `react-dashboard-template/src/pages/ui-components/charts/ChartJsPage.tsx`
-- `react-dashboard-template/src/pages/ui-components/charts/chartJsVueSources.ts`
+- `react-dashboard-template/src/layouts/DashboardLayout.tsx`
+- `react-dashboard-template/src/theme/theme.ts`
+- `react-dashboard-template/src/styles.css`
 - `migration-docs/phase-report.md`
 - `migration-docs/progress.md`
+
+### Global Typography / Layout Source Trace
+
+- App shell: `src/App.vue` uses `<v-main class="vuse-content">` directly around the routed page; `VMain.ts` derives padding from Vuetify application top/left/right/bottom state.
+- Sidebar shell: `src/layouts/App/Sidebar.vue` uses `v-navigation-drawer app width="280" mini-variant-width="80" floating`, a dense `v-list`, `v-subheader class="heading-text ml-2 nav-subheader"`, and source logo/header spacing.
+- Typography source: `src/sass/main.scss` imports Muli; `src/sass/preset/variables.scss` sets `$body-font-family: "Muli", sans-serif`, leaves `$font-size-root` at Vuetify default 16px, sets border radius 4px, h6 letter-spacing 0 and weight 600, and subtitle-2 weight 600.
+- Sidebar typography source: `src/sass/_variables.scss` sets sidebar list title size `0.95rem` and line-height `1.2rem`; `src/sass/_sidebar.scss` applies it to `.vuse-sidebar .nav-drawer .v-list-item__title`.
+- Dense sidebar/list source: Vuetify `VList/_variables.scss` and `VListItem.sass` define dense list item min-height 40px and dense subheader font-size `.75rem`, height 40px, padding `0 8px`.
+- Shared page wrapper source: `src/sass/_base.scss` defines `.vuse-content-wrapper` as `.mx-3` / `.py-3`; Vuetify spacing source uses 4px units, so `3 = 12px`. `VGrid/_mixins.sass` defines fluid container padding as 12px and max-width 100%.
+
+### Verification Table
+
+| Area | Vue source/classes | Vue expected | React before | React after | Match level | Notes |
+|---|---|---|---|---|---|---|
+| Sidebar item font sizes/line heights | `src/sass/_variables.scss:1`, `_sidebar.scss:65-68` | `.v-list-item__title` uses `0.95rem` font-size and `1.2rem` line-height | Depth-specific `14.25/13.25/14.5/13.5px` titles with default MUI line-height | Shared sidebar title typography now uses `0.95rem` / `1.2rem` for group and leaf titles | Match | Active/non-active weight remains source-shaped through Vuetify medium/strong title styling |
+| Sidebar group/header typography | `Sidebar.vue:44-54`; `VList.sass:45-49`; `VList/_variables.scss:6-7,41` | Dense `v-subheader`: `.75rem`, 40px height, `0 8px` padding, `ml-2`, `mt-3` after first header | Custom uppercase 11.5px bold header with non-source margins | Header uses `.75rem`, 40px height, `px: 1`, `ml: 1`, `mt: 1.5` after first header | Match | Mini subheader icon visibility unchanged |
+| Topbar typography if globally affected | `Toolbar.vue:18-25`; `preset/variables.scss:9`; Vuetify typography `.title` | Vuse Admin title uses Muli, h6/title scale `1.25rem`, line-height `2rem`, weight 600, letter-spacing 0 | React title used Inter/500/20px | React title uses Muli theme plus explicit `1.25rem`, `2rem`, 600, letter-spacing 0 | Match | Toolbar button sizing/behavior unchanged |
+| Dashboard card typography if affected by global theme | `main.scss`; `preset/variables.scss`; Vuetify `settings/_variables.scss` headings/body/caption | Global app typography uses Muli and Vuetify body/headings scale | MUI theme used Inter/Roboto fallback with partial heading overrides | MUI theme now uses Muli and source-aligned body, caption, subtitle, h4-h6 tokens | Match | Page-local hardcoded typography remains untouched per scope |
+| Main content offset from sidebar | `Sidebar.vue:2-10`; `VMain.ts:21-32` | Drawer app width contributes 280px left/right application padding; mini contributes 80px | React used 280/80 offsets but added extra centered container spacing | Drawer offsets remain 280/80; centered max-width was removed from shared shell | Match | Sidebar-right and mini behavior preserved |
+| Page content container width/padding | `App.vue:5-9`; `_base.scss:5-8`; `VGrid/_mixins.sass:1-5`; `VGrid.sass:8-9` | Routed page is not constrained by a centered max-width; shared wrapper spacing is 12px | React `Container` used route-dependent padding and `maxWidth: 1480` on non-components | Shared shell container now uses `maxWidth: 100%`, 12px horizontal padding, 12px vertical padding | Match | Removes React-only centered empty space |
+| Shared page wrapper spacing | `_base.scss:5-8`; Vuetify spacing `$spacer: 4px` | `.mx-3`/`.py-3` = 12px horizontal and vertical wrapper spacing | Spacing was split between overlarge shell top offset and route-specific container padding | Shell now uses source-derived app-bar offset plus 12px wrapper padding | Match | React pages with existing class remain functionally unchanged; shared shell provides the source wrapper role |
+| App-bar/top offset | `src/config/navigations/header.js:4`; `VToolbar.ts:61-68`; `VMain.ts:27-31` | Header default dense=false -> 64px app top; dense=true -> 48px; no header -> 0 app top, with page wrapper padding outside that | React used 88px default and 70px dense shell offset | React shell uses 64px default, 48px dense, 0 hidden, plus 12px page-wrapper padding | Match | Header dense control remains otherwise unchanged |
+
+### Build
+
+- `npm run build` inside `react-dashboard-template/`: passed (0 TypeScript errors; Vite chunk-size warning only).
+
+### Protected-path check
+
+- Git protected-path check was not run because the active user request explicitly forbids git commands.
+- Edits were restricted to `react-dashboard-template/` and `migration-docs/`; no protected Vue/root paths or `.claude/` were edited.
 
 ### Charts / ChartJS Source Trace
 

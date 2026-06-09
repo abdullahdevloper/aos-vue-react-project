@@ -1,6 +1,6 @@
 # React Parallel Build Progress
 
-Last updated: 2026-05-18 (Charts / ChartJS strict source-driven rebuild)
+Last updated: 2026-05-18 (Global typography and sidebar-content spacing correction)
 
 ## Strategy Status
 
@@ -11,9 +11,18 @@ Current rebuild strategy:
 - Rebuild section by section with high visual fidelity.
 - Audit -> implementation -> visual review -> approval.
 - Do not move to the next slice until the current slice is approved by the user.
-- Active section: Charts / ChartJS (rebuilt; pending visual approval).
+- Active section: Global typography and sidebar-content spacing correction (implemented; pending visual approval).
 
 ## Current Slice
+
+- Scope: global typography, sidebar typography, and shared shell/sidebar-to-content spacing only.
+- Source audit: traced Vue `src/App.vue`, `src/layouts/App/Sidebar.vue`, `src/layouts/App/Toolbar.vue`, `src/components/Stock/VuseSectionDefinition.vue`, `src/sass/main.scss`, `src/sass/preset/variables.scss`, `src/sass/_base.scss`, `src/sass/_sidebar.scss`, Vuetify `VMain`, `VToolbar`, `VList`, `VSubheader`, and grid/container Sass.
+- Implementation: changed React global font/theme typography to source Muli/Vuetify typography tokens, aligned sidebar list-title/subheader typography and dense item height to Vue Sass, removed the React-only centered/max-width content container, and moved shared shell padding/top offset to source-derived Vuetify app-bar/container values.
+- Not touched: page-specific business logic, chart data/options, Calendars, Theme Settings behavior, Vuetify component logic, Directives logic, Widgets logic, `.claude/`.
+- Build: passed inside `react-dashboard-template/` (`npm run build`; Vite chunk-size warning only).
+- Status: pending visual approval.
+
+## Previous Slice: Charts / ChartJS
 
 - Scope: UI Components / Charts / ChartJS only.
 - Route: `/charts/chartjs` (verified from `src/router/routes/vuse.js`).

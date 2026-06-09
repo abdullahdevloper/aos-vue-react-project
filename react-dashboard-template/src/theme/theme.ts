@@ -18,10 +18,16 @@ export const buildTheme = (darkMode = false, rtl = false, primaryColor = "#0097a
     },
     shape: { borderRadius: 4 },
     typography: {
-      fontFamily: ["Inter", "Roboto", "Arial", "sans-serif"].join(","),
-      h4: { fontWeight: 500, letterSpacing: 0 },
-      h6: { fontWeight: 500, letterSpacing: 0 },
-      button: { textTransform: "none", fontWeight: 600 },
+      fontFamily: ["Muli", "sans-serif"].join(","),
+      h4: { fontWeight: 400, letterSpacing: ".0073529412em", lineHeight: "2.5rem" },
+      h5: { fontWeight: 400, letterSpacing: 0, lineHeight: "2rem" },
+      h6: { fontWeight: 600, letterSpacing: 0, lineHeight: "2rem" },
+      subtitle1: { fontSize: "1rem", fontWeight: 400, lineHeight: "1.75rem", letterSpacing: ".009375em" },
+      subtitle2: { fontSize: ".875rem", fontWeight: 600, lineHeight: "1.375rem", letterSpacing: ".0071428571em" },
+      body1: { fontSize: "1rem", fontWeight: 400, lineHeight: "1.5rem", letterSpacing: ".03125em" },
+      body2: { fontSize: ".875rem", fontWeight: 400, lineHeight: "1.25rem", letterSpacing: ".0178571429em" },
+      caption: { fontSize: ".75rem", fontWeight: 400, lineHeight: "1.25rem", letterSpacing: ".0333333333em" },
+      button: { fontSize: ".875rem", textTransform: "none", fontWeight: 500, lineHeight: "2.25rem", letterSpacing: ".0892857143em" },
     },
     components: {
       MuiCard: {

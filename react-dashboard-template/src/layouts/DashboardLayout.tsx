@@ -92,13 +92,12 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   const mainScrollRef = useRef<HTMLElement | null>(null);
   const lastMainScrollTop = useRef(0);
   const previousPathRef = useRef(location.pathname);
-  const isVuetifyDocsRoute = location.pathname.startsWith("/components");
   const effectiveMini = miniVariant && !sidebarHovered;
   const effectiveHeaderVisible = headerVisible && !(headerHideOnScroll && hideHeaderOnScroll);
   const activeDrawerWidth = sidebarOpen ? (miniVariant ? miniDrawerWidth : drawerWidth) : 0;
   const sidebarPaperWidth = sidebarOpen ? (effectiveMini ? miniDrawerWidth : drawerWidth) : 0;
   const headerTextColor = headerColor ? readableTextFor(headerColor) : "text.primary";
-  const shellOffset = effectiveHeaderVisible ? (headerDense ? 8.75 : 11) : 3;
+  const shellOffset = effectiveHeaderVisible ? (headerDense ? 6 : 8) : 0;
 
   useEffect(() => {
     const selected = locales.find((item) => item.value === locale) || locales[0];
@@ -171,7 +170,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
                 <Box sx={{ width: 42, height: 42, display: "grid", placeItems: "center", color: headerColor ? headerTextColor : "primary.main" }}>
                   <DashboardCustomize sx={{ fontSize: 32 }} />
                 </Box>
-                <Typography variant="h6" color={headerColor ? headerTextColor : "primary.main"} sx={{ display: { xs: "none", md: "block" }, fontWeight: 500, fontSize: 20, whiteSpace: "nowrap" }}>
+                <Typography variant="h6" color={headerColor ? headerTextColor : "primary.main"} sx={{ display: { xs: "none", md: "block" }, fontWeight: 600, fontSize: "1.25rem", lineHeight: "2rem", letterSpacing: 0, whiteSpace: "nowrap" }}>
                   Vuse Admin
                 </Typography>
                 <Box sx={{ display: { xs: "none", lg: "block" } }}>
@@ -197,7 +196,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
               <Box sx={{ width: 40, height: 40, display: "grid", placeItems: "center", color: headerColor ? headerTextColor : "primary.main" }}>
                 <DashboardCustomize sx={{ fontSize: 30 }} />
               </Box>
-              <Typography variant="h6" color={headerColor ? headerTextColor : "primary.main"} sx={{ display: { xs: "none", md: "block" }, fontWeight: 500, fontSize: 20, whiteSpace: "nowrap" }}>
+              <Typography variant="h6" color={headerColor ? headerTextColor : "primary.main"} sx={{ display: { xs: "none", md: "block" }, fontWeight: 600, fontSize: "1.25rem", lineHeight: "2rem", letterSpacing: 0, whiteSpace: "nowrap" }}>
                 Vuse Admin
               </Typography>
             </Stack>
@@ -271,7 +270,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
           "& .MuiDrawer-paper": {
             width: sidebarPaperWidth,
             pt: 0,
-            px: 1.5,
+            px: 0,
             borderRight: 0,
             top: effectiveHeaderVisible && headerClippedOver ? (headerDense ? 50 : 64) : 0,
             height: effectiveHeaderVisible && headerClippedOver ? (headerDense ? "calc(100% - 50px)" : "calc(100% - 64px)") : "100%",
@@ -315,7 +314,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
           transition: (theme) => theme.transitions.create(["margin-left", "margin-right"], { duration: theme.transitions.duration.shorter }),
         }}
       >
-        <Container maxWidth={false} sx={{ px: { xs: isVuetifyDocsRoute ? 3 : 2, md: 3 }, maxWidth: isVuetifyDocsRoute ? "none" : 1480 }}>
+        <Container maxWidth={false} sx={{ px: 1.5, py: 1.5, maxWidth: "100%" }}>
           {children}
         </Container>
         {footerVisible && <Stack sx={{ mt: 4, px: footerPadless ? 0 : 3, py: footerPadless ? 0 : 1.5, ...(footerColor && { bgcolor: footerColor, color: readableTextFor(footerColor) }), ...(footerInset && { width: "auto" }), ...(footerFixed && { position: "sticky", bottom: 0, zIndex: 9 }) }} alignItems="center">
@@ -360,7 +359,7 @@ function UiComponentsSidebar({
         <Box sx={{ width: 38, height: 38, display: "grid", placeItems: "center", color: "primary.main", borderRadius: 1, boxShadow: neuGlow }}>
           <DashboardCustomize color="primary" />
         </Box>
-        {!mini && <Typography variant="h6" color={semidark ? "#f6f7fb" : "primary.main"} sx={{ fontWeight: 500, fontSize: 20 }}>
+        {!mini && <Typography variant="h6" color={semidark ? "#f6f7fb" : "primary.main"} sx={{ fontWeight: 600, fontSize: "1.25rem", lineHeight: "2rem", letterSpacing: 0 }}>
           Vuse Admin
         </Typography>}
       </Stack>}
@@ -927,15 +926,16 @@ function SidebarEntry({
           display: "flex",
           alignItems: "center",
           gap: 0.65,
-          mt: index === 0 ? 0.75 : 2.1,
-          mb: 0.6,
-          marginInlineStart: 1.5,
+          height: 40,
+          mt: index === 0 ? 0 : 1.5,
+          mb: 0,
+          px: 1,
+          marginInlineStart: 1,
           color: semidark ? "#c8d0d8" : "text.secondary",
-          fontWeight: 700,
-          textTransform: "uppercase",
-          letterSpacing: 0,
-          fontSize: 11.5,
-          lineHeight: 1.2,
+          fontWeight: 400,
+          letterSpacing: ".0333333333em",
+          fontSize: ".75rem",
+          lineHeight: "1.25rem",
           listStyle: "none",
         }}
       >
@@ -977,7 +977,7 @@ function SidebarNavItemView({
       <Box component="li" sx={{ listStyle: "none" }}>
         <ListItemButton onClick={() => setOpen((value) => !value)} sx={groupButtonSx(depth, containsActive, mini, activeMenuStyle, sidebarRight, semidark)}>
           <ListItemIcon sx={itemIconSx(depth, containsActive, false, mini)}>{renderIcon(item)}</ListItemIcon>
-          {!mini && <ListItemText primary={item.title} primaryTypographyProps={{ fontWeight: containsActive ? 700 : 600, fontSize: depth === 0 ? 14.5 : 13.5, noWrap: true }} />}
+          {!mini && <ListItemText primary={item.title} primaryTypographyProps={sidebarTitleTypographyProps(containsActive ? 600 : 500)} />}
           {!mini && item.badge && <BadgePill label={item.badge} />}
           {!mini && (open ? <ExpandLess sx={{ fontSize: 18, opacity: 0.66 }} /> : <ExpandMore sx={{ fontSize: 18, opacity: 0.66 }} />)}
         </ListItemButton>
@@ -1000,7 +1000,7 @@ function SidebarNavItemView({
   const content = (
     <>
       <ListItemIcon sx={itemIconSx(depth, active, Boolean(item.disabled), mini)}>{renderIcon(item)}</ListItemIcon>
-      {!mini && <ListItemText primary={item.title} primaryTypographyProps={{ fontWeight: active ? 700 : 500, fontSize: depth === 0 ? 14.25 : 13.25, noWrap: true }} />}
+      {!mini && <ListItemText primary={item.title} primaryTypographyProps={sidebarTitleTypographyProps(active ? 600 : 500)} />}
       {!mini && item.pending && <PendingPill />}
       {!mini && item.badge && <BadgePill label={item.badge} />}
       {!mini && item.href && <OpenInNew sx={{ fontSize: 13, opacity: 0.54, marginInlineStart: 0.4 }} />}
@@ -1067,8 +1067,8 @@ function groupButtonSx(
     marginInlineStart: mini ? 0.35 : 0.35 + depth * 1.55,
     marginInlineEnd: 0.45,
     my: 0.2,
-    minHeight: depth === 0 ? 38 : 34,
-    px: mini ? 0 : 1.2,
+    minHeight: 40,
+    px: mini ? 0 : 2,
     justifyContent: mini ? "center" : "flex-start",
     borderRadius: radius,
     color: active ? "primary.main" : semidark ? "#f6f7fb" : "text.primary",
@@ -1101,8 +1101,8 @@ function leafButtonSx(
     marginInlineStart: mini ? 0.35 : 0.35 + depth * 1.65,
     marginInlineEnd: 0.45,
     my: 0.15,
-    minHeight: depth === 0 ? 36 : 32,
-    px: mini ? 0 : 1.2,
+    minHeight: 40,
+    px: mini ? 0 : 2,
     justifyContent: mini ? "center" : "flex-start",
     borderRadius: radius,
     color: active ? "primary.main" : semidark ? "#c8d0d8" : "text.secondary",
@@ -1120,6 +1120,16 @@ function leafButtonSx(
       color: semidark ? "#9aa6af" : "text.secondary",
       opacity: 0.52,
     },
+  };
+}
+
+function sidebarTitleTypographyProps(fontWeight: number) {
+  return {
+    fontWeight,
+    fontSize: ".95rem",
+    lineHeight: "1.2rem",
+    letterSpacing: "normal",
+    noWrap: true,
   };
 }
 
